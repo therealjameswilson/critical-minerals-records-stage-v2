@@ -1,0 +1,40 @@
+FRUS:
+  tier: 1
+  label: "Primary historical diplomatic record"
+  official_usg: true
+NARA:
+  tier: 1
+  label: "Official archival metadata"
+  official_usg: true
+Census:
+  tier: 1
+  label: "Official U.S. trade statistics"
+  official_usg: true
+USGS:
+  tier: 1
+  label: "Official critical-minerals science and list source"
+  official_usg: true
+DOE:
+  tier: 1
+  label: "Official energy critical-materials assessment"
+  official_usg: true
+DLA:
+  tier: 1
+  label: "Official strategic-materials and stockpile source"
+  official_usg: true
+Federal Register:
+  tier: 1
+  label: "Official legal notice"
+  official_usg: true
+State:
+  tier: 1
+  label: "Official State Department release or report"
+  official_usg: true
+Other USG:
+  tier: 2
+  label: "Other official U.S. government source or campaign scaffold"
+  official_usg: true
+Partner Government:
+  tier: 3
+  label: "Partner-government source requiring separate validation"
+  official_usg: false

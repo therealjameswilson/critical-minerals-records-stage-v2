@@ -1,0 +1,23 @@
+# Web wrapper deps. The toolkit itself (build_cache, merge_sources,
+# taxonomy, fetch_records_stage) is stdlib-only.
+streamlit>=1.30
+
+# Local server deps (only needed if you want to run local_server.py —
+# enables the in-browser NARA Catalog image search and the optional
+# AI summarizer). The local server is otherwise stdlib-only.
+flask>=3.0
+flask-cors>=4.0
+
+# Word doc parsing — used by app.py's clearance-chain upload feature.
+# Lets adopters drop in an existing Word doc with a clearance-chain table
+# instead of retyping every row into the data editor.
+python-docx>=1.0
+
+# Optional: pip install transformers torch sentencepiece to enable
+# the local AI summarizer route (/summarize). ~300 MB-1.5 GB download.
+
+# --- Dev / CI ---
+# Only needed to run the test suite (see tests/) and the GitHub Actions
+# workflow. Install with: pip install -r requirements.txt
+pytest>=8.0
+PyYAML>=6.0

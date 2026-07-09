@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-06-03",
+  "derivedFrom": "frus-subject-taxonomy/exports/taxonomy.json",
+  "filter": {
+    "category": "Foreign Economic Policy",
+    "subcategory": "Energy and Natural Resources"
+  },
+  "totalSubjects": 23,
+  "categories": [
+    {
+      "label": "Foreign Economic Policy",
+      "totalAnnotations": 74727,
+      "subcategories": [
+        {
+          "label": "Energy and Natural Resources",
+          "subjects": [
+            {
+              "ref": "rec65d5a63ab10e2d2",
+              "name": "Rubber",
+              "count": 2477,
+              "volumes": 355,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85115631",
+              "lcshMatch": "exact",
+              "variants": [
+                "Footwear, rubber-soled",
+                "International Rubber Study Group",
+                "Non-rubber footwear",
+                "Rubber",
+                "Rubber exports",
+                "Rubber Producers’ Agreement, international",
+                "Rubber production restrictions, reduction of",
+                "Rubber regulation agreement (1934), question of revision of",
+                "Rubber research in Latin America",
+                "Rubber, natural",
+                "Rubber, synthetic",
+                "Rubber-soled footwear",
+                "Rubber: Development plan in Haiti",
+                "Rubber–cotton exchange agreement between United Kingdom and United States (June 23), implementation of"
+              ]
+            },
+            {
+              "ref": "recSaEMkYGbM62K53",
+              "name": "Oil",
+              "count": 13692,
+              "volumes": 521,
+              "variants": [
+                "Aegean Sea oil dispute",
+                "Anglo-Ecuadorian Oilfields, Ltd.",
+                "Buraimi dispute",
+                "Costa Rica: British allegation of discriminatory treatment in oil exploitation",
+                "Denmark: Interest in proposed ratification of draft convention on oil pollution of navigable waters",
+                "French oil companies",
+                "Naft-I–Shah oil field",
+                "Nationalization of oil industry in Iran",
+                "Netherland India, oil concessions in",
+                "Netherland Indies, oil concessions in",
+                "Netherlands: Attitude on Djambi oil question",
+                "Oil",
+                "Oil and gas leases",
+                "Oil concessions",
+                "Oil exploitation in—",
+                "Oil exploitation: American companies, U. S. efforts to aid",
+                "Oil imports, restrictions on",
+                "Oil industry",
+                "Oil issues",
+                "Oil monopolies in China",
+                "Oil monopolies, Japanese",
+                "Oil pipelines",
+                "Oil resources",
+                "Oil sales",
+                "Oil supplies",
+                "Oils and fats--Analysis",
+                "Philippine Islands: Oil exploitation, discussion",
+                "Sakhalin oil concessions, Soviet-Japanese agreement (Mar. 30)",
+                "San Remo oil agreement: Text",
+                "Takao oil refinery, rehabilitation",
+                "Tung oil",
+                "U.S oil policies",
+                "Wico, detention with oil cargo"
+              ]
+            },
+            {
+              "ref": "recbfb6dc62c599a48",
+              "name": "Tobacco",
+              "count": 1570,
+              "volumes": 329,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85135793",
+              "lcshMatch": "exact"
+            },
+            {
+              "ref": "reccb48408ba115688",
+              "name": "Wool",
+              "count": 967,
+              "volumes": 257
+            },
+            {
+              "ref": "recBRpk2PnA6tnVFg",
+              "name": "Minerals and metals",
+              "count": 11513,
+              "volumes": 535,
+              "variants": [
+                "Cadmium",
+                "Magnesium",
+                "Metals",
+                "Minerals",
+                "Minerals and mining",
+                "Native element minerals",
+                "Strategic raw materials",
+                "Strategic war materials",
+                "Tin"
+              ]
+            },
+            {
+              "ref": "recrwQjqdJQ2sXaLO",
+              "name": "Sea bed mining",
+              "count": 81,
+              "volumes": 4
+            },
+            {
+              "ref": "recXXD3sj2iBEhNCv",
+              "name": "Natural resources",
+              "count": 7788,
+              "volumes": 523,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85090254",
+              "lcshMatch": "exact",
+              "variants": [
+                "Coconut oil",
+                "Commodities and strategic materials policy",
+                "Gold purchases by China from United States",
+                "Oilseeds",
+                "Palm oil",
+                "Shale oil",
+                "Strategic materials",
+                "Strategic raw materials, measures to secure adequate supplies of",
+                "Sweden: Coal shipments to Sweden"
+              ]
+            },
+            {
+              "ref": "recUatc2rZ79DXSzf",
+              "name": "Petroleum and natural gas",
+              "count": 5700,
+              "volumes": 454,
+              "variants": [
+                "Liquefied natural gas (LNG) Soviet, sales proposals",
+                "Natural gas",
+                "Petroleum resources in the Western Hemisphere"
+              ]
+            },
+            {
+              "ref": "recoA56uMzqjuuRYx",
+              "name": "Water",
+              "count": 6392,
+              "volumes": 545,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85145447",
+              "lcshMatch": "exact",
+              "variants": [
+                "Bodies of water",
+                "Desalinization of sea water",
+                "Indus waters issue",
+                "Jordan River water dispute",
+                "Jordan Waters issue",
+                "Water desalination",
+                "Water issues"
+              ]
+            },
+            {
+              "ref": "recN222dd4YgVLuoR",
+              "name": "Energy",
+              "count": 7546,
+              "volumes": 533,
+              "variants": [
+                "Energy",
+                "Energy conservation",
+                "Force and energy"
+              ]
+            },
+            {
+              "ref": "recItilmdY8wKocmo",
+              "name": "Conservation",
+              "count": 1040,
+              "volumes": 294,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh99005329",
+              "lcshMatch": "exact",
+              "variants": [
+                "International Technical Conference on the Conservation of the Living Resources of the Sea, Rome"
+              ]
+            },
+            {
+              "ref": "recH8UKNUTXoDXkax",
+              "name": "Environmental affairs",
+              "count": 2266,
+              "volumes": 292
+            },
+            {
+              "ref": "recT9SDfSZeFRiMti",
+              "name": "Gold",
+              "count": 3481,
+              "volumes": 296,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85055692",
+              "lcshMatch": "exact",
+              "variants": [
+                "Gold"
+              ]
+            },
+            {
+              "ref": "recemUx1q3gl5ohku",
+              "name": "Marine environment",
+              "count": 43,
+              "volumes": 6
+            },
+            {
+              "ref": "recZMQkJBeic8JUxy",
+              "name": "Pollution control",
+              "count": 56,
+              "volumes": 19
+            },
+            {
+              "ref": "rec3jq56tRRiAvPzT",
+              "name": "Energy policy",
+              "count": 239,
+              "volumes": 54,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85043147",
+              "lcshMatch": "exact",
+              "variants": [
+                "Energy resources policy"
+              ]
+            },
+            {
+              "ref": "rec5Zq5iTuWG2mE3w",
+              "name": "Fuel",
+              "count": 2950,
+              "volumes": 485,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh00005720",
+              "lcshMatch": "exact",
+              "variants": [
+                "Postwar questions: Disposition of fueling installations at Pointe-Noire, French Equatorial Africa"
+              ]
+            },
+            {
+              "ref": "recIfFl6ouaEmS16p",
+              "name": "Iron",
+              "count": 2269,
+              "volumes": 308,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85068131",
+              "lcshMatch": "exact",
+              "variants": [
+                "Iron ore"
+              ]
+            },
+            {
+              "ref": "recWYSm1K6WFkq0n5",
+              "name": "Ocean energy",
+              "count": 3516,
+              "volumes": 471
+            },
+            {
+              "ref": "rec7PW9Ao8kwc9ZK7",
+              "name": "Hydroelectric power plant",
+              "count": 45,
+              "volumes": 33
+            },
+            {
+              "ref": "recLVtmipNOLIF0A1",
+              "name": "Silver",
+              "count": 1060,
+              "volumes": 176,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85122588",
+              "lcshMatch": "exact"
+            },
+            {
+              "ref": "recrztdhZBg1KzNu2",
+              "name": "Solar energy",
+              "count": 33,
+              "volumes": 20,
+              "lcshUri": "http://id.loc.gov/authorities/subjects/sh85124500",
+              "lcshMatch": "exact"
+            },
+            {
+              "ref": "rec2ZDPZS6fW12Hhz",
+              "name": "Wind energy",
+              "count": 3,
+              "volumes": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "subjectIndex": [
+    "rec65d5a63ab10e2d2",
+    "recSaEMkYGbM62K53",
+    "recbfb6dc62c599a48",
+    "reccb48408ba115688",
+    "recBRpk2PnA6tnVFg",
+    "recrwQjqdJQ2sXaLO",
+    "recXXD3sj2iBEhNCv",
+    "recUatc2rZ79DXSzf",
+    "recoA56uMzqjuuRYx",
+    "recN222dd4YgVLuoR",
+    "recItilmdY8wKocmo",
+    "recH8UKNUTXoDXkax",
+    "recT9SDfSZeFRiMti",
+    "recemUx1q3gl5ohku",
+    "recZMQkJBeic8JUxy",
+    "rec3jq56tRRiAvPzT",
+    "rec5Zq5iTuWG2mE3w",
+    "recIfFl6ouaEmS16p",
+    "recWYSm1K6WFkq0n5",
+    "rec7PW9Ao8kwc9ZK7",
+    "recLVtmipNOLIF0A1",
+    "recrztdhZBg1KzNu2",
+    "rec2ZDPZS6fW12Hhz"
+  ]
+}

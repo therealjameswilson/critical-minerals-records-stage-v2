@@ -1,0 +1,24 @@
+United States:
+  iso2: US
+  iso3: USA
+Australia:
+  iso2: AU
+  iso3: AUS
+Canada:
+  iso2: CA
+  iso3: CAN
+Democratic Republic of the Congo:
+  iso2: CD
+  iso3: COD
+Indonesia:
+  iso2: ID
+  iso3: IDN
+Japan:
+  iso2: JP
+  iso3: JPN
+European Union:
+  iso2: EU
+  iso3: EUR
+China:
+  iso2: CN
+  iso3: CHN

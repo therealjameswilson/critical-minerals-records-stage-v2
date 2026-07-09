@@ -1,0 +1,110 @@
+{
+  "12-19": [
+    {
+      "source": "State Department",
+      "year": 2023,
+      "month": "12",
+      "day": "19",
+      "title": "Publication, Coordination, and Reporting of International Agreements: Amendments; Correction",
+      "url": "https://www.federalregister.gov/documents/2023/12/19/2023-27837/publication-coordination-and-reporting-of-international-agreements-amendments-correction",
+      "date_display": "2023-12-19",
+      "extra": {
+        "doc_type": "Rule",
+        "citation": "88 FR 87671",
+        "significant": true,
+        "recently_published": false
+      },
+      "subjects": [
+        "Treaties"
+      ],
+      "subject_categories": {
+        "Treaties": "Subject"
+      },
+      "score": 35,
+      "subject_indices": [
+        3
+      ]
+    }
+  ],
+  "06-23": [
+    {
+      "source": "State Department",
+      "year": 2023,
+      "month": "06",
+      "day": "23",
+      "title": "Passports: Consular Reports of Birth Abroad (CRBA)",
+      "url": "https://www.federalregister.gov/documents/2023/06/23/2023-13318/passports-consular-reports-of-birth-abroad-crba",
+      "date_display": "2023-06-23",
+      "extra": {
+        "doc_type": "Rule",
+        "citation": "88 FR 41024",
+        "significant": false,
+        "recently_published": false
+      },
+      "subjects": [
+        "Passports"
+      ],
+      "subject_categories": {
+        "Passports": "Subject"
+      },
+      "score": 30,
+      "subject_indices": [
+        2
+      ]
+    }
+  ],
+  "12-27": [
+    {
+      "source": "State Department",
+      "year": 2023,
+      "month": "12",
+      "day": "27",
+      "title": "Notice of Public Meeting: International Information and Communications Policy Division Stakeholder Briefing",
+      "url": "https://www.federalregister.gov/documents/2023/12/27/2023-28447/notice-of-public-meeting-international-information-and-communications-policy-division-stakeholder",
+      "date_display": "2023-12-27",
+      "extra": {
+        "doc_type": "Notice",
+        "citation": "88 FR 89488",
+        "significant": false,
+        "recently_published": false
+      },
+      "subjects": [
+        "Hearings, Meetings, Proceedings, etc."
+      ],
+      "subject_categories": {
+        "Hearings, Meetings, Proceedings, etc.": "Subject"
+      },
+      "score": 10,
+      "subject_indices": [
+        1
+      ]
+    }
+  ],
+  "12-28": [
+    {
+      "source": "State Department",
+      "year": 2023,
+      "month": "12",
+      "day": "28",
+      "title": "30-Day Notice of Proposed Information Collection: I2U2 Project Proposal Submission Template",
+      "url": "https://www.federalregister.gov/documents/2023/12/28/2023-28601/30-day-notice-of-proposed-information-collection-i2u2-project-proposal-submission-template",
+      "date_display": "2023-12-28",
+      "extra": {
+        "doc_type": "Notice",
+        "citation": "88 FR 89803",
+        "significant": false,
+        "recently_published": false
+      },
+      "subjects": [
+        "Agency Information Collection Activities; Proposals, Submissions, and Approvals"
+      ],
+      "subject_categories": {
+        "Agency Information Collection Activities; Proposals, Submissions, and Approvals": "Subject"
+      },
+      "score": 10,
+      "subject_indices": [
+        0
+      ]
+    }
+  ]
+}

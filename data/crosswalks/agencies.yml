@@ -1,0 +1,46 @@
+Department of State:
+  abbreviation: State
+  source_types:
+    - FRUS
+    - State
+U.S. Geological Survey:
+  abbreviation: USGS
+  source_types:
+    - USGS
+Department of the Interior:
+  abbreviation: DOI
+  source_types:
+    - Federal Register
+    - USGS
+Department of Energy:
+  abbreviation: DOE
+  source_types:
+    - DOE
+Defense Logistics Agency:
+  abbreviation: DLA
+  source_types:
+    - DLA
+U.S. Census Bureau:
+  abbreviation: Census
+  source_types:
+    - Census
+National Archives and Records Administration:
+  abbreviation: NARA
+  source_types:
+    - NARA
+USTR:
+  abbreviation: USTR
+  source_types:
+    - Other USG
+Commerce:
+  abbreviation: Commerce
+  source_types:
+    - Other USG
+EXIM:
+  abbreviation: EXIM
+  source_types:
+    - Other USG
+DFC:
+  abbreviation: DFC
+  source_types:
+    - Other USG

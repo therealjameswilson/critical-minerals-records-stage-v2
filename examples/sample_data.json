@@ -1,0 +1,72 @@
+[
+  {
+    "date": "1995-03-15",
+    "date_display": "March 1995",
+    "title": "Diplomacy in the Digital Age",
+    "summary": "Feature article on emerging IT challenges in the Foreign Service.",
+    "url": "https://example.org/stubmag/1995-03/digital-age",
+    "subjects": ["Information Technology", "Public Diplomacy"],
+    "author": "Smith, Jane",
+    "author_title": "Director",
+    "department": "IRM",
+    "cover_story": true,
+    "word_count": 2400,
+    "media": ["photo"]
+  },
+  {
+    "date": "1997-09-01",
+    "date_display": "September 1997",
+    "title": "Foreign Service Day Reflections",
+    "summary": "Short institutional piece on the annual observance.",
+    "url": "https://example.org/stubmag/1997-09/fs-day",
+    "subjects": ["Foreign Service Life"],
+    "author": "Doe, John",
+    "author_title": "Foreign Service Officer",
+    "department": "DGHR",
+    "cover_story": false,
+    "word_count": 600,
+    "media": []
+  },
+  {
+    "date": "2001-11-20",
+    "date_display": "November 2001",
+    "title": "Embassy Security After Nairobi",
+    "summary": "Retrospective on diplomatic security reforms.",
+    "url": "https://example.org/stubmag/2001-11/embassy-security",
+    "subjects": ["Diplomatic Security"],
+    "author": "Roe, Pat",
+    "author_title": "Assistant Secretary",
+    "department": "DS",
+    "cover_story": true,
+    "word_count": 3100,
+    "media": ["photo", "video"]
+  },
+  {
+    "date": "2010-06-10",
+    "date_display": "June 2010",
+    "title": "Notes from the Mailroom",
+    "summary": "A staff column.",
+    "url": "https://example.org/stubmag/2010-06/mailroom",
+    "subjects": [],
+    "author": null,
+    "author_title": null,
+    "department": null,
+    "cover_story": false,
+    "word_count": 300,
+    "media": []
+  },
+  {
+    "date": "2018-02-22",
+    "date_display": "February 2018",
+    "title": "Cultural Diplomacy in Practice",
+    "summary": "Bureau profile on ECA programming.",
+    "url": "https://example.org/stubmag/2018-02/cultural-diplomacy",
+    "subjects": ["Public Diplomacy"],
+    "author": "Lee, Sam",
+    "author_title": "Under Secretary",
+    "department": "ECA",
+    "cover_story": false,
+    "word_count": 1800,
+    "media": ["photo"]
+  }
+]

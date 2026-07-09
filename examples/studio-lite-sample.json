@@ -1,0 +1,86 @@
+[
+  {
+    "title": "Secretary Delivers Remarks on the Transatlantic Partnership",
+    "date": "2023-04-12",
+    "url": "https://www.state.gov/secretary-remarks-transatlantic-partnership/",
+    "tags": ["Diplomacy", "Europe"],
+    "description": "Public remarks on strengthening U.S.-Europe cooperation."
+  },
+  {
+    "title": "United States Announces New Humanitarian Assistance",
+    "date": "June 5, 2022",
+    "url": "https://www.state.gov/us-announces-new-humanitarian-assistance/",
+    "tags": ["Humanitarian Aid", "Foreign Assistance"],
+    "description": "Announcement of additional humanitarian funding."
+  },
+  {
+    "title": "Joint Statement on Indo-Pacific Cooperation",
+    "date": "2024-01-22",
+    "url": "https://www.state.gov/joint-statement-indo-pacific-cooperation/",
+    "tags": ["Indo-Pacific", "Security"],
+    "description": "Multilateral statement following ministerial talks."
+  },
+  {
+    "title": "Fact Sheet: Advancing Global Health Security",
+    "date": "14 March 2024",
+    "url": "https://www.state.gov/fact-sheet-global-health-security/",
+    "tags": ["Global Health"],
+    "description": "Summary of U.S. global health security commitments."
+  },
+  {
+    "title": "Readout of the Secretary's Call with the Foreign Minister",
+    "date": "2021-11-08",
+    "url": "https://www.state.gov/readout-secretary-call-foreign-minister/",
+    "tags": ["Diplomacy"],
+    "description": "Readout of a bilateral phone call."
+  },
+  {
+    "title": "United States Imposes Sanctions on Illicit Networks",
+    "date": "September 30, 2022",
+    "url": "https://www.state.gov/us-imposes-sanctions-illicit-networks/",
+    "tags": ["Sanctions", "Economic Affairs"],
+    "description": "Designations targeting transnational illicit finance."
+  },
+  {
+    "title": "Statement on World Press Freedom Day",
+    "date": "2023-05-03",
+    "url": "https://www.state.gov/statement-world-press-freedom-day/",
+    "tags": ["Human Rights", "Press Freedom"],
+    "description": "Statement marking World Press Freedom Day."
+  },
+  {
+    "title": "Launch of a New Educational Exchange Initiative",
+    "date": "2022-08-17",
+    "url": "https://www.state.gov/launch-educational-exchange-initiative/",
+    "tags": ["Public Diplomacy", "Education"],
+    "description": "New people-to-people exchange program announced."
+  },
+  {
+    "title": "Briefing on Climate Diplomacy Ahead of COP",
+    "date": "November 2023",
+    "url": "https://www.state.gov/briefing-climate-diplomacy-cop/",
+    "tags": ["Climate", "Energy"],
+    "description": "Press briefing previewing climate negotiations."
+  },
+  {
+    "title": "United States Hosts Summit on Democratic Renewal",
+    "date": "2021-12-09",
+    "url": "https://www.state.gov/us-hosts-summit-democratic-renewal/",
+    "tags": ["Democracy", "Human Rights"],
+    "description": "Convening of partners on democratic resilience."
+  },
+  {
+    "title": "Remarks at the Release of the Annual Human Rights Report",
+    "date": "2024-04-22",
+    "url": "https://www.state.gov/remarks-release-human-rights-report/",
+    "tags": ["Human Rights"],
+    "description": "Remarks accompanying the annual report's release."
+  },
+  {
+    "title": "Joint Communique on Trade and Investment",
+    "date": "2023-07-14",
+    "url": "https://www.state.gov/joint-communique-trade-investment/",
+    "tags": ["Trade", "Economic Affairs"],
+    "description": "Outcome statement from a trade and investment dialogue."
+  }
+]

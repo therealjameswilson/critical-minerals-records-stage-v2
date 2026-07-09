@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<!--
+  Critical Minerals Records Studio Lite - a browser-only build tool for Critical Minerals Records Stage.
+
+  This is the no-install, no-Python sibling of Records Studio (app.py). It runs
+  the *no-code* build path entirely in the browser: load a clean JSON or CSV
+  export, map your fields, optionally tune a simple score, and download a
+  ready-to-use records-stage.html with your data embedded.
+
+  It deliberately mirrors the existing Python pipeline so the output is
+  byte-compatible with what build_cache.py + html_embed.sync_html_embed produce:
+    - generic_json_parser.py  -> field mapping, date parsing, subject coercion
+    - build_cache.py          -> taxonomy synthesis, MM-DD bucketing, compact form
+    - cache_format.py         -> compact key map (y,t,u,s,sc,sb) and {n,c,sc} taxonomy
+    - html_embed.py           -> single-line SUBJECT_TAXONOMY / EVENTS_CACHE splice
+
+  What it does NOT do (use the full Python Critical Minerals Records Studio for these):
+    - arbitrary custom parsers (messy XML / PDF / scraped HTML)
+    - controlled-vocabulary taxonomy loading, clearance-chain customization
+  It is JSON + CSV in, a finished publishing tool out. Nothing leaves the
+  browser — no upload, no server, no network call (except an optional same-
+  folder fetch of the records-stage.html template when served over http).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critical Minerals Records Studio Lite</title>
+<style>
+  :root {
+    --navy: #1b3a5b; --red: #8a2b2b; --muted: #6b7785;
+    --line: #d7dee6; --bg: #f4f6f9; --ok: #1d7a46; --warn: #8a5a00;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0; background: var(--bg); color: #1c2733; line-height: 1.45;
+  }
+  header {
+    background: var(--navy); color: #fff; padding: 18px 28px;
+  }
+  header h1 { margin: 0; font-size: 20px; }
+  header p { margin: 4px 0 0; font-size: 13px; opacity: .85; }
+  main { max-width: 880px; margin: 0 auto; padding: 24px 20px 60px; }
+  .step {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; margin-bottom: 18px;
+  }
+  .step h2 {
+    margin: 0 0 4px; font-size: 15px; color: var(--navy);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .step h2 .n {
+    background: var(--navy); color: #fff; width: 22px; height: 22px;
+    border-radius: 50%; font-size: 12px; display: inline-flex;
+    align-items: center; justify-content: center; flex: none;
+  }
+  .step .hint { font-size: 12px; color: var(--muted); margin: 0 0 14px 30px; }
+  label.fld { display: block; font-size: 12px; font-weight: 600; color: var(--navy); margin: 10px 0 3px; }
+  input[type=text], input[type=number], select {
+    width: 100%; padding: 7px 9px; font-size: 13px; border: 1px solid var(--line);
+    border-radius: 6px; background: #fff;
+  }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 180px; }
+  input[type=file] { font-size: 13px; }
+  .check { display: flex; align-items: center; gap: 7px; font-size: 13px; margin-top: 10px; }
+  .check input { width: auto; }
+  button {
+    background: var(--navy); color: #fff; border: 0; border-radius: 7px;
+    padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  button.secondary { background: #fff; color: var(--navy); border: 1px solid var(--navy); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .msg { font-size: 13px; margin-top: 10px; padding: 8px 11px; border-radius: 6px; }
+  .msg.ok { background: #e7f4ec; color: var(--ok); }
+  .msg.warn { background: #fdf4e3; color: var(--warn); }
+  .msg.err { background: #fbeaea; color: var(--red); }
+  .msg.info { background: #eef2f7; color: var(--navy); }
+  details { margin-top: 10px; font-size: 13px; }
+  summary { cursor: pointer; color: var(--navy); font-weight: 600; }
+  pre {
+    background: #0f1722; color: #d4e1f0; padding: 12px; border-radius: 6px;
+    overflow: auto; font-size: 12px; max-height: 260px;
+  }
+  table.summary { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
+  table.summary td { padding: 4px 8px; border-bottom: 1px solid var(--line); }
+  table.summary td:first-child { color: var(--muted); width: 60%; }
+  table.summary td:last-child { font-weight: 600; text-align: right; }
+  .dl { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .note { font-size: 12px; color: var(--muted); }
+  code { background: #eef2f7; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🏗 Critical Minerals Records Studio Lite</h1>
+  <p>Build a Critical Minerals Records Stage tool from a JSON or CSV metadata export - entirely in your browser. No Python, no install, no upload.</p>
+</header>
+<main>
+
+  <div class="step">
+    <p class="note">
+      This is the no-code, in-browser path. Your data never leaves this page.
+      The result is metadata-only by design (title, source, subjects, date, score) —
+      it links out to each document and does not store or search body text.
+      For messy formats (XML/PDF/scraped HTML) or a controlled taxonomy, use the
+      full Python <strong>Critical Minerals Records Studio</strong> (<code>app.py</code>) instead.
+    </p>
+  </div>
+
+  <!-- Step 1: load data -->
+  <div class="step">
+    <h2><span class="n">1</span> Load your data</h2>
+    <p class="hint">Choose a <code>.json</code> file (an array of records, or an object with an array inside) or a <code>.csv</code> file with a header row.</p>
+    <input type="file" id="dataFile" accept=".json,.csv,application/json,text/csv">
+    <div class="row">
+      <div>
+        <label class="fld" for="arrayKey">If JSON is nested, the array's key (optional)</label>
+        <input type="text" id="arrayKey" placeholder="e.g. records  — leave blank for a plain array">
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="dayFirst"> Dates are day-first (e.g. <code>03/04/2020</code> = 4 March, not 3 April)</label>
+    <div id="loadMsg"></div>
+  </div>
+
+  <!-- Step 2: map fields -->
+  <div class="step">
+    <h2><span class="n">2</span> Map your fields</h2>
+    <p class="hint">We guessed these from your data. Confirm or change them. Title and a date are required; URL is strongly recommended.</p>
+    <label class="fld" for="sourceLabel">Source label (shown as a badge on every card)</label>
+    <input type="text" id="sourceLabel" placeholder="e.g. GPA Press Releases">
+    <div class="row">
+      <div>
+        <label class="fld" for="mapTitle">Title field *</label>
+        <select id="mapTitle"></select>
+      </div>
+      <div>
+        <label class="fld" for="mapUrl">URL field</label>
+        <select id="mapUrl"></select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label class="fld" for="mapDate">Date field (single column)</label>
+        <select id="mapDate"></select>
+      </div>
+      <div class="note" style="align-self:center; flex:0 0 auto;">— or use three separate columns —</div>
+    </div>
+    <div class="row">
+      <div>
+        <label class="fld" for="mapYear">Year field</label>
+        <select id="mapYear"></select>
+      </div>
+      <div>
+        <label class="fld" for="mapMonth">Month field</label>
+        <select id="mapMonth"></select>
+      </div>
+      <div>
+        <label class="fld" for="mapDay">Day field</label>
+        <select id="mapDay"></select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label class="fld" for="mapSubjects">Subjects/tags field (optional)</label>
+        <select id="mapSubjects"></select>
+      </div>
+      <div>
+        <label class="fld" for="mapDescription">Description field (optional)</label>
+        <select id="mapDescription"></select>
+      </div>
+    </div>
+    <details>
+      <summary>Preview of the first record</summary>
+      <pre id="preview">Load a file first.</pre>
+    </details>
+  </div>
+
+  <!-- Step 3: scoring -->
+  <div class="step">
+    <h2><span class="n">3</span> Scoring <span class="note" style="font-weight:400">(optional)</span></h2>
+    <p class="hint">Records Stage ranks cards by score and can hide low-scoring ones. The defaults give everything an equal score, so you can skip this entirely. Tune it to surface what matters.</p>
+    <div class="row">
+      <div>
+        <label class="fld" for="scBase">Base score (every record starts here)</label>
+        <input type="number" id="scBase" value="50" min="0" max="100">
+      </div>
+      <div>
+        <label class="fld" for="scSubjectBonus">Bonus if the record has subjects</label>
+        <input type="number" id="scSubjectBonus" value="10" min="0" max="100">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label class="fld" for="scKeywords">Priority keywords (comma-separated)</label>
+        <input type="text" id="scKeywords" placeholder="e.g. treaty, summit, sanctions">
+      </div>
+      <div>
+        <label class="fld" for="scKeywordWeight">Points per keyword match (title or subjects)</label>
+        <input type="number" id="scKeywordWeight" value="15" min="0" max="100">
+      </div>
+    </div>
+    <label class="fld" for="scThreshold">Minimum score to include (0 = keep everything)</label>
+    <input type="number" id="scThreshold" value="0" min="0" max="100">
+  </div>
+
+  <!-- Step 4: template -->
+  <div class="step">
+    <h2><span class="n">4</span> Records Stage template</h2>
+    <p class="hint">Pick the <code>records-stage.html</code> from your toolkit-template repo. We embed your data into a copy of it — your original file is never modified.</p>
+    <input type="file" id="templateFile" accept=".html,text/html">
+    <div id="templateMsg"></div>
+  </div>
+
+  <!-- Step 5: build -->
+  <div class="step">
+    <h2><span class="n">5</span> Build &amp; download</h2>
+    <button id="buildBtn" disabled>Build my Records Stage</button>
+    <div id="buildMsg"></div>
+    <div id="summaryWrap" style="display:none">
+      <table class="summary" id="summaryTable"></table>
+      <div class="dl" id="downloads"></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+"use strict";
+
+// ── Small DOM helpers ──────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+function setMsg(el, kind, html) { el.innerHTML = html ? `<div class="msg ${kind}">${html}</div>` : ""; }
+function esc(s) { return String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])); }
+
+// State carried between steps.
+let LOADED = null;   // { records: [...], keys: [...] }
+let TEMPLATE = null; // string contents of records-stage.html
+
+// ── CSV parsing (RFC-4180-ish: quotes, embedded commas/newlines) ────────────
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  // Normalize newlines so \r\n inside the file doesn't leave stray \r.
+  text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (text[i + 1] === '"') { field += '"'; i++; } // escaped quote
+        else inQuotes = false;
+      } else field += ch;
+    } else if (ch === '"') {
+      inQuotes = true;
+    } else if (ch === ",") {
+      row.push(field); field = "";
+    } else if (ch === "\n") {
+      row.push(field); rows.push(row); row = []; field = "";
+    } else {
+      field += ch;
+    }
+  }
+  if (field !== "" || row.length) { row.push(field); rows.push(row); }
+  if (!rows.length) return [];
+  const headers = rows[0].map(h => h.trim());
+  const out = [];
+  for (let r = 1; r < rows.length; r++) {
+    if (rows[r].length === 1 && rows[r][0] === "") continue; // blank line
+    const obj = {};
+    headers.forEach((h, c) => { obj[h] = rows[r][c] !== undefined ? rows[r][c] : ""; });
+    out.push(obj);
+  }
+  return out;
+}
+
+// ── Record discovery (mirrors generic_json_parser._load_records) ────────────
+function loadRecords(text, filename, arrayKey) {
+  const isCSV = /\.csv$/i.test(filename) ||
+    (!/\.json$/i.test(filename) && !/^\s*[\[{]/.test(text));
+  if (isCSV) {
+    const recs = parseCSV(text);
+    if (!recs.length) throw new Error("No rows found in the CSV (need a header row plus at least one data row).");
+    return recs;
+  }
+  let data;
+  try { data = JSON.parse(text); }
+  catch (e) { throw new Error("Couldn't parse that JSON: " + e.message); }
+  if (arrayKey) {
+    if (typeof data !== "object" || Array.isArray(data) || !(arrayKey in data))
+      throw new Error(`Expected a top-level object with key "${arrayKey}", but didn't find it.`);
+    data = data[arrayKey];
+  }
+  if (!Array.isArray(data)) {
+    // Help the user find the array key if the records are nested.
+    const arrKeys = (data && typeof data === "object")
+      ? Object.keys(data).filter(k => Array.isArray(data[k])) : [];
+    const hint = arrKeys.length
+      ? ` Your records may be under one of these keys: ${arrKeys.map(k => `"${k}"`).join(", ")} — set it above.`
+      : "";
+    throw new Error(`Expected a JSON array of records, got ${Array.isArray(data) ? "array" : typeof data}.` + hint);
+  }
+  return data.filter(r => r && typeof r === "object" && !Array.isArray(r));
+}
+
+// ── Field auto-detection (mirrors generic_json_parser._AUTODETECT) ──────────
+const AUTODETECT = {
+  title:       ["title", "headline", "name", "subject"],
+  url:         ["url", "link", "href", "permalink", "uri"],
+  date:        ["date", "publication_date", "published", "published_at", "release_date", "issue_date", "created", "created_at"],
+  year:        ["year", "yr"],
+  month:       ["month", "mo"],
+  day:         ["day"],
+  subjects:    ["subjects", "tags", "topics", "categories", "keywords"],
+  description: ["description", "summary", "abstract", "excerpt", "body"],
+};
+function autodetect(keys) {
+  const lc = {}; keys.forEach(k => { lc[k.toLowerCase()] = k; });
+  const out = {};
+  for (const [target, cands] of Object.entries(AUTODETECT)) {
+    out[target] = cands.map(c => lc[c]).find(Boolean) || "";
+  }
+  return out;
+}
+
+// ── Date parsing (mirrors generic_json_parser._parse_date_string) ───────────
+const MONTHS = { january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12,
+  jan:1,feb:2,mar:3,apr:4,jun:6,jul:7,aug:8,sep:9,sept:9,oct:10,nov:11,dec:12 };
+
+function parseDateString(raw, dayFirst) {
+  if (raw === null || raw === undefined || String(raw).trim() === "") return null;
+  const s = String(raw).trim();
+  let m;
+  // YYYY-MM-DD or YYYY/MM/DD
+  if ((m = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/)))
+    return mk(+m[1], +m[2], +m[3], s);
+  // Month name, day, year — "March 15, 2010" / "Mar 15 2010" / "15 March 2010"
+  if ((m = s.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})$/)) && MONTHS[m[1].toLowerCase()])
+    return mk(+m[3], MONTHS[m[1].toLowerCase()], +m[2], s);
+  if ((m = s.match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$/)) && MONTHS[m[2].toLowerCase()])
+    return mk(+m[3], MONTHS[m[2].toLowerCase()], +m[1], s);
+  // Month name + year — "March 2010"
+  if ((m = s.match(/^([A-Za-z]+)\s+(\d{4})$/)) && MONTHS[m[1].toLowerCase()])
+    return mk(+m[2], MONTHS[m[1].toLowerCase()], 1, s);
+  // Bare year
+  if ((m = s.match(/^(\d{4})$/))) return mk(+m[1], 1, 1, s);
+  // Ambiguous numeric slash form — order per dayFirst flag.
+  if ((m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/))) {
+    const a = +m[1], b = +m[2], y = +m[3];
+    const [mo, da] = dayFirst ? [b, a] : [a, b];
+    return mk(y, mo, da, s);
+  }
+  // Last resort: a 4-digit year anywhere in the string.
+  if ((m = s.match(/\b(\d{4})\b/))) {
+    const y = +m[1];
+    if (y >= 1700 && y <= 2100) return mk(y, 1, 1, s);
+  }
+  return null;
+}
+function mk(y, mo, da, display) { return { year: y, month: mo, day: da, display }; }
+
+// ── Subjects coercion (mirrors generic_json_parser._coerce_subjects) ────────
+function coerceSubjects(raw) {
+  if (raw === null || raw === undefined) return [];
+  if (Array.isArray(raw)) return raw.map(x => String(x).trim()).filter(Boolean);
+  if (typeof raw === "string") return raw.split(/[,;|]/).map(p => p.trim()).filter(Boolean);
+  return [String(raw)];
+}
+
+// ── Build events (mirrors generic_json_parser.parse_corpus_with_config) ─────
+function buildEvents(records, cfg) {
+  const events = [];
+  const skips = { noTitle: 0, noDate: 0, badRange: 0 };
+  const useSplitDate = !!cfg.year;
+  for (const rec of records) {
+    const title = cfg.title ? String(rec[cfg.title] || "").trim() : "";
+    if (!title) { skips.noTitle++; continue; }
+
+    let year, month, day, display;
+    if (useSplitDate) {
+      const y = parseInt(rec[cfg.year], 10);
+      const mo = cfg.month ? parseInt(rec[cfg.month], 10) : 1;
+      const da = cfg.day ? parseInt(rec[cfg.day], 10) : 1;
+      if (Number.isNaN(y)) { skips.noDate++; continue; }
+      year = y; month = Number.isNaN(mo) ? 1 : mo; day = Number.isNaN(da) ? 1 : da;
+      display = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    } else {
+      const parsed = parseDateString(rec[cfg.date], cfg.dayFirst);
+      if (!parsed) { skips.noDate++; continue; }
+      ({ year, month, day, display } = parsed);
+    }
+    if (!(month >= 1 && month <= 12 && day >= 1 && day <= 31)) { skips.badRange++; continue; }
+
+    const url = cfg.url ? String(rec[cfg.url] || "").trim() : "";
+    const subjects = coerceSubjects(cfg.subjects ? rec[cfg.subjects] : null);
+    const description = cfg.description ? String(rec[cfg.description] || "").trim() : "";
+
+    events.push({
+      source: cfg.sourceLabel || "Untitled Archive",
+      date_display: display,
+      month: String(month).padStart(2, "0"),
+      day: String(day).padStart(2, "0"),
+      year, title, url, subjects, description,
+    });
+  }
+  return { events, skips };
+}
+
+// ── Scoring (Lite's transparent stand-in for axis_scorer.py) ────────────────
+function scoreEvent(ev, sc) {
+  let score = sc.base;
+  if (sc.subjectBonus && ev.subjects && ev.subjects.length) score += sc.subjectBonus;
+  if (sc.keywords.length && sc.keywordWeight) {
+    const hay = (ev.title + " " + (ev.subjects || []).join(" ")).toLowerCase();
+    for (const kw of sc.keywords) if (kw && hay.includes(kw)) score += sc.keywordWeight;
+  }
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+// ── Taxonomy synthesis (mirrors build_cache.resolve_taxonomy, no-controlled-vocab branch) ──
+function resolveTaxonomy(events) {
+  if (!events.some(e => e.subjects && e.subjects.length)) return [];
+  const unique = [...new Set(events.flatMap(e => e.subjects || []))].sort();
+  return unique.map(s => ({ name: s, category: "Other", subcategory: "All" }));
+}
+function enrich(events, taxonomy) {
+  if (!taxonomy.length) return;
+  const idx = new Map(taxonomy.map((t, i) => [t.name, i]));
+  for (const e of events) {
+    const sb = (e.subjects || []).map(s => idx.get(s)).filter(i => i !== undefined);
+    if (sb.length) e.subject_indices = sb;
+  }
+}
+
+// ── Bucket + compact (mirrors build_cache.bucket_by_day / build_compact) ────
+const COMPACT_MAP = { year: "y", title: "t", url: "u", source: "s", score: "sc", subject_indices: "sb" };
+function bucketByDay(events) {
+  const byDay = {};
+  for (const e of events) (byDay[`${e.month}-${e.day}`] ||= []).push(e);
+  for (const k in byDay) byDay[k].sort((a, b) => (b.score || 0) - (a.score || 0));
+  return byDay;
+}
+function buildCompact(byDay) {
+  const out = {};
+  for (const [day, evs] of Object.entries(byDay)) {
+    out[day] = evs.map(ev => {
+      const ce = {};
+      for (const [full, short] of Object.entries(COMPACT_MAP)) {
+        if (ev[full] === undefined) continue;
+        if (full === "subject_indices" && (!ev[full] || !ev[full].length)) continue;
+        ce[short] = ev[full];
+      }
+      return ce;
+    });
+  }
+  return out;
+}
+
+// ── JS-safe embed (mirrors html_embed.js_safe_dumps) ────────────────────────
+function jsSafeDumps(obj) {
+  return JSON.stringify(obj)
+    .replace(/</g, "\\u003c").replace(/>/g, "\\u003e").replace(/&/g, "\\u0026")
+    .replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
+}
+
+// ── Splice into the template (mirrors html_embed.sync_html_embed) ───────────
+const TAX_RE = /const SUBJECT_TAXONOMY = \[.*\];/;
+const CACHE_RE = /const EVENTS_CACHE = \{.*\};/;
+function spliceTemplate(html, taxonomy, compactByDay) {
+  const compactTax = taxonomy.map(t => ({ n: t.name, c: t.category, sc: t.subcategory }));
+  const taxLine = "const SUBJECT_TAXONOMY = " + jsSafeDumps(compactTax) + ";";
+  const cacheLine = "const EVENTS_CACHE = " + jsSafeDumps(compactByDay) + ";";
+  if (!TAX_RE.test(html) || !CACHE_RE.test(html))
+    throw new Error("That file doesn't look like a Records Stage template — couldn't find the SUBJECT_TAXONOMY / EVENTS_CACHE markers. Pick the records-stage.html from the toolkit-template repo.");
+  // Function replacements so backslash escapes in the data aren't treated as
+  // regex backreferences (same reason html_embed.py uses lambdas).
+  return html.replace(TAX_RE, () => taxLine).replace(CACHE_RE, () => cacheLine);
+}
+
+// ── Download helper ─────────────────────────────────────────────────────────
+function download(filename, text, mime) {
+  const blob = new Blob([text], { type: mime || "text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+
+// ── UI wiring ───────────────────────────────────────────────────────────────
+const MAP_SELECTS = {
+  title: "mapTitle", url: "mapUrl", date: "mapDate", year: "mapYear",
+  month: "mapMonth", day: "mapDay", subjects: "mapSubjects", description: "mapDescription",
+};
+function populateSelects(keys, detected) {
+  for (const [target, id] of Object.entries(MAP_SELECTS)) {
+    const sel = $(id);
+    const optional = target !== "title";
+    sel.innerHTML = (optional ? '<option value="">(none)</option>' : "")
+      + keys.map(k => `<option value="${esc(k)}">${esc(k)}</option>`).join("");
+    sel.value = detected[target] || "";
+  }
+}
+
+function readFieldConfig() {
+  return {
+    sourceLabel: $("sourceLabel").value.trim(),
+    title: $("mapTitle").value,
+    url: $("mapUrl").value,
+    date: $("mapDate").value,
+    year: $("mapYear").value,
+    month: $("mapMonth").value,
+    day: $("mapDay").value,
+    subjects: $("mapSubjects").value,
+    description: $("mapDescription").value,
+    dayFirst: $("dayFirst").checked,
+  };
+}
+function readScoreConfig() {
+  return {
+    base: parseInt($("scBase").value, 10) || 0,
+    subjectBonus: parseInt($("scSubjectBonus").value, 10) || 0,
+    keywords: $("scKeywords").value.split(",").map(s => s.trim().toLowerCase()).filter(Boolean),
+    keywordWeight: parseInt($("scKeywordWeight").value, 10) || 0,
+    threshold: parseInt($("scThreshold").value, 10) || 0,
+  };
+}
+
+function refreshBuildEnabled() {
+  $("buildBtn").disabled = !(LOADED && TEMPLATE && $("mapTitle").value);
+}
+
+// File load
+$("dataFile").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const records = loadRecords(reader.result, file.name, $("arrayKey").value.trim());
+      if (!records.length) throw new Error("No usable records found in that file.");
+      const keys = [...new Set(records.flatMap(r => Object.keys(r)))];
+      LOADED = { records, keys };
+      const detected = autodetect(keys);
+      populateSelects(keys, detected);
+      if (!$("sourceLabel").value) $("sourceLabel").value = file.name.replace(/\.(json|csv)$/i, "");
+      $("preview").textContent = JSON.stringify(records[0], null, 2);
+      setMsg($("loadMsg"), "ok", `Found <strong>${records.length.toLocaleString()}</strong> record(s) with ${keys.length} distinct field(s).`);
+    } catch (err) {
+      LOADED = null;
+      setMsg($("loadMsg"), "err", esc(err.message));
+    }
+    refreshBuildEnabled();
+  };
+  reader.onerror = () => setMsg($("loadMsg"), "err", "Couldn't read that file.");
+  reader.readAsText(file);
+});
+$("arrayKey").addEventListener("change", () => $("dataFile").dispatchEvent(new Event("change")));
+$("mapTitle").addEventListener("change", refreshBuildEnabled);
+
+// Template load (file input)
+$("templateFile").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    if (!TAX_RE.test(reader.result) || !CACHE_RE.test(reader.result)) {
+      TEMPLATE = null;
+      setMsg($("templateMsg"), "err", "That HTML doesn't contain the Records Stage data markers. Pick the records-stage.html from the toolkit-template repo.");
+    } else {
+      TEMPLATE = reader.result;
+      setMsg($("templateMsg"), "ok", `Template loaded (${(reader.result.length / 1024).toFixed(0)} KB).`);
+    }
+    refreshBuildEnabled();
+  };
+  reader.readAsText(file);
+});
+
+// Optional convenience: when served over http(s), try to grab the sibling
+// records-stage.html so the user doesn't have to pick it manually. Silently
+// no-ops under file:// (fetch of a sibling is blocked there).
+(async function tryAutoTemplate() {
+  if (location.protocol === "file:") return;
+  try {
+    const r = await fetch("records-stage.html");
+    if (!r.ok) return;
+    const text = await r.text();
+    if (TAX_RE.test(text) && CACHE_RE.test(text)) {
+      TEMPLATE = text;
+      setMsg($("templateMsg"), "info", "Loaded <code>records-stage.html</code> from this folder automatically. (Pick a file above to override.)");
+      refreshBuildEnabled();
+    }
+  } catch (_) { /* offline / file:// — user picks the file manually */ }
+})();
+
+// Build
+$("buildBtn").addEventListener("click", () => {
+  setMsg($("buildMsg"), "info", "Building…");
+  $("summaryWrap").style.display = "none";
+  try {
+    const fcfg = readFieldConfig();
+    const scfg = readScoreConfig();
+    if (!fcfg.title) throw new Error("Pick which field holds the title.");
+    if (!fcfg.year && !fcfg.date) throw new Error("Pick a date field, or pick separate year/month/day fields.");
+
+    // Pipeline — same order as build_cache.build():
+    // parse -> score -> threshold -> taxonomy -> bucket -> compact -> splice.
+    const { events, skips } = buildEvents(LOADED.records, fcfg);
+    let belowThreshold = 0;
+    const included = [];
+    for (const ev of events) {
+      ev.score = scoreEvent(ev, scfg);
+      if (ev.score >= scfg.threshold) included.push(ev);
+      else belowThreshold++;
+    }
+    if (!included.length) throw new Error("No records survived. Check your field mapping and lower the minimum score (step 3).");
+
+    const taxonomy = resolveTaxonomy(included);
+    enrich(included, taxonomy);
+    const byDay = bucketByDay(included);
+    const compactByDay = buildCompact(byDay);
+    const builtHtml = spliceTemplate(TEMPLATE, taxonomy, compactByDay);
+
+    // events_cache.json — full records, for the CLI/merge workflow & archiving.
+    const fullJson = JSON.stringify(byDay, null, 2);
+    // events_cache.js — the two embedded globals, byte-compatible with build_cache.
+    const compactTax = taxonomy.map(t => ({ n: t.name, c: t.category, sc: t.subcategory }));
+    const cacheJs =
+      "// Auto-generated by Records Studio Lite. Do not edit.\n" +
+      "const SUBJECT_TAXONOMY = " + jsSafeDumps(compactTax) + ";\n" +
+      "const EVENTS_CACHE = " + jsSafeDumps(compactByDay) + ";\n";
+
+    // Summary
+    const rows = [
+      ["Records read from file", LOADED.records.length],
+      ["Skipped — no title", skips.noTitle],
+      ["Skipped — unparseable/missing date", skips.noDate],
+      ["Skipped — month/day out of range", skips.badRange],
+      ["Dropped — below minimum score", belowThreshold],
+      ["Included in the tool", included.length],
+      ["Days of the year covered", Object.keys(byDay).length],
+      ["Subjects in taxonomy", taxonomy.length],
+    ];
+    $("summaryTable").innerHTML = rows.map(
+      ([k, v]) => `<tr><td>${esc(k)}</td><td>${Number(v).toLocaleString()}</td></tr>`).join("");
+
+    $("downloads").innerHTML = "";
+    const mk = (label, fn, primary) => {
+      const b = document.createElement("button");
+      b.textContent = label; if (!primary) b.className = "secondary";
+      b.onclick = fn; $("downloads").appendChild(b);
+    };
+    mk("⬇ Download records-stage.html", () => download("records-stage.html", builtHtml, "text/html;charset=utf-8"), true);
+    mk("events_cache.js", () => download("events_cache.js", cacheJs, "text/javascript;charset=utf-8"));
+    mk("events_cache.json", () => download("events_cache.json", fullJson, "application/json;charset=utf-8"));
+
+    $("summaryWrap").style.display = "";
+    const warn = (skips.noTitle + skips.noDate + skips.badRange + belowThreshold);
+    setMsg($("buildMsg"), warn ? "warn" : "ok",
+      warn
+        ? `Built — but ${warn.toLocaleString()} record(s) were dropped (see the breakdown below). Download your tool, or adjust the mapping/score and rebuild.`
+        : "Built successfully. Download your publishing tool below.");
+  } catch (err) {
+    setMsg($("buildMsg"), "err", esc(err.message));
+  }
+});
+</script>
+</body>
+</html>

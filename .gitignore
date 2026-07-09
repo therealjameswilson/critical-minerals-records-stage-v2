@@ -1,0 +1,60 @@
+# Caches built by build_cache.py — produced from source data, not tracked.
+events_cache.json
+events_cache.js
+
+# Founders Online bulk metadata (~51 MB). Manually downloaded once in a
+# browser (it sits behind an AWS WAF JS challenge) and used only at build
+# time; the generated HTML embeds its own copy. See docs/founders-online-build.md.
+founders-online-metadata.json
+# Build intermediates for the Records Stage edition (regenerable from the
+# metadata above; the final founders-online-stage.html embeds the data).
+founders_events_cache.json
+founders_events_cache.js
+
+# Reagan Diaries build intermediates (regenerable from data/reagan-diaries/
+# diary.xml; the final reagan-diaries-stage.html embeds the data).
+# See docs/reagan-diaries-build.md.
+reagan_events_cache.json
+reagan_events_cache.js
+
+# Annex build intermediates — the merged cache is regenerable from the sibling
+# caches above; the final records-stage-annex.html embeds the data.
+# See docs/records-stage-annex-build.md.
+annex_events_cache.json
+annex_events_cache.js
+
+# Adopter source data, if mounted into the repo. Adjust to taste.
+# By default everything under /data/ is ignored, but POC adapter code
+# (parser.py, extract_articles.py, etc.) inside /data/state-magazine/
+# is tracked. The article-JSON outputs, API key, and caches stay ignored.
+/data/*
+!/data/crosswalks/
+!/data/crosswalks/*.yml
+!/data/state-magazine/
+/data/state-magazine/articles_*.json
+/data/state-magazine/.anthropic_key*
+/data/state-magazine/__pycache__/
+/data/state-magazine/.DS_Store
+/raw/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.env
+
+# Pytest
+.pytest_cache/
+.pytest_tmp/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# NARA Catalog API key — never commit
+.nara_key
+.nara_key.xml
+!/data/frus/

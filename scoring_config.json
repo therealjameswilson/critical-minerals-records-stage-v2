@@ -1,0 +1,66 @@
+{
+  "_template_name": "FRUS standard (document type · prestige · classification)",
+  "threshold": 30,
+  "axes": [
+    {
+      "name": "Document type",
+      "field": "extra.doc_type",
+      "weights": {
+        "Memorandum of Conversation": 40,
+        "Notes of Meeting/Conversation": 38,
+        "Backchannel Message": 38,
+        "National Intelligence Estimate": 36,
+        "Intelligence Memorandum": 32,
+        "Letter/Message from President": 32,
+        "NSC/Cabinet Minutes": 30,
+        "Presidential Memorandum": 30,
+        "Summary of Conclusions": 28,
+        "NSA Memorandum": 28,
+        "SecState Memo/Letter": 26,
+        "Telegram": 15,
+        "Cable/Message": 14,
+        "Memorandum": 12,
+        "Letter": 12,
+        "Policy Paper": 8,
+        "Address/Speech": 5,
+        "Document": 2
+      },
+      "default": 2
+    },
+    {
+      "name": "Participant prestige",
+      "field": "extra.participant_roles",
+      "any_of": {
+        "The President": 40,
+        "General Secretary": 40,
+        "Prime Minister": 36,
+        "Chancellor": 36,
+        "Premier": 34,
+        "Chairman": 32,
+        "Secretary of State": 30,
+        "National Security Advisor": 30,
+        "Assistant to the President for National Security": 30,
+        "Secretary of Defense": 28,
+        "Director of Central Intelligence": 28,
+        "Vice President": 25,
+        "Foreign Minister": 25,
+        "Chairman of the Joint Chiefs": 22,
+        "Deputy Secretary": 18,
+        "Ambassador": 15,
+        "Under Secretary": 12,
+        "Assistant Secretary": 10
+      },
+      "default": 0
+    },
+    {
+      "name": "Classification",
+      "field": "extra.classification",
+      "weights": {
+        "Top Secret": 10,
+        "Secret": 7,
+        "Confidential": 4
+      },
+      "default": 0
+    }
+  ]
+}

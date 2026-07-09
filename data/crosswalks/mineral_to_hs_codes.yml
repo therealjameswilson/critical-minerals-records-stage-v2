@@ -1,0 +1,91 @@
+nickel:
+  aliases:
+    - nickel
+    - nickel matte
+    - ferronickel
+  hs_codes:
+    - code: "260400"
+      description: "Nickel ores and concentrates"
+      confidence: "high"
+    - code: "750210"
+      description: "Unwrought nickel, not alloyed"
+      confidence: "medium"
+      caveat: "Refined product; may not map cleanly to mined origin."
+cobalt:
+  aliases:
+    - cobalt
+    - cobalt ores
+    - cobalt oxides
+  hs_codes:
+    - code: "260500"
+      description: "Cobalt ores and concentrates"
+      confidence: "high"
+    - code: "810520"
+      description: "Cobalt mattes and other intermediate cobalt metallurgy products"
+      confidence: "medium"
+      caveat: "Intermediate products can mix origins and processing stages."
+graphite:
+  aliases:
+    - graphite
+    - natural graphite
+  hs_codes:
+    - code: "250410"
+      description: "Natural graphite in powder or flakes"
+      confidence: "high"
+    - code: "380110"
+      description: "Artificial graphite"
+      confidence: "medium"
+      caveat: "Artificial graphite is a downstream product, not mined natural graphite."
+lithium:
+  aliases:
+    - lithium
+    - lithium carbonate
+    - lithium hydroxide
+  hs_codes:
+    - code: "283691"
+      description: "Lithium carbonates"
+      confidence: "high"
+    - code: "282520"
+      description: "Lithium oxide and hydroxide"
+      confidence: "high"
+rare earth elements:
+  aliases:
+    - rare earth elements
+    - rare earths
+    - ree
+  hs_codes:
+    - code: "280530"
+      description: "Rare-earth metals, scandium and yttrium, whether or not intermixed or interalloyed"
+      confidence: "medium"
+      caveat: "Broad basket code; individual element-level visibility is limited."
+    - code: "284690"
+      description: "Compounds of rare-earth metals, yttrium or scandium, or mixtures"
+      confidence: "medium"
+      caveat: "Compound code; verify whether the shipment maps to the mineral of interest."
+gallium:
+  aliases:
+    - gallium
+  hs_codes:
+    - code: "811292"
+      description: "Gallium, hafnium, indium, niobium, rhenium and similar metals, unwrought; waste and scrap; powders"
+      confidence: "low"
+      caveat: "Basket code; gallium is not isolated without further commodity detail."
+germanium:
+  aliases:
+    - germanium
+  hs_codes:
+    - code: "811299"
+      description: "Other articles of gallium, hafnium, indium, niobium, rhenium and similar metals"
+      confidence: "low"
+      caveat: "Basket code and downstream-product ambiguity require analyst review."
+copper:
+  aliases:
+    - copper
+  hs_codes:
+    - code: "260300"
+      description: "Copper ores and concentrates"
+      confidence: "high"
+    - code: "740311"
+      description: "Refined copper cathodes and sections of cathodes"
+      confidence: "medium"
+      caveat: "Refined product; does not by itself identify mined origin."

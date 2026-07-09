@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-07-09",
+  "title": "Critical Minerals Records Stage starter taxonomy",
+  "categories": [
+    {
+      "label": "Battery minerals",
+      "subcategories": [
+        {
+          "label": "Core battery inputs",
+          "subjects": [
+            {"ref": "cm-battery-lithium", "name": "Lithium"},
+            {"ref": "cm-battery-cobalt", "name": "Cobalt"},
+            {"ref": "cm-battery-nickel", "name": "Nickel"},
+            {"ref": "cm-battery-graphite", "name": "Graphite"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Rare earth elements",
+      "subcategories": [
+        {
+          "label": "REE diplomacy and processing",
+          "subjects": [
+            {"ref": "cm-ree-general", "name": "Rare earth elements"},
+            {"ref": "cm-ree-neodymium", "name": "Neodymium"},
+            {"ref": "cm-ree-dysprosium", "name": "Dysprosium"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Semiconductor materials",
+      "subcategories": [
+        {
+          "label": "Chip supply chains",
+          "subjects": [
+            {"ref": "cm-semi-gallium", "name": "Gallium"},
+            {"ref": "cm-semi-germanium", "name": "Germanium"},
+            {"ref": "cm-semi-silicon", "name": "Silicon"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Defense industrial base",
+      "subcategories": [
+        {
+          "label": "Strategic materials",
+          "subjects": [
+            {"ref": "cm-defense-stockpile", "name": "Strategic stockpiling"},
+            {"ref": "cm-defense-industrial-base", "name": "Defense industrial base"},
+            {"ref": "cm-defense-beryllium", "name": "Beryllium"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Energy technologies",
+      "subcategories": [
+        {
+          "label": "Energy criticality",
+          "subjects": [
+            {"ref": "cm-energy-technologies", "name": "Energy technologies"},
+            {"ref": "cm-critical-minerals", "name": "Critical minerals"},
+            {"ref": "cm-critical-materials", "name": "Critical materials"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Trade and import reliance",
+      "subcategories": [
+        {
+          "label": "Trade data",
+          "subjects": [
+            {"ref": "cm-trade-import-reliance", "name": "Trade and import reliance"},
+            {"ref": "cm-trade-hs-proxy", "name": "HS-code proxy"},
+            {"ref": "cm-trade-customs", "name": "Customs and tariff data"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Processing and refining",
+      "subcategories": [
+        {
+          "label": "Midstream capacity",
+          "subjects": [
+            {"ref": "cm-processing-refining", "name": "Processing and refining"},
+            {"ref": "cm-recycling", "name": "Recycling and circularity"},
+            {"ref": "cm-infrastructure-finance", "name": "Infrastructure and finance"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Resource nationalism",
+      "subcategories": [
+        {
+          "label": "Political economy",
+          "subjects": [
+            {"ref": "cm-resource-nationalism", "name": "Resource nationalism"},
+            {"ref": "cm-environment-labor", "name": "Environmental and labor issues"},
+            {"ref": "cm-investment-climate", "name": "Investment climate"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Historical diplomacy",
+      "subcategories": [
+        {
+          "label": "Historical and archival evidence",
+          "subjects": [
+            {"ref": "cm-historical-diplomacy", "name": "Historical diplomacy"},
+            {"ref": "cm-archival-discovery", "name": "Archival discovery"},
+            {"ref": "cm-frus-context", "name": "FRUS context"}
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Ministerial follow-up",
+      "subcategories": [
+        {
+          "label": "FSO outputs",
+          "subjects": [
+            {"ref": "cm-ministerial-follow-up", "name": "Ministerial follow-up"},
+            {"ref": "cm-policy-document", "name": "Policy document"},
+            {"ref": "cm-federal-register", "name": "Federal Register"}
+          ]
+        }
+      ]
+    }
+  ],
+  "subjectIndex": [
+    "cm-critical-minerals",
+    "cm-ministerial-follow-up",
+    "cm-historical-diplomacy",
+    "cm-archival-discovery",
+    "cm-frus-context",
+    "cm-trade-import-reliance",
+    "cm-trade-hs-proxy",
+    "cm-battery-lithium",
+    "cm-battery-cobalt",
+    "cm-battery-nickel",
+    "cm-battery-graphite",
+    "cm-ree-general",
+    "cm-ree-neodymium",
+    "cm-ree-dysprosium",
+    "cm-semi-gallium",
+    "cm-semi-germanium",
+    "cm-processing-refining",
+    "cm-recycling",
+    "cm-infrastructure-finance",
+    "cm-defense-stockpile",
+    "cm-defense-industrial-base",
+    "cm-energy-technologies",
+    "cm-resource-nationalism",
+    "cm-environment-labor",
+    "cm-investment-climate",
+    "cm-policy-document",
+    "cm-federal-register"
+  ]
+}

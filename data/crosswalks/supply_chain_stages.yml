@@ -1,0 +1,30 @@
+mining:
+  label: Mining
+  description: Extraction and mine development.
+processing:
+  label: Processing
+  description: Beneficiation, separation, and intermediate processing.
+refining:
+  label: Refining
+  description: Chemical or metallurgical refining into usable products.
+recycling:
+  label: Recycling
+  description: Recovery from scrap, products, or excess property.
+trade:
+  label: Trade
+  description: Import, export, tariff, and HS-code evidence.
+stockpiling:
+  label: Stockpiling
+  description: Strategic reserve and National Defense Stockpile context.
+diplomacy:
+  label: Diplomacy
+  description: Bilateral, multilateral, and historical diplomatic records.
+finance:
+  label: Finance
+  description: Project finance, investment climate, insurance, or development finance.
+permitting:
+  label: Permitting
+  description: Regulatory, environmental, or public-notice context.
+infrastructure:
+  label: Infrastructure
+  description: Transport, energy, logistics, or enabling infrastructure.

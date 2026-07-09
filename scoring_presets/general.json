@@ -1,0 +1,38 @@
+{
+  "_template_name": "General starter (edit to fit your corpus)",
+  "threshold": 0,
+  "axes": [
+    {
+      "name": "Topic relevance",
+      "field": "subjects",
+      "any_of": {
+        "Example subject A": 30,
+        "Example subject B": 20
+      },
+      "default": 0
+    },
+    {
+      "name": "Document type",
+      "field": "extra.doc_type",
+      "weights": {
+        "Example type": 20
+      },
+      "default": 0
+    },
+    {
+      "name": "Flagged / featured",
+      "field": "extra.featured",
+      "if_truthy": 10,
+      "default": 0
+    },
+    {
+      "name": "Length",
+      "field": "extra.word_count",
+      "at_least": [
+        [2000, 10],
+        [1000, 5]
+      ],
+      "default": 0
+    }
+  ]
+}
