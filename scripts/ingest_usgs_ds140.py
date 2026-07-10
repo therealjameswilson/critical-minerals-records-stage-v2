@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Extract a bounded 1861-1992 pilot from official USGS Data Series 140 XLSX files.
 
-The script performs no interpolation and writes only numeric cells. NARA data is
-not involved. Install ``openpyxl`` from requirements.txt before running.
+The rare-earth workbook is imported annually through 1992; the other commodity
+workbooks retain the project's benchmark-year sampling. The script performs no
+interpolation and writes only numeric cells. NARA data is not involved. Install
+``openpyxl`` from requirements.txt before running.
 """
 
 from __future__ import annotations
@@ -20,7 +22,7 @@ from openpyxl import load_workbook
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT = ROOT / "data" / "history-stack" / "statistics.json"
-YEARS = {1900, 1910, 1917, 1920, 1930, 1939, 1941, 1942, 1945, 1950, 1953, 1960, 1967, 1970, 1973, 1975, 1980, 1990, 1992}
+BENCHMARK_YEARS = {1900, 1910, 1917, 1920, 1930, 1939, 1941, 1942, 1945, 1950, 1953, 1960, 1967, 1970, 1973, 1975, 1980, 1990, 1992}
 BASE = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/"
 
 SOURCES = {
@@ -72,8 +74,19 @@ def workbook_unit_text(raw: object) -> str:
     text = text.strip("[]")
     if "unless otherwise noted" in text:
         text = text.split("unless otherwise noted", 1)[0].rstrip(" ,")
-    text = text.replace("All values are in ", "").replace("All values in ", "")
+    for prefix in ("All quantities are in ", "All quantities in ", "All values are in ", "All values in "):
+        if text.startswith(prefix):
+            text = text.removeprefix(prefix)
+            break
     return text
+
+
+def include_year(mineral_id: str, year: object) -> bool:
+    if not isinstance(year, int) or not 1861 <= year <= 1992:
+        return False
+    if mineral_id == "rare-earth-elements":
+        return year >= 1900
+    return year in BENCHMARK_YEARS
 
 
 def download(url: str, destination: Path) -> None:
@@ -102,7 +115,7 @@ def extract_file(mineral_id: str, cache_dir: Path, access_date: str) -> list[dic
     rows: list[dict] = []
     for row_number, values in enumerate(worksheet.iter_rows(min_row=6, values_only=True), start=6):
         year = values[0]
-        if not isinstance(year, int) or year not in YEARS or not 1861 <= year <= 1992:
+        if not include_year(mineral_id, year):
             continue
         for column, header in enumerate(headers[1:], start=1):
             if header not in METRICS or column >= len(values):
@@ -132,7 +145,13 @@ def extract_file(mineral_id: str, cache_dir: Path, access_date: str) -> list[dic
                 "original_unit": unit,
                 "displayed_unit": unit,
                 "conversion_methodology": "No project conversion. Value reproduced from the USGS-standardized XLSX cell.",
-                "notes": "Data Series 140 may incorporate conversions made by USGS from historical source units. Missing, withheld, and nonnumeric cells are omitted rather than treated as zero.",
+                "notes": (
+                    "Data Series 140 may incorporate conversions made by USGS from historical source units. "
+                    "Missing, withheld, and nonnumeric cells are omitted rather than treated as zero. "
+                    + ("All numeric annual worksheet cells from 1900 through 1992 are included for rare earths."
+                       if mineral_id == "rare-earth-elements"
+                       else "This commodity retains the project's benchmark-year sampling.")
+                ),
                 "confidence": "high"
             })
     return rows

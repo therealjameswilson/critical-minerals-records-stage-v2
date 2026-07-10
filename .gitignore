@@ -50,6 +50,7 @@ __pycache__/
 # Pytest
 .pytest_cache/
 .pytest_tmp/
+.cache/
 
 # Editor / OS
 .DS_Store

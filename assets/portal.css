@@ -671,6 +671,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .atlas-number-grid span { margin-top: 4px; font-size: 10px; font-weight: 800; }
 .atlas-number-grid small { margin-top: 2px; color: var(--muted); font-size: 9px; }
 .atlas-number-grid a { margin-top: 8px; font-size: 9px; }
+.atlas-number-grid-complete { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); }
+.atlas-number-grid-complete article:last-child { border-right: 0; }
 .trade-scope-note { display: grid; grid-template-columns: 150px 1fr; gap: 16px; margin: 0 0 16px; padding: 12px 14px; border-left: 4px solid var(--gold-500); background: var(--paper-muted); color: var(--muted); font-size: 11px; }
 .trade-scope-note strong { color: var(--ink); text-transform: uppercase; }
 .trade-number-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 16px; }

@@ -106,6 +106,25 @@ def test_uranium_and_rare_earth_profiles_preserve_different_evidence_depth():
     assert any("FRUS" in gap for gap in rare_earths["data_gaps"])
 
 
+def test_rare_earth_usgs_series_is_annual_and_source_complete_through_1992():
+    rows = [row for row in load("statistics") if row["mineral_id"] == "rare-earth-elements"]
+    assert len(rows) == 500
+    assert {row["year"] for row in rows} == set(range(1900, 1993))
+    assert {row["metric"] for row in rows} == {
+        "U.S. production", "U.S. imports", "U.S. exports",
+        "U.S. apparent consumption", "Unit value", "Real unit value",
+        "World production",
+    }
+    rows_1983 = {row["metric"]: row for row in rows if row["year"] == 1983}
+    assert set(rows_1983) == {
+        "U.S. production", "U.S. imports", "U.S. exports",
+        "U.S. apparent consumption", "Unit value", "Real unit value",
+        "World production",
+    }
+    assert all(row["source_url"].endswith("rare-earths-historical-statistics-data-series-140") for row in rows)
+    assert all("rare-earth oxide equivalent" in row["unit"] for row in rows if row["price_basis"] == "not-price")
+
+
 def test_trade_records_cover_every_selectable_year_without_interpolation():
     rows = load("trade")
     for year in range(1861, 1993):

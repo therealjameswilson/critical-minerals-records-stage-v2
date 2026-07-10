@@ -27,8 +27,9 @@ appears only in a separately labeled Modern Context layer.
   countries or territories; 8 periods; 15 typed agreements or policy
   instruments; 3 laws; 5 administrations; 32 linked FRUS records; and 30 NARA
   query plans.
-- 1,222 unit-defined historical observations extracted from official USGS Data
-  Series 140 workbooks without project interpolation.
+- 1,614 unit-defined historical observations extracted from official USGS Data
+  Series 140 workbooks without project interpolation, including all 500 numeric
+  rare-earth observations published for 1900-1992.
 - 1,476 source-defined long-run trade records covering every selectable year,
   plus 294 contemporaneous rare-earth category rows for 1970-1990 and 3,669
   USITC DataWeb partner-product rows for 1989-1992. UN Comtrade contributes
@@ -132,8 +133,10 @@ python -m http.server 8000
 ## Rebuild Official USGS Statistics
 
 The extractor downloads nine official Data Series 140 workbooks and writes
-human-readable JSON. It selects benchmark years through 1992, preserves USGS
-units, and skips missing, withheld, estimated-text, and nonnumeric cells.
+human-readable JSON. It imports every numeric annual rare-earth cell for
+1900-1992 and retains benchmark-year samples for the other commodities. It
+preserves USGS units and worksheet coordinates, and skips missing, withheld,
+estimated-text, and nonnumeric cells rather than treating them as zero.
 
 ```bash
 python scripts/ingest_usgs_ds140.py --access-date YYYY-MM-DD
