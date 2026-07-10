@@ -8,8 +8,8 @@ Service Officers, historians, policy researchers, and students.
 **Live site:**
 [therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html](https://therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html)
 
-> **Governing principle:** FRUS explains what policymakers were thinking. Other
-> official U.S. Government sources explain what they were looking at.
+> **Statutory standard:** FRUS is to be “a thorough, accurate, and reliable
+> documentary record.” See [22 U.S.C. § 4351(a)](https://uscode.house.gov/view.xhtml?req=%28title%3A22%20section%3A4351%20edition%3Aprelim%29).
 
 The main historical experience is hard-bounded to 1861–1992. Post-1992 material
 appears only in a separately labeled Modern Context layer.

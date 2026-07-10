@@ -250,12 +250,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .source-principle .folio { color: var(--rust-600); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
 .source-principle h2 { margin: 13px 0 10px; font-size: 29px; }
 .source-principle > p { color: #4a5960; }
-.principle-stack { margin: 24px 0; border-top: 1px solid #cabf9f; }
-.principle-stack > div { display: grid; grid-template-columns: 28px 1fr; gap: 10px; padding: 13px 0; border-bottom: 1px solid #cabf9f; }
-.principle-stack strong { color: var(--gold-600); font-family: Georgia, serif; font-size: 20px; }
-.principle-stack span, .principle-stack b { display: block; }
-.principle-stack span { color: #59666c; font-size: 13px; }
-.principle-stack b { color: #172e3d; }
+.source-principle q { quotes: "“" "”" "‘" "’"; }
+.source-principle .statute-citation { margin: 25px 0 20px; padding-top: 14px; border-top: 1px solid #cabf9f; color: #59666c; font-size: 12px; }
 .scope-strip {
   width: min(var(--max-width), calc(100% - 48px));
   margin: 0 auto;

@@ -100,7 +100,9 @@ def test_landau_command_center_records_are_present_and_tiered():
 def test_portal_shell_has_history_stack_sections_and_no_operational_ui():
     html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
     assert "The United States and Strategic Resources, 1861–1992" in html
-    assert "FRUS explains what policymakers were thinking" in html
+    assert "A thorough, accurate, and reliable documentary record" in html
+    assert "22 U.S.C. § 4351(a)" in html
+    assert "FRUS explains what policymakers were thinking" not in html
     assert "State of the Mineral" in html
     assert "Historical resource relationships" in html
     assert "Policy in Numbers" in html

@@ -3,10 +3,11 @@
 The public methodology is maintained in [`methodology.html`](../methodology.html)
 so the same guidance is available on GitHub Pages.
 
-The governing rule is:
+The statutory standard is:
 
-> FRUS explains what policymakers were thinking. Other official U.S. Government
-> sources explain what they were looking at.
+> A thorough, accurate, and reliable documentary record.
+
+See [22 U.S.C. § 4351(a)](https://uscode.house.gov/view.xhtml?req=%28title%3A22%20section%3A4351%20edition%3Aprelim%29).
 
 Core rules:
 
