@@ -50,6 +50,7 @@
       this.popup = null;
       this.timer = null;
       this.bound = false;
+      this.themeObserver = null;
     }
 
     async init() {
@@ -59,6 +60,7 @@
       this.renderLayerTable();
       this.renderAll();
       await this.initMap();
+      this.renderAll();
       return this;
     }
 
@@ -184,6 +186,7 @@
       });
       $("atlasPrevYear").addEventListener("click", () => this.setState({ year: Math.max(1861, this.state.year - 1), country: null }));
       $("atlasNextYear").addEventListener("click", () => this.setState({ year: Math.min(1992, this.state.year + 1), country: null }));
+      $("atlasResetView").addEventListener("click", () => this.fitWorld());
       $("atlasPlay").addEventListener("click", () => this.togglePlayback());
       const tabs = [...document.querySelectorAll("[data-atlas-tab]")];
       tabs.forEach((button, index) => {
@@ -287,10 +290,10 @@
         this.orientation = await response.json();
         this.map = new window.maplibregl.Map({
           container: "atlasMap",
-          style: { version: 8, sources: {}, layers: [{ id: "background", type: "background", paint: { "background-color": "#c9d5d5" } }] },
+          style: { version: 8, sources: {}, layers: [{ id: "background", type: "background", paint: { "background-color": "#d6e1e1" } }] },
           center: [-15, 14],
-          zoom: 1.18,
-          minZoom: 0.75,
+          zoom: 0.8,
+          minZoom: -1.25,
           maxZoom: 6,
           attributionControl: false,
           cooperativeGestures: true
@@ -301,10 +304,31 @@
           compact: true,
           customAttribution: '<a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth orientation geometry</a>'
         }));
-        this.map.on("load", () => this.onMapLoad());
+        const mapLoaded = new Promise((resolve) => {
+          let settled = false;
+          let initialized = false;
+          const finish = () => {
+            if (settled) return;
+            settled = true;
+            window.clearTimeout(timeout);
+            resolve();
+          };
+          const initialize = () => {
+            if (initialized) return;
+            initialized = true;
+            this.onMapLoad();
+            finish();
+          };
+          const timeout = window.setTimeout(finish, 12000);
+          this.map.once("load", initialize);
+          if (this.map.loaded()) initialize();
+        });
         this.map.on("error", (event) => {
           if (event && event.error) $("atlasMapStatus").textContent = `Atlas map notice: ${event.error.message}`;
         });
+        this.themeObserver = new MutationObserver(() => this.applyMapTheme());
+        this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+        await mapLoaded;
       } catch (error) {
         this.showMapFallback(error.message);
       }
@@ -317,15 +341,20 @@
     }
 
     onMapLoad() {
+      this.map.addSource("atlas-graticule", { type: "geojson", data: this.graticuleGeoJson() });
+      this.map.addLayer({
+        id: "atlas-graticule", type: "line", source: "atlas-graticule",
+        paint: { "line-color": "#91a5a6", "line-width": 0.6, "line-opacity": 0.34 }
+      });
       this.map.addSource("orientation", { type: "geojson", data: this.orientation });
-      this.map.addLayer({ id: "orientation-land", type: "fill", source: "orientation", paint: { "fill-color": "#d8d7c8", "fill-opacity": 0.92 } });
-      this.map.addLayer({ id: "orientation-borders", type: "line", source: "orientation", paint: { "line-color": "#718080", "line-width": 0.65, "line-opacity": 0.7 } });
+      this.map.addLayer({ id: "orientation-land", type: "fill", source: "orientation", paint: { "fill-color": "#e8e4d8", "fill-opacity": 0.96 } });
+      this.map.addLayer({ id: "orientation-borders", type: "line", source: "orientation", paint: { "line-color": "#748383", "line-width": 0.7, "line-opacity": 0.74 } });
       this.map.addSource("atlas-countries", { type: "geojson", data: EMPTY_COLLECTION });
       this.map.addLayer({
         id: "atlas-country-fill", type: "fill", source: "atlas-countries",
         paint: {
-          "fill-color": ["interpolate", ["linear"], ["get", "atlas_value"], 0, "#d8d7c8", 1, "#a9c6bd", 2, "#4f8f86", 4, "#245d5a", 8, "#153650"],
-          "fill-opacity": ["case", [">", ["get", "atlas_value"], 0], 0.82, 0.18]
+          "fill-color": ["case", ["get", "selected"], "#d2aa54", ["interpolate", ["linear"], ["get", "atlas_value"], 0, "#e8e4d8", 1, "#b8d2ca", 2, "#70a79f", 4, "#2e716d", 8, "#153650"]],
+          "fill-opacity": ["case", ["get", "selected"], 0.92, [">", ["get", "atlas_value"], 0], 0.84, 0.08]
         }
       });
       this.map.addSource("atlas-events", { type: "geojson", data: EMPTY_COLLECTION });
@@ -336,20 +365,29 @@
       this.map.addLayer({
         id: "atlas-country-outline", type: "line", source: "atlas-countries",
         paint: {
-          "line-color": ["case", ["==", ["get", "atlas_id"], ""], "#b08b35", "#284f59"],
-          "line-width": ["case", ["get", "selected"], 3, 1.1],
+          "line-color": ["case", ["get", "selected"], "#f6d889", "#284f59"],
+          "line-width": ["case", ["get", "selected"], 3.2, 1.15],
           "line-opacity": 0.9
         }
       });
       this.map.addSource("atlas-relationships", { type: "geojson", data: EMPTY_COLLECTION });
       this.map.addLayer({
+        id: "atlas-relationship-halo", type: "line", source: "atlas-relationships",
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: {
+          "line-color": "#fff7df",
+          "line-opacity": 0.72,
+          "line-width": ["interpolate", ["linear"], ["get", "line_value"], 1, 4.5, 4, 8]
+        }
+      });
+      this.map.addLayer({
         id: "atlas-relationship-lines", type: "line", source: "atlas-relationships",
         layout: { "line-cap": "round", "line-join": "round" },
         paint: {
           "line-color": "#a87122",
-          "line-opacity": 0.82,
-          "line-dasharray": [2, 1.5],
-          "line-width": ["interpolate", ["linear"], ["get", "line_value"], 1, 1.8, 4, 5]
+          "line-opacity": 0.9,
+          "line-dasharray": [2.4, 1.6],
+          "line-width": ["interpolate", ["linear"], ["get", "line_value"], 1, 1.6, 4, 4.6]
         }
       });
       this.popup = new window.maplibregl.Popup({ closeButton: false, closeOnClick: false, maxWidth: "310px" });
@@ -365,7 +403,66 @@
       this.map.on("mouseleave", "atlas-relationship-lines", () => this.popup.remove());
       this.mapReady = true;
       this.renderMap();
-      window.setTimeout(() => this.map.resize(), 100);
+      this.applyMapTheme();
+      window.setTimeout(() => {
+        this.map.resize();
+        this.fitWorld();
+        this.renderMap();
+      }, 100);
+    }
+
+    graticuleGeoJson() {
+      const features = [];
+      for (let longitude = -150; longitude <= 150; longitude += 30) {
+        features.push({
+          type: "Feature",
+          properties: {},
+          geometry: { type: "LineString", coordinates: Array.from({ length: 31 }, (_, index) => [longitude, -75 + index * 5]) }
+        });
+      }
+      for (let latitude = -60; latitude <= 60; latitude += 20) {
+        features.push({
+          type: "Feature",
+          properties: {},
+          geometry: { type: "LineString", coordinates: Array.from({ length: 73 }, (_, index) => [-180 + index * 5, latitude]) }
+        });
+      }
+      return { type: "FeatureCollection", features };
+    }
+
+    mapPalette() {
+      return document.documentElement.dataset.theme === "dark" ? {
+        ocean: "#102936", land: "#34484b", border: "#829497", grid: "#7d9297", halo: "#173744"
+      } : {
+        ocean: "#d6e1e1", land: "#e8e4d8", border: "#748383", grid: "#91a5a6", halo: "#fff7df"
+      };
+    }
+
+    applyMapTheme() {
+      if (!this.mapReady) return;
+      const colors = this.mapPalette();
+      [
+        ["background", "background-color", colors.ocean],
+        ["atlas-graticule", "line-color", colors.grid],
+        ["orientation-land", "fill-color", colors.land],
+        ["orientation-borders", "line-color", colors.border],
+        ["atlas-relationship-halo", "line-color", colors.halo]
+      ].forEach(([layer, property, value]) => {
+        if (this.map.getLayer(layer)) this.map.setPaintProperty(layer, property, value);
+      });
+    }
+
+    fitWorld() {
+      if (!this.mapReady) return;
+      const container = this.map.getContainer();
+      const widthZoom = Math.log2(Math.max(320, container.clientWidth) / 540);
+      const heightZoom = Math.log2(Math.max(360, container.clientHeight) / 400);
+      const zoom = Math.max(-1.1, Math.min(1.25, widthZoom, heightZoom));
+      this.map.easeTo({
+        center: [0, 14],
+        zoom,
+        duration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 450
+      });
     }
 
     showCountryPopup(event) {
@@ -385,6 +482,14 @@
 
     selectCountry(id) {
       this.setState({ country: id });
+      const row = this.atlasCountry(id);
+      if (this.mapReady && row) {
+        this.map.easeTo({
+          center: row.coordinates,
+          zoom: Math.max(this.map.getZoom(), 2.15),
+          duration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 450
+        });
+      }
     }
 
     arcCoordinates(from, to) {
@@ -476,7 +581,7 @@
       const element = document.createElement("button");
       element.type = "button";
       element.className = `atlas-marker marker-${kind}`;
-      element.innerHTML = `<span aria-hidden="true">${H.escape(MARKER_LABELS[kind] || "◆")}</span><b>${H.escape(count)}</b>`;
+      element.innerHTML = `<span aria-hidden="true">${H.escape(MARKER_LABELS[kind] || "◆")}</span><b aria-hidden="true">${H.escape(count)}</b>`;
       element.setAttribute("aria-label", `${title}. Select ${this.historicalName(this.country(countryId), this.state.year)}.`);
       element.title = title;
       element.addEventListener("click", () => this.selectCountry(countryId));
@@ -513,7 +618,7 @@
       const lens = this.layer(this.state.mode);
       const labels = this.state.mode === "frus-activity" ? ["No linked record", "1", "2", "4+"] :
         this.state.mode === "historical-events" ? ["No episode", "1", "2", "3+"] : ["No link", "1", "2", "4+"];
-      $("atlasLegend").innerHTML = `<strong>${H.escape(lens.title)}</strong><div class="atlas-scale">${labels.map((label, index) => `<span><i data-scale="${index}"></i>${H.escape(label)}</span>`).join("")}</div><p>${H.escape(lens.value_semantics)}</p>${this.state.layers.has("access-relationships") ? '<p><i class="line-key"></i> Access line width = linked pilot FRUS records, never trade volume.</p>' : ""}${this.state.layers.has("historical-events") ? '<p><i class="event-key"></i> Dashed rust boundary = linked active pilot episode.</p>' : ""}${this.state.layers.has("resource-geography") ? '<p><i class="resource-key">◆</i> Country-level material association, not production.</p>' : ""}`;
+      $("atlasLegend").innerHTML = `<span class="atlas-legend-kicker">Evidence coverage · ${H.escape(this.state.year)}</span><strong>${H.escape(lens.title)}</strong><div class="atlas-scale">${labels.map((label, index) => `<span><i data-scale="${index}"></i>${H.escape(label)}</span>`).join("")}</div><p>${H.escape(lens.value_semantics)}</p>${this.state.layers.has("access-relationships") ? '<p><i class="line-key"></i> Access line width = linked pilot FRUS records, never trade volume.</p>' : ""}${this.state.layers.has("historical-events") ? '<p><i class="event-key"></i> Dashed rust boundary = linked active pilot episode.</p>' : ""}${this.state.layers.has("resource-geography") ? '<p><i class="resource-key">◆</i> Country-level material association, not production.</p>' : ""}`;
     }
 
     selectedCountry() {
@@ -669,7 +774,7 @@
       const activeCountries = this.data.countries.filter((row) => this.countryValue(row) > 0).length;
       const relationships = this.activeRelationships().length;
       const mineral = this.selectedMineral();
-      $("atlasMapStatus").textContent = `${this.state.year} · ${mineral ? mineral.canonical_name : "all pilot materials"} · ${activeCountries} geographies with ${this.layer(this.state.mode).short_title.toLowerCase()} evidence · ${relationships} documented access links.`;
+      $("atlasMapStatus").innerHTML = `<strong>${H.escape(this.state.year)} · ${H.escape(mineral ? mineral.canonical_name : "All pilot materials")}</strong><span>${H.escape(activeCountries)} geographies with ${H.escape(this.layer(this.state.mode).short_title)} evidence · ${H.escape(relationships)} documented access links</span>`;
     }
 
     renderAll() {

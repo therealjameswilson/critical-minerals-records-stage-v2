@@ -326,3 +326,17 @@ def test_atlas_url_state_and_accessible_contracts_are_visible():
     assert 'data-atlas-tab="trade"' in html
     assert "renderTradePanel" in atlas
     assert "No annual value is inferred" in atlas
+
+
+def test_atlas_visual_system_keeps_the_map_primary_and_resettable():
+    atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
+    css = (ROOT / "assets" / "portal.css").read_text(encoding="utf-8")
+    html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
+    assert 'id="atlasResetView"' in html
+    assert 'id: "atlas-graticule"' in atlas
+    assert "graticuleGeoJson" in atlas
+    assert "fitWorld" in atlas
+    assert "applyMapTheme" in atlas
+    assert 'grid-template-areas:' in css
+    assert '"map map"' in css
+    assert ".atlas-legend-kicker" in css
