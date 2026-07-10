@@ -43,9 +43,10 @@
     const data = Object.fromEntries(FILES.map((name, index) => [name, rows[index]]));
     data["dataweb-trade"] = [];
     data["comtrade-rare-earth"] = [];
+    data["annual-snapshots"] = [];
     data.atlas = atlas;
     data.indexes = {};
-    [...FILES, "dataweb-trade", "comtrade-rare-earth"].forEach((name) => {
+    [...FILES, "dataweb-trade", "comtrade-rare-earth", "annual-snapshots"].forEach((name) => {
       data.indexes[name] = new Map((data[name] || []).map((row) => [row.id, row]));
     });
     return data;

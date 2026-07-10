@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#153650">
   <title>The United States and Strategic Resources, 1861–1992</title>
   <link rel="stylesheet" href="assets/vendor/maplibre-gl/maplibre-gl.css?v=5.24.0">
-  <link rel="stylesheet" href="assets/portal.css?v=2.7.0">
+  <link rel="stylesheet" href="assets/portal.css?v=2.8.0">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -102,6 +102,8 @@
           <div class="control atlas-mode-control"><label for="atlasMode">Analytical lens</label><select id="atlasMode"></select></div>
         </div>
 
+        <div class="atlas-year-ledger" id="atlasYearLedger" aria-live="polite"></div>
+
         <div class="atlas-workbench">
           <aside class="atlas-layer-rail" aria-labelledby="atlas-layers-title">
             <div class="atlas-rail-heading"><span class="atlas-folio">Layers</span><h3 id="atlas-layers-title">Build the view</h3></div>
@@ -125,7 +127,7 @@
 
         <div class="atlas-evidence-desk">
           <div class="atlas-tabs" role="tablist" aria-label="Synchronized atlas evidence">
-            <button type="button" role="tab" id="atlasTabSummary" data-atlas-tab="summary" aria-controls="atlasPanel" aria-selected="true">At a glance</button>
+            <button type="button" role="tab" id="atlasTabSummary" data-atlas-tab="summary" aria-controls="atlasPanel" aria-selected="true">Annual brief</button>
             <button type="button" role="tab" id="atlasTabFrus" data-atlas-tab="frus" aria-controls="atlasPanel" aria-selected="false">FRUS</button>
             <button type="button" role="tab" id="atlasTabTrade" data-atlas-tab="trade" aria-controls="atlasPanel" aria-selected="false">U.S. Trade</button>
             <button type="button" role="tab" id="atlasTabNumbers" data-atlas-tab="numbers" aria-controls="atlasPanel" aria-selected="false">Policy in Numbers</button>
@@ -293,8 +295,8 @@
   <script src="assets/runtime-config.js?v=2.1.3"></script>
   <script src="assets/vendor/maplibre-gl/maplibre-gl.js?v=5.24.0"></script>
   <script src="assets/frus-subjects-index.js?v=2.0.0"></script>
-  <script src="assets/history-data.js?v=2.6.0"></script>
-  <script src="assets/atlas.js?v=2.8.0"></script>
+  <script src="assets/history-data.js?v=2.7.0"></script>
+  <script src="assets/atlas.js?v=2.9.0"></script>
   <script src="assets/portal.js?v=2.6.0"></script>
 </body>
 </html>

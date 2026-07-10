@@ -31,6 +31,7 @@ EXPECTED_MINIMUMS = {
     "dataweb-query-manifest": 2,
     "comtrade-rare-earth": 170,
     "comtrade-query-manifest": 40,
+    "annual-snapshots": 132,
 }
 
 
@@ -117,6 +118,35 @@ def main() -> None:
             errors.append(f"statistics/{row.get('id')}: missing {', '.join(missing)}")
         if row.get("mineral_id") not in ids["minerals"]:
             errors.append(f"statistics/{row.get('id')}: unknown mineral {row.get('mineral_id')}")
+
+    annual = datasets["annual-snapshots"]
+    if {row.get("year") for row in annual} != set(range(HISTORICAL_START, HISTORICAL_END + 1)):
+        errors.append("annual-snapshots: expected exactly one record for every year 1861-1992")
+    annual_count_fields = {
+        "frus_documents", "reviewed_frus_documents", "frus_discovery_leads",
+        "year_linked_geographies", "active_episodes", "documented_access_links",
+        "dated_instruments", "laws_enacted", "stockpile_pathways", "nara_query_plans",
+        "official_statistics", "broad_trade_context_rows", "commodity_trade_rows",
+        "dataweb_partner_rows", "comtrade_context_rows"
+    }
+    valid_coverage = {"document-plus-context", "documentary-only", "context-only", "sparse"}
+    valid_gaps = {"frus", "geography", "statistics", "policy", "archives"}
+    for row in annual:
+        owner = f"annual-snapshots/{row.get('id')}"
+        if set(row.get("materials", {})) != ids["minerals"]:
+            errors.append(f"{owner}: material slices do not match the mineral registry")
+        for label, snapshot in [("overall", row.get("overall", {})), *row.get("materials", {}).items()]:
+            counts = snapshot.get("counts", {})
+            if set(counts) != annual_count_fields or any(not isinstance(value, int) or value < 0 for value in counts.values()):
+                errors.append(f"{owner}/{label}: invalid annual count contract")
+            if snapshot.get("coverage_status") not in valid_coverage:
+                errors.append(f"{owner}/{label}: invalid coverage status")
+            if not set(snapshot.get("missing_lanes", [])).issubset(valid_gaps):
+                errors.append(f"{owner}/{label}: invalid missing lane")
+            if not set(snapshot.get("country_evidence_counts", {})).issubset(ids["countries"]):
+                errors.append(f"{owner}/{label}: unknown year-linked country")
+            if not set(snapshot.get("profile_context_country_ids", [])).issubset(ids["countries"]):
+                errors.append(f"{owner}/{label}: unknown profile-context country")
 
     required_trade_fields = {
         "year_start", "year_end", "year_label", "temporal_precision", "direction",

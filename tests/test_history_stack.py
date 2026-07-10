@@ -48,6 +48,7 @@ def test_pilot_meets_minimum_entity_counts():
         "dataweb-query-manifest": 2,
         "comtrade-rare-earth": 170,
         "comtrade-query-manifest": 40,
+        "annual-snapshots": 132,
     }
     for name, minimum in expected.items():
         assert len(load(name)) >= minimum
@@ -286,6 +287,42 @@ def test_atlas_exposes_dataweb_as_context_not_the_default_spine():
     assert 'H.loadJson("comtrade-rare-earth")' in atlas_script
     assert "Broad proxy families are not summed" in atlas_script
     assert 'mode: LENS_IDS.includes(options.state.mode) ? options.state.mode : "frus-activity"' in atlas_script
+
+
+def test_annual_atlas_has_one_source_bounded_view_for_every_year_and_material():
+    snapshots = load("annual-snapshots")
+    mineral_ids = {row["id"] for row in load("minerals")}
+    assert [row["year"] for row in snapshots] == list(range(1861, 1993))
+    assert all(set(row["materials"]) == mineral_ids for row in snapshots)
+    assert all(row["schema_version"] == "1.0" for row in snapshots)
+    valid_statuses = {"document-plus-context", "documentary-only", "context-only", "sparse"}
+    for row in snapshots:
+        for snapshot in [row["overall"], *row["materials"].values()]:
+            assert snapshot["coverage_status"] in valid_statuses
+            assert all(isinstance(value, int) and value >= 0 for value in snapshot["counts"].values())
+            assert set(snapshot["missing_lanes"]) <= {"frus", "geography", "statistics", "policy", "archives"}
+
+
+def test_annual_atlas_distinguishes_documentary_evidence_from_context():
+    snapshots = {row["year"]: row for row in load("annual-snapshots")}
+    assert snapshots[1942]["overall"]["counts"]["frus_documents"] == 5
+    assert snapshots[1942]["overall"]["counts"]["documented_access_links"] == 3
+    rare_earth_1983 = snapshots[1983]["materials"]["rare-earth-elements"]
+    assert rare_earth_1983["coverage_status"] == "context-only"
+    assert rare_earth_1983["counts"]["frus_documents"] == 0
+    assert rare_earth_1983["counts"]["comtrade_context_rows"] > 0
+    assert "frus" in rare_earth_1983["missing_lanes"]
+
+
+def test_atlas_labels_profile_context_separately_from_year_linked_evidence():
+    atlas_script = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
+    atlas_data = json.loads((ROOT / "data" / "atlas" / "atlas.json").read_text(encoding="utf-8"))
+    resource_layer = next(row for row in atlas_data["layers"] if row["id"] == "resource-geography")
+    assert 'H.loadJson("annual-snapshots")' in atlas_script
+    assert "Annual evidence ledger" in atlas_script
+    assert "Profile context only" in atlas_script
+    assert "year-linked evidence" in resource_layer["value_semantics"]
+    assert "not proof" in resource_layer["caveat"]
 
 
 def test_history_stack_page_exposes_all_layers():

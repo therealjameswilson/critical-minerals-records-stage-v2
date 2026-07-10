@@ -458,6 +458,25 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .atlas-year-control output { color: #fff; font-family: Georgia, serif; font-size: 30px; line-height: .9; }
 .atlas-year-control input { width: 100%; height: 18px; accent-color: var(--gold-500); cursor: ew-resize; }
 .atlas-era-labels { display: flex; justify-content: space-between; color: #aebfc4; font-size: 9px; }
+.atlas-year-ledger {
+  display: grid;
+  grid-template-columns: minmax(210px, .8fr) minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 11px 14px;
+  border: 1px solid var(--line-strong);
+  border-top: 0;
+  background: var(--paper-muted);
+}
+.atlas-year-ledger-heading { display: grid; gap: 6px; align-items: start; }
+.atlas-year-ledger-heading > .badge { width: fit-content; }
+.atlas-year-ledger-heading strong, .atlas-year-ledger-heading span { display: block; }
+.atlas-year-ledger-heading strong { margin-top: 2px; font-family: Georgia, serif; font-size: 16px; }
+.atlas-year-ledger-metrics { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-left: 1px solid var(--line); }
+.atlas-year-ledger-metrics span { min-width: 0; padding: 2px 9px; border-right: 1px solid var(--line); color: var(--muted); font-size: 9px; line-height: 1.3; text-transform: uppercase; }
+.atlas-year-ledger-metrics strong { display: block; color: var(--navy-800); font-family: Georgia, serif; font-size: 18px; }
+[data-theme="dark"] .atlas-year-ledger-metrics strong { color: #d6e8e6; }
+.atlas-year-ledger > p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
 .atlas-workbench {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
@@ -622,6 +641,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .atlas-summary-metrics strong { font-family: Georgia, serif; font-size: 27px; color: var(--navy-800); }
 [data-theme="dark"] .atlas-summary-metrics strong { color: #d6e8e6; }
 .atlas-summary-metrics span { color: var(--muted); font-size: 9px; text-transform: uppercase; }
+.atlas-gap-heading { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
+.atlas-gap-list { display: grid; gap: 7px; margin: 10px 0 0; padding: 0; list-style: none; }
+.atlas-gap-list li { position: relative; padding-left: 16px; color: var(--muted); font-size: 12px; }
+.atlas-gap-list li::before { content: ""; position: absolute; top: .52em; left: 0; width: 7px; height: 7px; border: 1px solid var(--gold-600); background: var(--gold-100); }
+.coverage-complete-note { padding: 11px 13px; border-left: 4px solid var(--teal-700); background: var(--teal-100); color: var(--navy-800); font-size: 12px; }
+[data-theme="dark"] .coverage-complete-note { color: #d7e8e6; }
 .atlas-evidence-prompt { display: flex; justify-content: space-between; gap: 18px; align-items: center; margin-top: 14px; padding: 13px 15px; border-left: 4px solid var(--teal-600); background: var(--teal-100); }
 .atlas-evidence-prompt strong, .atlas-evidence-prompt span { display: block; }
 .atlas-evidence-prompt span { margin-top: 3px; color: var(--muted); font-size: 10px; }
@@ -1097,6 +1122,8 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .trade-comparison > div:last-child { border-bottom: 0; }
   .atlas-timebar { grid-template-columns: 42px 42px minmax(220px, 1fr) 42px; }
   .atlas-mineral-control, .atlas-mode-control { grid-column: span 2; }
+  .atlas-year-ledger { grid-template-columns: minmax(210px, .7fr) minmax(0, 1.3fr); }
+  .atlas-year-ledger > p { grid-column: 1 / -1; }
   .atlas-workbench {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -1181,6 +1208,15 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .atlas-shell { width: 100%; padding-bottom: 52px; }
   .atlas-timebar { grid-template-columns: 42px 42px 1fr 42px; padding: 10px; }
   .atlas-mineral-control, .atlas-mode-control { grid-column: 1 / -1; }
+  .atlas-year-ledger { grid-template-columns: 1fr; padding: 12px 14px; }
+  .atlas-year-ledger > p { grid-column: auto; }
+  .atlas-year-ledger-heading { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+  .atlas-year-ledger-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); }
+  .atlas-year-ledger-metrics span { padding: 7px 8px; border-bottom: 1px solid var(--line); }
+  .atlas-year-ledger-metrics span:nth-child(3n) { border-right: 0; }
+  .atlas-year-ledger-metrics span:nth-child(n+4) { border-bottom: 0; }
+  .atlas-year-ledger-metrics span:last-child { border-right: 1px solid var(--line); }
+  .atlas-year-ledger > p { font-size: 9px; }
   .atlas-workbench, .atlas-evidence-desk { border-inline: 0; }
   .atlas-layer-group { grid-template-columns: 1fr; }
   .atlas-layer-rail { padding: 16px 14px; }

@@ -97,12 +97,12 @@
       "short_title": "Resources",
       "availability": "supported",
       "geometry": "country-markers",
-      "value_semantics": "Country-level links between pilot mineral profiles and country records.",
+      "value_semantics": "Country-level resource associations distinguish profile context from year-linked evidence.",
       "source_ids": [
         "frus-history-at-state",
         "usgs-statistical-compendium"
       ],
-      "caveat": "This layer shows evidence associations, not production, reserves, mines, or supplier rank."
+      "caveat": "Profile context is not proof that a country produced or supplied the material in the selected year. Neither class measures production, reserves, mines, supplier rank, or U.S. dependence."
     },
     {
       "id": "mineral-production",

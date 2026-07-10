@@ -85,6 +85,7 @@ Read the [full methodology](methodology.html) or
 - `schemas/`: JSON schemas for core entity types
 - `scripts/build_history_pilot.py`: reproducible editorial pilot builder
 - `scripts/build_atlas_data.py`: reproducible atlas overlays and basemap builder
+- `scripts/build_annual_atlas.py`: one evidence ledger for every year and pilot material
 - `scripts/ingest_usgs_ds140.py`: official XLSX extractor
 - `scripts/ingest_trade_data.py`: official Census and USGS trade extractor
 - `scripts/ingest_un_comtrade_rare_earth.py`: 1962-1992 reporter-partner continuity importer
@@ -109,6 +110,7 @@ python scripts/ingest_usgs_ds140.py
 python scripts/ingest_trade_data.py
 python scripts/ingest_usitc_dataweb.py --cache-dir .cache/usitc-dataweb
 python scripts/build_atlas_data.py
+python scripts/build_annual_atlas.py
 python scripts/validate_history_data.py
 python -m http.server 8000
 open http://localhost:8000/records-stage.html
@@ -116,6 +118,9 @@ open http://localhost:8000/records-stage.html
 
 The site must be served over HTTP because browsers do not allow modular JSON
 `fetch()` calls from a `file://` page.
+
+The annual atlas generation method and source-acquisition sequence are documented
+in [`docs/annual-atlas-coverage-plan.md`](docs/annual-atlas-coverage-plan.md).
 
 To test only with the committed datasets:
 

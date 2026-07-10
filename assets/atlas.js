@@ -15,6 +15,19 @@
     "nara-discovery": "A",
     "resource-geography": "◆"
   };
+  const COVERAGE_LABELS = {
+    "document-plus-context": "FRUS + official context",
+    "documentary-only": "FRUS evidence",
+    "context-only": "Context only",
+    sparse: "Research gap"
+  };
+  const GAP_LABELS = {
+    frus: "No checked-in FRUS pilot record matches this exact selection.",
+    geography: "No country is linked by year-specific checked-in evidence.",
+    statistics: "No exact-year commodity statistic or trade row is normalized.",
+    policy: "No dated agreement, law, or stockpile pathway is linked.",
+    archives: "No structured NARA query plan matches this exact selection."
+  };
 
   function option(value, label, selected) {
     return `<option value="${H.escape(value)}"${String(value) === String(selected) ? " selected" : ""}>${H.escape(label)}</option>`;
@@ -55,9 +68,12 @@
       this.dataWebLoading = null;
       this.comtradeLoaded = this.data["comtrade-rare-earth"].length > 0;
       this.comtradeLoading = null;
+      this.annualSnapshotsLoaded = this.data["annual-snapshots"].length > 0;
+      this.annualSnapshotsLoading = null;
     }
 
     async init() {
+      await this.ensureAnnualSnapshots();
       if (this.state.year >= 1989) await this.ensureDataWebTrade();
       if (this.state.year >= 1962 && this.state.mineral === "rare-earth-elements") await this.ensureComtrade();
       this.renderControls();
@@ -68,6 +84,22 @@
       await this.initMap();
       this.renderAll();
       return this;
+    }
+
+    async ensureAnnualSnapshots() {
+      if (this.annualSnapshotsLoaded) return this.data["annual-snapshots"];
+      if (!this.annualSnapshotsLoading) {
+        this.annualSnapshotsLoading = H.loadJson("annual-snapshots").then((rows) => {
+          this.data["annual-snapshots"] = rows;
+          this.data.indexes["annual-snapshots"] = new Map(rows.map((row) => [row.id, row]));
+          this.annualSnapshotsLoaded = true;
+          return rows;
+        }).catch((error) => {
+          this.annualSnapshotsLoading = null;
+          throw error;
+        });
+      }
+      return this.annualSnapshotsLoading;
     }
 
     async ensureDataWebTrade() {
@@ -184,13 +216,25 @@
       return this.data["comtrade-rare-earth"].filter((row) => row.year === this.state.year);
     }
 
+    annualSnapshot() {
+      return this.data.indexes["annual-snapshots"].get(`annual-${this.state.year}`);
+    }
+
+    annualSlice() {
+      const snapshot = this.annualSnapshot();
+      if (!snapshot) return null;
+      return this.state.mineral === "all" ? snapshot.overall : snapshot.materials[this.state.mineral];
+    }
+
     countryValue(country) {
       if (!this.countryExists(country) || !this.state.layers.has(this.state.mode)) return 0;
       if (this.state.mode === "frus-activity") return this.activeFrus(country).length;
       if (this.state.mode === "historical-events") return this.activeEvents(country.id).length;
       if (this.state.mode === "resource-geography") {
-        if (this.state.mineral !== "all") return country.mineral_ids.includes(this.state.mineral) ? 1 : 0;
-        return country.mineral_ids.length;
+        const annual = this.annualSlice();
+        const evidenceCount = annual?.country_evidence_counts[country.id] || 0;
+        const hasProfileContext = annual?.profile_context_country_ids.includes(country.id);
+        return evidenceCount ? Math.min(4, evidenceCount + 1) : hasProfileContext ? 1 : 0;
       }
       if (this.state.mode === "quantitative-trade-flows") {
         const atlasCountry = this.atlasCountry(country.id);
@@ -812,8 +856,13 @@
           if (rows.length) this.addMarker(id, "stockpile-policy", rows.length, `${rows.length} stockpile policy pathway${rows.length === 1 ? "" : "s"}`, [0, 14]);
         }
         if (this.state.layers.has("resource-geography") && (this.state.mineral === "all" ? country.mineral_ids.length : country.mineral_ids.includes(this.state.mineral))) {
-          const count = this.state.mineral === "all" ? country.mineral_ids.length : 1;
-          this.addMarker(id, "resource-geography", count, `${count} country-level material association${count === 1 ? "" : "s"}; not production`, [0, -30]);
+          const annual = this.annualSlice();
+          const evidenceCount = annual?.country_evidence_counts[id] || 0;
+          const count = evidenceCount || "C";
+          const title = evidenceCount
+            ? `${evidenceCount} year-linked evidence connection${evidenceCount === 1 ? "" : "s"}; not production`
+            : "Profile context only; no year-linked evidence";
+          this.addMarker(id, "resource-geography", count, title, [0, -30]);
         }
       });
     }
@@ -826,8 +875,9 @@
         return;
       }
       const labels = this.state.mode === "frus-activity" ? ["No linked record", "1", "2", "4+"] :
-        this.state.mode === "historical-events" ? ["No episode", "1", "2", "3+"] : ["No link", "1", "2", "4+"];
-      $("atlasLegend").innerHTML = `<span class="atlas-legend-kicker">Evidence coverage · ${H.escape(this.state.year)}</span><strong>${H.escape(lens.title)}</strong><div class="atlas-scale">${labels.map((label, index) => `<span><i data-scale="${index}"></i>${H.escape(label)}</span>`).join("")}</div><p>${H.escape(lens.value_semantics)}</p>${this.state.layers.has("access-relationships") ? '<p><i class="line-key"></i> Access line width = linked pilot FRUS records, never trade volume.</p>' : ""}${this.state.layers.has("historical-events") ? '<p><i class="event-key"></i> Dashed rust boundary = linked active pilot episode.</p>' : ""}${this.state.layers.has("resource-geography") ? '<p><i class="resource-key">◆</i> Country-level material association, not production.</p>' : ""}`;
+        this.state.mode === "historical-events" ? ["No episode", "1", "2", "3+"] :
+          this.state.mode === "resource-geography" ? ["No association", "Profile context", "Year-linked", "Multiple links"] : ["No link", "1", "2", "4+"];
+      $("atlasLegend").innerHTML = `<span class="atlas-legend-kicker">Evidence coverage · ${H.escape(this.state.year)}</span><strong>${H.escape(lens.title)}</strong><div class="atlas-scale">${labels.map((label, index) => `<span><i data-scale="${index}"></i>${H.escape(label)}</span>`).join("")}</div><p>${H.escape(lens.value_semantics)}</p>${this.state.layers.has("access-relationships") ? '<p><i class="line-key"></i> Access line width = linked pilot FRUS records, never trade volume.</p>' : ""}${this.state.layers.has("historical-events") ? '<p><i class="event-key"></i> Dashed rust boundary = linked active pilot episode.</p>' : ""}${this.state.layers.has("resource-geography") ? '<p><i class="resource-key">◆</i> C = profile context only; numbers = year-linked evidence connections. Neither measures production.</p>' : ""}`;
     }
 
     selectedCountry() {
@@ -852,11 +902,14 @@
       const frus = this.activeFrus(country);
       const instruments = this.activeInstruments(country.id);
       const archives = this.activeNara(country.id);
+      const annual = this.annualSlice();
+      const yearLinkedEvidence = annual?.country_evidence_counts[country.id] || 0;
+      const profileContext = annual?.profile_context_country_ids.includes(country.id);
       $("mapInspector").innerHTML = `<div class="atlas-drawer-head"><span class="atlas-folio">${H.escape(this.state.year)} · country-level precision</span><button type="button" id="atlasCloseCountry" aria-label="Close selected country">×</button></div>
         <h3>${H.escape(name)}</h3>
         ${country.present_day_name !== name ? `<p class="present-name">Present-day reference: ${H.escape(country.present_day_name)}</p>` : ""}
         <div class="atlas-status-block"><strong>Political status in the pilot</strong><p>${H.escape(latestChange ? latestChange.note : "No dated sovereignty-change note is linked for this year.")}</p></div>
-        <dl class="atlas-facts"><div><dt>FRUS in selected year</dt><dd>${frus.length}</dd></div><div><dt>Dated instruments</dt><dd>${instruments.length}</dd></div><div><dt>NARA query plans</dt><dd>${archives.length}</dd></div><div><dt>Map precision</dt><dd>${H.escape(country.marker.precision)}</dd></div></dl>
+        <dl class="atlas-facts"><div><dt>Year-linked evidence</dt><dd>${H.escape(yearLinkedEvidence)}</dd></div><div><dt>FRUS in selected year</dt><dd>${frus.length}</dd></div><div><dt>Dated instruments</dt><dd>${instruments.length}</dd></div><div><dt>NARA query plans</dt><dd>${archives.length}</dd></div><div><dt>Profile context</dt><dd>${profileContext ? "Yes" : "No"}</dd></div><div><dt>Map precision</dt><dd>${H.escape(country.marker.precision)}</dd></div></dl>
         <div><strong>Linked materials</strong><div class="tag-row">${minerals.map((item) => H.badge(item, "neutral")).join("") || H.badge("Context entity", "neutral")}</div></div>
         <div class="atlas-outcome"><strong>What happened next?</strong><p>Outcome annotation has not yet been verified for this country-year view. This remains a visible research queue.</p></div>
         <p class="caveat">${H.escape(country.data_gaps[0] || "Coverage remains incomplete.")}</p>
@@ -874,6 +927,34 @@
       $("atlasPanel").setAttribute("aria-labelledby", active.id);
     }
 
+    renderAnnualLedger() {
+      const annual = this.annualSlice();
+      const mineral = this.selectedMineral();
+      if (!annual) {
+        $("atlasYearLedger").innerHTML = '<p class="empty-note">The annual evidence ledger could not be loaded.</p>';
+        return;
+      }
+      const counts = annual.counts;
+      const statisticalRows = counts.official_statistics + counts.commodity_trade_rows + counts.broad_trade_context_rows;
+      const policyRows = counts.dated_instruments + counts.laws_enacted + counts.stockpile_pathways;
+      const kind = {
+        "document-plus-context": "verified",
+        "documentary-only": "source",
+        "context-only": "discovery",
+        sparse: "neutral"
+      }[annual.coverage_status];
+      const scope = mineral ? mineral.canonical_name : "All pilot materials";
+      $("atlasYearLedger").innerHTML = `<div class="atlas-year-ledger-heading"><div><span class="atlas-folio">Annual evidence ledger</span><strong>${H.escape(this.state.year)} · ${H.escape(scope)}</strong></div>${H.badge(COVERAGE_LABELS[annual.coverage_status], kind)}</div>
+        <div class="atlas-year-ledger-metrics">
+          <span><strong>${H.escape(counts.frus_documents)}</strong> FRUS</span>
+          <span><strong>${H.escape(counts.year_linked_geographies)}</strong> year-linked geographies</span>
+          <span><strong>${H.escape(statisticalRows)}</strong> statistical/trade rows</span>
+          <span><strong>${H.escape(policyRows)}</strong> policy records</span>
+          <span><strong>${H.escape(counts.nara_query_plans)}</strong> NARA plans</span>
+        </div>
+        <p>Generated from checked-in evidence for this exact year and material selection. Profile context remains visible on the map but is not counted as year-specific evidence.</p>`;
+    }
+
     renderSummaryPanel() {
       const country = this.selectedCountry();
       const activeEpisodes = country ? this.activeEvents(country.id) : this.atlas.events.filter((row) => row.start <= this.state.year && row.end >= this.state.year && this.mineralMatches(row.mineral_ids, true));
@@ -885,8 +966,11 @@
       const tradeDetails = this.data["trade-details"].filter((row) => row.year === this.state.year && (!mineral || row.mineral_id === mineral.id));
       const dataWeb = this.activeDataWebTrade().filter((row) => !mineral || row.mineral_id === mineral.id);
       const comtrade = this.activeComtrade();
+      const annual = this.annualSlice();
+      const counts = annual?.counts || {};
+      const missing = (annual?.missing_lanes || []).map((id) => GAP_LABELS[id]);
       const tradePrompt = mineral && (trade.length || tradeDetails.length || dataWeb.length || comtrade.length) ? `<div class="atlas-evidence-prompt"><div><strong>Official trade evidence is available</strong><span>${trade.length} national observation${trade.length === 1 ? "" : "s"}${tradeDetails.length ? `, ${tradeDetails.length} published category row${tradeDetails.length === 1 ? "" : "s"}` : ""}${comtrade.length ? `, ${comtrade.length} Comtrade continuity row${comtrade.length === 1 ? "" : "s"}` : ""}${dataWeb.length ? `, and ${dataWeb.length} DataWeb partner row${dataWeb.length === 1 ? "" : "s"}` : ""} match this selection.</span></div><button type="button" data-open-atlas-tab="trade">Open U.S. Trade</button></div>` : "";
-      return `<div class="atlas-summary-grid"><div><p class="eyebrow">Synchronized view</p><h3>${H.escape(title)}</h3><p>${mineral ? `Material filter: <strong>${H.escape(mineral.canonical_name)}</strong>.` : "All pilot materials are visible."} Each count reflects checked-in evidence, not total historical activity.</p><div class="atlas-summary-metrics"><div><strong>${uniqueEpisodes.length}</strong><span>active pilot episodes</span></div><div><strong>${relationships.length}</strong><span>documented access links</span></div><div><strong>${country ? this.activeFrus(country).length : this.data.countries.reduce((sum, row) => sum + this.activeFrus(row).length, 0)}</strong><span>linked FRUS records</span></div><div><strong>${trade.length + tradeDetails.length + comtrade.length + dataWeb.length}</strong><span>trade evidence rows</span></div></div>${tradePrompt}</div><div><h4>What happened here?</h4>${uniqueEpisodes.length ? `<ol class="atlas-story-list">${uniqueEpisodes.map((row) => `<li><span>${row.start}–${row.end}</span><a href="${H.detailHref("episodes", row.episode_id)}">${H.escape(row.title)}</a>${H.completenessBadge(row.completeness)}</li>`).join("")}</ol>` : '<p class="empty-note">No pilot episode is linked to this exact selection. The absence reflects current coverage, not absence of historical activity.</p>'}</div></div>`;
+      return `<div class="atlas-summary-grid"><div><p class="eyebrow">Annual evidence brief</p><h3>${H.escape(title)}</h3><p>${mineral ? `Material filter: <strong>${H.escape(mineral.canonical_name)}</strong>.` : "All pilot materials are visible."} FRUS remains the documentary spine; official statistics, policy records, and archival plans supply context without filling documentary gaps by inference.</p><div class="atlas-summary-metrics"><div><strong>${H.escape(counts.frus_documents || 0)}</strong><span>FRUS records</span></div><div><strong>${H.escape(counts.year_linked_geographies || 0)}</strong><span>year-linked geographies</span></div><div><strong>${H.escape((counts.official_statistics || 0) + (counts.commodity_trade_rows || 0))}</strong><span>exact-year data rows</span></div><div><strong>${H.escape((counts.dated_instruments || 0) + (counts.laws_enacted || 0) + (counts.stockpile_pathways || 0))}</strong><span>policy records</span></div></div>${tradePrompt}</div><div><h4>Historical record</h4>${uniqueEpisodes.length ? `<ol class="atlas-story-list">${uniqueEpisodes.map((row) => `<li><span>${row.start}–${row.end}</span><a href="${H.detailHref("episodes", row.episode_id)}">${H.escape(row.title)}</a>${H.completenessBadge(row.completeness)}</li>`).join("")}</ol>` : '<p class="empty-note">No pilot episode is linked to this exact selection. The absence reflects current coverage, not absence of historical activity.</p>'}<h4 class="atlas-gap-heading">Research needed</h4>${missing.length ? `<ul class="atlas-gap-list">${missing.map((item) => `<li>${H.escape(item)}</li>`).join("")}</ul>` : '<p class="coverage-complete-note">All five annual evidence lanes contain at least one checked-in record. Coverage is still selective rather than comprehensive.</p>'}</div></div>`;
     }
 
     renderFrusPanel() {
@@ -1113,7 +1197,8 @@
       const activeCountries = this.state.mode === "quantitative-trade-flows" ? this.dataWebPartnerTotals("imports").size : this.data.countries.filter((row) => this.countryValue(row) > 0).length;
       const relationships = this.activeRelationships().length;
       const mineral = this.selectedMineral();
-      $("atlasMapStatus").innerHTML = `<strong>${H.escape(this.state.year)} · ${H.escape(mineral ? mineral.canonical_name : "All pilot materials")}</strong><span>${H.escape(activeCountries)} geographies with ${H.escape(this.layer(this.state.mode).short_title)} evidence · ${H.escape(relationships)} documented access links</span>`;
+      const annual = this.annualSlice();
+      $("atlasMapStatus").innerHTML = `<strong>${H.escape(this.state.year)} · ${H.escape(mineral ? mineral.canonical_name : "All pilot materials")}</strong><span>${H.escape(activeCountries)} geographies in this lens · ${H.escape(annual?.counts.year_linked_geographies || 0)} with year-linked evidence · ${H.escape(relationships)} documented access links</span>`;
     }
 
     renderAll() {
@@ -1121,6 +1206,7 @@
       $("mapYearValue").textContent = this.state.year;
       $("mapMineral").value = this.state.mineral;
       $("atlasMode").value = this.state.mode;
+      this.renderAnnualLedger();
       this.renderLegend();
       this.renderInspector();
       this.renderTabs();
