@@ -49,8 +49,9 @@ python local_server.py --no-browser-open
 The server checks the process environment first and `.env.local` second. It
 never prints the key or its length. `.env.local`, `.env.*`, and legacy local-key
 patterns are ignored by Git. `assets/runtime-config.js` points local site hosts
-to `http://localhost:5757` automatically; the deployed proxy URL remains blank
-until explicitly configured.
+to `http://localhost:5757` automatically. The public GitHub Pages site uses the
+deployed Cloudflare Worker URL; the secret remains available only to the Worker
+runtime.
 
 ## Deploy the Worker
 
