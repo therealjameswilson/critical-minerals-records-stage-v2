@@ -54,6 +54,10 @@ rare earth elements:
     - rare earths
     - ree
   hs_codes:
+    - code: "261220"
+      description: "Thorium ores and concentrates"
+      confidence: "low"
+      caveat: "Included only as a historical rare-earth research aid because monazite and thorium categories appear in the contemporary source tables; it is not equivalent to rare-earth-element trade."
     - code: "280530"
       description: "Rare-earth metals, scandium and yttrium, whether or not intermixed or interalloyed"
       confidence: "medium"
@@ -62,6 +66,10 @@ rare earth elements:
       description: "Compounds of rare-earth metals, yttrium or scandium, or mixtures"
       confidence: "medium"
       caveat: "Compound code; verify whether the shipment maps to the mineral of interest."
+    - code: "360690"
+      description: "Other combustible preparations, including ferrocerium and pyrophoric alloys"
+      confidence: "low"
+      caveat: "Broad downstream basket code; only some products have a rare-earth relationship."
 gallium:
   aliases:
     - gallium
@@ -89,3 +97,128 @@ copper:
       description: "Refined copper cathodes and sections of cathodes"
       confidence: "medium"
       caveat: "Refined product; does not by itself identify mined origin."
+    - code: "740312"
+      description: "Refined copper wire bars"
+      confidence: "medium"
+      caveat: "Refined product; does not by itself identify mined origin."
+    - code: "740313"
+      description: "Refined copper billets"
+      confidence: "medium"
+      caveat: "Refined product; does not by itself identify mined origin."
+    - code: "740319"
+      description: "Other refined copper"
+      confidence: "medium"
+      caveat: "Refined product; does not by itself identify mined origin."
+aluminum:
+  aliases:
+    - aluminum
+    - aluminium
+  hs_codes:
+    - code: "760110"
+      description: "Unwrought aluminum, not alloyed"
+      confidence: "medium"
+      caveat: "Refined metal; does not identify bauxite or alumina origin."
+    - code: "760120"
+      description: "Unwrought aluminum alloys"
+      confidence: "medium"
+      caveat: "Alloy category; composition and upstream origin are not isolated."
+bauxite:
+  aliases:
+    - bauxite
+    - alumina
+  hs_codes:
+    - code: "260600"
+      description: "Aluminum ores and concentrates"
+      confidence: "high"
+    - code: "281820"
+      description: "Aluminum oxide other than artificial corundum"
+      confidence: "medium"
+      caveat: "Processed alumina; it does not identify mine origin."
+chromium:
+  aliases:
+    - chromium
+    - chromite
+    - ferrochromium
+  hs_codes:
+    - code: "261000"
+      description: "Chromium ores and concentrates"
+      confidence: "high"
+    - code: "720241"
+      description: "Ferrochromium containing more than 4 percent carbon"
+      confidence: "medium"
+      caveat: "Processed ferroalloy; origin and chromium content require further detail."
+    - code: "720249"
+      description: "Other ferrochromium"
+      confidence: "medium"
+      caveat: "Processed ferroalloy; origin and chromium content require further detail."
+manganese:
+  aliases:
+    - manganese
+    - ferromanganese
+  hs_codes:
+    - code: "260200"
+      description: "Manganese ores and concentrates"
+      confidence: "high"
+    - code: "720211"
+      description: "Ferromanganese containing more than 2 percent carbon"
+      confidence: "medium"
+      caveat: "Processed ferroalloy; origin and manganese content require further detail."
+    - code: "720219"
+      description: "Other ferromanganese"
+      confidence: "medium"
+      caveat: "Processed ferroalloy; origin and manganese content require further detail."
+tin:
+  aliases:
+    - tin
+  hs_codes:
+    - code: "260900"
+      description: "Tin ores and concentrates"
+      confidence: "high"
+    - code: "800110"
+      description: "Unwrought tin, not alloyed"
+      confidence: "medium"
+      caveat: "Refined product; does not by itself identify mined origin."
+    - code: "800120"
+      description: "Unwrought tin alloys"
+      confidence: "medium"
+      caveat: "Alloy category; upstream origin is not isolated."
+tungsten:
+  aliases:
+    - tungsten
+    - wolfram
+  hs_codes:
+    - code: "261100"
+      description: "Tungsten ores and concentrates"
+      confidence: "high"
+    - code: "810110"
+      description: "Tungsten powders"
+      confidence: "medium"
+      caveat: "Processed product; does not by itself identify mined origin."
+    - code: "810191"
+      description: "Unwrought tungsten, including sintered bars and rods"
+      confidence: "medium"
+      caveat: "Processed product; does not by itself identify mined origin."
+    - code: "810192"
+      description: "Tungsten bars and rods other than sintered articles"
+      confidence: "low"
+      caveat: "Downstream product; may not map cleanly to primary tungsten supply."
+uranium:
+  aliases:
+    - uranium
+    - uranium ore
+  hs_codes:
+    - code: "261210"
+      description: "Uranium ores and concentrates"
+      confidence: "high"
+    - code: "284410"
+      description: "Natural uranium and its compounds"
+      confidence: "medium"
+      caveat: "Processed nuclear material; source country does not necessarily identify mined origin."
+    - code: "284420"
+      description: "Uranium enriched in U235 and plutonium and their compounds"
+      confidence: "medium"
+      caveat: "Processed nuclear material; value reflects a downstream stage, not ore access."
+    - code: "284430"
+      description: "Uranium depleted in U235 and thorium and their compounds"
+      confidence: "low"
+      caveat: "Broad processed-material heading; not equivalent to primary uranium supply."

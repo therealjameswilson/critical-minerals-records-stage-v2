@@ -27,6 +27,8 @@ EXPECTED_MINIMUMS = {
     "trade": 1400,
     "trade-details": 294,
     "trade-research": 21,
+    "dataweb-trade": 3600,
+    "dataweb-query-manifest": 2,
 }
 
 
@@ -198,6 +200,54 @@ def main() -> None:
     research_years = {row.get("year") for row in datasets["trade-research"]}
     if research_years != set(range(1970, 1991)):
         errors.append(f"trade-research: expected annual queues 1970-1990, found {sorted(research_years)}")
+
+    required_dataweb_fields = {
+        "year", "mineral_id", "direction", "trade_flow", "classification_system",
+        "classification_level", "commodity_code", "commodity_description", "commodity_scope_note",
+        "supply_chain_stage", "source_partner_name", "partner_code", "partner_iso2", "partner_iso3",
+        "trade_value", "quantity", "source_id", "source_origin_agency", "publication_title",
+        "table_or_page", "source_url", "access_date", "transcription_status", "confidence", "caveat"
+    }
+    for row in datasets["dataweb-trade"]:
+        owner = f"dataweb-trade/{row.get('id')}"
+        missing = sorted(required_dataweb_fields - set(row))
+        if missing:
+            errors.append(f"{owner}: missing {', '.join(missing)}")
+        if row.get("year") not in {1989, 1990, 1991, 1992}:
+            errors.append(f"{owner}: DataWeb year must be 1989-1992")
+        if row.get("mineral_id") not in ids["minerals"]:
+            errors.append(f"{owner}: unknown mineral_id {row.get('mineral_id')}")
+        if row.get("source_id") != "usitc-dataweb":
+            errors.append(f"{owner}: source_id must be usitc-dataweb")
+        if row.get("direction") not in {"imports", "exports"}:
+            errors.append(f"{owner}: invalid direction {row.get('direction')}")
+        if row.get("classification_level") != "HS6" or not re.fullmatch(r"\d{6}", str(row.get("commodity_code", ""))):
+            errors.append(f"{owner}: expected a six-digit HS heading")
+        if not re.fullmatch(r"[A-Z]{3}", str(row.get("partner_iso3", ""))):
+            errors.append(f"{owner}: expected partner ISO3 code")
+        measures = [row.get("trade_value", {}), row.get("quantity", {})]
+        for measure in measures:
+            if not {"value", "display", "unit", "status"} <= set(measure):
+                errors.append(f"{owner}: malformed DataWeb measurement")
+            if measure.get("status") not in {"reported", "not-reported"}:
+                errors.append(f"{owner}: invalid measurement status {measure.get('status')}")
+        if not any(measure.get("value", 0) and measure.get("value", 0) > 0 for measure in measures):
+            errors.append(f"{owner}: retained DataWeb row must contain a positive reported value or quantity")
+
+    dataweb_minerals = {row.get("mineral_id") for row in datasets["dataweb-trade"]}
+    if dataweb_minerals != ids["minerals"]:
+        errors.append(f"dataweb-trade: expected all pilot minerals, found {sorted(dataweb_minerals)}")
+    for query in datasets["dataweb-query-manifest"]:
+        owner = f"dataweb-query-manifest/{query.get('id')}"
+        if query.get("direction") not in {"imports", "exports"}:
+            errors.append(f"{owner}: invalid direction")
+        if query.get("years") != [1989, 1990, 1991, 1992]:
+            errors.append(f"{owner}: expected 1989-1992 query years")
+        expected_count = sum(row["direction"] == query.get("direction") for row in datasets["dataweb-trade"])
+        if query.get("record_count") != expected_count:
+            errors.append(f"{owner}: record count does not match cached rows")
+        if not re.fullmatch(r"[0-9a-f]{64}", str(query.get("query_sha256", ""))):
+            errors.append(f"{owner}: malformed query hash")
 
     fact_statuses = {"verified", "estimated", "unknown"}
     for brief in datasets["country-briefs"]:

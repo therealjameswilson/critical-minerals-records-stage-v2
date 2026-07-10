@@ -654,7 +654,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .trade-table td strong, .trade-table td small { display: block; }
 .trade-table td small { margin-top: 2px; color: var(--muted); font-size: 9px; }
 .trade-source-note { margin: 12px 0 0; color: var(--muted); font-size: 10px; }
+.trade-map-action { display: flex; justify-content: space-between; gap: 18px; align-items: center; margin: 16px 0; padding: 12px 14px; border: 1px solid var(--line); background: var(--paper-muted); color: var(--muted); font-size: 11px; }
+.trade-map-action button { flex: 0 0 auto; padding: 9px 12px; border: 1px solid var(--teal-700); background: var(--surface); color: var(--teal-800); font: inherit; font-weight: 800; text-transform: uppercase; cursor: pointer; }
+.trade-map-action button:hover { background: var(--teal-100); }
+.trade-map-action button:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
 .trade-pilot { margin: 24px 0; padding: 22px; border: 1px solid var(--line-strong); border-top: 5px solid var(--gold-500); background: var(--surface); }
+.trade-pilot.dataweb-trade { border-top-color: var(--teal-700); }
 .trade-pilot-heading { display: flex; justify-content: space-between; gap: 20px; align-items: start; }
 .trade-pilot-heading h4 { margin: 3px 0 0; font: 700 24px/1.15 Georgia, serif; color: var(--navy-900); }
 [data-theme="dark"] .trade-pilot-heading h4 { color: #e3efed; }
@@ -1172,7 +1177,7 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .atlas-tabs button { min-width: 112px; padding-inline: 10px; }
   .atlas-summary-metrics, .atlas-number-grid { grid-template-columns: 1fr; }
   .atlas-summary-metrics div, .atlas-number-grid article { border-right: 0; border-bottom: 1px solid var(--line); }
-  .atlas-evidence-prompt, .trade-pilot-heading { align-items: stretch; flex-direction: column; }
+  .atlas-evidence-prompt, .trade-pilot-heading, .trade-map-action { align-items: stretch; flex-direction: column; }
   .atlas-evidence-prompt button { width: 100%; }
   .trade-pilot { padding: 17px 13px; }
   .trade-comparison > div { grid-template-columns: 1fr; }

@@ -2,9 +2,9 @@
 """Build the source-bounded Historical Geostrategic Atlas pilot.
 
 The atlas derives documentary overlays from the normalized History Stack data.
-It does not infer production, import shares, route volume, alliance membership,
-facility coordinates, or strategic risk. Those modes remain registered but
-locked until an official, citable series is added.
+It does not infer production, route volume, alliance membership, facility
+coordinates, or strategic risk. DataWeb partner trade is supported only for
+1989-1992 and remains visually distinct from FRUS documentary relationships.
 """
 
 from __future__ import annotations
@@ -128,13 +128,13 @@ LAYER_REGISTRY = [
     },
     {
         "id": "quantitative-trade-flows",
-        "title": "Partner-country quantitative trade flows",
-        "short_title": "Bilateral trade",
-        "availability": "locked",
-        "geometry": "relationship-lines",
-        "required_data": "Origin, destination, mineral or product code, year, flow, quantity/value, unit, classification, and official citation.",
-        "source_ids": ["census-historical-trade"],
-        "caveat": "The U.S. Trade tab provides cited national totals. This map layer remains locked until official origin-destination data can support bilateral flows; documented access lines must not be interpreted as trade volume.",
+        "title": "DataWeb partner trade, 1989-1992",
+        "short_title": "DataWeb trade",
+        "availability": "supported",
+        "geometry": "country-fill-and-lines",
+        "value_semantics": "Country shading and line width represent reported customs value of U.S. imports for consumption across the selected six-digit HS headings. Exports remain available in the U.S. Trade evidence table.",
+        "source_ids": ["usitc-dataweb"],
+        "caveat": "Available only for 1989-1992. Partner means reported country of origin, not mine origin, ownership, route, end use, import dependence, or strategic importance. Country positions are generalized centroids.",
     },
     {
         "id": "infrastructure",

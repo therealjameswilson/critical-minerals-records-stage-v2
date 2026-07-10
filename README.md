@@ -29,12 +29,13 @@ appears only in a separately labeled Modern Context layer.
   query plans.
 - 1,222 unit-defined historical observations extracted from official USGS Data
   Series 140 workbooks without project interpolation.
-- 1,476 source-defined trade records covering every selectable year: published
-  Census multi-year crude-material averages for 1861-1899 and exact-year USGS
-  commodity imports and exports for 1900-1992.
+- 1,476 source-defined long-run trade records covering every selectable year,
+  plus 294 contemporaneous rare-earth category rows for 1970-1990 and 3,669
+  USITC DataWeb partner-product rows for 1989-1992.
 - A Historical Geostrategic Atlas with a 1861–1992 year control, historical
   names, documentary access lines, agreements, stockpile policy, NARA query
-  plans, synchronized evidence panels, and an accessible table alternative.
+  plans, an optional cited DataWeb import-value layer for 1989-1992,
+  synchronized evidence panels, and an accessible table alternative.
 - A visible atlas layer registry that keeps bilateral trade-flow, production,
   supplier-share, infrastructure, alliance, boundary, and risk map views locked
   until compatible official data and citations exist.
@@ -83,6 +84,7 @@ Read the [full methodology](methodology.html) or
 - `scripts/build_atlas_data.py`: reproducible atlas overlays and basemap builder
 - `scripts/ingest_usgs_ds140.py`: official XLSX extractor
 - `scripts/ingest_trade_data.py`: official Census and USGS trade extractor
+- `scripts/ingest_usitc_dataweb.py`: official 1989-1992 partner-trade importer
 - `scripts/validate_history_data.py`: dates, references, provenance, and secret checks
 - `connectors/nara.py`: server-side, metadata-only NARA API client
 - `nara_proxy_worker.js`: deployable serverless proxy for the static site
@@ -101,6 +103,7 @@ pip install -r requirements.txt
 python scripts/build_history_pilot.py
 python scripts/ingest_usgs_ds140.py
 python scripts/ingest_trade_data.py
+python scripts/ingest_usitc_dataweb.py --cache-dir .cache/usitc-dataweb
 python scripts/build_atlas_data.py
 python scripts/validate_history_data.py
 python -m http.server 8000
@@ -128,6 +131,27 @@ python scripts/validate_history_data.py
 ```
 
 Use `--cache-dir <path>` to retain downloaded XLSX files outside the repository.
+
+## Rebuild USITC DataWeb Partner Trade
+
+DataWeb supplies the portal's official bilateral statistical layer for the four
+years in which its electronic series overlaps this project: 1989-1992. The
+importer uses the public anonymous query session, writes a sanitized static JSON
+cache for GitHub Pages, and does not require or store an API token.
+
+```bash
+python scripts/ingest_usitc_dataweb.py \
+  --access-date YYYY-MM-DD \
+  --cache-dir .cache/usitc-dataweb
+python scripts/build_atlas_data.py
+python scripts/validate_history_data.py
+```
+
+The checked-in query manifest preserves years, six-digit HTS/Schedule B
+headings, result counts, and a payload hash. Partner country is the reported
+origin or destination; it is not presented as mine origin, route, ownership,
+end use, import dependence, or strategic importance. FRUS remains the
+documentary and narrative spine throughout the interface.
 
 ## Rebuild Historical U.S. Trade
 

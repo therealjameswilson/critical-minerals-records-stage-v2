@@ -90,6 +90,16 @@
     "trust_note": "The pilot includes reviewed Census-derived national category totals. Country rows remain a source-acquisition queue until the relevant FT reports are obtained and checked."
   },
   {
+    "id": "usitc-dataweb",
+    "label": "USITC DataWeb",
+    "agency": "U.S. International Trade Commission; underlying statistics published by the U.S. Department of Commerce, Census Bureau",
+    "source_type": "official-statistics",
+    "tier": 1,
+    "url": "https://dataweb.usitc.gov/",
+    "scope": "Official U.S. merchandise imports and exports by commodity, partner country, and year. Electronic DataWeb coverage begins in 1989.",
+    "trust_note": "The portal uses 1989-1992 country breakouts at the shared six-digit Harmonized System level. Partner country means reported origin or destination; it does not establish mine origin, ownership, route, end use, or strategic importance."
+  },
+  {
     "id": "census-statistical-abstract-1948",
     "label": "Statistical Abstract of the United States: 1948, Foreign Commerce tables 1013-1014",
     "agency": "U.S. Department of Commerce, Bureau of the Census",

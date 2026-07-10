@@ -4,7 +4,8 @@
   const FILES = [
     "sources", "minerals", "countries", "episodes", "agreements", "laws",
     "administrations", "stockpile-cases", "frus-documents", "statistics", "trade",
-    "trade-details", "trade-research", "nara-queries", "country-briefs", "modern-context"
+    "trade-details", "trade-research", "dataweb-query-manifest",
+    "nara-queries", "country-briefs", "modern-context"
   ];
 
   function escape(value) {
@@ -40,9 +41,10 @@
       })
     ]);
     const data = Object.fromEntries(FILES.map((name, index) => [name, rows[index]]));
+    data["dataweb-trade"] = [];
     data.atlas = atlas;
     data.indexes = {};
-    FILES.forEach((name) => {
+    [...FILES, "dataweb-trade"].forEach((name) => {
       data.indexes[name] = new Map((data[name] || []).map((row) => [row.id, row]));
     });
     return data;
@@ -103,6 +105,7 @@
       "govinfo-statutes": "GovInfo",
       "state-treaties": "State treaty series",
       "census-historical-trade": "Census",
+      "usitc-dataweb": "USITC DataWeb / Census",
       "census-statistical-abstract-1948": "Census Statistical Abstract",
       "gsa-stockpile": "Stockpile records",
       "state-country-guide-bolivia": "State country guide",
@@ -196,7 +199,7 @@
   }
 
   window.HistoryData = {
-    FILES, escape, text, loadAll, displayName, detailHref, badge,
+    FILES, escape, text, loadAll, loadJson, displayName, detailHref, badge,
     completenessBadge, sourceBadge, sourceRow, officialLink, arrayLinks,
     frusCard, formatNumber, yearRange, initTheme, initNavigation
   };

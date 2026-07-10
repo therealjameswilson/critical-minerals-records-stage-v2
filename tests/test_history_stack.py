@@ -44,6 +44,8 @@ def test_pilot_meets_minimum_entity_counts():
         "trade": 1400,
         "trade-details": 294,
         "trade-research": 21,
+        "dataweb-trade": 3600,
+        "dataweb-query-manifest": 2,
     }
     for name, minimum in expected.items():
         assert len(load(name)) >= minimum
@@ -172,6 +174,48 @@ def test_rare_earth_partner_rows_remain_year_specific_acquisition_queues():
     assert all(any("Do not draw atlas trade-flow lines" in note for note in queue["classification_notes"]) for queue in queues)
 
 
+def test_dataweb_partner_trade_covers_the_full_portal_overlap():
+    rows = load("dataweb-trade")
+    assert len(rows) >= 3600
+    assert {row["year"] for row in rows} == {1989, 1990, 1991, 1992}
+    assert {row["mineral_id"] for row in rows} == {row["id"] for row in load("minerals")}
+    assert all(row["source_id"] == "usitc-dataweb" for row in rows)
+    assert all(row["classification_level"] == "HS6" and re.fullmatch(r"\d{6}", row["commodity_code"]) for row in rows)
+    assert all(re.fullmatch(r"[A-Z]{3}", row["partner_iso3"]) for row in rows)
+    assert all((row["trade_value"]["value"] or 0) > 0 or (row["quantity"]["value"] or 0) > 0 for row in rows)
+
+
+def test_dataweb_preserves_representative_rare_earth_and_uranium_rows():
+    rows = {
+        (row["year"], row["direction"], row["commodity_code"], row["source_partner_name"]): row
+        for row in load("dataweb-trade")
+    }
+    rare_earth = rows[(1989, "imports", "280530", "China")]
+    assert rare_earth["trade_value"]["value"] == 754063
+    assert rare_earth["quantity"]["unit"] == "kilograms"
+    uranium = rows[(1989, "imports", "284410", "Canada")]
+    assert uranium["trade_value"]["value"] == 373623125
+    assert uranium["commodity_description"].startswith("NATURAL URANIUM")
+    assert all("mine origin" in row["caveat"] for row in (rare_earth, uranium))
+
+
+def test_dataweb_query_manifest_reconciles_to_static_cache():
+    rows = load("dataweb-trade")
+    manifests = load("dataweb-query-manifest")
+    assert {row["direction"] for row in manifests} == {"imports", "exports"}
+    for manifest in manifests:
+        assert manifest["years"] == [1989, 1990, 1991, 1992]
+        assert manifest["record_count"] == sum(row["direction"] == manifest["direction"] for row in rows)
+        assert re.fullmatch(r"[0-9a-f]{64}", manifest["query_sha256"])
+
+
+def test_dataweb_ingestion_uses_anonymous_public_session_without_secret():
+    script = (ROOT / "scripts" / "ingest_usitc_dataweb.py").read_text(encoding="utf-8")
+    assert "XSRF-TOKEN" in script
+    assert "DATAWEB_API_TOKEN" not in script
+    assert "Authorization" not in script
+
+
 def test_atlas_renders_census_recovery_pilot_separately_from_standardized_trade():
     atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
     portal = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
@@ -179,6 +223,18 @@ def test_atlas_renders_census_recovery_pilot_separately_from_standardized_trade(
     assert "Census recovery pilot" in atlas
     assert "They are displayed side by side and are not merged" in atlas
     assert 'data.trade.length + data["trade-details"].length' in portal
+
+
+def test_atlas_exposes_dataweb_as_context_not_the_default_spine():
+    atlas_script = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
+    atlas_data = json.loads((ROOT / "data" / "atlas" / "atlas.json").read_text(encoding="utf-8"))
+    layer = next(row for row in atlas_data["layers"] if row["id"] == "quantitative-trade-flows")
+    assert layer["availability"] == "supported"
+    assert layer["source_ids"] == ["usitc-dataweb"]
+    assert "FRUS remains the documentary spine" in atlas_script
+    assert "Map reported import value" in atlas_script
+    assert 'H.loadJson("dataweb-trade")' in atlas_script
+    assert 'mode: LENS_IDS.includes(options.state.mode) ? options.state.mode : "frus-activity"' in atlas_script
 
 
 def test_history_stack_page_exposes_all_layers():
@@ -339,14 +395,14 @@ def test_atlas_layers_are_source_bounded_and_unsupported_modes_stay_locked():
     for layer_id in [
         "frus-activity", "access-relationships", "agreements",
         "stockpile-policy", "historical-events", "nara-discovery",
-        "resource-geography",
+        "resource-geography", "quantitative-trade-flows",
     ]:
         assert by_id[layer_id]["availability"] == "supported"
         assert by_id[layer_id]["value_semantics"]
         assert by_id[layer_id]["source_ids"]
         assert by_id[layer_id]["caveat"]
     for layer_id in [
-        "mineral-production", "import-dependence", "quantitative-trade-flows",
+        "mineral-production", "import-dependence",
         "infrastructure", "alliances-boundaries", "strategic-risk",
     ]:
         assert by_id[layer_id]["availability"] == "locked"

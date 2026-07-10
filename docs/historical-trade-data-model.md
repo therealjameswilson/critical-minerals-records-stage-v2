@@ -85,6 +85,51 @@ The generated detail row retains both a normalized category and the source
 label, quantity and value measurement objects, original source symbol, table
 URL, access date, extraction status, and applicable classification caveats.
 
+## 1989-1992 USITC DataWeb Partner Trade
+
+USITC DataWeb supplies the first checked-in partner-country layer. DataWeb
+provides official U.S. merchandise trade statistics published by the Department
+of Commerce, Census Bureau, and states that its electronic trade series begins
+in 1989. The portal therefore uses only 1989-1992, the overlap between DataWeb
+and the project's historical boundary.
+
+The importer runs two annual country-breakout queries:
+
+- imports for consumption, with customs value and first quantity; and
+- total exports, with F.A.S. value and first quantity.
+
+It queries 32 six-digit Harmonized System headings associated with the ten
+pilot mineral profiles. Imports are classified in the HTS and exports in
+Schedule B; only the shared six-digit international level is compared. The
+response-supplied historical commodity description is retained on every row.
+The checked-in cache contains 3,669 positive partner-product records, including
+rare-earth and uranium headings that were absent from the earlier national
+aggregate display.
+
+Each row preserves the source partner name, DataWeb country code, ISO codes,
+flow definition, commodity code and description, customs or F.A.S. valuation
+basis, first quantity and unit, source URL, access date, and a scope caveat.
+The query manifest records the exact years, commodity headings, record count,
+and a SHA-256 hash of the submitted payload.
+
+The atlas only draws these quantitative lines when the DataWeb lens is selected.
+Country shading and line width represent reported import customs value summed
+across the selected headings. They do not represent import dependence,
+production, reserves, strategic importance, mine origin, ownership, route, or
+end use. Exports remain in the accessible U.S. Trade table rather than being
+combined with imports on the map.
+
+The official source pages are:
+
+- [USITC DataWeb](https://dataweb.usitc.gov/)
+- [About DataWeb](https://www.usitc.gov/applications/dataweb/about)
+- [DataWeb FAQs](https://www.usitc.gov/applications/dataweb/faqs)
+- [DataWeb API guide](https://www.usitc.gov/applications/dataweb/api/dataweb_query_api.html)
+
+Suggested source form follows USITC guidance: compiled using USITC DataWeb from
+official U.S. merchandise trade statistics published by the U.S. Department of
+Commerce, Census Bureau, with the access date shown in the portal.
+
 ## Record Shape
 
 Each object in `data/history-stack/trade.json` includes:
@@ -128,6 +173,7 @@ JSON and official workbook control if the source series is refreshed.
 ```bash
 python scripts/ingest_trade_data.py --access-date YYYY-MM-DD
 python scripts/build_trade_pilot.py --access-date YYYY-MM-DD --cache-dir .cache/rare-earth-trade
+python scripts/ingest_usitc_dataweb.py --access-date YYYY-MM-DD --cache-dir .cache/usitc-dataweb
 python scripts/validate_history_data.py
 python -m pytest tests/ -q
 ```
