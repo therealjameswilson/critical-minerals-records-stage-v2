@@ -5,6 +5,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+import yaml
 
 from connectors.nara import normalize_nara_hit, search_nara
 
@@ -48,6 +49,8 @@ def test_pilot_meets_minimum_entity_counts():
         "dataweb-query-manifest": 2,
         "comtrade-rare-earth": 170,
         "comtrade-query-manifest": 40,
+        "comtrade-strategic-materials": 2000,
+        "comtrade-strategic-query-manifest": 31,
         "annual-snapshots": 132,
     }
     for name, minimum in expected.items():
@@ -266,6 +269,52 @@ def test_comtrade_importer_uses_public_preview_without_secret():
     assert "Authorization" not in script
 
 
+def test_strategic_comtrade_covers_nine_materials_and_all_31_years():
+    rows = load("comtrade-strategic-materials")
+    manifests = load("comtrade-strategic-query-manifest")
+    assert len(rows) >= 2000
+    assert {row["year"] for row in manifests} == set(range(1962, 1993))
+    assert sum(row["record_count"] for row in manifests) == len(rows)
+    assert {row["mineral_id"] for row in rows} == {
+        "aluminum", "bauxite", "chromium", "cobalt", "copper",
+        "manganese", "tin", "tungsten", "uranium"
+    }
+    for row in rows:
+        expected = "S1" if row["year"] <= 1975 else "S2" if row["year"] <= 1987 else "S3"
+        assert row["classification_code"] == expected
+        assert row["scope_confidence"] in {"high", "medium", "low"}
+        assert row["scope_caveat"]
+        assert row["source_id"] == "un-comtrade"
+
+
+def test_strategic_comtrade_retains_reported_partner_values_and_product_stages():
+    rows = {
+        (row["year"], row["mineral_id"], row["flow_code"], row["partner_iso3"], row["commodity_code"]): row
+        for row in load("comtrade-strategic-materials")
+    }
+    chile_refined = rows[(1983, "copper", "M", "CHL", "68212")]
+    congo_refined = rows[(1983, "copper", "M", "COD", "68212")]
+    assert chile_refined["primary_value"] == 428190784
+    assert chile_refined["net_weight_kg"] == 270717888
+    assert chile_refined["supply_chain_stage"] == "refined-metal"
+    assert congo_refined["primary_value"] == 46755712
+
+
+def test_strategic_comtrade_crosswalk_is_revision_bounded_and_auditable():
+    crosswalk = yaml.safe_load((ROOT / "data" / "crosswalks" / "comtrade_sitc_mineral_codes.yml").read_text(encoding="utf-8"))
+    assert set(crosswalk["classifications"]) == {"S1", "S2", "S3"}
+    assert crosswalk["classifications"]["S1"]["years"] == [1962, 1975]
+    assert crosswalk["classifications"]["S2"]["years"] == [1976, 1987]
+    assert crosswalk["classifications"]["S3"]["years"] == [1988, 1992]
+    for definition in crosswalk["classifications"].values():
+        assert definition["codes"]
+        assert all({"mineral_id", "stage", "confidence", "caveat"} <= set(row) for row in definition["codes"].values())
+    script = (ROOT / "scripts" / "ingest_un_comtrade_strategic_materials.py").read_text(encoding="utf-8")
+    assert "public/v1/preview" not in script  # shared official client supplies the endpoint
+    assert "COMTRADE_API_KEY" not in script
+    assert "Authorization" not in script
+
+
 def test_atlas_renders_census_recovery_pilot_separately_from_standardized_trade():
     atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
     portal = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
@@ -275,16 +324,18 @@ def test_atlas_renders_census_recovery_pilot_separately_from_standardized_trade(
     assert 'data.trade.length + data["trade-details"].length' in portal
 
 
-def test_atlas_exposes_dataweb_as_context_not_the_default_spine():
+def test_atlas_exposes_reported_trade_as_context_not_the_default_spine():
     atlas_script = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
     atlas_data = json.loads((ROOT / "data" / "atlas" / "atlas.json").read_text(encoding="utf-8"))
     layer = next(row for row in atlas_data["layers"] if row["id"] == "quantitative-trade-flows")
     assert layer["availability"] == "supported"
-    assert layer["source_ids"] == ["usitc-dataweb"]
+    assert layer["source_ids"] == ["un-comtrade", "usitc-dataweb"]
     assert "FRUS remains the documentary spine" in atlas_script
     assert "Map reported import value" in atlas_script
     assert 'H.loadJson("dataweb-trade")' in atlas_script
     assert 'H.loadJson("comtrade-rare-earth")' in atlas_script
+    assert 'H.loadJson("comtrade-strategic-materials")' in atlas_script
+    assert layer["title"] == "Partner trade, 1962-1992"
     assert "Broad proxy families are not summed" in atlas_script
     assert 'mode: LENS_IDS.includes(options.state.mode) ? options.state.mode : "frus-activity"' in atlas_script
 

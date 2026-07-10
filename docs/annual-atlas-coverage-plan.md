@@ -66,6 +66,10 @@ Use the source appropriate to each period rather than forcing one classification
 - 1976-1987: UN Comtrade SITC Revision 2, held separately
 - 1988-1992: UN Comtrade SITC Revision 3 plus USITC DataWeb verification for U.S.-reported 1989-1992 values
 
+The current Comtrade pilot now includes rare earths and nine additional
+strategic materials. Expansion to further materials should extend the audited
+SITC code registry rather than reusing a modern HS category backward.
+
 Every series must preserve reporter, partner, direction, commodity code, classification revision, valuation basis, quantity unit, and original-versus-converted status. Mirror reports remain parallel observations.
 
 ### 4. Treaties, law, and stockpile policy

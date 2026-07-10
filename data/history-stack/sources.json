@@ -106,8 +106,10 @@
     "source_type": "official-international-statistics",
     "tier": 2,
     "url": "https://comtradeplus.un.org/",
-    "scope": "Annual reporter-partner merchandise trade by commodity, value, and available quantity. The portal uses a 1962-1992 rare-earth continuity pilot only.",
-    "trust_note": "Comtrade is an official international contextual source, not a substitute for FRUS or authoritative U.S.-reported DataWeb records. SITC proxy baskets, classification revisions, converted records, mirror discrepancies, and missing years remain visible."
+    "scope": "Annual reporter-partner merchandise trade by commodity, value, and available quantity. The portal uses classification-bounded 1962-1992 pilots for rare earths and nine additional strategic materials.",
+    "trust_note": "Comtrade is an official international contextual source, not a substitute for FRUS or authoritative U.S.-reported DataWeb records. SITC product baskets, classification revisions, converted records, mirror discrepancies, and missing years remain visible.",
+    "discovery_url": "https://www.unccd.int/resources/knowledge-sharing-system/united-nations-commodity-trade-statistics-database-un-comtrade",
+    "discovery_note": "The UNCCD Knowledge Hub identifies UN Statistics Division as the managing entity and links to UN Comtrade. Statistical records are retrieved from the official UN Comtrade API, not transcribed from the directory entry."
   },
   {
     "id": "census-statistical-abstract-1948",

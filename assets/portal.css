@@ -686,6 +686,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .trade-pilot { margin: 24px 0; padding: 22px; border: 1px solid var(--line-strong); border-top: 5px solid var(--gold-500); background: var(--surface); }
 .trade-pilot.dataweb-trade { border-top-color: var(--teal-700); }
 .trade-pilot.comtrade-continuity { border-top-color: var(--navy-700); }
+.trade-detail-disclosure { margin-top: 16px; border-top: 1px solid var(--line); }
+.trade-detail-disclosure > summary { padding: 13px 2px 4px; color: var(--teal-800); font-size: 11px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+.trade-detail-disclosure > summary:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
 .trade-pilot-heading { display: flex; justify-content: space-between; gap: 20px; align-items: start; }
 .trade-pilot-heading h4 { margin: 3px 0 0; font: 700 24px/1.15 Georgia, serif; color: var(--navy-900); }
 [data-theme="dark"] .trade-pilot-heading h4 { color: #e3efed; }

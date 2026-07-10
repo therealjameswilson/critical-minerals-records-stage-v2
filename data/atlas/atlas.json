@@ -130,15 +130,16 @@
     },
     {
       "id": "quantitative-trade-flows",
-      "title": "DataWeb partner trade, 1989-1992",
-      "short_title": "DataWeb trade",
+      "title": "Partner trade, 1962-1992",
+      "short_title": "Partner trade",
       "availability": "supported",
       "geometry": "country-fill-and-lines",
-      "value_semantics": "Country shading and line width represent reported customs value of U.S. imports for consumption across the selected six-digit HS headings. Exports remain available in the U.S. Trade evidence table.",
+      "value_semantics": "For 1962-1988, shading and line width represent U.S.-reported UN Comtrade import value across selected SITC headings. For 1989-1992, the map uses USITC DataWeb import customs value across selected HS6 headings. Exports remain in the evidence table.",
       "source_ids": [
+        "un-comtrade",
         "usitc-dataweb"
       ],
-      "caveat": "Available only for 1989-1992. Partner means reported country of origin, not mine origin, ownership, route, end use, import dependence, or strategic importance. Country positions are generalized centroids."
+      "caveat": "Comtrade SITC revisions and product stages remain separate from DataWeb HS6 headings. Partner means reported trade partner, not mine origin, ownership, route, end use, import dependence, or strategic importance. Country positions are generalized centroids."
     },
     {
       "id": "infrastructure",

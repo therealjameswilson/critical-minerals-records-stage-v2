@@ -85,14 +85,26 @@ The generated detail row retains both a normalized category and the source
 label, quantity and value measurement objects, original source symbol, table
 URL, access date, extraction status, and applicable classification caveats.
 
-## 1962-1992 UN Comtrade Continuity Context
+## 1962-1992 UN Comtrade Partner Context
 
 UN Comtrade provides official international reporter-partner merchandise trade
 statistics from 1962. It is a Tier 2 contextual source in this portal: FRUS
 remains the documentary spine, and USITC DataWeb remains the authoritative
 U.S.-reported verification layer where its electronic series is available.
 
-The checked-in rare-earth pilot contains 177 observations recovered from 40
+The strategic-material pilot contains 2,010 U.S.-reported observations from 31
+annual queries. It covers aluminum, bauxite, chromium, cobalt, copper,
+manganese, tin, tungsten, and uranium for the world and selected countries
+already represented in the atlas. The audited code registry is
+`data/crosswalks/comtrade_sitc_mineral_codes.yml`.
+
+The strategic-material layer distinguishes ores and concentrates, compounds,
+intermediates, ferroalloys, unwrought metals, alloys, waste, and articles. Gross
+product values and weights are never converted to contained-mineral quantities.
+The map may display reported partner value, but it does not interpret that value
+as mine origin, U.S. dependence, or strategic importance.
+
+The separate rare-earth pilot contains 177 observations recovered from 40
 year-and-reporter queries. It uses:
 
 - SITC Revision 1 for 1962-1975;
@@ -124,9 +136,15 @@ status, query identifier, access date, and source URL. Zero-result query years
 remain in the manifest so absence of a displayed row is not confused with an
 unattempted query.
 
+The UNCCD Knowledge Hub entry supplied during source discovery identifies UN
+Statistics Division as the managing entity and links to UN Comtrade. It is
+retained as a discovery URL, not treated as the publisher of the statistical
+records.
+
 Official references:
 
 - [UN Comtrade](https://comtradeplus.un.org/)
+- [UNCCD Knowledge Hub discovery entry](https://www.unccd.int/resources/knowledge-sharing-system/united-nations-commodity-trade-statistics-database-un-comtrade)
 - [UNSD historical classification and availability explanation](https://unstats.un.org/unsd/trade/dataextract/dataclass.htm)
 - [UN Comtrade methodology guide](https://comtradeapi.un.org/files/v1/app/wiki/MethodologyGuideforComtradePlus.pdf)
 

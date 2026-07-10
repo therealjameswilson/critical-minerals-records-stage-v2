@@ -68,6 +68,8 @@
       this.dataWebLoading = null;
       this.comtradeLoaded = this.data["comtrade-rare-earth"].length > 0;
       this.comtradeLoading = null;
+      this.strategicComtradeLoaded = this.data["comtrade-strategic-materials"].length > 0;
+      this.strategicComtradeLoading = null;
       this.annualSnapshotsLoaded = this.data["annual-snapshots"].length > 0;
       this.annualSnapshotsLoading = null;
     }
@@ -75,7 +77,8 @@
     async init() {
       await this.ensureAnnualSnapshots();
       if (this.state.year >= 1989) await this.ensureDataWebTrade();
-      if (this.state.year >= 1962 && this.state.mineral === "rare-earth-elements") await this.ensureComtrade();
+      if (this.state.year >= 1962 && ["rare-earth-elements", "all"].includes(this.state.mineral)) await this.ensureComtrade();
+      if (this.state.year >= 1962 && this.state.mineral !== "rare-earth-elements") await this.ensureStrategicComtrade();
       this.renderControls();
       this.bindControls();
       this.renderLayerControls();
@@ -132,6 +135,22 @@
         });
       }
       return this.comtradeLoading;
+    }
+
+    async ensureStrategicComtrade() {
+      if (this.strategicComtradeLoaded) return this.data["comtrade-strategic-materials"];
+      if (!this.strategicComtradeLoading) {
+        this.strategicComtradeLoading = H.loadJson("comtrade-strategic-materials").then((rows) => {
+          this.data["comtrade-strategic-materials"] = rows;
+          this.data.indexes["comtrade-strategic-materials"] = new Map(rows.map((row) => [row.id, row]));
+          this.strategicComtradeLoaded = true;
+          return rows;
+        }).catch((error) => {
+          this.strategicComtradeLoading = null;
+          throw error;
+        });
+      }
+      return this.strategicComtradeLoading;
     }
 
     country(id) {
@@ -212,8 +231,15 @@
     }
 
     activeComtrade() {
-      if (this.state.mineral !== "rare-earth-elements" || this.state.year < 1962 || this.state.year > 1992) return [];
+      if (!["rare-earth-elements", "all"].includes(this.state.mineral) || this.state.year < 1962 || this.state.year > 1992) return [];
       return this.data["comtrade-rare-earth"].filter((row) => row.year === this.state.year);
+    }
+
+    activeStrategicComtrade() {
+      if (this.state.year < 1962 || this.state.year > 1992 || this.state.mineral === "rare-earth-elements") return [];
+      return this.data["comtrade-strategic-materials"].filter((row) =>
+        row.year === this.state.year && (this.state.mineral === "all" || row.mineral_id === this.state.mineral)
+      );
     }
 
     annualSnapshot() {
@@ -238,9 +264,7 @@
       }
       if (this.state.mode === "quantitative-trade-flows") {
         const atlasCountry = this.atlasCountry(country.id);
-        return this.activeDataWebTrade("imports")
-          .filter((row) => row.partner_iso3 === atlasCountry?.a3)
-          .reduce((sum, row) => sum + (row.trade_value.value || 0), 0);
+        return this.partnerTradeTotals("imports").get(atlasCountry?.a3)?.value || 0;
       }
       return 0;
     }
@@ -257,8 +281,13 @@
           $("atlasMapStatus").textContent = `DataWeb context could not be loaded: ${error.message}`;
         });
       }
-      if (this.state.year >= 1962 && this.state.mineral === "rare-earth-elements" && !this.comtradeLoaded) {
+      if (this.state.year >= 1962 && ["rare-earth-elements", "all"].includes(this.state.mineral) && !this.comtradeLoaded) {
         this.ensureComtrade().then(() => this.renderAll()).catch((error) => {
+          $("atlasMapStatus").textContent = `Comtrade context could not be loaded: ${error.message}`;
+        });
+      }
+      if (this.state.year >= 1962 && this.state.mineral !== "rare-earth-elements" && !this.strategicComtradeLoaded) {
+        this.ensureStrategicComtrade().then(() => this.renderAll()).catch((error) => {
           $("atlasMapStatus").textContent = `Comtrade context could not be loaded: ${error.message}`;
         });
       }
@@ -632,7 +661,7 @@
       const feature = event.features && event.features[0];
       if (!feature) return;
       const row = feature.properties;
-      this.popup.setLngLat(event.lngLat).setHTML(`<strong>${H.escape(row.partner_name)}</strong><br><span>${H.escape(this.state.year)} imports for consumption: ${H.escape(H.formatNumber(row.trade_value))} current dollars</span><br><small>${H.escape(row.commodity_count)} selected HS6 heading${Number(row.commodity_count) === 1 ? "" : "s"} · USITC DataWeb / Census</small>`).addTo(this.map);
+      this.popup.setLngLat(event.lngLat).setHTML(`<strong>${H.escape(row.partner_name)}</strong><br><span>${H.escape(this.state.year)} reported imports: ${H.escape(H.formatNumber(row.trade_value))} current dollars</span><br><small>${H.escape(row.commodity_count)} selected ${H.escape(row.commodity_label)}${Number(row.commodity_count) === 1 ? "" : "s"} · ${H.escape(row.source_name)}</small>`).addTo(this.map);
     }
 
     selectCountry(id) {
@@ -731,7 +760,9 @@
           name: row.source_partner_name,
           value: 0,
           codes: new Set(),
-          rows: 0
+          rows: 0,
+          source_name: "USITC DataWeb / Census",
+          commodity_label: "HS6 heading"
         };
         current.value += row.trade_value.value;
         current.codes.add(row.commodity_code);
@@ -741,9 +772,44 @@
       return totals;
     }
 
+    comtradePartnerTotals(direction) {
+      const flowCode = direction === "exports" ? "X" : "M";
+      const rows = [...this.activeStrategicComtrade(), ...this.activeComtrade()].filter((row) =>
+        row.reporter_iso3 === "USA" && row.flow_code === flowCode && row.partner_iso3
+      );
+      const totals = new Map();
+      rows.forEach((row) => {
+        const current = totals.get(row.partner_iso3) || {
+          iso3: row.partner_iso3,
+          name: row.partner_name,
+          value: 0,
+          codes: new Set(),
+          rows: 0,
+          source_name: "UN Comtrade / UN Statistics Division",
+          commodity_label: `${row.classification_code} heading`
+        };
+        current.value += row.primary_value || 0;
+        current.codes.add(`${row.classification_code}:${row.commodity_code}`);
+        current.rows += 1;
+        totals.set(row.partner_iso3, current);
+      });
+      return totals;
+    }
+
+    partnerTradeTotals(direction) {
+      if (this.state.year >= 1989 && this.dataWebLoaded) return this.dataWebPartnerTotals(direction);
+      return this.comtradePartnerTotals(direction);
+    }
+
+    partnerTradeSource() {
+      return this.state.year >= 1989 && this.dataWebLoaded
+        ? "USITC DataWeb / Census"
+        : "UN Comtrade / UN Statistics Division";
+    }
+
     tradeCountryGeoJson() {
       if (!this.state.layers.has("quantitative-trade-flows") || this.state.mode !== "quantitative-trade-flows") return EMPTY_COLLECTION;
-      const totals = this.dataWebPartnerTotals("imports");
+      const totals = this.partnerTradeTotals("imports");
       const atlasByA3 = new Map(this.atlas.countries.map((row) => [row.a3, row.id]));
       return {
         type: "FeatureCollection",
@@ -758,7 +824,9 @@
               partner_iso3: total.iso3,
               trade_value: total.value,
               commodity_count: total.codes.size,
-              row_count: total.rows
+              row_count: total.rows,
+              source_name: total.source_name,
+              commodity_label: total.commodity_label
             }
           };
         })
@@ -769,7 +837,7 @@
       if (!this.state.layers.has("quantitative-trade-flows") || this.state.mode !== "quantitative-trade-flows") return EMPTY_COLLECTION;
       const us = this.atlasCountry("united-states");
       const featuresByA3 = new Map(this.orientation.features.map((feature) => [feature.properties.ADM0_A3, feature]));
-      const totals = [...this.dataWebPartnerTotals("imports").values()]
+      const totals = [...this.partnerTradeTotals("imports").values()]
         .sort((a, b) => b.value - a.value)
         .slice(0, 18);
       return {
@@ -785,7 +853,9 @@
               partner_iso3: row.iso3,
               trade_value: row.value,
               commodity_count: row.codes.size,
-              year: this.state.year
+              year: this.state.year,
+              source_name: row.source_name,
+              commodity_label: row.commodity_label
             }
           };
         }).filter(Boolean)
@@ -870,8 +940,9 @@
     renderLegend() {
       const lens = this.layer(this.state.mode);
       if (this.state.mode === "quantitative-trade-flows") {
-        const count = this.activeDataWebTrade("imports").length;
-        $("atlasLegend").innerHTML = `<span class="atlas-legend-kicker">Official trade context · ${H.escape(this.state.year)}</span><strong>${H.escape(lens.title)}</strong><div class="atlas-scale"><span><i data-scale="0"></i>$0</span><span><i data-scale="1"></i>$100K</span><span><i data-scale="2"></i>$1M</span><span><i data-scale="3"></i>$100M+</span></div><p>${H.escape(lens.value_semantics)}</p><p><i class="line-key"></i> Top partner lines use the same reported import customs-value measure.</p><p>${H.escape(count)} positive partner-product rows match this selection. ${H.escape(lens.caveat)}</p>`;
+        const totals = this.partnerTradeTotals("imports");
+        const count = [...totals.values()].reduce((sum, row) => sum + row.rows, 0);
+        $("atlasLegend").innerHTML = `<span class="atlas-legend-kicker">Official trade context · ${H.escape(this.state.year)}</span><strong>${H.escape(lens.title)}</strong><div class="atlas-scale"><span><i data-scale="0"></i>$0</span><span><i data-scale="1"></i>$100K</span><span><i data-scale="2"></i>$1M</span><span><i data-scale="3"></i>$100M+</span></div><p>${H.escape(lens.value_semantics)}</p><p><i class="line-key"></i> Top partner lines use the same reported import-value measure.</p><p>${H.escape(count)} positive partner-product rows from ${H.escape(this.partnerTradeSource())} match this selection. ${H.escape(lens.caveat)}</p>`;
         return;
       }
       const labels = this.state.mode === "frus-activity" ? ["No linked record", "1", "2", "4+"] :
@@ -888,8 +959,8 @@
       const country = this.selectedCountry();
       if (!country) {
         if (this.state.mode === "quantitative-trade-flows") {
-          const active = this.dataWebPartnerTotals("imports").size;
-          $("mapInspector").innerHTML = `<div class="atlas-drawer-empty"><span class="atlas-folio">Selected geography</span><h3>Choose a reported partner</h3><p>At ${H.escape(this.state.year)}, ${H.escape(active)} partner geographies carry positive import customs-value evidence in the selected HS6 headings.</p><p>Hover over a shaded country or line for its DataWeb value. A full History Stack opens only where the portal has a curated country record.</p><div class="atlas-drawer-key"><span><b>Fill</b> Reported import customs value</span><span><b>Line</b> Top partner values to the United States</span></div></div>`;
+          const active = this.partnerTradeTotals("imports").size;
+          $("mapInspector").innerHTML = `<div class="atlas-drawer-empty"><span class="atlas-folio">Selected geography</span><h3>Choose a reported partner</h3><p>At ${H.escape(this.state.year)}, ${H.escape(active)} partner geographies carry positive import-value evidence in the selected commodity headings.</p><p>Hover over a shaded country or line for its ${H.escape(this.partnerTradeSource())} value. A full History Stack opens only where the portal has a curated country record.</p><div class="atlas-drawer-key"><span><b>Fill</b> Reported import value</span><span><b>Line</b> Top partner values to the United States</span></div></div>`;
           return;
         }
         const active = this.data.countries.filter((row) => this.countryValue(row) > 0);
@@ -966,10 +1037,12 @@
       const tradeDetails = this.data["trade-details"].filter((row) => row.year === this.state.year && (!mineral || row.mineral_id === mineral.id));
       const dataWeb = this.activeDataWebTrade().filter((row) => !mineral || row.mineral_id === mineral.id);
       const comtrade = this.activeComtrade();
+      const strategicComtrade = this.activeStrategicComtrade();
+      const comtradeCount = comtrade.length + strategicComtrade.length;
       const annual = this.annualSlice();
       const counts = annual?.counts || {};
       const missing = (annual?.missing_lanes || []).map((id) => GAP_LABELS[id]);
-      const tradePrompt = mineral && (trade.length || tradeDetails.length || dataWeb.length || comtrade.length) ? `<div class="atlas-evidence-prompt"><div><strong>Official trade evidence is available</strong><span>${trade.length} national observation${trade.length === 1 ? "" : "s"}${tradeDetails.length ? `, ${tradeDetails.length} published category row${tradeDetails.length === 1 ? "" : "s"}` : ""}${comtrade.length ? `, ${comtrade.length} Comtrade continuity row${comtrade.length === 1 ? "" : "s"}` : ""}${dataWeb.length ? `, and ${dataWeb.length} DataWeb partner row${dataWeb.length === 1 ? "" : "s"}` : ""} match this selection.</span></div><button type="button" data-open-atlas-tab="trade">Open U.S. Trade</button></div>` : "";
+      const tradePrompt = mineral && (trade.length || tradeDetails.length || dataWeb.length || comtradeCount) ? `<div class="atlas-evidence-prompt"><div><strong>Official trade evidence is available</strong><span>${trade.length} national observation${trade.length === 1 ? "" : "s"}${tradeDetails.length ? `, ${tradeDetails.length} published category row${tradeDetails.length === 1 ? "" : "s"}` : ""}${comtradeCount ? `, ${comtradeCount} Comtrade partner-product row${comtradeCount === 1 ? "" : "s"}` : ""}${dataWeb.length ? `, and ${dataWeb.length} DataWeb partner row${dataWeb.length === 1 ? "" : "s"}` : ""} match this selection.</span></div><button type="button" data-open-atlas-tab="trade">Open U.S. Trade</button></div>` : "";
       return `<div class="atlas-summary-grid"><div><p class="eyebrow">Annual evidence brief</p><h3>${H.escape(title)}</h3><p>${mineral ? `Material filter: <strong>${H.escape(mineral.canonical_name)}</strong>.` : "All pilot materials are visible."} FRUS remains the documentary spine; official statistics, policy records, and archival plans supply context without filling documentary gaps by inference.</p><div class="atlas-summary-metrics"><div><strong>${H.escape(counts.frus_documents || 0)}</strong><span>FRUS records</span></div><div><strong>${H.escape(counts.year_linked_geographies || 0)}</strong><span>year-linked geographies</span></div><div><strong>${H.escape((counts.official_statistics || 0) + (counts.commodity_trade_rows || 0))}</strong><span>exact-year data rows</span></div><div><strong>${H.escape((counts.dated_instruments || 0) + (counts.laws_enacted || 0) + (counts.stockpile_pathways || 0))}</strong><span>policy records</span></div></div>${tradePrompt}</div><div><h4>Historical record</h4>${uniqueEpisodes.length ? `<ol class="atlas-story-list">${uniqueEpisodes.map((row) => `<li><span>${row.start}–${row.end}</span><a href="${H.detailHref("episodes", row.episode_id)}">${H.escape(row.title)}</a>${H.completenessBadge(row.completeness)}</li>`).join("")}</ol>` : '<p class="empty-note">No pilot episode is linked to this exact selection. The absence reflects current coverage, not absence of historical activity.</p>'}<h4 class="atlas-gap-heading">Research needed</h4>${missing.length ? `<ul class="atlas-gap-list">${missing.map((item) => `<li>${H.escape(item)}</li>`).join("")}</ul>` : '<p class="coverage-complete-note">All five annual evidence lanes contain at least one checked-in record. Coverage is still selective rather than comprehensive.</p>'}</div></div>`;
     }
 
@@ -1006,9 +1079,10 @@
       const emptyMessage = mineral
         ? `No annual USGS import or export row is normalized for ${mineral.canonical_name} in ${this.state.year}. ${availableMaterials} other pilot material series have exact-year trade evidence; choose All pilot materials to inspect them.`
         : `No annual USGS commodity trade row is normalized for ${this.state.year}. Missing values are not treated as zero.`;
-      return `<div class="atlas-panel-heading"><div><p class="eyebrow">Verified U.S. commodity trade</p><h3>${mineral ? H.escape(mineral.canonical_name) : "Pilot strategic-resource materials"}, ${H.escape(this.state.year)}</h3></div><p>The long-run USGS rows are exact-year national imports and exports in their published units. DataWeb partner context appears separately for 1989–1992.</p></div>
+      return `<div class="atlas-panel-heading"><div><p class="eyebrow">Verified U.S. commodity trade</p><h3>${mineral ? H.escape(mineral.canonical_name) : "Pilot strategic-resource materials"}, ${H.escape(this.state.year)}</h3></div><p>The long-run USGS rows are exact-year national imports and exports. UN Comtrade adds classification-bounded partner context from 1962; DataWeb remains the U.S.-reported verification layer for 1989–1992.</p></div>
         <div class="trade-scope-note"><strong>National aggregate</strong><span>${H.escape(selectionNote)}</span></div>
         ${this.renderComtradeRareEarthPanel()}
+        ${this.renderComtradeStrategicPanel()}
         ${this.renderDataWebPartnerPanel()}
         ${this.renderTradeDetailPilot(details, research, records)}
         ${groups.length ? `<div class="table-scroll trade-table"><table><caption>Official U.S. mineral imports and exports for ${H.escape(this.state.year)}</caption><thead><tr><th>Material</th><th>Imports</th><th>Exports</th><th>Source definition</th><th>Provenance</th></tr></thead><tbody>${groups.map((group) => {
@@ -1050,6 +1124,44 @@
         ${mirror ? `<div class="comtrade-mirror-heading"><strong>Reporter mirror comparison</strong><span>Mirror values are parallel reports, not duplicates. Import and export valuation, timing, routing, and origin rules differ.</span></div><div class="comtrade-mirror-grid">${mirror}</div>` : '<p class="empty-note">No bilateral U.S.–China mirror pair is available for this year. World and one-sided reporter records remain below.</p>'}
         <div class="table-scroll trade-detail-table"><table><caption>UN Comtrade ${H.escape(classificationLabel)} records for ${H.escape(this.state.year)}; product families remain separate</caption><thead><tr><th>Product family</th><th>Reporter</th><th>Flow</th><th>Partner</th><th>Classification and commodity</th><th>Current value</th><th>Net weight</th><th>Classification status</th></tr></thead><tbody>${tableRows}</tbody></table></div>
         <p class="trade-source-note"><strong>Provenance:</strong> United Nations Statistics Division, UN Comtrade public annual preview API, accessed July 10, 2026. The checked-in manifest retains each reporter-year query URL, code basket, result count, and query hash.</p></section>`;
+    }
+
+    renderComtradeStrategicPanel() {
+      if (this.state.year < 1962 || this.state.mineral === "rare-earth-elements") return "";
+      const country = this.selectedCountry();
+      const atlasCountry = country ? this.atlasCountry(country.id) : null;
+      const allRows = this.activeStrategicComtrade();
+      const rows = atlasCountry ? allRows.filter((row) => row.partner_iso3 === atlasCountry.a3) : allRows;
+      const manifest = this.data["comtrade-strategic-query-manifest"].find((row) => row.year === this.state.year);
+      const classification = manifest?.classification_code || (this.state.year <= 1975 ? "S1" : this.state.year <= 1987 ? "S2" : "S3");
+      const classificationLabel = { S1: "SITC Revision 1", S2: "SITC Revision 2", S3: "SITC Revision 3" }[classification];
+      const mineral = this.selectedMineral();
+      const scope = country ? `${this.historicalName(country, this.state.year)} and the United States` : mineral ? mineral.canonical_name : "pilot strategic materials";
+      if (!rows.length) {
+        return `<section class="trade-pilot comtrade-continuity" aria-labelledby="comtrade-strategic-title"><div class="trade-pilot-heading"><div><p class="eyebrow">UN Comtrade · official international context</p><h4 id="comtrade-strategic-title">Reported partner trade, ${H.escape(this.state.year)}</h4></div>${H.badge("Tier 2 context", "discovery")}</div><p>The checked ${H.escape(classificationLabel)} query returned no matching U.S.-reported row for ${H.escape(scope)}. This is a visible coverage gap, not proof of zero trade.</p></section>`;
+      }
+      const partnerTotals = new Map();
+      rows.filter((row) => row.flow_code === "M" && row.partner_iso3).forEach((row) => {
+        const current = partnerTotals.get(row.partner_iso3) || { name: row.partner_name, value: 0, codes: new Set() };
+        current.value += row.primary_value || 0;
+        current.codes.add(row.commodity_code);
+        partnerTotals.set(row.partner_iso3, current);
+      });
+      const topPartners = [...partnerTotals.values()].sort((a, b) => b.value - a.value).slice(0, 4);
+      const topRows = [...rows].sort((a, b) => b.primary_value - a.primary_value).slice(0, 40);
+      const tableRows = topRows.map((row) => {
+        const material = this.data.indexes.minerals.get(row.mineral_id)?.canonical_name || row.mineral_id;
+        const confidenceKind = row.scope_confidence === "high" ? "verified" : row.scope_confidence === "medium" ? "discovery" : "queue";
+        const weight = row.net_weight_kg == null ? '<span class="unknown-value">Not reported</span>' : `${H.escape(H.formatNumber(row.net_weight_kg))} kg${row.net_weight_estimated ? " <small>estimated</small>" : ""}`;
+        return `<tr>${mineral ? "" : `<th scope="row">${H.escape(material)}</th>`}<td>${H.escape(row.flow)}</td><td>${H.escape(row.partner_name)}</td><td>${H.escape(row.classification_code)} ${H.escape(row.commodity_code)}<small>${H.escape(row.supply_chain_stage.replaceAll("-", " "))} · ${H.escape(row.commodity_description)}</small></td><td>$${H.escape(H.formatNumber(row.primary_value))}<small>${H.escape(row.valuation_basis)}</small></td><td>${weight}</td><td>${H.badge(`${row.scope_confidence} scope`, confidenceKind)}<small>${H.escape(row.scope_caveat)}</small></td></tr>`;
+      }).join("");
+      return `<section class="trade-pilot comtrade-continuity" aria-labelledby="comtrade-strategic-title"><div class="trade-pilot-heading"><div><p class="eyebrow">UN Comtrade · official international context</p><h4 id="comtrade-strategic-title">Reported partner trade, ${H.escape(this.state.year)}</h4></div>${H.badge("Tier 2 context", "discovery")}</div>
+        <p>FRUS remains the documentary spine. These are U.S.-reported merchandise values for selected upstream and primary-material headings, not proof of mine origin, dependence, strategic importance, or contained-mineral quantity.</p>
+        <div class="trade-scope-note caution"><strong>Classification boundary</strong><span>${H.escape(classificationLabel)} is displayed as its own statistical vintage. Ores, compounds, ferroalloys, intermediates, unwrought metals, alloys, waste, and articles remain separately labeled.</span></div>
+        ${topPartners.length ? `<div class="atlas-number-grid trade-number-grid">${topPartners.map((row) => `<article><strong>$${H.escape(H.formatNumber(row.value))}</strong><span>${H.escape(row.name)}</span><small>U.S.-reported imports · ${H.escape(row.codes.size)} selected heading${row.codes.size === 1 ? "" : "s"}</small></article>`).join("")}</div>` : '<p class="empty-note">Only world-total or export rows are available for this selection; no partner ranking is inferred.</p>'}
+        <div class="trade-map-action"><span>${H.escape(rows.length)} positive Comtrade partner-product record${rows.length === 1 ? "" : "s"} match ${H.escape(scope)}.</span><button type="button" data-enable-dataweb-map>Map reported import value</button></div>
+        <details class="trade-detail-disclosure"><summary>Open ${H.escape(rows.length)} Comtrade partner-product rows</summary><div class="table-scroll trade-detail-table"><table><caption>Largest ${H.escape(classificationLabel)} rows for ${H.escape(scope)} in ${H.escape(this.state.year)}</caption><thead><tr>${mineral ? "" : "<th>Material</th>"}<th>Flow</th><th>Partner</th><th>Classification, stage, and commodity</th><th>Current value</th><th>Net weight</th><th>Scope</th></tr></thead><tbody>${tableRows}</tbody></table></div></details>
+        <p class="trade-source-note"><strong>Provenance:</strong> United Nations Statistics Division, <a href="https://comtradeplus.un.org/" target="_blank" rel="noopener">UN Comtrade</a> public annual API, accessed July 10, 2026. The <a href="https://www.unccd.int/resources/knowledge-sharing-system/united-nations-commodity-trade-statistics-database-un-comtrade" target="_blank" rel="noopener">UNCCD Knowledge Hub entry</a> is retained as a discovery pointer, not the statistical publisher.</p></section>`;
     }
 
     renderDataWebPartnerPanel() {
@@ -1164,15 +1276,15 @@
       const headerCells = [...document.querySelectorAll(".atlas-accessible-table thead th")];
       const tableNote = document.querySelector(".atlas-accessible-table > p");
       if (this.state.mode === "quantitative-trade-flows") {
-        const headers = ["Reported partner", "DataWeb name", "Import customs value", "Selected commodity scope", "Source", "Precision"];
+        const headers = ["Reported partner", "ISO3", "Reported import value", "Selected commodity scope", "Source", "Precision"];
         headerCells.forEach((cell, index) => { cell.textContent = headers[index]; });
-        if (tableNote) tableNote.textContent = "This table reproduces the selected-year DataWeb import-value layer without requiring the map. Values sum only the selected six-digit headings and do not measure production, mine origin, import dependence, or strategic weight.";
+        if (tableNote) tableNote.textContent = "This table reproduces the selected-year reported-import layer without requiring the map. Values cover only the selected commodity headings and do not measure production, mine origin, import dependence, or strategic weight.";
         const atlasByA3 = new Map(this.atlas.countries.map((row) => [row.a3, row.id]));
-        const totals = [...this.dataWebPartnerTotals("imports").values()].sort((a, b) => b.value - a.value);
+        const totals = [...this.partnerTradeTotals("imports").values()].sort((a, b) => b.value - a.value);
         $("mapTableBody").innerHTML = totals.map((row) => {
           const atlasId = atlasByA3.get(row.iso3);
           const name = atlasId ? `<button class="table-country-button" type="button" data-table-country="${H.escape(atlasId)}">${H.escape(row.name)}</button>` : H.escape(row.name);
-          return `<tr><td>${name}</td><td>${H.escape(row.name)}</td><td>${H.escape(H.formatNumber(row.value))} current U.S. dollars</td><td>${H.escape(row.codes.size)} HS6 heading${row.codes.size === 1 ? "" : "s"}</td><td>USITC DataWeb / Census</td><td>country-level generalized geometry</td></tr>`;
+          return `<tr><td>${name}</td><td>${H.escape(row.iso3)}</td><td>${H.escape(H.formatNumber(row.value))} current U.S. dollars</td><td>${H.escape(row.codes.size)} ${H.escape(row.commodity_label)}${row.codes.size === 1 ? "" : "s"}</td><td>${H.escape(row.source_name)}</td><td>country-level generalized geometry</td></tr>`;
         }).join("");
         $("mapTableBody").querySelectorAll("[data-table-country]").forEach((button) => button.addEventListener("click", () => this.selectCountry(button.dataset.tableCountry)));
         return;
@@ -1194,7 +1306,7 @@
     }
 
     renderStatus() {
-      const activeCountries = this.state.mode === "quantitative-trade-flows" ? this.dataWebPartnerTotals("imports").size : this.data.countries.filter((row) => this.countryValue(row) > 0).length;
+      const activeCountries = this.state.mode === "quantitative-trade-flows" ? this.partnerTradeTotals("imports").size : this.data.countries.filter((row) => this.countryValue(row) > 0).length;
       const relationships = this.activeRelationships().length;
       const mineral = this.selectedMineral();
       const annual = this.annualSlice();

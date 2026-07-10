@@ -31,6 +31,8 @@ EXPECTED_MINIMUMS = {
     "dataweb-query-manifest": 2,
     "comtrade-rare-earth": 170,
     "comtrade-query-manifest": 40,
+    "comtrade-strategic-materials": 2000,
+    "comtrade-strategic-query-manifest": 31,
     "annual-snapshots": 132,
 }
 
@@ -329,6 +331,53 @@ def main() -> None:
             errors.append(f"{owner}: unexpected query URL")
         if not re.fullmatch(r"[0-9a-f]{64}", str(query.get("query_sha256", ""))):
             errors.append(f"{owner}: malformed query hash")
+
+    required_strategic_comtrade_fields = {
+        "year", "mineral_id", "supply_chain_stage", "reporter_code", "reporter_name",
+        "reporter_iso3", "partner_code", "partner_name", "partner_iso3", "flow_code", "flow",
+        "classification_code", "classification_label", "is_original_classification",
+        "commodity_code", "commodity_description", "scope_confidence", "scope_caveat",
+        "primary_value", "value_unit", "quantity", "quantity_unit_code", "quantity_unit",
+        "quantity_estimated", "net_weight_kg", "net_weight_estimated", "valuation_basis",
+        "query_id", "source_id", "source_url", "discovery_url", "access_date",
+        "transcription_status", "confidence"
+    }
+    strategic_rows = datasets["comtrade-strategic-materials"]
+    strategic_manifest = datasets["comtrade-strategic-query-manifest"]
+    for row in strategic_rows:
+        owner = f"comtrade-strategic-materials/{row.get('id')}"
+        missing = sorted(required_strategic_comtrade_fields - set(row))
+        if missing:
+            errors.append(f"{owner}: missing {', '.join(missing)}")
+        year = row.get("year")
+        expected_class = "S1" if year <= 1975 else "S2" if year <= 1987 else "S3"
+        if not isinstance(year, int) or not 1962 <= year <= 1992 or row.get("classification_code") != expected_class:
+            errors.append(f"{owner}: invalid year or classification")
+        if row.get("mineral_id") not in ids["minerals"] or row.get("mineral_id") == "rare-earth-elements":
+            errors.append(f"{owner}: unexpected mineral {row.get('mineral_id')}")
+        if row.get("reporter_code") not in {841, 842} or row.get("partner_code") not in {0, 68, 152, 156, 180, 710, 740, 792, 894}:
+            errors.append(f"{owner}: unexpected reporter or partner code")
+        if row.get("scope_confidence") not in {"high", "medium", "low"} or not row.get("scope_caveat"):
+            errors.append(f"{owner}: missing scope qualification")
+        if row.get("source_id") != "un-comtrade" or row.get("query_id") not in ids["comtrade-strategic-query-manifest"]:
+            errors.append(f"{owner}: invalid source or query reference")
+        if not isinstance(row.get("primary_value"), int) or row.get("primary_value") < 0:
+            errors.append(f"{owner}: primary value must be a nonnegative integer")
+
+    expected_strategic_minerals = ids["minerals"] - {"rare-earth-elements"}
+    if {row.get("mineral_id") for row in strategic_rows} != expected_strategic_minerals:
+        errors.append("comtrade-strategic-materials: expected all nine non-rare-earth pilot materials")
+    if {row.get("year") for row in strategic_manifest} != set(range(1962, 1993)):
+        errors.append("comtrade-strategic-query-manifest: expected one query for every year 1962-1992")
+    if sum(row.get("record_count", 0) for row in strategic_manifest) != len(strategic_rows):
+        errors.append("comtrade-strategic-query-manifest: record counts do not reconcile to the static cache")
+    for query in strategic_manifest:
+        owner = f"comtrade-strategic-query-manifest/{query.get('id')}"
+        if not str(query.get("query_url", "")).startswith("https://comtradeapi.un.org/public/v1/preview/"):
+            errors.append(f"{owner}: unexpected query URL")
+        for field in ["query_sha256", "code_registry_sha256"]:
+            if not re.fullmatch(r"[0-9a-f]{64}", str(query.get(field, ""))):
+                errors.append(f"{owner}: malformed {field}")
 
     fact_statuses = {"verified", "estimated", "unknown"}
     for brief in datasets["country-briefs"]:

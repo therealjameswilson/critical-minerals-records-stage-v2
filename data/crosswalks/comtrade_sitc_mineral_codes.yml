@@ -1,0 +1,83 @@
+schema_version: "1.0"
+source: https://comtradeapi.un.org/files/v1/app/reference/
+scope_note: >-
+  Selected upstream and primary-material SITC headings for the portal's 1962-1992
+  pilot. Revisions are separate statistical vintages. Codes are not summed across
+  revisions, and contained-mineral quantities are not inferred from ores, alloys,
+  oxides, or intermediate products.
+classifications:
+  S1:
+    label: SITC Revision 1
+    years: [1962, 1975]
+    codes:
+      "2833": {mineral_id: bauxite, stage: ore-concentrate, confidence: high, caveat: "Bauxite and aluminium concentrates."}
+      "6841": {mineral_id: aluminum, stage: unwrought-metal, confidence: medium, caveat: "Includes aluminium alloys with unwrought aluminium."}
+      "28391": {mineral_id: chromium, stage: ore-concentrate, confidence: high, caveat: "Chromium ores and concentrates."}
+      "51367": {mineral_id: chromium, stage: processed-compound, confidence: high, caveat: "Chromium oxides and hydroxides; not total chromium trade."}
+      "51354": {mineral_id: cobalt, stage: processed-compound, confidence: medium, caveat: "Cobalt oxides and hydroxides only; excludes other cobalt forms."}
+      "28311": {mineral_id: copper, stage: ore-concentrate, confidence: high, caveat: "Copper ores and concentrates."}
+      "28312": {mineral_id: copper, stage: intermediate, confidence: high, caveat: "Copper matte; not refined copper."}
+      "68211": {mineral_id: copper, stage: unrefined-metal, confidence: high, caveat: "Blister and other unrefined copper."}
+      "68212": {mineral_id: copper, stage: refined-metal, confidence: medium, caveat: "Refined copper, including remelted material."}
+      "2837": {mineral_id: manganese, stage: ore-concentrate, confidence: high, caveat: "Manganese ores and concentrates."}
+      "51352": {mineral_id: manganese, stage: processed-compound, confidence: high, caveat: "Manganese oxides; not total manganese trade."}
+      "6714": {mineral_id: manganese, stage: ferroalloy, confidence: medium, caveat: "Ferro-manganese; gross product value is not contained manganese."}
+      "2836": {mineral_id: tin, stage: ore-concentrate, confidence: high, caveat: "Tin ores and concentrates."}
+      "6871": {mineral_id: tin, stage: unwrought-metal, confidence: medium, caveat: "Includes tin alloys with unwrought tin."}
+      "28392": {mineral_id: tungsten, stage: ore-concentrate, confidence: high, caveat: "Tungsten or wolfram ores and concentrates."}
+      "68941": {mineral_id: tungsten, stage: unwrought-metal, confidence: medium, caveat: "Tungsten or wolfram heading; consult the revision description before aggregation."}
+      "2860": {mineral_id: uranium, stage: ore-concentrate, confidence: medium, caveat: "Combines uranium and thorium ores and concentrates."}
+      "6880": {mineral_id: uranium, stage: primary-material, confidence: low, caveat: "Combines uranium, thorium, and their alloys."}
+  S2:
+    label: SITC Revision 2
+    years: [1976, 1987]
+    codes:
+      "28731": {mineral_id: bauxite, stage: ore-concentrate, confidence: high, caveat: "Aluminium ore and concentrate."}
+      "28732": {mineral_id: aluminum, stage: processed-material, confidence: high, caveat: "Alumina; distinct from bauxite and unwrought aluminium."}
+      "6841": {mineral_id: aluminum, stage: unwrought-metal, confidence: medium, caveat: "Includes aluminium alloys with unwrought aluminium."}
+      "28791": {mineral_id: chromium, stage: ore-concentrate, confidence: high, caveat: "Chromium ore and concentrate."}
+      "52242": {mineral_id: chromium, stage: processed-compound, confidence: high, caveat: "Chromium oxides and hydroxides; not total chromium trade."}
+      "52245": {mineral_id: cobalt, stage: processed-compound, confidence: medium, caveat: "Cobalt oxides and hydroxides only; excludes other cobalt forms."}
+      "28711": {mineral_id: copper, stage: ore-concentrate, confidence: high, caveat: "Copper ores and concentrates."}
+      "28712": {mineral_id: copper, stage: intermediate, confidence: medium, caveat: "Copper matte and cement copper."}
+      "68211": {mineral_id: copper, stage: unrefined-metal, confidence: high, caveat: "Unrefined copper, including blister copper."}
+      "68212": {mineral_id: copper, stage: refined-metal, confidence: medium, caveat: "Refined copper and some copper alloys in unwrought form."}
+      "2877": {mineral_id: manganese, stage: ore-concentrate, confidence: high, caveat: "Includes qualifying manganiferous iron ores."}
+      "52243": {mineral_id: manganese, stage: processed-compound, confidence: high, caveat: "Manganese oxides; not total manganese trade."}
+      "67161": {mineral_id: manganese, stage: ferroalloy, confidence: medium, caveat: "Ferro-manganese; gross product value is not contained manganese."}
+      "2876": {mineral_id: tin, stage: ore-concentrate, confidence: high, caveat: "Tin ores and concentrates."}
+      "6871": {mineral_id: tin, stage: unwrought-metal, confidence: medium, caveat: "Includes tin alloys with unwrought tin."}
+      "28792": {mineral_id: tungsten, stage: ore-concentrate, confidence: high, caveat: "Tungsten or wolfram ores and concentrates."}
+      "68911": {mineral_id: tungsten, stage: primary-material, confidence: medium, caveat: "Combines unwrought tungsten with waste and scrap."}
+      "2860": {mineral_id: uranium, stage: ore-concentrate, confidence: medium, caveat: "Combines uranium and thorium ores and concentrates."}
+      "6880": {mineral_id: uranium, stage: primary-material, confidence: low, caveat: "Depleted uranium, thorium, alloys, articles, waste, and scrap share one heading."}
+  S3:
+    label: SITC Revision 3
+    years: [1988, 1992]
+    codes:
+      "2851": {mineral_id: bauxite, stage: ore-concentrate, confidence: high, caveat: "Aluminium ores and concentrates."}
+      "2852": {mineral_id: aluminum, stage: processed-material, confidence: high, caveat: "Alumina; distinct from bauxite and unwrought aluminium."}
+      "68411": {mineral_id: aluminum, stage: unwrought-metal, confidence: high, caveat: "Unalloyed aluminium."}
+      "68412": {mineral_id: aluminum, stage: unwrought-alloy, confidence: high, caveat: "Aluminium alloys; do not merge with unalloyed metal without disclosure."}
+      "28791": {mineral_id: chromium, stage: ore-concentrate, confidence: high, caveat: "Chromium ores and concentrates."}
+      "52252": {mineral_id: chromium, stage: processed-compound, confidence: high, caveat: "Chromium oxides and hydroxides; not total chromium trade."}
+      "67153": {mineral_id: chromium, stage: ferroalloy, confidence: medium, caveat: "Ferrochromium; gross product value is not contained chromium."}
+      "68995": {mineral_id: chromium, stage: metal-and-articles, confidence: low, caveat: "Combines chromium metal with articles, waste, and scrap."}
+      "28793": {mineral_id: cobalt, stage: ore-concentrate, confidence: high, caveat: "Cobalt ores and concentrates."}
+      "52255": {mineral_id: cobalt, stage: processed-compound, confidence: medium, caveat: "Cobalt oxides and hydroxides, including commercial cobalt oxides."}
+      "68981": {mineral_id: cobalt, stage: primary-and-intermediate, confidence: low, caveat: "Combines cobalt mattes, intermediates, unwrought cobalt, waste, scrap, and powders."}
+      "2831": {mineral_id: copper, stage: ore-concentrate, confidence: high, caveat: "Copper ores and concentrates."}
+      "28321": {mineral_id: copper, stage: intermediate, confidence: high, caveat: "Copper mattes; not refined copper."}
+      "68211": {mineral_id: copper, stage: unrefined-metal, confidence: high, caveat: "Unrefined copper and anodes for electrolytic refining."}
+      "68212": {mineral_id: copper, stage: refined-metal, confidence: high, caveat: "Refined copper."}
+      "2877": {mineral_id: manganese, stage: ore-concentrate, confidence: high, caveat: "Includes qualifying manganiferous iron ores."}
+      "52253": {mineral_id: manganese, stage: processed-compound, confidence: high, caveat: "Manganese oxides; not total manganese trade."}
+      "67152": {mineral_id: manganese, stage: ferroalloy, confidence: medium, caveat: "Ferrosilico-manganese; gross product value is not contained manganese."}
+      "68994": {mineral_id: manganese, stage: metal-and-articles, confidence: low, caveat: "Combines manganese metal with articles, waste, and scrap."}
+      "2876": {mineral_id: tin, stage: ore-concentrate, confidence: high, caveat: "Tin ores and concentrates."}
+      "68711": {mineral_id: tin, stage: unwrought-metal, confidence: high, caveat: "Unalloyed tin."}
+      "68712": {mineral_id: tin, stage: unwrought-alloy, confidence: high, caveat: "Tin alloys; do not merge with unalloyed metal without disclosure."}
+      "28792": {mineral_id: tungsten, stage: ore-concentrate, confidence: high, caveat: "Tungsten or wolfram ores and concentrates."}
+      "68911": {mineral_id: tungsten, stage: primary-material, confidence: medium, caveat: "Combines unwrought tungsten with waste and scrap."}
+      "2861": {mineral_id: uranium, stage: ore-concentrate, confidence: high, caveat: "Uranium ores and concentrates."}
+      "52515": {mineral_id: uranium, stage: processed-material, confidence: low, caveat: "Combines depleted uranium and thorium compounds, alloys, dispersions, ceramics, and mixtures."}

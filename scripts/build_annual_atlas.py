@@ -61,6 +61,7 @@ def main() -> None:
     trade_details = load("trade-details")
     dataweb = load("dataweb-trade")
     comtrade = load("comtrade-rare-earth")
+    strategic_comtrade = load("comtrade-strategic-materials")
 
     country_by_a3 = {row["a3"]: row["id"] for row in atlas["countries"]}
     country_ids = {row["id"] for row in countries}
@@ -128,6 +129,10 @@ def main() -> None:
             row for row in comtrade
             if row["year"] == year and (mineral_id in {None, "rare-earth-elements"})
         ]
+        year_strategic_comtrade = [
+            row for row in strategic_comtrade
+            if row["year"] == year and (mineral_id is None or row["mineral_id"] == mineral_id)
+        ]
 
         evidence = defaultdict(set)
 
@@ -155,6 +160,9 @@ def main() -> None:
         for row in year_comtrade:
             add(country_by_a3.get(row.get("reporter_iso3")), f"comtrade:{row['id']}")
             add(country_by_a3.get(row.get("partner_iso3")), f"comtrade:{row['id']}")
+        for row in year_strategic_comtrade:
+            add(country_by_a3.get(row.get("reporter_iso3")), f"comtrade:{row['id']}")
+            add(country_by_a3.get(row.get("partner_iso3")), f"comtrade:{row['id']}")
 
         counts = {
             "frus_documents": len(year_frus),
@@ -169,9 +177,9 @@ def main() -> None:
             "nara_query_plans": len(year_nara),
             "official_statistics": len(year_statistics),
             "broad_trade_context_rows": len(broad_trade),
-            "commodity_trade_rows": len(mineral_trade) + len(year_trade_details) + len(year_dataweb) + len(year_comtrade),
+            "commodity_trade_rows": len(mineral_trade) + len(year_trade_details) + len(year_dataweb) + len(year_comtrade) + len(year_strategic_comtrade),
             "dataweb_partner_rows": len(year_dataweb),
-            "comtrade_context_rows": len(year_comtrade),
+            "comtrade_context_rows": len(year_comtrade) + len(year_strategic_comtrade),
         }
 
         if mineral_id is None:

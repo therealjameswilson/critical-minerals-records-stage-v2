@@ -4,7 +4,7 @@
   const FILES = [
     "sources", "minerals", "countries", "episodes", "agreements", "laws",
     "administrations", "stockpile-cases", "frus-documents", "statistics", "trade",
-    "trade-details", "trade-research", "dataweb-query-manifest", "comtrade-query-manifest",
+    "trade-details", "trade-research", "dataweb-query-manifest", "comtrade-query-manifest", "comtrade-strategic-query-manifest",
     "nara-queries", "country-briefs", "modern-context"
   ];
 
@@ -43,10 +43,11 @@
     const data = Object.fromEntries(FILES.map((name, index) => [name, rows[index]]));
     data["dataweb-trade"] = [];
     data["comtrade-rare-earth"] = [];
+    data["comtrade-strategic-materials"] = [];
     data["annual-snapshots"] = [];
     data.atlas = atlas;
     data.indexes = {};
-    [...FILES, "dataweb-trade", "comtrade-rare-earth", "annual-snapshots"].forEach((name) => {
+    [...FILES, "dataweb-trade", "comtrade-rare-earth", "comtrade-strategic-materials", "annual-snapshots"].forEach((name) => {
       data.indexes[name] = new Map((data[name] || []).map((row) => [row.id, row]));
     });
     return data;
