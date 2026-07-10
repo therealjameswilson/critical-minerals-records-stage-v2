@@ -154,6 +154,15 @@ def test_frontend_has_accessible_visualization_alternatives():
     assert "prefers-reduced-motion" in (ROOT / "assets" / "portal.css").read_text(encoding="utf-8")
 
 
+def test_history_stack_minimap_has_explicit_svg_palette():
+    script = (ROOT / "assets" / "history-stack.js").read_text(encoding="utf-8")
+    css = (ROOT / "assets" / "portal.css").read_text(encoding="utf-8")
+    for class_name in ["ocean", "graticule", "land", "map-marker"]:
+        assert f'class="{class_name}"' in script
+        assert f".history-map-mini .{class_name}" in css
+    assert '[data-theme="dark"] .history-map-mini .ocean' in css
+
+
 def test_public_pages_do_not_contain_social_drafting_language():
     public = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in [
         "records-stage.html", "history-stack.html", "methodology.html",

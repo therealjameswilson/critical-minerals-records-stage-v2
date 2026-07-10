@@ -792,7 +792,56 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
 .chart-line { fill: none; stroke: var(--teal-600); stroke-width: 3; }
 .chart-point { fill: var(--rust-600); stroke: var(--surface); stroke-width: 2; }
 .chart-label { fill: var(--muted); font-size: 10px; }
-.history-map-mini { min-height: 300px; }
+.history-map-mini {
+  min-height: 300px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  background: #dce9eb;
+  border: 1px solid var(--line);
+}
+.history-map-mini svg {
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+  background: #dce9eb;
+}
+.history-map-mini .ocean { fill: #dce9eb; }
+.history-map-mini .graticule path {
+  fill: none;
+  stroke: #6f8990;
+  stroke-width: 1;
+  stroke-opacity: .38;
+  vector-effect: non-scaling-stroke;
+}
+.history-map-mini .land path {
+  fill: #a8b8aa;
+  stroke: #6c8177;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+.history-map-mini .map-marker circle {
+  fill: var(--gold-600);
+  stroke: #fffef9;
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+.history-map-mini .map-marker text {
+  fill: var(--navy-900);
+  stroke: #fffef9;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+}
+[data-theme="dark"] .history-map-mini,
+[data-theme="dark"] .history-map-mini svg { background: #102733; }
+[data-theme="dark"] .history-map-mini .ocean { fill: #102733; }
+[data-theme="dark"] .history-map-mini .graticule path { stroke: #9cb0b4; stroke-opacity: .28; }
+[data-theme="dark"] .history-map-mini .land path { fill: #536b63; stroke: #81938d; }
+[data-theme="dark"] .history-map-mini .map-marker circle { fill: var(--gold-500); stroke: #102733; }
+[data-theme="dark"] .history-map-mini .map-marker text { fill: #f6f4ed; stroke: #102733; }
 .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .outcome-grid > div { min-height: 140px; padding: 15px; border: 1px solid var(--line); border-top: 3px solid var(--gold-500); }
 .outcome-grid strong { display: block; margin-bottom: 8px; font-family: Georgia, serif; }
