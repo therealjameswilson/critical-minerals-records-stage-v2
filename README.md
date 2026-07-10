@@ -1,14 +1,14 @@
-# U.S. Critical Minerals Intelligence Portal
+# Strategic Resources Diplomacy
 
-A static-first historical intelligence portal for understanding how the United
-States has pursued secure access to critical minerals and supply chains from
-1861 to the present.
+A static-first, FRUS-grounded research environment for understanding how the
+United States used diplomacy to procure, secure, finance, protect, and reassess
+access to strategic resources.
 
 The primary audience is Foreign Service Officers and policy staff, but the site
 is also designed for historians, journalists, congressional staff, researchers,
-and students. It combines a historical timeline, global evidence map, mineral
-and country intelligence indexes, administration comparison, a FRUS-first
-discovery layer, and a filterable official-source record explorer.
+and students. It begins with recurring diplomatic problems and curated FRUS
+pathways, then opens into a conceptual timeline, country and mineral histories,
+the full FRUS subject index, and a filterable official-source evidence set.
 
 Live site:
 [therealjameswilson.github.io/critical-minerals-records-stage](https://therealjameswilson.github.io/critical-minerals-records-stage/)
@@ -42,7 +42,7 @@ This repository is a standalone adaptation of
 [therealjameswilson/toolkit-template](https://github.com/therealjameswilson/toolkit-template),
 which descends from the FRUS On This Day toolkit. It preserves the parser,
 scorer, event contract, taxonomy enrichment, and compact-cache build pattern
-while replacing the social-media workflow with a historical intelligence
+while replacing the social-media workflow with a historical research
 interface.
 
 ## Trust Model
@@ -65,26 +65,26 @@ proxies are visibly marked for review.
 
 ## Portal Sections
 
-- **2025-2026 Command Center:** current diplomacy connected to historical
-  precedents. The State Department ministerial record, White House policy
-  instruments, DFC investment framework, and Landau analytical report are
-  indexed with distinct source tiers and claim-level caveats.
-- **Interactive Historical Timeline:** era-based questions and verified source
-  records from 1861 to the present.
-- **Global Operating Picture:** country relationships, source mix, supply-chain
-  stages, mineral filters, and year scrubbing.
-- **Mineral Encyclopedia:** entry points for lithium, cobalt, copper, graphite,
-  rare earths, nickel, manganese, gallium, germanium, antimony, tin, tungsten,
-  and chromium.
-- **Country Intelligence:** coverage and research priorities for major producer
-  and partner countries.
-- **Administration Explorer:** indexed-record coverage by administration.
-- **FRUS Critical Minerals Index:** 16,811 metadata-only document links across
+- **Why History Matters:** the FRUS-led purpose, literal metadata search, and
+  distinctions among documentary metadata, editorial synthesis, and comparison.
+- **The Present Problem:** current official and analytical concerns translated
+  into historical questions, not an implementation dashboard.
+- **Recurring Diplomatic Problems:** nine problem lenses, with unsupported
+  themes explicitly retained as research queues.
+- **FRUS Pathways:** three verified documentary routes and two research queues
+  built from the records already present in this repository.
+- **Conceptual Timeline:** era-based questions, terminology, institutions,
+  instruments, tensions, and source-backed milestones.
+- **Country and Mineral Histories:** curated relationship arcs where evidence
+  permits, plus historical search language and visible gaps.
+- **Full FRUS Index:** 16,811 metadata-only document links across
   545 volumes. It includes every document assigned to the Minerals and metals
   or Natural resources authorities, plus exact Bauxite and Sea bed mining
   assignments, with official volume context and direct HistoryAtState links.
 - **Evidence Explorer:** filterable records with confidence, caveats, official
   links, NARA discovery, and shareable URLs.
+- **How to Read FRUS:** concise guidance on selection, subject mappings,
+  historical terminology, comparison limits, and collections beyond FRUS.
 
 ## Data Model
 

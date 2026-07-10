@@ -1,4 +1,10 @@
 window.CRITICAL_MINERALS_PORTAL = {
+  product: {
+    title: "Strategic Resources Diplomacy",
+    eyebrow: "FRUS historical research desk",
+    proposition: "Understand today's critical-minerals diplomacy through the historical record of how the United States sought, secured, financed, protected, and reassessed access to strategic resources."
+  },
+
   eras: [
     {
       id: "civil-war",
@@ -7,7 +13,8 @@ window.CRITICAL_MINERALS_PORTAL = {
       start: 1861,
       end: 1865,
       question: "How did blockade, wartime procurement, and industrial mobilization affect access to metals?",
-      status: "research"
+      status: "research",
+      researchNote: "The subject index contains discovery leads, but the current verified seed set does not yet support an era synthesis."
     },
     {
       id: "industrial-expansion",
@@ -16,7 +23,8 @@ window.CRITICAL_MINERALS_PORTAL = {
       start: 1866,
       end: 1897,
       question: "How did industrial scale, rail networks, and overseas markets alter material demand?",
-      status: "research"
+      status: "research",
+      researchNote: "Document-level verification is still required before characterizing this period."
     },
     {
       id: "spanish-american-war",
@@ -25,7 +33,8 @@ window.CRITICAL_MINERALS_PORTAL = {
       start: 1898,
       end: 1901,
       question: "What did overseas war reveal about logistics, metals, and strategic access?",
-      status: "research"
+      status: "research",
+      researchNote: "This remains a FRUS and archival research queue."
     },
     {
       id: "world-war-i",
@@ -34,7 +43,8 @@ window.CRITICAL_MINERALS_PORTAL = {
       start: 1902,
       end: 1918,
       question: "Which raw-material bottlenecks entered U.S. wartime planning and diplomacy?",
-      status: "research"
+      status: "research",
+      researchNote: "The full FRUS index provides leads; no document-level pathway is yet verified in the event set."
     },
     {
       id: "interwar",
@@ -43,7 +53,8 @@ window.CRITICAL_MINERALS_PORTAL = {
       start: 1919,
       end: 1938,
       question: "How did officials turn wartime shortages into national mineral planning?",
-      status: "research"
+      status: "research",
+      researchNote: "This interpretive bridge requires additional verified records."
     },
     {
       id: "world-war-ii",
@@ -52,7 +63,8 @@ window.CRITICAL_MINERALS_PORTAL = {
       start: 1939,
       end: 1945,
       question: "How did procurement, substitution, and allied access shape the strategic-materials system?",
-      status: "research"
+      status: "research",
+      researchNote: "World War II is a priority research queue; index membership alone is not enough for a synthesis."
     },
     {
       id: "early-cold-war",
@@ -60,8 +72,20 @@ window.CRITICAL_MINERALS_PORTAL = {
       years: "1946-1960",
       start: 1946,
       end: 1960,
-      question: "How did stockpiling, European recovery, and decolonization redefine accessible supply?",
-      status: "seeded"
+      question: "How did stockpiling, European recovery, and political change redefine assumptions about foreign supply?",
+      status: "verified",
+      bridgeNote: "This is the strongest verified bridge in the current seed set between wartime scarcity and permanent peacetime planning.",
+      dominantConcern: "Expanding overseas production while defining material requirements and stockpile objectives.",
+      institutions: ["Department of State", "National Security Resources Board"],
+      instruments: ["ERP-related provisions", "production support", "stockpile objectives", "foreign-source assumptions"],
+      terminology: ["strategic and critical materials", "material requirements", "foreign sources", "raw materials"],
+      diplomaticTension: "Recovery and security planning depended on resources located beyond U.S. territory and on assumptions about their availability.",
+      changeFromPriorEra: "The verified records show emergency scarcity being translated into recovery programs, production planning, and peacetime stockpile requirements.",
+      recordIds: [
+        "frus-1947-v1-d395-strategic-materials",
+        "frus-1950-v1-d95-stockpile-program",
+        "frus-1952-54-v11p1-d27-tropical-africa"
+      ]
     },
     {
       id: "cold-war",
@@ -69,8 +93,15 @@ window.CRITICAL_MINERALS_PORTAL = {
       years: "1961-1991",
       start: 1961,
       end: 1991,
-      question: "How did alliance geography, political reliability, and strategic planning change material access?",
-      status: "seeded"
+      question: "How did officials judge the political and economic dependability of accessible foreign sources?",
+      status: "verified",
+      dominantConcern: "Whether nominal foreign supply could be treated as accessible during an emergency.",
+      institutions: ["Department of State", "Department of Defense", "Office of Emergency Planning"],
+      instruments: ["interagency memoranda", "stockpile-objective calculations", "political and economic source assessments"],
+      terminology: ["accessible foreign sources", "political dependability", "economic dependability", "stockpile objectives"],
+      diplomaticTension: "Stockpile calculations required judgments about allied and nearby suppliers that were political as well as quantitative.",
+      changeFromPriorEra: "The verified 1967 record makes source reliability an explicit interagency variable in stockpile methodology.",
+      recordIds: ["frus-1964-68-v9-d344-stockpile-objectives"]
     },
     {
       id: "post-cold-war",
@@ -78,8 +109,9 @@ window.CRITICAL_MINERALS_PORTAL = {
       years: "1992-2000",
       start: 1992,
       end: 2000,
-      question: "How did reduced stockpiles and expanding global trade change the U.S. risk model?",
-      status: "research"
+      question: "How did expanding global trade alter the U.S. strategic-resource risk model?",
+      status: "research",
+      researchNote: "The current verified historical seed set ends in 1967; this period requires new sources."
     },
     {
       id: "china-wto-era",
@@ -88,7 +120,8 @@ window.CRITICAL_MINERALS_PORTAL = {
       start: 2001,
       end: 2016,
       question: "Where did extraction, processing, refining, and manufacturing become concentrated?",
-      status: "research"
+      status: "research",
+      researchNote: "Trade and production datasets are needed before this period can be interpreted historically."
     },
     {
       id: "critical-minerals-strategy",
@@ -96,89 +129,257 @@ window.CRITICAL_MINERALS_PORTAL = {
       years: "2017-2024",
       start: 2017,
       end: 2024,
-      question: "How did criticality lists, energy technologies, and supply-chain risk reshape policy?",
-      status: "seeded"
+      question: "How did criticality lists, energy technologies, and supply-chain risk reshape official categories?",
+      status: "official",
+      dominantConcern: "Defining criticality and connecting material supply risk to energy technologies.",
+      institutions: ["U.S. Geological Survey", "Department of Energy"],
+      instruments: ["critical-minerals lists", "critical-materials assessments", "commodity studies"],
+      terminology: ["critical minerals", "critical materials", "supply risk"],
+      diplomaticTension: "Modern category systems do not map neatly onto the strategic-material vocabulary used in older records."
     },
     {
       id: "ministerial-era",
-      label: "Ministerial Era",
+      label: "Present in historical context",
       years: "2025-present",
       start: 2025,
       end: 2026,
-      question: "How is modern minerals diplomacy connecting agreements, finance, processing, and partner coordination?",
-      status: "seeded"
+      question: "Which current concerns have historical analogues, and where do modern processing, finance, and technology problems differ?",
+      status: "official",
+      dominantConcern: "Partner coordination, investment frameworks, processing capacity, and resilient supply chains.",
+      institutions: ["Department of State", "The White House", "DFC", "EXIM"],
+      instruments: ["ministerial diplomacy", "investment frameworks", "project finance", "trade measures"],
+      terminology: ["critical minerals", "processing", "supply chains", "investment partnership"],
+      diplomaticTension: "Current policy combines resource access with processing, infrastructure, finance, and private investment across an integrated value chain.",
+      changeFromPriorEra: "The contemporary records emphasize value-chain integration and investment instruments alongside access to raw materials."
     }
   ],
-  minerals: [
-    { name: "Lithium", symbol: "Li", prompt: "Trace lithium suppliers, battery policy, trade records, and agreements over time." },
-    { name: "Cobalt", symbol: "Co", prompt: "Compare wartime cobalt access with Cold War and modern battery supply diplomacy." },
-    { name: "Copper", symbol: "Cu", prompt: "Follow copper through wartime requirements, Chilean relations, trade, and infrastructure." },
-    { name: "Graphite", symbol: "C", prompt: "Connect historical strategic-material lists to modern anode and processing concerns." },
-    { name: "Rare earth elements", symbol: "REE", prompt: "Map the shift from geological resource to processing and manufacturing vulnerability." },
-    { name: "Nickel", symbol: "Ni", prompt: "Examine alloy demand, stockpiling, supplier geography, and processing capacity." },
-    { name: "Manganese", symbol: "Mn", prompt: "Track steel, batteries, stockpile assumptions, and changing foreign sources." },
-    { name: "Gallium", symbol: "Ga", prompt: "Review semiconductor uses, trade-code caveats, and current supply restrictions." },
-    { name: "Germanium", symbol: "Ge", prompt: "Connect defense and semiconductor demand to stockpiling and trade evidence." },
-    { name: "Antimony", symbol: "Sb", prompt: "Trace defense use, stockpile policy, and shifting overseas supply." },
-    { name: "Tin", symbol: "Sn", prompt: "Follow Southeast Asian supply, wartime planning, and modern electronics demand." },
-    { name: "Tungsten", symbol: "W", prompt: "Compare machining and armament requirements across war and peacetime planning." },
-    { name: "Chromium", symbol: "Cr", prompt: "Map chromite access, alloy demand, stockpile assumptions, and supplier reliability." }
+
+  diplomaticProblems: [
+    {
+      id: "securing-access",
+      title: "Securing access",
+      summary: "How could diplomacy connect overseas production and foreign supply to U.S. recovery, security, and stockpile requirements?",
+      historicalQuestion: "What made a foreign source usable rather than merely known?",
+      periods: ["Early Cold War", "Cold War"],
+      minerals: ["cobalt", "copper", "chromium", "manganese", "nickel"],
+      countries: ["Democratic Republic of the Congo", "South Africa", "Canada", "Mexico"],
+      stages: ["diplomacy", "trade", "mining", "stockpiling"],
+      recordIds: [
+        "frus-1947-v1-d395-strategic-materials",
+        "frus-1952-54-v11p1-d27-tropical-africa",
+        "frus-1964-68-v9-d344-stockpile-objectives"
+      ],
+      status: "verified"
+    },
+    {
+      id: "reliable-suppliers",
+      title: "Assessing reliable foreign suppliers",
+      summary: "Officials had to decide which foreign supplies were politically and economically dependable under planning assumptions.",
+      historicalQuestion: "Who judged accessibility, and how did that judgment change calculated requirements?",
+      periods: ["Early Cold War", "Cold War"],
+      minerals: ["chromium", "cobalt", "copper", "manganese", "nickel", "tin", "tungsten"],
+      countries: ["Canada", "Mexico"],
+      stages: ["stockpiling", "trade", "diplomacy"],
+      recordIds: ["frus-1950-v1-d95-stockpile-program", "frus-1964-68-v9-d344-stockpile-objectives"],
+      status: "verified"
+    },
+    {
+      id: "production-infrastructure",
+      title: "Expanding production and infrastructure",
+      summary: "Access depended on production support and on the infrastructure needed to move material, not geology alone.",
+      historicalQuestion: "How were recovery programs, production expansion, and transport constraints linked to strategic supply?",
+      periods: ["Early Cold War"],
+      minerals: ["cobalt", "copper", "graphite", "manganese", "tin"],
+      countries: ["Democratic Republic of the Congo", "South Africa"],
+      stages: ["mining", "infrastructure", "trade", "stockpiling"],
+      recordIds: ["frus-1947-v1-d395-strategic-materials", "frus-1952-54-v11p1-d27-tropical-africa"],
+      status: "verified"
+    },
+    {
+      id: "concentration-dependency",
+      title: "Managing concentration and dependency",
+      summary: "Strategic planning had to account for materials concentrated in politically changing regions or in a limited set of accessible sources.",
+      historicalQuestion: "Which geographic assumptions made supply plans fragile?",
+      periods: ["Early Cold War", "Cold War"],
+      minerals: ["cobalt", "copper", "chromium", "manganese"],
+      countries: ["Democratic Republic of the Congo", "South Africa", "Canada", "Mexico"],
+      stages: ["mining", "trade", "stockpiling"],
+      recordIds: ["frus-1952-54-v11p1-d27-tropical-africa", "frus-1964-68-v9-d344-stockpile-objectives"],
+      status: "verified"
+    },
+    {
+      id: "stockpiling",
+      title: "Stockpiling and emergency planning",
+      summary: "Stockpile objectives translated foreign-source assumptions and material requirements into interagency planning decisions.",
+      historicalQuestion: "How did assumptions about overseas supply change what the United States planned to hold?",
+      periods: ["Early Cold War", "Cold War"],
+      minerals: ["antimony", "chromium", "cobalt", "copper", "graphite", "manganese", "nickel", "tin", "tungsten"],
+      countries: ["United States", "Canada", "Mexico"],
+      stages: ["stockpiling", "trade", "diplomacy"],
+      recordIds: [
+        "frus-1947-v1-d395-strategic-materials",
+        "frus-1950-v1-d95-stockpile-program",
+        "frus-1964-68-v9-d344-stockpile-objectives"
+      ],
+      status: "verified"
+    },
+    {
+      id: "resource-nationalism",
+      title: "Resource nationalism and investment terms",
+      summary: "How sovereignty, ownership, and bargaining over natural resources altered access cannot yet be answered from the verified seed set.",
+      historicalQuestion: "How did host-government objectives and changes in resource control reshape U.S. assumptions?",
+      periods: ["Research queue"],
+      minerals: ["copper"],
+      countries: ["Chile"],
+      stages: ["diplomacy", "finance", "mining"],
+      recordIds: [],
+      frusQuery: "Chile copper",
+      status: "research"
+    },
+    {
+      id: "allied-coordination",
+      title: "Alliance and partner coordination",
+      summary: "U.S. planning incorporated diplomatic posts, recovery partners, and judgments about nearby or allied foreign sources.",
+      historicalQuestion: "How were competing requirements and source assumptions coordinated across governments and agencies?",
+      periods: ["Early Cold War", "Cold War"],
+      minerals: ["strategic materials"],
+      countries: ["Canada", "Mexico"],
+      stages: ["diplomacy", "trade", "stockpiling"],
+      recordIds: ["frus-1947-v1-d395-strategic-materials", "frus-1964-68-v9-d344-stockpile-objectives"],
+      status: "verified"
+    },
+    {
+      id: "processing-bottlenecks",
+      title: "Processing and technological bottlenecks",
+      summary: "Modern records emphasize processing and refining, but the verified historical seed set does not yet establish when this became a diplomatic problem.",
+      historicalQuestion: "When did concern shift from access to ore toward processing, refining, manufacturing, or substitution?",
+      periods: ["Research queue"],
+      minerals: ["rare earth elements", "gallium", "germanium"],
+      countries: [],
+      stages: ["processing", "refining"],
+      recordIds: [],
+      frusQuery: "processing strategic materials",
+      status: "research"
+    },
+    {
+      id: "social-constraints",
+      title: "Environmental, labor, and political constraints",
+      summary: "The present seed set is insufficient to characterize how labor conditions, environmental effects, or local politics constrained mineral access.",
+      historicalQuestion: "Which non-geological constraints changed the feasibility or legitimacy of access?",
+      periods: ["Research queue"],
+      minerals: [],
+      countries: [],
+      stages: ["mining", "permitting", "infrastructure"],
+      recordIds: [],
+      frusQuery: "minerals labor political conditions",
+      status: "research"
+    }
   ],
-  countries: [
-    { name: "United States", lon: -98, lat: 39, focus: "Policy, demand, stockpiling, trade, and domestic capacity" },
-    { name: "Canada", lon: -106, lat: 56, focus: "Allied access, mining, processing, and defense supply" },
-    { name: "Mexico", lon: -102, lat: 23, focus: "North American supply chains and historical accessibility" },
-    { name: "Chile", lon: -71, lat: -33, focus: "Copper, lithium, investment, and diplomatic agreements" },
-    { name: "Argentina", lon: -64, lat: -34, focus: "Lithium, investment climate, and infrastructure" },
-    { name: "Brazil", lon: -52, lat: -10, focus: "Niobium, graphite, rare earths, and industrial partnership" },
-    { name: "Peru", lon: -75, lat: -9, focus: "Copper, mining policy, infrastructure, and investment" },
-    { name: "Democratic Republic of the Congo", lon: 23, lat: -3, focus: "Cobalt, copper, historical access, and governance" },
-    { name: "Egypt", lon: 30, lat: 27, focus: "Commercial diplomacy, infrastructure, trade corridors, and regional security" },
-    { name: "Ethiopia", lon: 40, lat: 9, focus: "Strategic investment, infrastructure corridors, and commercial engagement" },
-    { name: "Kenya", lon: 38, lat: 1, focus: "Rare-earth potential, investment climate, infrastructure, and regional diplomacy" },
-    { name: "Djibouti", lon: 43, lat: 12, focus: "Port infrastructure, maritime access, security, and commercial ties" },
-    { name: "South Africa", lon: 24, lat: -30, focus: "Chromium, manganese, platinum-group metals, and historical access" },
-    { name: "Namibia", lon: 17, lat: -22, focus: "Uranium, rare earths, investment, and infrastructure" },
-    { name: "Greenland", lon: -42, lat: 72, focus: "Arctic strategy, rare earths, and alliance geography" },
-    { name: "Ukraine", lon: 31, lat: 49, focus: "Reconstruction, titanium, graphite, and strategic partnership" },
-    { name: "Kazakhstan", lon: 68, lat: 48, focus: "Uranium, chromium, rare earths, and transport corridors" },
-    { name: "Uzbekistan", lon: 64, lat: 41, focus: "Critical minerals, investment, and Central Asian connectivity" },
-    { name: "Indonesia", lon: 118, lat: -2, focus: "Nickel, processing policy, investment, and trade" },
-    { name: "Philippines", lon: 122, lat: 13, focus: "Nickel, alliances, maritime access, and investment" },
-    { name: "Mongolia", lon: 103, lat: 46, focus: "Rare earths, copper, third-neighbor diplomacy, and infrastructure" },
-    { name: "Australia", lon: 134, lat: -25, focus: "Allied mining, processing, investment, and defense supply chains" }
+
+  frusPathways: [
+    {
+      id: "accessible-foreign-sources",
+      title: "How the United States judged accessible foreign sources",
+      summary: "A route from foreign-source assumptions to explicit political and economic judgments about supplier dependability.",
+      historicalProblem: "Stockpile requirements depended on what foreign material planners believed would remain available in an emergency.",
+      whyItMattered: "Changing the accessible-source assumption could change calculated stockpile requirements.",
+      stateRole: "The 1967 memorandum records State and Defense assessing the political and economic dependability of sources within an interagency stockpile process.",
+      instruments: ["foreign-source assumptions", "interagency memoranda", "stockpile-objective calculations"],
+      recordIds: ["frus-1950-v1-d95-stockpile-program", "frus-1964-68-v9-d344-stockpile-objectives"],
+      contemporaryResonance: "Current diplomacy also distinguishes nominal supply from supply that is reliable under political and economic stress.",
+      criticalDifference: "The verified historical records center on emergency stockpile methodology; current policy also addresses processing, investment, infrastructure, and integrated commercial supply chains.",
+      status: "verified"
+    },
+    {
+      id: "recovery-stockpiling",
+      title: "From European recovery to permanent stockpile planning",
+      summary: "How recovery policy, overseas production, and strategic-material requirements became connected in early Cold War planning.",
+      historicalProblem: "The United States sought to support recovery while increasing production and building reserves of materials considered strategically important.",
+      whyItMattered: "Recovery requirements and national-security planning competed for materials and depended on overseas production.",
+      stateRole: "A State circular airgram connected overseas missions and ERP planning to production and stockpiling; later interagency comments set out material requirements and foreign-source assumptions.",
+      instruments: ["circular airgram", "ERP-related provisions", "production support", "stockpile objectives"],
+      recordIds: ["frus-1947-v1-d395-strategic-materials", "frus-1950-v1-d95-stockpile-program"],
+      contemporaryResonance: "Current agreements likewise connect diplomatic relationships to investment and supply resilience.",
+      criticalDifference: "The 1947-1950 records arose from European recovery and mobilization planning, not today's technology-specific and commercially integrated supply chains.",
+      status: "verified"
+    },
+    {
+      id: "africa-strategic-geography",
+      title: "Cobalt, copper, and the political future of Tropical Africa",
+      summary: "A focused reading of how a 1953 intelligence estimate connected raw materials, infrastructure, and political change.",
+      historicalProblem: "Officials assessed the strategic significance of mineral-rich colonial territories amid political and social change.",
+      whyItMattered: "The estimate treated access to cobalt, copper, chrome, manganese, tin, graphite, and other raw materials as part of a broader strategic assessment.",
+      stateRole: "FRUS preserves the estimate within the foreign-policy record; the current seed metadata does not establish a separate State negotiating instrument.",
+      instruments: ["national intelligence estimate", "strategic assessment", "infrastructure analysis"],
+      recordIds: ["frus-1952-54-v11p1-d27-tropical-africa"],
+      contemporaryResonance: "African mineral partnerships remain connected to infrastructure, political risk, and access questions.",
+      criticalDifference: "The 1953 document uses colonial geography and terminology; modern sovereign partnerships and host-government objectives cannot be projected backward onto that setting.",
+      status: "verified"
+    },
+    {
+      id: "chile-copper",
+      title: "Chile, copper, and bargaining over national resources",
+      summary: "A promising route in the FRUS subject index that still lacks document-level annotations in this portal.",
+      historicalProblem: "Research question: how did copper access interact with Chilean sovereignty, investment terms, and U.S. diplomacy?",
+      stateRole: "Not yet established from verified records in this repository.",
+      instruments: [],
+      recordIds: [],
+      frusQuery: "Chile copper",
+      contemporaryResonance: "Chile remains central to current copper and lithium diplomacy.",
+      criticalDifference: "No historical comparison should be made until representative documents are verified and placed in their political context.",
+      status: "research"
+    },
+    {
+      id: "seabed-minerals",
+      title: "The diplomatic history of seabed minerals",
+      summary: "The authority index identifies 81 sea bed mining records, but the current event-level example is explicitly a placeholder.",
+      historicalProblem: "Research question: how did law-of-the-sea negotiations shape claims to seabed mineral access?",
+      stateRole: "Not yet established from verified document-level metadata in this repository.",
+      instruments: [],
+      recordIds: [],
+      frusQuery: "sea bed mining",
+      contemporaryResonance: "Seabed resources continue to raise access, governance, and environmental questions.",
+      criticalDifference: "Subject assignment is a discovery signal, not evidence that every indexed document is centrally about minerals.",
+      status: "research"
+    }
   ],
-  administrations: [
-    { label: "Lincoln", start: 1861, end: 1865 },
-    { label: "Grant", start: 1869, end: 1877 },
-    { label: "Theodore Roosevelt", start: 1901, end: 1909 },
-    { label: "Wilson", start: 1913, end: 1921 },
-    { label: "Franklin D. Roosevelt", start: 1933, end: 1945 },
-    { label: "Truman", start: 1945, end: 1953 },
-    { label: "Eisenhower", start: 1953, end: 1961 },
-    { label: "Kennedy", start: 1961, end: 1963 },
-    { label: "Johnson", start: 1963, end: 1969 },
-    { label: "Nixon", start: 1969, end: 1974 },
-    { label: "Ford", start: 1974, end: 1977 },
-    { label: "Carter", start: 1977, end: 1981 },
-    { label: "Reagan", start: 1981, end: 1989 },
-    { label: "George H. W. Bush", start: 1989, end: 1993 },
-    { label: "Clinton", start: 1993, end: 2001 },
-    { label: "George W. Bush", start: 2001, end: 2009 },
-    { label: "Obama", start: 2009, end: 2017 },
-    { label: "Trump I", start: 2017, end: 2021 },
-    { label: "Biden", start: 2021, end: 2025 },
-    { label: "Trump II", start: 2025, end: 2026 }
-  ],
-  sources: [
-    { name: "FRUS", role: "Diplomatic decisions, negotiations, policy assumptions, and historical context", tier: "Primary edited record" },
-    { name: "NARA", role: "Archival discovery across record groups, presidential libraries, maps, photographs, and finding aids", tier: "Primary catalog metadata" },
-    { name: "Census", role: "Imports and exports by commodity code, partner, flow, and period", tier: "Official statistical data" },
-    { name: "USGS", role: "Commodity statistics, import reliance, production, criticality, and geoscience", tier: "Official scientific data" },
-    { name: "State", role: "Current diplomacy, agreements, ministerials, releases, and investment climate", tier: "Official policy record" },
-    { name: "DLA", role: "National Defense Stockpile and strategic-material program context", tier: "Official program record" }
-  ],
-  commandCenter: {
+
+  frusAnnotations: {
+    "frus-1947-v1-d395-strategic-materials": {
+      policyProblem: "Connecting European recovery, overseas production, and U.S. stockpiling of strategic and critical materials.",
+      stateRole: "A State circular airgram linked diplomatic and consular posts to ERP-related planning for production and stockpiling.",
+      instrument: "Confidential circular airgram and proposed ERP provisions.",
+      keyConcept: "Strategic and critical materials",
+      whyReadNow: "It shows that diplomatic access, production support, recovery policy, and stockpiling were considered together.",
+      pathwayIds: ["recovery-stockpiling"]
+    },
+    "frus-1950-v1-d95-stockpile-program": {
+      policyProblem: "Defining strategic stockpile objectives, material requirements, and foreign-source assumptions in NSC-68 planning.",
+      stateRole: "FRUS places National Security Resources Board comments within an interagency foreign-policy and national-security record; State was not the author of the memorandum.",
+      instrument: "Interagency memorandum and requirements planning.",
+      keyConcept: "Foreign-source assumptions",
+      whyReadNow: "It makes the assumptions behind stockpile quantities visible rather than treating the figures as self-explanatory.",
+      pathwayIds: ["accessible-foreign-sources", "recovery-stockpiling"]
+    },
+    "frus-1952-54-v11p1-d27-tropical-africa": {
+      policyProblem: "Assessing the strategic importance of Tropical Africa, including raw-material access, infrastructure, and political change.",
+      stateRole: "FRUS preserves a National Intelligence Estimate for the foreign-policy record; the seed metadata does not identify a separate State negotiating action.",
+      instrument: "National Intelligence Estimate.",
+      keyConcept: "Strategic raw materials in a changing political geography",
+      whyReadNow: "It demonstrates why modern country tags must not replace the document's colonial geography or historical terminology.",
+      pathwayIds: ["africa-strategic-geography"]
+    },
+    "frus-1964-68-v9-d344-stockpile-objectives": {
+      policyProblem: "Determining which foreign sources could be counted as politically and economically dependable in stockpile calculations.",
+      stateRole: "The memorandum records State and Defense judgments within an interagency process involving the Office of Emergency Planning.",
+      instrument: "Interagency memorandum and stockpile-objective methodology.",
+      keyConcept: "Accessible foreign sources",
+      whyReadNow: "It shows that supplier reliability was treated as a political and economic judgment, not only a production statistic.",
+      pathwayIds: ["accessible-foreign-sources"]
+    }
+  },
+
+  presentContext: {
     report: {
       title: "Deputy Secretary Landau and the Critical Minerals Imperative",
       url: "https://github.com/therealjameswilson/critical-minerals-records-stage/blob/main/research/Landau-Critical-Minerals-2026.md",
@@ -187,7 +388,45 @@ window.CRITICAL_MINERALS_PORTAL = {
       tier: "Analytical synthesis",
       caveat: "The report combines official records, partner-government material, commercial reporting, and outside analysis. Validate operational claims against the linked primary source."
     },
-    timeline: [
+    questions: [
+      {
+        concern: "Reliable partner networks",
+        historicalQuestion: "How did earlier officials decide whether a foreign source was politically and economically accessible?",
+        pathwayId: "accessible-foreign-sources",
+        tier: "Analytical synthesis"
+      },
+      {
+        concern: "Agreements linked to investment",
+        historicalQuestion: "When did U.S. diplomacy pair access commitments with production support or recovery programs?",
+        pathwayId: "recovery-stockpiling",
+        tier: "Official contemporary source"
+      },
+      {
+        concern: "Processing and refining bottlenecks",
+        historicalQuestion: "When did the diplomatic problem shift from raw-material access toward processing and technological capacity?",
+        problemId: "processing-bottlenecks",
+        tier: "Official contemporary source"
+      },
+      {
+        concern: "Public and private finance",
+        historicalQuestion: "Which earlier instruments encouraged production and infrastructure, and which modern finance tools are genuinely new?",
+        pathwayId: "recovery-stockpiling",
+        tier: "Official contemporary source"
+      },
+      {
+        concern: "African partnerships",
+        historicalQuestion: "How did older assessments connect mineral access, infrastructure, and political change in Africa?",
+        pathwayId: "africa-strategic-geography",
+        tier: "Analytical synthesis"
+      },
+      {
+        concern: "Allied coordination",
+        historicalQuestion: "How were source assumptions and competing requirements coordinated across allies and agencies?",
+        problemId: "allied-coordination",
+        tier: "Official contemporary source"
+      }
+    ],
+    chronology: [
       {
         date: "Jan. 14",
         title: "Processed-minerals proclamation",
@@ -215,46 +454,165 @@ window.CRITICAL_MINERALS_PORTAL = {
         detail: "DFC announced a proposed joint framework spanning exploration, extraction, processing, infrastructure, and energy.",
         source: "DFC",
         url: "https://www.dfc.gov/media/press-releases/dfc-leadership-lays-foundation-investment-partnership-uzbekistan"
-      },
-      {
-        date: "May 29",
-        title: "National-security investment workforce",
-        detail: "The White House authorized critical-position pay for up to 400 investment, engineering, finance, and legal specialists.",
-        source: "White House",
-        url: "https://www.whitehouse.gov/presidential-actions/2026/05/approving-critical-position-pay-authority-for-national-security-investment-workforce/"
       }
     ],
-    workstreams: [
-      { label: "Agreements", detail: "Track the instrument, responsible offices, consultations, deadlines, and implementation status." },
-      { label: "Projects", detail: "Identify bankable projects, ownership, offtake, infrastructure, permitting, and political risk." },
-      { label: "Finance", detail: "Map DFC, EXIM, allied, host-government, and private-capital roles across the value chain." },
-      { label: "Post reporting", detail: "Report regulatory barriers, local politics, community effects, security risks, and partner follow-through." }
-    ],
-    historicalLinks: [
+    comparisons: [
       {
-        modern: "Agreements linked to investment",
-        historical: "1947 ERP planning paired bilateral commitments with production support and U.S. stockpiling.",
-        recordId: "frus-1947-v1-d395-strategic-materials"
+        title: "Agreements, production, and reserves",
+        historicalProblem: "The 1947 record connected ERP planning, overseas production, and U.S. stockpiling of strategic materials.",
+        contemporaryResonance: "Current official records also connect agreements, investment frameworks, and supply resilience.",
+        criticalDifference: "European recovery and postwar stockpiling are not equivalent to today's commercially integrated, technology-specific value chains.",
+        recordId: "frus-1947-v1-d395-strategic-materials",
+        pathwayId: "recovery-stockpiling"
       },
       {
-        modern: "Mineral-rich Africa as strategic geography",
-        historical: "A 1953 estimate connected raw-material access, infrastructure, political change, and Western strategy.",
-        recordId: "frus-1952-54-v11p1-d27-tropical-africa"
+        title: "Mineral-rich Africa as strategic geography",
+        historicalProblem: "A 1953 estimate assessed raw materials, infrastructure, and political change in colonial Tropical Africa.",
+        contemporaryResonance: "Current diplomacy also links African mineral partnerships to infrastructure and political risk.",
+        criticalDifference: "Modern sovereign partnerships and host-government objectives cannot be mapped directly onto colonial geography or terminology.",
+        recordId: "frus-1952-54-v11p1-d27-tropical-africa",
+        pathwayId: "africa-strategic-geography"
       },
       {
-        modern: "Assessing reliable foreign supply",
-        historical: "A 1967 stockpile debate assigned State a role in judging the political and economic dependability of sources.",
-        recordId: "frus-1964-68-v9-d344-stockpile-objectives"
+        title: "Supplier reliability as a policy judgment",
+        historicalProblem: "A 1967 stockpile memorandum treated political and economic dependability as part of deciding which foreign sources were accessible.",
+        contemporaryResonance: "Current strategy likewise distinguishes nominal supply from resilient supply.",
+        criticalDifference: "The historical calculation addressed emergency stockpile objectives; present concerns span processing, finance, infrastructure, and private firms.",
+        recordId: "frus-1964-68-v9-d344-stockpile-objectives",
+        pathwayId: "accessible-foreign-sources"
       }
-    ],
-    partners: ["Argentina", "Chile", "Democratic Republic of the Congo", "Kazakhstan", "Mexico", "Uzbekistan"]
+    ]
   },
+
+  minerals: [
+    { name: "Lithium", symbol: "Li", prompt: "When did lithium become strategically salient, and where does the verified historical record remain thin?", historicalTerms: ["strategic materials", "material requirements", "foreign sources"] },
+    { name: "Cobalt", symbol: "Co", prompt: "Follow cobalt through strategic-material lists, African raw-material assessments, stockpiling, and supplier reliability.", historicalTerms: ["strategic and critical materials", "Tropical Africa", "raw materials", "stockpile objectives", "accessible foreign sources"] },
+    { name: "Copper", symbol: "Cu", prompt: "Trace copper across recovery planning, African strategic geography, stockpile assumptions, and modern trade evidence.", historicalTerms: ["strategic and critical materials", "raw materials", "stockpile objectives", "accessible foreign sources"] },
+    { name: "Graphite", symbol: "C", prompt: "Compare its appearance in historical strategic-material records with modern processing concerns.", historicalTerms: ["strategic and critical materials", "raw materials", "material requirements"] },
+    { name: "Rare earth elements", symbol: "REE", prompt: "Identify where modern terminology departs from older strategic-material and processing language.", historicalTerms: ["strategic materials", "material requirements", "processing"] },
+    { name: "Nickel", symbol: "Ni", prompt: "Examine stockpile requirements, foreign-source assumptions, and modern processing evidence.", historicalTerms: ["strategic and critical materials", "material requirements", "stockpile objectives", "accessible foreign sources"] },
+    { name: "Manganese", symbol: "Mn", prompt: "Track raw-material access, stockpile planning, and the seabed-minerals research queue.", historicalTerms: ["strategic and critical materials", "raw materials", "stockpile objectives", "sea bed mining"] },
+    { name: "Gallium", symbol: "Ga", prompt: "Use modern trade and processing records while treating the historical FRUS connection as a research question.", historicalTerms: ["strategic materials", "processing", "material requirements"] },
+    { name: "Germanium", symbol: "Ge", prompt: "Connect modern technology concerns to older research language without assuming the categories are equivalent.", historicalTerms: ["strategic materials", "material requirements", "stockpile objectives"] },
+    { name: "Antimony", symbol: "Sb", prompt: "Follow its place in the 1947 strategic-material list and later stockpile research questions.", historicalTerms: ["strategic and critical materials", "stockpiling", "material requirements"] },
+    { name: "Tin", symbol: "Sn", prompt: "Trace its appearance in raw-material assessments, requirements planning, and source-access judgments.", historicalTerms: ["strategic and critical materials", "raw materials", "stockpile objectives", "accessible foreign sources"] },
+    { name: "Tungsten", symbol: "W", prompt: "Study requirements, stockpile objectives, and changing assumptions about foreign access.", historicalTerms: ["strategic and critical materials", "material requirements", "stockpile objectives", "accessible foreign sources"] },
+    { name: "Chromium", symbol: "Cr", prompt: "Follow chromium through strategic-material lists, African geography, and supplier-dependability judgments.", historicalTerms: ["strategic and critical materials", "raw materials", "stockpile objectives", "accessible foreign sources"] }
+  ],
+
+  countries: [
+    {
+      name: "United States", lon: -98, lat: 39, focus: "Requirements, interagency planning, stockpiling, and diplomacy",
+      history: {
+        status: "curated",
+        arc: "The verified seed records move from ERP-linked production and stockpiling in 1947 to requirements planning in 1950 and explicit source-dependability judgments in 1967.",
+        materials: ["antimony", "chromium", "cobalt", "copper", "graphite", "manganese", "nickel", "tin", "tungsten"],
+        usObjectives: "Increase production, define requirements, build reserves, and decide which foreign supplies could be counted as accessible.",
+        partnerObjectives: "Not established in the current verified seed set.",
+        recordIds: ["frus-1947-v1-d395-strategic-materials", "frus-1950-v1-d95-stockpile-program", "frus-1964-68-v9-d344-stockpile-objectives"]
+      }
+    },
+    {
+      name: "Canada", lon: -106, lat: 56, focus: "Accessible foreign-source assumptions in 1967 stockpile planning",
+      history: {
+        status: "curated",
+        arc: "Canada appears in the verified 1967 stockpile record as part of the foreign-source geography used in accessibility calculations.",
+        materials: ["chromium", "cobalt", "copper", "manganese", "nickel", "tin", "tungsten"],
+        usObjectives: "Assess whether foreign supplies could be counted as politically and economically dependable.",
+        partnerObjectives: "Not established in the current verified seed metadata.",
+        recordIds: ["frus-1964-68-v9-d344-stockpile-objectives"]
+      }
+    },
+    {
+      name: "Mexico", lon: -102, lat: 23, focus: "Accessible foreign-source assumptions in 1967 stockpile planning",
+      history: {
+        status: "curated",
+        arc: "Mexico appears in the verified 1967 stockpile record as part of the foreign-source geography used in accessibility calculations.",
+        materials: ["chromium", "cobalt", "copper", "manganese", "nickel", "tin", "tungsten"],
+        usObjectives: "Assess whether foreign supplies could be counted as politically and economically dependable.",
+        partnerObjectives: "Not established in the current verified seed metadata.",
+        recordIds: ["frus-1964-68-v9-d344-stockpile-objectives"]
+      }
+    },
+    {
+      name: "Democratic Republic of the Congo", lon: 23, lat: -3, focus: "Cobalt, copper, infrastructure, and historical geography",
+      history: {
+        status: "curated",
+        arc: "A 1953 estimate assessed mineral access in colonial Tropical Africa. The modern country tag is a discovery aid and must not replace the document's historical geography.",
+        materials: ["cobalt", "copper", "chromium", "manganese", "tin", "graphite", "vanadium"],
+        usObjectives: "Assess strategic raw-material access, infrastructure, and political trends.",
+        partnerObjectives: "Not established in the current verified seed metadata.",
+        historicalNames: "Use the place names and sovereignty descriptions in the 1953 document when citing it.",
+        recordIds: ["frus-1952-54-v11p1-d27-tropical-africa"]
+      }
+    },
+    {
+      name: "South Africa", lon: 24, lat: -30, focus: "Raw-material access in a 1953 strategic assessment",
+      history: {
+        status: "curated",
+        arc: "South Africa is tagged to the verified 1953 estimate on the strategic importance of Tropical Africa and access to raw materials.",
+        materials: ["chromium", "manganese", "copper", "graphite", "vanadium"],
+        usObjectives: "Assess strategic raw-material access and regional political trends.",
+        partnerObjectives: "Not established in the current verified seed metadata.",
+        recordIds: ["frus-1952-54-v11p1-d27-tropical-africa"]
+      }
+    },
+    { name: "Chile", lon: -71, lat: -33, focus: "Copper and lithium diplomacy", history: { status: "research", researchGap: "The FRUS index contains Chile discovery leads, but no document-level Chile pathway is verified in the current event set.", frusQuery: "Chile copper" } },
+    { name: "Argentina", lon: -64, lat: -34, focus: "Lithium, investment, and infrastructure", history: { status: "research", researchGap: "Current records exist; a verified historical relationship arc has not yet been built." } },
+    { name: "Brazil", lon: -52, lat: -10, focus: "Niobium, graphite, rare earths, and industrial partnership", history: { status: "research", researchGap: "No verified FRUS seed record is currently tagged to Brazil." } },
+    { name: "Peru", lon: -75, lat: -9, focus: "Copper, infrastructure, and investment", history: { status: "research", researchGap: "No verified FRUS seed record is currently tagged to Peru." } },
+    { name: "Egypt", lon: 30, lat: 27, focus: "Current commercial diplomacy and regional context", history: { status: "research", researchGap: "The indexed evidence is contemporary; the historical resource relationship remains a research queue." } },
+    { name: "Ethiopia", lon: 40, lat: 9, focus: "Current investment and commercial engagement", history: { status: "research", researchGap: "The indexed evidence is contemporary; the historical resource relationship remains a research queue." } },
+    { name: "Kenya", lon: 38, lat: 1, focus: "Current investment and regional diplomacy", history: { status: "research", researchGap: "The indexed evidence is contemporary; the historical resource relationship remains a research queue." } },
+    { name: "Djibouti", lon: 43, lat: 12, focus: "Current maritime and commercial context", history: { status: "research", researchGap: "The indexed evidence is contemporary; the historical resource relationship remains a research queue." } },
+    { name: "Namibia", lon: 17, lat: -22, focus: "Uranium, rare earths, investment, and infrastructure", history: { status: "research", researchGap: "No verified FRUS seed record is currently tagged to Namibia." } },
+    { name: "Greenland", lon: -42, lat: 72, focus: "Arctic strategy and rare earths", history: { status: "research", researchGap: "No verified FRUS seed record is currently tagged to Greenland." } },
+    { name: "Ukraine", lon: 31, lat: 49, focus: "Reconstruction and strategic partnership", history: { status: "research", researchGap: "No verified FRUS seed record is currently tagged to Ukraine." } },
+    { name: "Kazakhstan", lon: 68, lat: 48, focus: "Current investment and transport-corridor diplomacy", history: { status: "research", researchGap: "The indexed evidence is contemporary; the historical resource relationship remains a research queue." } },
+    { name: "Uzbekistan", lon: 64, lat: 41, focus: "Current investment framework and connectivity", history: { status: "research", researchGap: "The indexed evidence is contemporary; the historical resource relationship remains a research queue." } },
+    { name: "Indonesia", lon: 118, lat: -2, focus: "Nickel and processing policy", history: { status: "research", researchGap: "The current NARA item is a search placeholder, not a verified historical record." } },
+    { name: "Philippines", lon: 122, lat: 13, focus: "Nickel, alliance geography, and maritime access", history: { status: "research", researchGap: "No verified FRUS seed record is currently tagged to the Philippines." } },
+    { name: "Mongolia", lon: 103, lat: 46, focus: "Copper, rare earths, and infrastructure", history: { status: "research", researchGap: "No verified FRUS seed record is currently tagged to Mongolia." } },
+    { name: "Australia", lon: 134, lat: -25, focus: "Current allied mining and processing", history: { status: "research", researchGap: "The current country item is a demonstrator placeholder, not a verified historical relationship arc." } }
+  ],
+
+  administrations: [
+    { label: "Lincoln", start: 1861, end: 1865 },
+    { label: "Grant", start: 1869, end: 1877 },
+    { label: "Theodore Roosevelt", start: 1901, end: 1909 },
+    { label: "Wilson", start: 1913, end: 1921 },
+    { label: "Franklin D. Roosevelt", start: 1933, end: 1945 },
+    { label: "Truman", start: 1945, end: 1953 },
+    { label: "Eisenhower", start: 1953, end: 1961 },
+    { label: "Kennedy", start: 1961, end: 1963 },
+    { label: "Johnson", start: 1963, end: 1969 },
+    { label: "Nixon", start: 1969, end: 1974 },
+    { label: "Ford", start: 1974, end: 1977 },
+    { label: "Carter", start: 1977, end: 1981 },
+    { label: "Reagan", start: 1981, end: 1989 },
+    { label: "George H. W. Bush", start: 1989, end: 1993 },
+    { label: "Clinton", start: 1993, end: 2001 },
+    { label: "George W. Bush", start: 2001, end: 2009 },
+    { label: "Obama", start: 2009, end: 2017 },
+    { label: "Trump I", start: 2017, end: 2021 },
+    { label: "Biden", start: 2021, end: 2025 },
+    { label: "Trump II", start: 2025, end: 2026 }
+  ],
+
+  sources: [
+    { name: "FRUS", role: "Selected and edited diplomatic decisions, negotiations, policy assumptions, and historical context", tier: "Primary edited record" },
+    { name: "NARA", role: "Archival discovery across record groups, presidential libraries, maps, photographs, and finding aids", tier: "Primary catalog metadata" },
+    { name: "Census", role: "Imports and exports by commodity code, partner, flow, and period", tier: "Official statistical data" },
+    { name: "USGS", role: "Commodity statistics, import reliance, production, criticality, and geoscience", tier: "Official scientific data" },
+    { name: "State", role: "Current diplomacy, agreements, ministerials, releases, and investment climate", tier: "Official policy record" },
+    { name: "DLA", role: "National Defense Stockpile and strategic-material program context", tier: "Official program record" }
+  ],
+
   searchPrompts: [
-    "cobalt during the early Cold War",
-    "strategic materials stockpiling",
-    "Tropical Africa cobalt copper",
-    "Chile copper trade",
-    "rare earth elements 2025",
-    "FRUS accessible foreign sources"
+    { label: "How did State assess reliable foreign sources?", problemId: "reliable-suppliers" },
+    { label: "What role did infrastructure play in mineral access?", problemId: "production-infrastructure" },
+    { label: "How were stockpile requirements debated?", problemId: "stockpiling" },
+    { label: "How did the United States encourage production abroad?", pathwayId: "recovery-stockpiling" },
+    { label: "How did allies coordinate material requirements?", problemId: "allied-coordination" }
   ]
 };

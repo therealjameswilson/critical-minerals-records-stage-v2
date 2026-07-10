@@ -97,14 +97,21 @@ def test_landau_command_center_records_are_present_and_tiered():
     assert "mixed source tiers" in report["extra"]["caveat"]
 
 
-def test_portal_shell_has_intelligence_sections_and_no_drafting_ui():
+def test_portal_shell_has_historical_research_sections_and_no_operational_ui():
     html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
-    assert "U.S. Critical Minerals Intelligence Portal" in html
-    assert "Interactive historical timeline" in html
-    assert "FRUS Critical Minerals Index" in html
+    assert "Strategic Resources Diplomacy" in html
+    assert "How the United States used diplomacy to secure access to strategic resources" in html
+    assert "Recurring diplomatic problems" in html
+    assert "FRUS Pathways" in html
+    assert "Strategic-resource diplomacy across time" in html
+    assert "Full FRUS strategic-resources index" in html
     assert "Evidence Explorer" in html
-    assert "From ministerial commitments to post-level execution" in html
-    assert "report ingested and source-tiered" in html
+    assert "How to read FRUS and this portal" in html
+    assert 'id="navToggle"' in html
+    assert 'aria-expanded="false"' in html
+    assert "2025-2026 Command Center" not in html
+    assert "Implementation workstreams" not in html
+    assert "Diplomatic operating tempo" not in html
     assert "Anthropic API Key" not in html
     assert "Clearance Status" not in html
     assert "Export Notes as Word" not in html
@@ -119,8 +126,42 @@ def test_portal_data_covers_full_historical_frame():
     assert "end: 2026" in source
     assert source.count("symbol:") >= 13
     assert source.count("focus:") >= 16
-    assert "historicalLinks" in source
-    assert "workstreams" in source
+    assert "diplomaticProblems" in source
+    assert "frusPathways" in source
+    assert "frusAnnotations" in source
+    assert "presentContext" in source
+    assert source.count('status: "verified"') >= 9
+    assert source.count('status: "research"') >= 12
+
+
+def test_curated_frus_annotations_only_reference_verified_seed_records():
+    source = (ROOT / "data" / "portal-data.js").read_text(encoding="utf-8")
+    expected = {
+        "frus-1947-v1-d395-strategic-materials",
+        "frus-1950-v1-d95-stockpile-program",
+        "frus-1952-54-v11p1-d27-tropical-africa",
+        "frus-1964-68-v9-d344-stockpile-objectives",
+    }
+    annotation_block = source.split("frusAnnotations:", 1)[1].split("presentContext:", 1)[0]
+    for record_id in expected:
+        assert f'"{record_id}"' in annotation_block
+    assert "frus-1981-88-v41-d116-example" not in annotation_block
+    assert "frus-1969-76-ve01-d430-example" not in annotation_block
+    assert "policyProblem" in annotation_block
+    assert "criticalDifference" in source
+
+
+def test_guided_search_and_mobile_navigation_contracts_are_present():
+    javascript = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
+    css = (ROOT / "assets" / "portal.css").read_text(encoding="utf-8")
+    assert "function openLens" in javascript
+    assert "function openFrusQuery" in javascript
+    assert "function setNavOpen" in javascript
+    assert 'searchState.query = query.trim()' in javascript
+    assert 'frusState.query = searchState.query' not in javascript
+    assert '.primary-nav.open' in css
+    assert ".nav-toggle" in css
+    assert "Evidence coverage only" in javascript
 
 
 def test_landau_report_is_preserved_outside_browser_cache():
