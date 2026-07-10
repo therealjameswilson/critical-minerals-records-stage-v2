@@ -27,9 +27,12 @@ appears only in a separately labeled Modern Context layer.
   countries or territories; 8 periods; 15 typed agreements or policy
   instruments; 3 laws; 5 administrations; 32 linked FRUS records; and 30 NARA
   query plans.
-- 1,614 unit-defined historical observations extracted from official USGS Data
-  Series 140 workbooks without project interpolation, including all 500 numeric
-  rare-earth observations published for 1900-1992.
+- 7,602 unit-defined annual observations for the nine DS140-backed atlas
+  materials, extracted from official USGS workbooks without project
+  interpolation.
+- A lazy-loaded Data Series 140 library containing 61,133 numeric observations
+  across 92 official commodity workbooks, 122 worksheet series, and 956
+  published measures through 1992.
 - 1,476 source-defined long-run trade records covering every selectable year,
   plus 294 contemporaneous rare-earth category rows for 1970-1990 and 3,669
   USITC DataWeb partner-product rows for 1989-1992. UN Comtrade contributes
@@ -72,6 +75,7 @@ Read the [full methodology](methodology.html) or
 ## Repository Structure
 
 - `records-stage.html`: historical portal entry point
+- `usgs-ds140.html`: complete, lazy-loaded DS140 statistical explorer
 - `history-stack.html`: reusable entity and document detail route
 - `methodology.html`: public methodology page
 - `assets/portal.js`: homepage rendering, filters, search, and FRUS index
@@ -83,11 +87,13 @@ Read the [full methodology](methodology.html) or
 - `assets/frus-subjects-index.js`: full metadata-only FRUS discovery index
 - `data/history-stack/`: normalized pilot JSON modules
 - `data/atlas/`: generated atlas layer registry, overlays, and orientation geometry
+- `data/usgs-ds140/`: compact catalog and one source-preserving JSON file per commodity
 - `schemas/`: JSON schemas for core entity types
 - `scripts/build_history_pilot.py`: reproducible editorial pilot builder
 - `scripts/build_atlas_data.py`: reproducible atlas overlays and basemap builder
 - `scripts/build_annual_atlas.py`: one evidence ledger for every year and pilot material
 - `scripts/ingest_usgs_ds140.py`: official XLSX extractor
+- `scripts/ingest_usgs_ds140_library.py`: full official DS140 catalog and workbook extractor
 - `scripts/ingest_trade_data.py`: official Census and USGS trade extractor
 - `scripts/ingest_un_comtrade_rare_earth.py`: 1962-1992 reporter-partner continuity importer
 - `scripts/ingest_un_comtrade_strategic_materials.py`: classification-bounded partner trade for nine strategic materials
@@ -109,6 +115,7 @@ python3 -m venv .venv
 pip install -r requirements.txt
 python scripts/build_history_pilot.py
 python scripts/ingest_usgs_ds140.py
+python scripts/ingest_usgs_ds140_library.py --cache-dir .cache/usgs-ds140-full
 python scripts/ingest_trade_data.py
 python scripts/ingest_usitc_dataweb.py --cache-dir .cache/usitc-dataweb
 python scripts/build_atlas_data.py
@@ -132,14 +139,22 @@ python -m http.server 8000
 
 ## Rebuild Official USGS Statistics
 
-The extractor downloads nine official Data Series 140 workbooks and writes
-human-readable JSON. It imports every numeric annual rare-earth cell for
-1900-1992 and retains benchmark-year samples for the other commodities. It
-preserves USGS units and worksheet coordinates, and skips missing, withheld,
-estimated-text, and nonnumeric cells rather than treating them as zero.
+The atlas extractor downloads nine official Data Series 140 workbooks and
+writes every numeric annual cell through 1992 for the materials already linked
+to the FRUS-led atlas. It preserves USGS units and worksheet coordinates, and
+skips missing, withheld, estimated-text, and nonnumeric cells rather than
+treating them as zero.
+
+The full-library extractor discovers the official USGS catalog, resolves all 92
+workbooks, preserves 122 separate worksheet series, and writes one compact JSON
+file per commodity. This keeps the 61,133-observation library lazy-loaded rather
+than adding its full weight to the portal homepage.
 
 ```bash
 python scripts/ingest_usgs_ds140.py --access-date YYYY-MM-DD
+python scripts/ingest_usgs_ds140_library.py \
+  --access-date YYYY-MM-DD \
+  --cache-dir .cache/usgs-ds140-full
 python scripts/validate_history_data.py
 ```
 

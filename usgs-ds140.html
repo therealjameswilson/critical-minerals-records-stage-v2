@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore official annual U.S. Geological Survey Data Series 140 mineral statistics through 1992.">
+  <meta name="theme-color" content="#153650">
+  <title>USGS Data Series 140 Library | Strategic Resources, 1861–1992</title>
+  <link rel="stylesheet" href="assets/portal.css?v=3.0.0">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-main">
+      <a class="brand" href="records-stage.html"><span class="brand-mark" aria-hidden="true">FRUS</span><span><small>Historical decision support</small><strong>Strategic Resources, 1861–1992</strong></span></a>
+      <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="records-stage.html">Portal</a><a href="records-stage.html#map">Atlas</a><a href="records-stage.html#minerals">Minerals</a><a href="records-stage.html#countries">Countries</a><a href="records-stage.html#frus">FRUS Index</a><a href="methodology.html">Method</a></nav>
+      <div class="header-actions"><button class="header-button nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">☰</span><span class="visually-hidden">Menu</span></button><button class="header-button" id="themeToggle" type="button"><span aria-hidden="true">◐</span><span class="visually-hidden">Toggle color theme</span></button></div>
+    </div>
+    <p class="status-line">Public research demonstrator · Official statistical context · Not an official Department of State or USGS product</p>
+  </header>
+
+  <main id="main-content">
+    <section class="ds140-hero" aria-labelledby="ds140-title">
+      <div class="section ds140-hero-grid">
+        <div>
+          <p class="eyebrow">Official statistical context · 1861–1992 project boundary</p>
+          <h1 id="ds140-title">USGS Data Series 140 Library</h1>
+          <p class="hero-deck">Explore annual production, trade, stocks, consumption, shipments, prices, and world-output series from the U.S. Geological Survey and its historical Bureau of Mines sources.</p>
+        </div>
+        <aside class="ds140-principle">
+          <span class="folio">How this fits</span>
+          <strong>FRUS remains the documentary spine.</strong>
+          <p>These statistics reconstruct part of the quantitative environment around the diplomatic record. They do not explain policy intent, identify supplier countries, or establish causation.</p>
+        </aside>
+      </div>
+      <div class="scope-strip ds140-scope" id="ds140Metrics" aria-label="USGS library coverage"></div>
+    </section>
+
+    <section class="section ds140-workbench" aria-labelledby="explorer-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Annual statistical explorer</p><h2 id="explorer-title">Read one published series at a time</h2></div>
+        <p>Worksheet series and measures remain separate. Missing, unavailable, and withheld cells are disclosed and never converted to zero.</p>
+      </div>
+
+      <div class="ds140-controls" aria-label="Data Series 140 controls">
+        <div class="control grow"><label for="ds140Commodity">Commodity</label><select id="ds140Commodity"></select></div>
+        <div class="control"><label for="ds140Series">Worksheet series</label><select id="ds140Series"></select></div>
+        <div class="control grow"><label for="ds140Measure">Published measure</label><select id="ds140Measure"></select></div>
+        <div class="control ds140-year-control"><label for="ds140Year">Historical year <output id="ds140YearValue" for="ds140Year">1983</output></label><input id="ds140Year" type="range" min="1861" max="1992" value="1983" step="1"></div>
+      </div>
+
+      <div class="ds140-sourcebar" id="ds140Source" aria-live="polite"></div>
+      <div class="ds140-year-panel" id="ds140YearPanel" aria-live="polite"></div>
+
+      <div class="ds140-analysis-grid">
+        <section class="ds140-chart-panel" aria-labelledby="series-chart-title">
+          <div class="panel-heading"><p class="eyebrow">Published annual series</p><h3 id="series-chart-title">Selected measure</h3></div>
+          <div id="ds140Chart"></div>
+        </section>
+        <aside class="ds140-quality-panel" id="ds140Quality" aria-labelledby="quality-title"><h3 id="quality-title">Data quality</h3></aside>
+      </div>
+
+      <details class="accessible-table ds140-table" open>
+        <summary>Open annual values and citations</summary>
+        <div class="table-scroll"><table><caption id="ds140TableCaption">Selected USGS series</caption><thead><tr><th>Year</th><th>Value</th><th>Unit</th><th>Worksheet location</th></tr></thead><tbody id="ds140TableBody"></tbody></table></div>
+      </details>
+      <div class="ds140-actions"><button class="quiet-button" id="ds140Download" type="button">Download selected series as CSV</button><a class="button-link" href="records-stage.html#frus">Return to the FRUS index</a></div>
+    </section>
+
+    <section class="section-band">
+      <div class="section ds140-method-note">
+        <div><p class="eyebrow">Provenance</p><h2>What was ingested</h2></div>
+        <div><p>Every numeric cell through 1992 was machine-extracted from the official XLSX workbooks listed in the USGS Data Series 140 catalog. The project preserves the workbook, worksheet, header, year, value, published unit statement, price basis, and missing-cell counts.</p><p>No worksheet series is silently combined with another. No project interpolation, deflation, aggregation, or unit conversion is applied. USGS notes that its historical series may include agency-standardized conversions and estimates; consult each workbook’s embedded notes before formal citation.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner"><div><strong>USGS Data Series 140 Library</strong><p>Quantitative context for the FRUS-led historical portal.</p></div><a href="https://www.usgs.gov/centers/national-minerals-information-center/historical-statistics-mineral-commodities-united" target="_blank" rel="noopener">Open the official USGS catalog <span aria-hidden="true">↗</span></a></div></footer>
+  <script src="assets/history-data.js?v=2.8.0"></script>
+  <script src="assets/usgs-ds140.js?v=1.0.0"></script>
+</body>
+</html>

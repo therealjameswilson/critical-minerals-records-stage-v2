@@ -11,6 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "history-stack"
+DS140_DATA = ROOT / "data" / "usgs-ds140"
 HISTORICAL_START = 1861
 HISTORICAL_END = 1992
 
@@ -67,6 +68,44 @@ def main() -> None:
     datasets["sources"] = load("sources")
     datasets["nara-queries"] = load("nara-queries")
     atlas = json.loads((ROOT / "data" / "atlas" / "atlas.json").read_text(encoding="utf-8"))
+    ds140_catalog = json.loads((DS140_DATA / "catalog.json").read_text(encoding="utf-8"))
+
+    if ds140_catalog.get("commodity_count") != 92 or ds140_catalog.get("review_queue_count") != 0:
+        errors.append("usgs-ds140: expected 92 extracted commodities and an empty review queue")
+    observed_ds140 = 0
+    observed_series = 0
+    observed_measures = 0
+    commodity_ids: set[str] = set()
+    for entry in ds140_catalog.get("commodities", []):
+        commodity_id = entry.get("id")
+        if not commodity_id or commodity_id in commodity_ids:
+            errors.append(f"usgs-ds140: invalid or duplicate commodity id {commodity_id}")
+            continue
+        commodity_ids.add(commodity_id)
+        path = DS140_DATA / "commodities" / f"{commodity_id}.json"
+        if not path.exists():
+            errors.append(f"usgs-ds140/{commodity_id}: missing commodity payload")
+            continue
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if payload.get("commodity", {}).get("id") != commodity_id:
+            errors.append(f"usgs-ds140/{commodity_id}: payload id mismatch")
+        observed_series += len(payload.get("series", []))
+        for series in payload.get("series", []):
+            observed_measures += len(series.get("measures", []))
+            for measure in series.get("measures", []):
+                observations = measure.get("observations", [])
+                observed_ds140 += len(observations)
+                for observation in observations:
+                    if len(observation) != 3 or not HISTORICAL_START <= observation[0] <= HISTORICAL_END:
+                        errors.append(f"usgs-ds140/{commodity_id}/{series.get('id')}/{measure.get('id')}: invalid observation")
+                        break
+                    if not isinstance(observation[1], (int, float)) or not isinstance(observation[2], int):
+                        errors.append(f"usgs-ds140/{commodity_id}/{series.get('id')}/{measure.get('id')}: value and row must be numeric")
+                        break
+    if observed_ds140 != ds140_catalog.get("observation_count"):
+        errors.append("usgs-ds140: observation count does not match catalog")
+    if observed_series != ds140_catalog.get("series_count") or observed_measures != ds140_catalog.get("measure_count"):
+        errors.append("usgs-ds140: series or measure count does not match catalog")
 
     for name, minimum in EXPECTED_MINIMUMS.items():
         if len(datasets[name]) < minimum:
@@ -451,6 +490,7 @@ def main() -> None:
         raise SystemExit("History Stack validation failed:\n- " + "\n- ".join(errors))
     print("History Stack validation passed")
     print(", ".join(f"{name}={len(rows)}" for name, rows in datasets.items()))
+    print(f"usgs-ds140 commodities={len(commodity_ids)}, series={observed_series}, measures={observed_measures}, observations={observed_ds140}")
 
 
 if __name__ == "__main__":

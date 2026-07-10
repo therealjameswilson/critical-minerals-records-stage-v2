@@ -12,6 +12,7 @@ from connectors.nara import normalize_nara_hit, search_nara
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "history-stack"
+DS140_DATA = ROOT / "data" / "usgs-ds140"
 
 
 def load(name):
@@ -67,7 +68,7 @@ def test_all_historical_data_stays_between_1861_and_1992():
 
 def test_statistics_have_units_dates_and_provenance():
     rows = load("statistics")
-    assert len(rows) >= 1000
+    assert len(rows) >= 7600
     required = {
         "metric", "mineral_id", "year", "unit", "value", "publication_title",
         "publication_year", "table_or_page", "agency", "source_url",
@@ -123,6 +124,32 @@ def test_rare_earth_usgs_series_is_annual_and_source_complete_through_1992():
     }
     assert all(row["source_url"].endswith("rare-earths-historical-statistics-data-series-140") for row in rows)
     assert all("rare-earth oxide equivalent" in row["unit"] for row in rows if row["price_basis"] == "not-price")
+
+
+def test_full_ds140_library_preserves_catalog_series_and_source_rows():
+    catalog = json.loads((DS140_DATA / "catalog.json").read_text(encoding="utf-8"))
+    assert catalog["commodity_count"] == 92
+    assert catalog["series_count"] == 122
+    assert catalog["measure_count"] == 956
+    assert catalog["observation_count"] == 61133
+    assert catalog["review_queue_count"] == 0
+    assert len({row["id"] for row in catalog["commodities"]}) == 92
+    rare = json.loads((DS140_DATA / "commodities" / "rare-earths.json").read_text(encoding="utf-8"))
+    assert rare["summary"]["observation_count"] == 500
+    assert rare["summary"]["year_start"] == 1900
+    assert rare["summary"]["year_end"] == 1992
+    production = next(row for row in rare["series"][0]["measures"] if row["label"] == "Production")
+    assert all(len(row) == 3 and 1861 <= row[0] <= 1992 and isinstance(row[2], int) for row in production["observations"])
+
+
+def test_ds140_library_is_linked_from_the_portal_and_has_a_static_explorer():
+    portal = (ROOT / "records-stage.html").read_text(encoding="utf-8")
+    library = (ROOT / "usgs-ds140.html").read_text(encoding="utf-8")
+    script = (ROOT / "assets" / "usgs-ds140.js").read_text(encoding="utf-8")
+    assert "usgs-ds140.html" in portal
+    assert "USGS Data Series 140 Library" in library
+    assert "data/usgs-ds140/catalog.json" in script
+    assert "Download selected series as CSV" in library
 
 
 def test_trade_records_cover_every_selectable_year_without_interpolation():

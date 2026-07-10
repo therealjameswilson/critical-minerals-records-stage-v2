@@ -1,0 +1,955 @@
+{
+  "schema_version": 1,
+  "commodity": {
+    "id": "cesium",
+    "title": "Cesium",
+    "update_year": 2018,
+    "source_url": "https://www.usgs.gov/media/files/cesium-historical-statistics-data-series-140-2017-update",
+    "download_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/atoms/files/ds140-2017-cesiu.xlsx",
+    "catalog_url": "https://www.usgs.gov/centers/national-minerals-information-center/historical-statistics-mineral-commodities-united",
+    "access_date": "2026-07-10",
+    "historical_scope": {
+      "start": 1861,
+      "end": 1992
+    },
+    "transcription_status": "machine-extracted-xlsx",
+    "conversion_methodology": "No project conversion. Numeric values are reproduced from USGS-standardized workbook cells.",
+    "caveat": "Blank, unavailable, withheld, and other nonnumeric cells are counted separately and are never treated as zero."
+  },
+  "summary": {
+    "series_count": 1,
+    "measure_count": 7,
+    "observation_count": 158,
+    "year_start": 1959,
+    "year_end": 1992
+  },
+  "series": [
+    {
+      "id": "cesium",
+      "label": "Cesium",
+      "worksheet": "Cesium",
+      "header_row": 5,
+      "source_unit": "metric tons (t) cesium content",
+      "year_start": 1959,
+      "year_end": 1992,
+      "measures": [
+        {
+          "id": "production",
+          "label": "Production",
+          "column": 2,
+          "unit": "metric tons (t) cesium content",
+          "price_basis": "not-price",
+          "observation_count": 28,
+          "year_start": 1965,
+          "year_end": 1992,
+          "missing": {
+            "blank": 0,
+            "not_available": 6,
+            "withheld": 0,
+            "other_nonnumeric": 0
+          },
+          "observations": [
+            [
+              1965,
+              0,
+              12
+            ],
+            [
+              1966,
+              0,
+              13
+            ],
+            [
+              1967,
+              0,
+              14
+            ],
+            [
+              1968,
+              0,
+              15
+            ],
+            [
+              1969,
+              0,
+              16
+            ],
+            [
+              1970,
+              0,
+              17
+            ],
+            [
+              1971,
+              0,
+              18
+            ],
+            [
+              1972,
+              0,
+              19
+            ],
+            [
+              1973,
+              0,
+              20
+            ],
+            [
+              1974,
+              0,
+              21
+            ],
+            [
+              1975,
+              0,
+              22
+            ],
+            [
+              1976,
+              0,
+              23
+            ],
+            [
+              1977,
+              0,
+              24
+            ],
+            [
+              1978,
+              0,
+              25
+            ],
+            [
+              1979,
+              0,
+              26
+            ],
+            [
+              1980,
+              0,
+              27
+            ],
+            [
+              1981,
+              0,
+              28
+            ],
+            [
+              1982,
+              0,
+              29
+            ],
+            [
+              1983,
+              0,
+              30
+            ],
+            [
+              1984,
+              0,
+              31
+            ],
+            [
+              1985,
+              0,
+              32
+            ],
+            [
+              1986,
+              0,
+              33
+            ],
+            [
+              1987,
+              0,
+              34
+            ],
+            [
+              1988,
+              0,
+              35
+            ],
+            [
+              1989,
+              0,
+              36
+            ],
+            [
+              1990,
+              0,
+              37
+            ],
+            [
+              1991,
+              0,
+              38
+            ],
+            [
+              1992,
+              0,
+              39
+            ]
+          ]
+        },
+        {
+          "id": "imports",
+          "label": "Imports",
+          "column": 3,
+          "unit": "metric tons (t) cesium content",
+          "price_basis": "not-price",
+          "observation_count": 26,
+          "year_start": 1963,
+          "year_end": 1988,
+          "missing": {
+            "blank": 0,
+            "not_available": 8,
+            "withheld": 0,
+            "other_nonnumeric": 0
+          },
+          "observations": [
+            [
+              1963,
+              0.18,
+              10
+            ],
+            [
+              1964,
+              0.917,
+              11
+            ],
+            [
+              1965,
+              0.392,
+              12
+            ],
+            [
+              1966,
+              0,
+              13
+            ],
+            [
+              1967,
+              1.1,
+              14
+            ],
+            [
+              1968,
+              1.41,
+              15
+            ],
+            [
+              1969,
+              2.42,
+              16
+            ],
+            [
+              1970,
+              2.33,
+              17
+            ],
+            [
+              1971,
+              1.93,
+              18
+            ],
+            [
+              1972,
+              5.46,
+              19
+            ],
+            [
+              1973,
+              1.43,
+              20
+            ],
+            [
+              1974,
+              2.1,
+              21
+            ],
+            [
+              1975,
+              1.43,
+              22
+            ],
+            [
+              1976,
+              2.04,
+              23
+            ],
+            [
+              1977,
+              5.21,
+              24
+            ],
+            [
+              1978,
+              6.04,
+              25
+            ],
+            [
+              1979,
+              10.5,
+              26
+            ],
+            [
+              1980,
+              5.36,
+              27
+            ],
+            [
+              1981,
+              11.1,
+              28
+            ],
+            [
+              1982,
+              7.55,
+              29
+            ],
+            [
+              1983,
+              8.72,
+              30
+            ],
+            [
+              1984,
+              24.3,
+              31
+            ],
+            [
+              1985,
+              22.9,
+              32
+            ],
+            [
+              1986,
+              17,
+              33
+            ],
+            [
+              1987,
+              19.3,
+              34
+            ],
+            [
+              1988,
+              22.6,
+              35
+            ]
+          ]
+        },
+        {
+          "id": "stocks",
+          "label": "Stocks",
+          "column": 4,
+          "unit": "metric tons (t) cesium content",
+          "price_basis": "not-price",
+          "observation_count": 2,
+          "year_start": 1961,
+          "year_end": 1962,
+          "missing": {
+            "blank": 0,
+            "not_available": 32,
+            "withheld": 0,
+            "other_nonnumeric": 0
+          },
+          "observations": [
+            [
+              1961,
+              45,
+              8
+            ],
+            [
+              1962,
+              45,
+              9
+            ]
+          ]
+        },
+        {
+          "id": "apparent-consumption",
+          "label": "Apparent consumption",
+          "column": 5,
+          "unit": "metric tons (t) cesium content",
+          "price_basis": "not-price",
+          "observation_count": 26,
+          "year_start": 1963,
+          "year_end": 1988,
+          "missing": {
+            "blank": 0,
+            "not_available": 8,
+            "withheld": 0,
+            "other_nonnumeric": 0
+          },
+          "observations": [
+            [
+              1963,
+              0.18,
+              10
+            ],
+            [
+              1964,
+              0.917,
+              11
+            ],
+            [
+              1965,
+              0.392,
+              12
+            ],
+            [
+              1966,
+              0,
+              13
+            ],
+            [
+              1967,
+              1.1,
+              14
+            ],
+            [
+              1968,
+              1.41,
+              15
+            ],
+            [
+              1969,
+              2.42,
+              16
+            ],
+            [
+              1970,
+              2.33,
+              17
+            ],
+            [
+              1971,
+              1.93,
+              18
+            ],
+            [
+              1972,
+              5.46,
+              19
+            ],
+            [
+              1973,
+              1.43,
+              20
+            ],
+            [
+              1974,
+              2.1,
+              21
+            ],
+            [
+              1975,
+              1.43,
+              22
+            ],
+            [
+              1976,
+              2.04,
+              23
+            ],
+            [
+              1977,
+              5.21,
+              24
+            ],
+            [
+              1978,
+              6.04,
+              25
+            ],
+            [
+              1979,
+              10.5,
+              26
+            ],
+            [
+              1980,
+              5.36,
+              27
+            ],
+            [
+              1981,
+              11.1,
+              28
+            ],
+            [
+              1982,
+              7.55,
+              29
+            ],
+            [
+              1983,
+              8.72,
+              30
+            ],
+            [
+              1984,
+              24.3,
+              31
+            ],
+            [
+              1985,
+              22.9,
+              32
+            ],
+            [
+              1986,
+              17,
+              33
+            ],
+            [
+              1987,
+              19.3,
+              34
+            ],
+            [
+              1988,
+              22.6,
+              35
+            ]
+          ]
+        },
+        {
+          "id": "unit-value-t",
+          "label": "Unit value ($/t)",
+          "column": 6,
+          "unit": "current U.S. dollars per metric ton",
+          "price_basis": "nominal",
+          "observation_count": 34,
+          "year_start": 1959,
+          "year_end": 1992,
+          "missing": {
+            "blank": 0,
+            "not_available": 0,
+            "withheld": 0,
+            "other_nonnumeric": 0
+          },
+          "observations": [
+            [
+              1959,
+              2230000,
+              6
+            ],
+            [
+              1960,
+              1190000,
+              7
+            ],
+            [
+              1961,
+              830000,
+              8
+            ],
+            [
+              1962,
+              830000,
+              9
+            ],
+            [
+              1963,
+              520000,
+              10
+            ],
+            [
+              1964,
+              520000,
+              11
+            ],
+            [
+              1965,
+              580000,
+              12
+            ],
+            [
+              1966,
+              580000,
+              13
+            ],
+            [
+              1967,
+              580000,
+              14
+            ],
+            [
+              1968,
+              580000,
+              15
+            ],
+            [
+              1969,
+              520000,
+              16
+            ],
+            [
+              1970,
+              520000,
+              17
+            ],
+            [
+              1971,
+              520000,
+              18
+            ],
+            [
+              1972,
+              520000,
+              19
+            ],
+            [
+              1973,
+              520000,
+              20
+            ],
+            [
+              1974,
+              520000,
+              21
+            ],
+            [
+              1975,
+              520000,
+              22
+            ],
+            [
+              1976,
+              520000,
+              23
+            ],
+            [
+              1977,
+              660000,
+              24
+            ],
+            [
+              1978,
+              580000,
+              25
+            ],
+            [
+              1979,
+              500000,
+              26
+            ],
+            [
+              1980,
+              500000,
+              27
+            ],
+            [
+              1981,
+              500000,
+              28
+            ],
+            [
+              1982,
+              660000,
+              29
+            ],
+            [
+              1983,
+              660000,
+              30
+            ],
+            [
+              1984,
+              660000,
+              31
+            ],
+            [
+              1985,
+              720000,
+              32
+            ],
+            [
+              1986,
+              720000,
+              33
+            ],
+            [
+              1987,
+              660000,
+              34
+            ],
+            [
+              1988,
+              660000,
+              35
+            ],
+            [
+              1989,
+              690000,
+              36
+            ],
+            [
+              1990,
+              690000,
+              37
+            ],
+            [
+              1991,
+              690000,
+              38
+            ],
+            [
+              1992,
+              38500000,
+              39
+            ]
+          ]
+        },
+        {
+          "id": "unit-value-98-t",
+          "label": "Unit value (98$/t)",
+          "column": 7,
+          "unit": "1998 U.S. dollars per metric ton",
+          "price_basis": "real-1998-dollars",
+          "observation_count": 34,
+          "year_start": 1959,
+          "year_end": 1992,
+          "missing": {
+            "blank": 0,
+            "not_available": 0,
+            "withheld": 0,
+            "other_nonnumeric": 0
+          },
+          "observations": [
+            [
+              1959,
+              12500000,
+              6
+            ],
+            [
+              1960,
+              6550000,
+              7
+            ],
+            [
+              1961,
+              4520000,
+              8
+            ],
+            [
+              1962,
+              4470000,
+              9
+            ],
+            [
+              1963,
+              2770000,
+              10
+            ],
+            [
+              1964,
+              2730000,
+              11
+            ],
+            [
+              1965,
+              3000000,
+              12
+            ],
+            [
+              1966,
+              2910000,
+              13
+            ],
+            [
+              1967,
+              2830000,
+              14
+            ],
+            [
+              1968,
+              2720000,
+              15
+            ],
+            [
+              1969,
+              2310000,
+              16
+            ],
+            [
+              1970,
+              2180000,
+              17
+            ],
+            [
+              1971,
+              2090000,
+              18
+            ],
+            [
+              1972,
+              2030000,
+              19
+            ],
+            [
+              1973,
+              1910000,
+              20
+            ],
+            [
+              1974,
+              1720000,
+              21
+            ],
+            [
+              1975,
+              1580000,
+              22
+            ],
+            [
+              1976,
+              1490000,
+              23
+            ],
+            [
+              1977,
+              1780000,
+              24
+            ],
+            [
+              1978,
+              1450000,
+              25
+            ],
+            [
+              1979,
+              1120000,
+              26
+            ],
+            [
+              1980,
+              989000,
+              27
+            ],
+            [
+              1981,
+              896000,
+              28
+            ],
+            [
+              1982,
+              1110000,
+              29
+            ],
+            [
+              1983,
+              1080000,
+              30
+            ],
+            [
+              1984,
+              1040000,
+              31
+            ],
+            [
+              1985,
+              1090000,
+              32
+            ],
+            [
+              1986,
+              1070000,
+              33
+            ],
+            [
+              1987,
+              947000,
+              34
+            ],
+            [
+              1988,
+              910000,
+              35
+            ],
+            [
+              1989,
+              907000,
+              36
+            ],
+            [
+              1990,
+              861000,
+              37
+            ],
+            [
+              1991,
+              826000,
+              38
+            ],
+            [
+              1992,
+              44700000,
+              39
+            ]
+          ]
+        },
+        {
+          "id": "world-production",
+          "label": "World production",
+          "column": 8,
+          "unit": "metric tons (t) cesium content",
+          "price_basis": "not-price",
+          "observation_count": 8,
+          "year_start": 1961,
+          "year_end": 1977,
+          "missing": {
+            "blank": 0,
+            "not_available": 26,
+            "withheld": 0,
+            "other_nonnumeric": 0
+          },
+          "observations": [
+            [
+              1961,
+              11,
+              8
+            ],
+            [
+              1962,
+              20,
+              9
+            ],
+            [
+              1971,
+              91,
+              18
+            ],
+            [
+              1972,
+              318,
+              19
+            ],
+            [
+              1973,
+              249,
+              20
+            ],
+            [
+              1975,
+              73,
+              22
+            ],
+            [
+              1976,
+              73,
+              23
+            ],
+            [
+              1977,
+              18,
+              24
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

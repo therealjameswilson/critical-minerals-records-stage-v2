@@ -1232,9 +1232,10 @@
       const records = this.data.statistics.filter((row) => row.mineral_id === mineral.id && row.year === this.state.year && ["united-states", null].includes(row.country_id));
       const priority = ["U.S. primary production", "U.S. mine production", "U.S. production", "U.S. imports", "U.S. exports", "U.S. apparent consumption", "U.S. Government stocks", "U.S. stocks", "World mine production", "World production", "Unit value", "Real unit value"];
       const selected = priority.map((metric) => records.find((row) => row.metric === metric)).filter(Boolean);
-      const annualNote = mineral.id === "rare-earth-elements"
-        ? "The complete numeric USGS rare-earth worksheet series is indexed annually from 1900 through 1992."
-        : "This commodity currently uses selected benchmark years from the USGS worksheet.";
+      const ds140Materials = new Set(["aluminum", "bauxite", "chromium", "cobalt", "copper", "manganese", "rare-earth-elements", "tin", "tungsten"]);
+      const annualNote = ds140Materials.has(mineral.id)
+        ? "Every numeric annual cell in the linked USGS worksheet is indexed through 1992."
+        : "This material does not yet have a normalized Data Series 140 worksheet in the atlas.";
       return `<div class="atlas-panel-heading"><div><p class="eyebrow">Official statistical context</p><h3>${H.escape(mineral.canonical_name)}, ${H.escape(this.state.year)}</h3></div><p>Exact-year U.S. and world series only. No interpolation and no country supplier shares. ${H.escape(annualNote)}</p></div>${selected.length ? `<div class="atlas-number-grid atlas-number-grid-complete">${selected.map((row) => `<article><strong>${H.formatNumber(row.value)}</strong><span>${H.escape(row.metric)}</span><small>${H.escape(row.unit)}</small><small>${H.escape(row.table_or_page)}</small><a href="${H.escape(row.source_url)}" target="_blank" rel="noopener">USGS table source ↗</a></article>`).join("")}</div>` : `<p class="empty-note">No numeric USGS observation is checked in for ${H.escape(mineral.canonical_name)} in ${H.escape(this.state.year)}. Missing, withheld, and nonnumeric source cells are not interpolated or treated as zero.</p>`}`;
     }
 

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Extract a bounded 1861-1992 pilot from official USGS Data Series 140 XLSX files.
+"""Extract annual 1861-1992 profile data from official USGS DS140 workbooks.
 
-The rare-earth workbook is imported annually through 1992; the other commodity
-workbooks retain the project's benchmark-year sampling. The script performs no
-interpolation and writes only numeric cells. NARA data is not involved. Install
-``openpyxl`` from requirements.txt before running.
+Every numeric cell for the nine DS140-backed atlas materials is imported through
+1992. The script performs no interpolation and writes only numeric cells. NARA
+data is not involved. Install ``openpyxl`` from requirements.txt before running.
 """
 
 from __future__ import annotations
@@ -22,7 +21,6 @@ from openpyxl import load_workbook
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT = ROOT / "data" / "history-stack" / "statistics.json"
-BENCHMARK_YEARS = {1900, 1910, 1917, 1920, 1930, 1939, 1941, 1942, 1945, 1950, 1953, 1960, 1967, 1970, 1973, 1975, 1980, 1990, 1992}
 BASE = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/"
 
 SOURCES = {
@@ -62,11 +60,20 @@ def slug(value: str) -> str:
 
 
 def unit_for(header: str, workbook_unit: str) -> tuple[str, str]:
-    if header == "unit value ($/t)":
+    compact = header.replace(" ", "")
+    if "unitvalue" in compact and "98$/t" not in compact and "$/t" in compact:
         return ("current U.S. dollars per metric ton", "nominal")
-    if header == "unit value (98$/t)":
+    if "unitvalue" in compact and "98$/t" in compact:
         return ("1998 U.S. dollars per metric ton", "real-1998-dollars")
     return (workbook_unit, "not-price")
+
+
+def metric_for(header: str) -> str:
+    if header in METRICS:
+        return METRICS[header]
+    if header.startswith("world "):
+        return header.capitalize()
+    return f"U.S. {header}"
 
 
 def workbook_unit_text(raw: object) -> str:
@@ -82,11 +89,7 @@ def workbook_unit_text(raw: object) -> str:
 
 
 def include_year(mineral_id: str, year: object) -> bool:
-    if not isinstance(year, int) or not 1861 <= year <= 1992:
-        return False
-    if mineral_id == "rare-earth-elements":
-        return year >= 1900
-    return year in BENCHMARK_YEARS
+    return isinstance(year, int) and 1861 <= year <= 1992
 
 
 def download(url: str, destination: Path) -> None:
@@ -118,13 +121,13 @@ def extract_file(mineral_id: str, cache_dir: Path, access_date: str) -> list[dic
         if not include_year(mineral_id, year):
             continue
         for column, header in enumerate(headers[1:], start=1):
-            if header not in METRICS or column >= len(values):
+            if not header or column >= len(values):
                 continue
             value = values[column]
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
                 continue
             unit, price_basis = unit_for(header, workbook_unit)
-            metric = METRICS[header]
+            metric = metric_for(header)
             rows.append({
                 "id": f"usgs-ds140-{mineral_id}-{year}-{slug(metric)}",
                 "metric": metric,
@@ -148,9 +151,7 @@ def extract_file(mineral_id: str, cache_dir: Path, access_date: str) -> list[dic
                 "notes": (
                     "Data Series 140 may incorporate conversions made by USGS from historical source units. "
                     "Missing, withheld, and nonnumeric cells are omitted rather than treated as zero. "
-                    + ("All numeric annual worksheet cells from 1900 through 1992 are included for rare earths."
-                       if mineral_id == "rare-earth-elements"
-                       else "This commodity retains the project's benchmark-year sampling.")
+                    + "All numeric annual worksheet cells through 1992 are included for this atlas material."
                 ),
                 "confidence": "high"
             })

@@ -69,6 +69,10 @@ __pycache__/
 !/data/atlas/*.json
 !/data/atlas/*.geojson
 !/data/atlas/README.md
+!/data/usgs-ds140/
+!/data/usgs-ds140/*.json
+!/data/usgs-ds140/commodities/
+!/data/usgs-ds140/commodities/*.json
 !/data/nara/
 !/data/nara/*.json
 
