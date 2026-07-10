@@ -4,7 +4,7 @@
   const FILES = [
     "sources", "minerals", "countries", "episodes", "agreements", "laws",
     "administrations", "stockpile-cases", "frus-documents", "statistics", "trade",
-    "nara-queries", "country-briefs", "modern-context"
+    "trade-details", "trade-research", "nara-queries", "country-briefs", "modern-context"
   ];
 
   function escape(value) {

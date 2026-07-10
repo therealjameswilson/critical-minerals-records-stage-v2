@@ -86,8 +86,8 @@
     "source_type": "official-statistics",
     "tier": 1,
     "url": "https://www.census.gov/foreign-trade/statistics/historical/",
-    "scope": "Historical import and export publications and classification references.",
-    "trust_note": "No Census values are yet transcribed into the pilot."
+    "scope": "Historical import and export publications, commodity classifications, and country-partner tables.",
+    "trust_note": "The pilot includes reviewed Census-derived national category totals. Country rows remain a source-acquisition queue until the relevant FT reports are obtained and checked."
   },
   {
     "id": "census-statistical-abstract-1948",

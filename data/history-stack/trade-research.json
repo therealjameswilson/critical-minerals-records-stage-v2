@@ -1,0 +1,48 @@
+[
+  {
+    "id": "census-ft-1983-rare-earth-partners",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1983 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous TSUSA commodity and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1983-import-9",
+      "census-usgs-rare-earth-1983-export-5"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1983 TSUSA or Schedule B categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  }
+]

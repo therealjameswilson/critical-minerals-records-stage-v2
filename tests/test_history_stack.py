@@ -42,6 +42,8 @@ def test_pilot_meets_minimum_entity_counts():
         "nara-queries": 30,
         "country-briefs": 4,
         "trade": 1400,
+        "trade-details": 14,
+        "trade-research": 1,
     }
     for name, minimum in expected.items():
         assert len(load(name)) >= minimum
@@ -127,6 +129,35 @@ def test_usgs_trade_rows_preserve_exact_year_units_and_provenance():
     assert by_direction["imports"]["unit"] == "metric tons (t) tin content"
     assert by_direction["exports"]["table_or_page"].startswith("Tin worksheet")
     assert all(row["source_id"] == "usgs-ds140" for row in rows)
+
+
+def test_1983_rare_earth_census_recovery_pilot_preserves_published_categories():
+    rows = [row for row in load("trade-details") if row["year"] == 1983 and row["mineral_id"] == "rare-earth-elements"]
+    totals = {(row["direction"], row["category"]): row for row in rows}
+    imports = totals[("imports", "Published total")]
+    exports = totals[("exports", "Published total")]
+    assert imports["quantity"]["value"] == 822
+    assert imports["trade_value"]["value"] == 15826
+    assert exports["quantity"]["value"] == 2743
+    thorium = totals[("exports", "Thorium ore and concentrates")]
+    assert thorium["quantity"]["value"] == 2684
+    assert all(row["source_origin_agency"] == "Bureau of the Census" for row in rows)
+    assert all(row["transcription_status"] == "manually-reviewed-published-table" for row in rows)
+
+
+def test_1983_rare_earth_partner_rows_remain_an_explicit_acquisition_queue():
+    queue = load("trade-research")[0]
+    assert queue["status"] == "source-acquisition"
+    assert {row["series"] for row in queue["reports"]} == {"FT 246", "FT 446"}
+    assert len(queue["control_total_ids"]) == 2
+    assert any("Do not draw atlas trade-flow lines" in note for note in queue["classification_notes"])
+
+
+def test_atlas_renders_census_recovery_pilot_separately_from_standardized_trade():
+    atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
+    assert "renderTradeDetailPilot" in atlas
+    assert "1983 Census recovery pilot" in atlas
+    assert "They are displayed side by side and are not merged" in atlas
 
 
 def test_history_stack_page_exposes_all_layers():

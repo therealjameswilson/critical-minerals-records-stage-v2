@@ -1,0 +1,408 @@
+[
+  {
+    "id": "census-usgs-rare-earth-1983-import-1",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Cerium compounds",
+    "quantity": {
+      "value": 4,
+      "display": "4",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": 25,
+      "display": "25",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-import-2",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Mixtures of rare-earth oxides and chlorides",
+    "quantity": {
+      "value": 26,
+      "display": "26",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": 99,
+      "display": "99",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-import-3",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Cerium salts",
+    "quantity": {
+      "value": 2,
+      "display": "2",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": 7,
+      "display": "7",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-import-4",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Rare-earth oxide excluding cerium oxide",
+    "quantity": {
+      "value": 609,
+      "display": "609",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": 13671,
+      "display": "13,671",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-import-5",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Rare-earth alloys",
+    "quantity": {
+      "value": 75,
+      "display": "75",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": 642,
+      "display": "642",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-import-6",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Rare-earth metals including scandium and yttrium",
+    "quantity": {
+      "value": 1,
+      "display": "1",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": 182,
+      "display": "182",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-import-7",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Other rare-earth metals",
+    "quantity": {
+      "value": null,
+      "display": "Less than 0.5",
+      "unit": "metric tons",
+      "status": "not-available"
+    },
+    "trade_value": {
+      "value": 14,
+      "display": "14",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-import-8",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Ferrocerium and other pyrophoric alloys",
+    "quantity": {
+      "value": 105,
+      "display": "105",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": 1185,
+      "display": "1,185",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-import-9",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "imports",
+    "category": "Published total",
+    "quantity": {
+      "value": 822,
+      "display": "822",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": 15826,
+      "display": "15,826",
+      "unit": "thousand current U.S. dollars",
+      "status": "reported"
+    },
+    "is_total": true,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 3, U.S. imports for consumption of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl3.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The table preserves the contemporaneous published categories. Quantity totals may not add because of independent rounding.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-export-1",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "exports",
+    "category": "Thorium ore and concentrates",
+    "quantity": {
+      "value": 2684,
+      "display": "2,684",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": null,
+      "display": "Not published in this table",
+      "unit": "thousand current U.S. dollars",
+      "status": "not-available"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 4, U.S. exports of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl4.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The published export total includes thorium ore and concentrates. It is not equivalent to a modern rare-earth-element product total.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-export-2",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "exports",
+    "category": "Ferrocerium and other pyrophoric alloys",
+    "quantity": {
+      "value": 59,
+      "display": "59",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": null,
+      "display": "Not published in this table",
+      "unit": "thousand current U.S. dollars",
+      "status": "not-available"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 4, U.S. exports of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl4.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The published export total includes thorium ore and concentrates. It is not equivalent to a modern rare-earth-element product total.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-export-3",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "exports",
+    "category": "Cerium compounds",
+    "quantity": {
+      "value": null,
+      "display": "Not separately available",
+      "unit": "metric tons",
+      "status": "not-available"
+    },
+    "trade_value": {
+      "value": null,
+      "display": "Not published in this table",
+      "unit": "thousand current U.S. dollars",
+      "status": "not-available"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 4, U.S. exports of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl4.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The published export total includes thorium ore and concentrates. It is not equivalent to a modern rare-earth-element product total.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-export-4",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "exports",
+    "category": "Rare-earth metals including scandium and yttrium",
+    "quantity": {
+      "value": null,
+      "display": "Not separately available",
+      "unit": "metric tons",
+      "status": "not-available"
+    },
+    "trade_value": {
+      "value": null,
+      "display": "Not published in this table",
+      "unit": "thousand current U.S. dollars",
+      "status": "not-available"
+    },
+    "is_total": false,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 4, U.S. exports of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl4.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The published export total includes thorium ore and concentrates. It is not equivalent to a modern rare-earth-element product total.",
+    "confidence": "high"
+  },
+  {
+    "id": "census-usgs-rare-earth-1983-export-5",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "direction": "exports",
+    "category": "Published total",
+    "quantity": {
+      "value": 2743,
+      "display": "2,743",
+      "unit": "metric tons",
+      "status": "reported"
+    },
+    "trade_value": {
+      "value": null,
+      "display": "Not published in this table",
+      "unit": "thousand current U.S. dollars",
+      "status": "not-available"
+    },
+    "is_total": true,
+    "source_id": "usgs-statistical-compendium",
+    "source_origin_agency": "Bureau of the Census",
+    "publication_title": "Rare Earths Statistical Compendium",
+    "table_or_page": "Table 4, U.S. exports of rare-earths",
+    "source_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/rare-earth/stats/tbl4.txt",
+    "access_date": "2026-07-10",
+    "transcription_status": "manually-reviewed-published-table",
+    "classification_note": "The published export total includes thorium ore and concentrates. It is not equivalent to a modern rare-earth-element product total.",
+    "confidence": "high"
+  }
+]

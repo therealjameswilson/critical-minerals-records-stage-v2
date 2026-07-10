@@ -25,6 +25,8 @@ EXPECTED_MINIMUMS = {
     "stockpile-cases": 2,
     "country-briefs": 4,
     "trade": 1400,
+    "trade-details": 14,
+    "trade-research": 1,
 }
 
 
@@ -144,6 +146,43 @@ def main() -> None:
     ]
     if uncovered_trade_years:
         errors.append(f"trade: no verified record covers years {uncovered_trade_years}")
+
+    required_trade_detail_fields = {
+        "year", "mineral_id", "direction", "category", "quantity", "trade_value",
+        "is_total", "source_id", "source_origin_agency", "publication_title",
+        "table_or_page", "source_url", "access_date", "transcription_status",
+        "classification_note", "confidence"
+    }
+    for row in datasets["trade-details"]:
+        owner = f"trade-details/{row.get('id')}"
+        missing = sorted(required_trade_detail_fields - set(row))
+        if missing:
+            errors.append(f"{owner}: missing {', '.join(missing)}")
+        if row.get("mineral_id") not in ids["minerals"]:
+            errors.append(f"{owner}: unknown mineral_id {row.get('mineral_id')}")
+        if row.get("source_id") not in ids["sources"]:
+            errors.append(f"{owner}: unknown source_id {row.get('source_id')}")
+        if row.get("direction") not in {"imports", "exports"}:
+            errors.append(f"{owner}: invalid direction {row.get('direction')}")
+        for measure_name in ("quantity", "trade_value"):
+            measure = row.get(measure_name, {})
+            if not {"value", "display", "unit", "status"} <= set(measure):
+                errors.append(f"{owner}: malformed {measure_name}")
+            if measure.get("value") is None and measure.get("status") != "not-available":
+                errors.append(f"{owner}: null {measure_name} must be not-available")
+
+    detail_ids = ids["trade-details"]
+    for row in datasets["trade-research"]:
+        owner = f"trade-research/{row.get('id')}"
+        if row.get("mineral_id") not in ids["minerals"]:
+            errors.append(f"{owner}: unknown mineral_id {row.get('mineral_id')}")
+        if row.get("status") != "source-acquisition":
+            errors.append(f"{owner}: invalid status {row.get('status')}")
+        if len(row.get("reports", [])) < 2:
+            errors.append(f"{owner}: expected import and export report plans")
+        for reference in row.get("control_total_ids", []):
+            if reference not in detail_ids:
+                errors.append(f"{owner}: missing control total {reference}")
 
     fact_statuses = {"verified", "estimated", "unknown"}
     for brief in datasets["country-briefs"]:

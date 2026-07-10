@@ -615,13 +615,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .atlas-panel-heading h3 { margin-bottom: 0; }
 .atlas-panel-heading > p { margin-bottom: 0; color: var(--muted); font-size: 12px; }
 .atlas-summary-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, .8fr); gap: 46px; }
-.atlas-summary-metrics { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); }
+.atlas-summary-metrics { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); }
 .atlas-summary-metrics div { padding: 13px; border-right: 1px solid var(--line); }
 .atlas-summary-metrics div:last-child { border-right: 0; }
 .atlas-summary-metrics strong, .atlas-summary-metrics span { display: block; }
 .atlas-summary-metrics strong { font-family: Georgia, serif; font-size: 27px; color: var(--navy-800); }
 [data-theme="dark"] .atlas-summary-metrics strong { color: #d6e8e6; }
 .atlas-summary-metrics span { color: var(--muted); font-size: 9px; text-transform: uppercase; }
+.atlas-evidence-prompt { display: flex; justify-content: space-between; gap: 18px; align-items: center; margin-top: 14px; padding: 13px 15px; border-left: 4px solid var(--teal-600); background: var(--teal-100); }
+.atlas-evidence-prompt strong, .atlas-evidence-prompt span { display: block; }
+.atlas-evidence-prompt span { margin-top: 3px; color: var(--muted); font-size: 10px; }
+.atlas-evidence-prompt button { flex: 0 0 auto; padding: 9px 12px; border: 1px solid var(--teal-700); background: var(--surface); color: var(--teal-800); font: inherit; font-size: 10px; font-weight: 800; text-transform: uppercase; cursor: pointer; }
+.atlas-evidence-prompt button:hover { background: var(--paper-muted); }
+.atlas-evidence-prompt button:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
 .atlas-story-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
 .atlas-story-list li { display: grid; grid-template-columns: 90px 1fr auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
 .atlas-story-list li > span { color: var(--muted); font-size: 10px; }
@@ -648,6 +654,36 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .trade-table td strong, .trade-table td small { display: block; }
 .trade-table td small { margin-top: 2px; color: var(--muted); font-size: 9px; }
 .trade-source-note { margin: 12px 0 0; color: var(--muted); font-size: 10px; }
+.trade-pilot { margin: 24px 0; padding: 22px; border: 1px solid var(--line-strong); border-top: 5px solid var(--gold-500); background: var(--surface); }
+.trade-pilot-heading { display: flex; justify-content: space-between; gap: 20px; align-items: start; }
+.trade-pilot-heading h4 { margin: 3px 0 0; font: 700 24px/1.15 Georgia, serif; color: var(--navy-900); }
+[data-theme="dark"] .trade-pilot-heading h4 { color: #e3efed; }
+.trade-pilot > p { max-width: 850px; color: var(--muted); }
+.trade-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 18px 0; border: 1px solid var(--line); }
+.trade-comparison > div { display: grid; grid-template-columns: minmax(90px, .35fr) minmax(0, 1fr) minmax(0, 1fr); gap: 8px 18px; padding: 15px; border-right: 1px solid var(--line); }
+.trade-comparison > div:last-child { border-right: 0; }
+.trade-comparison > div > span { grid-row: 1 / span 2; align-self: center; color: var(--teal-800); font-weight: 900; text-transform: uppercase; }
+.trade-comparison strong { display: block; color: var(--navy-800); font: 700 20px/1.2 Georgia, serif; }
+[data-theme="dark"] .trade-comparison strong { color: #d6e8e6; }
+.trade-comparison strong small { display: block; margin-top: 3px; color: var(--muted); font: 500 9px/1.35 Inter, ui-sans-serif, system-ui, sans-serif; }
+.trade-comparison > div > small { color: var(--muted); font-size: 9px; }
+.trade-scope-note.caution { border-left-color: var(--rust-600); }
+.trade-detail-table { margin-top: 18px; }
+.trade-detail-table table { min-width: 900px; }
+.trade-detail-table th, .trade-detail-table td { vertical-align: top; }
+.trade-detail-table td small { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; }
+.trade-detail-table tr.is-total th, .trade-detail-table tr.is-total td { border-top: 2px solid var(--navy-700); background: var(--paper-muted); font-weight: 800; }
+.trade-acquisition { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line-strong); }
+.trade-acquisition h4 { margin: 8px 0 4px; font-size: 17px; }
+.trade-acquisition > div:first-child p { max-width: 820px; color: var(--muted); }
+.trade-report-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 15px 0; }
+.trade-report-list > div { padding: 14px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-muted); }
+.trade-report-list strong, .trade-report-list span, .trade-report-list small, .trade-report-list a { display: block; }
+.trade-report-list span { margin: 4px 0; font-weight: 700; }
+.trade-report-list small { color: var(--muted); }
+.trade-report-list a { margin-top: 9px; font-size: 10px; font-weight: 800; }
+.trade-acquisition ul { margin: 12px 0 18px; padding-left: 20px; color: var(--muted); }
+.trade-acquisition li + li { margin-top: 5px; }
 .atlas-accessible-table { margin-top: 14px; }
 .atlas-accessible-table > p { padding: 0 16px; color: var(--muted); font-size: 12px; }
 .table-scroll { overflow-x: auto; }
@@ -1032,7 +1068,13 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .method-toc { position: static; grid-template-columns: repeat(3, 1fr); }
   .method-toc strong { grid-column: 1 / -1; }
   .atlas-heading, .atlas-summary-grid, .atlas-panel-heading { grid-template-columns: 1fr; gap: 16px; }
+  .atlas-summary-metrics { grid-template-columns: repeat(2, 1fr); }
+  .atlas-summary-metrics div:nth-child(2n) { border-right: 0; }
+  .atlas-summary-metrics div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .trade-scope-note { grid-template-columns: 1fr; gap: 4px; }
+  .trade-comparison, .trade-report-list { grid-template-columns: 1fr; }
+  .trade-comparison > div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .trade-comparison > div:last-child { border-bottom: 0; }
   .atlas-timebar { grid-template-columns: 42px 42px minmax(220px, 1fr) 42px; }
   .atlas-mineral-control, .atlas-mode-control { grid-column: span 2; }
   .atlas-workbench {
@@ -1130,6 +1172,11 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .atlas-tabs button { min-width: 112px; padding-inline: 10px; }
   .atlas-summary-metrics, .atlas-number-grid { grid-template-columns: 1fr; }
   .atlas-summary-metrics div, .atlas-number-grid article { border-right: 0; border-bottom: 1px solid var(--line); }
+  .atlas-evidence-prompt, .trade-pilot-heading { align-items: stretch; flex-direction: column; }
+  .atlas-evidence-prompt button { width: 100%; }
+  .trade-pilot { padding: 17px 13px; }
+  .trade-comparison > div { grid-template-columns: 1fr; }
+  .trade-comparison > div > span { grid-row: auto; }
   .atlas-story-list li { grid-template-columns: 72px 1fr; }
   .atlas-story-list li .badge { grid-column: 2; width: fit-content; }
 }

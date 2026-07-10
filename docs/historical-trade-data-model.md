@@ -43,6 +43,38 @@ compatible annual U.S. imports-and-exports workbook is currently normalized.
 The interface reports that gap instead of omitting uranium from the mineral
 system or treating missing values as zero.
 
+## 1983 Rare-Earth Census Recovery Pilot
+
+The atlas includes a bounded pilot showing how legacy Census trade reporting
+can be recovered without projecting modern HS categories backward.
+
+The reviewed category rows in `trade-details.json` reproduce the 1983 columns
+of the official Rare Earths Statistical Compendium tables. Those tables name
+the Bureau of the Census as their source:
+
+- Table 3 reports 822 metric tons of rare-earth imports for consumption,
+  valued at 15,826 thousand current dollars, across eight published product
+  categories.
+- Table 4 reports 2,743 metric tons of exports, including 2,684 metric tons of
+  thorium ore and concentrates and 59 metric tons of ferrocerium and other
+  pyrophoric alloys.
+
+These totals are displayed beside, but never merged with, the later USGS Data
+Series 140 standardized values for 1983. Data Series 140 uses rare-earth-oxide
+equivalent; the contemporaneous export table includes thorium ore. The scopes
+are therefore materially different.
+
+`trade-research.json` records the next acquisition step rather than inventing
+supplier countries. The 1983 annual reports needed are:
+
+- FT 246, *U.S. Imports for Consumption and General Imports, TSUSA Commodity
+  by Country of Origin*; and
+- FT 446, *U.S. Exports, Schedule B Commodity by Country*.
+
+No country flow is drawn on the atlas until those rows, classifications,
+quantities, valuation bases, and report locations have been reviewed. The
+published category totals serve as controls for that future transcription.
+
 ## Record Shape
 
 Each object in `data/history-stack/trade.json` includes:
@@ -85,6 +117,7 @@ JSON and official workbook control if the source series is refreshed.
 
 ```bash
 python scripts/ingest_trade_data.py --access-date YYYY-MM-DD
+python scripts/build_trade_pilot.py --access-date YYYY-MM-DD
 python scripts/validate_history_data.py
 python -m pytest tests/ -q
 ```

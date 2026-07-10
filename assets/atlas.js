@@ -667,7 +667,10 @@
       const relationships = this.activeRelationships().filter((row) => !country || row.country_id === country.id);
       const title = country ? `${this.historicalName(country, this.state.year)} in ${this.state.year}` : `The atlas in ${this.state.year}`;
       const mineral = this.selectedMineral();
-      return `<div class="atlas-summary-grid"><div><p class="eyebrow">Synchronized view</p><h3>${H.escape(title)}</h3><p>${mineral ? `Material filter: <strong>${H.escape(mineral.canonical_name)}</strong>.` : "All pilot materials are visible."} Each count reflects checked-in evidence, not total historical activity.</p><div class="atlas-summary-metrics"><div><strong>${uniqueEpisodes.length}</strong><span>active pilot episodes</span></div><div><strong>${relationships.length}</strong><span>documented access links</span></div><div><strong>${country ? this.activeFrus(country).length : this.data.countries.reduce((sum, row) => sum + this.activeFrus(row).length, 0)}</strong><span>linked FRUS records</span></div></div></div><div><h4>What happened here?</h4>${uniqueEpisodes.length ? `<ol class="atlas-story-list">${uniqueEpisodes.map((row) => `<li><span>${row.start}–${row.end}</span><a href="${H.detailHref("episodes", row.episode_id)}">${H.escape(row.title)}</a>${H.completenessBadge(row.completeness)}</li>`).join("")}</ol>` : '<p class="empty-note">No pilot episode is linked to this exact selection. The absence reflects current coverage, not absence of historical activity.</p>'}</div></div>`;
+      const trade = this.data.trade.filter((row) => row.year_start <= this.state.year && row.year_end >= this.state.year && (!mineral || row.mineral_id === mineral.id));
+      const tradeDetails = this.data["trade-details"].filter((row) => row.year === this.state.year && (!mineral || row.mineral_id === mineral.id));
+      const tradePrompt = mineral && (trade.length || tradeDetails.length) ? `<div class="atlas-evidence-prompt"><div><strong>Official trade evidence is available</strong><span>${trade.length} national observation${trade.length === 1 ? "" : "s"}${tradeDetails.length ? ` and ${tradeDetails.length} published category row${tradeDetails.length === 1 ? "" : "s"}` : ""} match this selection.</span></div><button type="button" data-open-atlas-tab="trade">Open U.S. Trade</button></div>` : "";
+      return `<div class="atlas-summary-grid"><div><p class="eyebrow">Synchronized view</p><h3>${H.escape(title)}</h3><p>${mineral ? `Material filter: <strong>${H.escape(mineral.canonical_name)}</strong>.` : "All pilot materials are visible."} Each count reflects checked-in evidence, not total historical activity.</p><div class="atlas-summary-metrics"><div><strong>${uniqueEpisodes.length}</strong><span>active pilot episodes</span></div><div><strong>${relationships.length}</strong><span>documented access links</span></div><div><strong>${country ? this.activeFrus(country).length : this.data.countries.reduce((sum, row) => sum + this.activeFrus(row).length, 0)}</strong><span>linked FRUS records</span></div><div><strong>${trade.length + tradeDetails.length}</strong><span>trade evidence rows</span></div></div>${tradePrompt}</div><div><h4>What happened here?</h4>${uniqueEpisodes.length ? `<ol class="atlas-story-list">${uniqueEpisodes.map((row) => `<li><span>${row.start}–${row.end}</span><a href="${H.detailHref("episodes", row.episode_id)}">${H.escape(row.title)}</a>${H.completenessBadge(row.completeness)}</li>`).join("")}</ol>` : '<p class="empty-note">No pilot episode is linked to this exact selection. The absence reflects current coverage, not absence of historical activity.</p>'}</div></div>`;
     }
 
     renderFrusPanel() {
@@ -689,6 +692,8 @@
     renderCommodityTradePanel(records, allYearRecords) {
       const mineral = this.selectedMineral();
       const country = this.selectedCountry();
+      const details = this.data["trade-details"].filter((row) => row.year === this.state.year && (!mineral || row.mineral_id === mineral.id));
+      const research = this.data["trade-research"].filter((row) => row.year === this.state.year && (!mineral || row.mineral_id === mineral.id));
       const grouped = new Map();
       records.forEach((row) => {
         const group = grouped.get(row.mineral_id) || { mineral: this.data.indexes.minerals.get(row.mineral_id), imports: null, exports: null };
@@ -701,13 +706,30 @@
       const emptyMessage = mineral
         ? `No annual USGS import or export row is normalized for ${mineral.canonical_name} in ${this.state.year}. ${availableMaterials} other pilot material series have exact-year trade evidence; choose All pilot materials to inspect them.`
         : `No annual USGS commodity trade row is normalized for ${this.state.year}. Missing values are not treated as zero.`;
-      return `<div class="atlas-panel-heading"><div><p class="eyebrow">Verified U.S. commodity trade</p><h3>${mineral ? H.escape(mineral.canonical_name) : "Pilot strategic-resource materials"}, ${H.escape(this.state.year)}</h3></div><p>Exact-year USGS national imports and exports in the original standardized commodity unit. No interpolation, dollar conversion, or partner-country attribution.</p></div>
+      return `<div class="atlas-panel-heading"><div><p class="eyebrow">Verified U.S. commodity trade</p><h3>${mineral ? H.escape(mineral.canonical_name) : "Pilot strategic-resource materials"}, ${H.escape(this.state.year)}</h3></div><p>Exact-year official national imports and exports in their published units. No interpolation, dollar conversion, or partner-country attribution.</p></div>
         <div class="trade-scope-note"><strong>National aggregate</strong><span>${H.escape(selectionNote)}</span></div>
+        ${this.renderTradeDetailPilot(details, research, records)}
         ${groups.length ? `<div class="table-scroll trade-table"><table><caption>Official U.S. mineral imports and exports for ${H.escape(this.state.year)}</caption><thead><tr><th>Material</th><th>Imports</th><th>Exports</th><th>Source definition</th><th>Provenance</th></tr></thead><tbody>${groups.map((group) => {
           const source = group.imports || group.exports;
           const valueCell = (row) => row ? `<strong>${H.formatNumber(row.value)}</strong><small>${H.escape(row.unit)}</small>` : '<span class="unknown-value">Not published</span>';
           return `<tr><th scope="row"><a href="${H.detailHref("minerals", group.mineral.id)}">${H.escape(group.mineral.canonical_name)}</a></th><td>${valueCell(group.imports)}</td><td>${valueCell(group.exports)}</td><td>${H.escape(source.trade_basis)}</td><td><a href="${H.escape(source.source_url)}" target="_blank" rel="noopener">USGS Data Series 140 · ${H.escape(source.table_or_page)}</a></td></tr>`;
         }).join("")}</tbody></table></div><p class="trade-source-note"><strong>Reading rule:</strong> A missing direction means no numeric cell was published in the normalized worksheet for that year; it does not mean zero trade.</p>` : `<p class="empty-note">${H.escape(emptyMessage)}</p>`}`;
+    }
+
+    renderTradeDetailPilot(details, research, aggregateRecords) {
+      if (!details.length && !research.length) return "";
+      const totals = new Map(details.filter((row) => row.is_total).map((row) => [row.direction, row]));
+      const aggregates = new Map(aggregateRecords.map((row) => [row.direction, row]));
+      const measurement = (item) => item && item.display ? `${H.escape(item.display)} <small>${H.escape(item.unit)}</small>` : '<span class="unknown-value">Not published</span>';
+      const comparison = ["imports", "exports"].map((direction) => {
+        const total = totals.get(direction);
+        const aggregate = aggregates.get(direction);
+        if (!total && !aggregate) return "";
+        return `<div><span>${H.escape(direction)}</span><strong>${total ? measurement(total.quantity) : '<span class="unknown-value">Not available</span>'}</strong><small>Census-derived contemporaneous categories</small>${aggregate ? `<strong>${H.formatNumber(aggregate.value)} <small>${H.escape(aggregate.unit)}</small></strong><small>Later USGS standardized series</small>` : ""}</div>`;
+      }).join("");
+      const rows = details.map((row) => `<tr${row.is_total ? ' class="is-total"' : ""}><th scope="row">${H.escape(row.direction)}</th><td>${H.escape(row.category)}</td><td>${measurement(row.quantity)}</td><td>${measurement(row.trade_value)}</td><td><a href="${H.escape(row.source_url)}" target="_blank" rel="noopener">${H.escape(row.table_or_page)}</a></td></tr>`).join("");
+      const queues = research.map((queue) => `<div class="trade-acquisition"><div><span class="badge badge-queue">Source acquisition</span><h4>${H.escape(queue.title)}</h4><p>${H.escape(queue.objective)}</p></div><div class="trade-report-list">${queue.reports.map((report) => `<div><strong>${H.escape(report.series)}</strong><span>${H.escape(report.title)}</span><small>${H.escape(report.role)}</small><a href="${H.escape(report.official_description_url)}" target="_blank" rel="noopener">Official Census description ↗</a></div>`).join("")}</div><ul>${queue.classification_notes.map((note) => `<li>${H.escape(note)}</li>`).join("")}</ul><a class="button-link" href="${H.escape(queue.official_request_url)}" target="_blank" rel="noopener">Find or request the legacy Census reports ↗</a></div>`).join("");
+      return `<section class="trade-pilot" aria-labelledby="trade-pilot-title"><div class="trade-pilot-heading"><div><p class="eyebrow">1983 Census recovery pilot</p><h4 id="trade-pilot-title">Rare-earth trade before a stable modern category</h4></div>${H.badge("Reviewed official table", "verified")}</div><p>The contemporaneous tables and the later standardized series answer different questions. They are displayed side by side and are not merged.</p><div class="trade-comparison">${comparison}</div><div class="trade-scope-note caution"><strong>Classification boundary</strong><span>The published 1983 export total includes 2,684 metric tons of thorium ore and concentrates. Data Series 140 instead reports rare-earth-oxide equivalent. Neither total can validate country rows from FT 246 or FT 446 until those reports are reviewed in their original classifications.</span></div>${rows ? `<div class="table-scroll trade-detail-table"><table><caption>Published 1983 rare-earth categories reproduced from Census-derived USGS Statistical Compendium tables</caption><thead><tr><th>Flow</th><th>Published category</th><th>Quantity</th><th>Trade value</th><th>Official table</th></tr></thead><tbody>${rows}</tbody></table></div>` : ""}${queues}</section>`;
     }
 
     renderTradePanel() {
@@ -754,6 +776,10 @@
         archives: () => this.renderArchivesPanel()
       };
       $("atlasPanel").innerHTML = renderers[this.state.tab]();
+      $("atlasPanel").querySelectorAll("[data-open-atlas-tab]").forEach((button) => button.addEventListener("click", () => {
+        const target = document.querySelector(`[data-atlas-tab="${button.dataset.openAtlasTab}"]`);
+        if (target) target.click();
+      }));
     }
 
     renderTable() {
