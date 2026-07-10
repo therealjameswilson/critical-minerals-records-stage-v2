@@ -73,3 +73,34 @@ def test_mineral_to_hs_crosswalk_loads_correctly():
     assert "nickel matte" in nickel["aliases"]
     assert codes["260400"]["confidence"] == "high"
     assert codes["750210"]["caveat"].startswith("Refined product")
+
+
+def test_verified_historical_seed_records_are_present():
+    events = list(parse_corpus(SAMPLE))
+    record_ids = {event["extra"]["record_id"] for event in events}
+    assert "frus-1947-v1-d395-strategic-materials" in record_ids
+    assert "frus-1950-v1-d95-stockpile-program" in record_ids
+    assert "frus-1952-54-v11p1-d27-tropical-africa" in record_ids
+    assert "frus-1964-68-v9-d344-stockpile-objectives" in record_ids
+
+
+def test_portal_shell_has_intelligence_sections_and_no_drafting_ui():
+    html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
+    assert "U.S. Critical Minerals Intelligence Portal" in html
+    assert "Interactive historical timeline" in html
+    assert "FRUS Critical Minerals Index" in html
+    assert "Evidence Explorer" in html
+    assert "Anthropic API Key" not in html
+    assert "Clearance Status" not in html
+    assert "Export Notes as Word" not in html
+    assert "Analytical Notes" not in html
+
+
+def test_portal_data_covers_full_historical_frame():
+    source = (ROOT / "data" / "portal-data.js").read_text(encoding="utf-8")
+    assert 'id: "civil-war"' in source
+    assert "start: 1861" in source
+    assert 'id: "ministerial-era"' in source
+    assert "end: 2026" in source
+    assert source.count("symbol:") >= 13
+    assert source.count("focus:") >= 16

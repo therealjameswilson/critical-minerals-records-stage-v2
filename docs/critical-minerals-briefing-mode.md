@@ -1,30 +1,42 @@
-# Analytical Modes
+# Historical Intelligence Modes
 
-Critical Minerals Records Stage preserves the original Records Stage clearance,
-snapshot, image-search, and Word export workflow, but reframes it for FSO and
-policy-staff analysis of U.S. access to critical minerals and supply chains.
+The portal supports source-grounded analysis of change across time. It does not
+contain social-media drafting, campaign management, clearance, or Word-export
+features.
 
-Supported analytical modes:
+## Operating Modes
 
-- Change across time
-- Global access map
-- Trusted evidence stack
-- Trade-flow proxy review
-- Historical sensitivity brief
-- Ministerial follow-up tracker
-- Meeting prep brief
-- Evidence pack
-- Talking points
-- Questions for host-government counterparts
+- Historical continuity: connect modern supply-chain diplomacy to earlier
+  procurement, stockpiling, access, and alliance assumptions.
+- Mineral history: follow one material across conflicts, administrations,
+  suppliers, policy frameworks, and supply-chain stages.
+- Country intelligence: assemble the diplomatic, archival, statistical, and
+  policy record for a producer or partner country.
+- FRUS discovery: locate relevant volumes and documents by mineral, country,
+  administration, topic, and year.
+- Trade evidence: examine Census commodity-code records while retaining query
+  details and proxy caveats.
+- Ministerial follow-up: place 2025-2026 announcements and agreements inside the
+  longer historical record.
+- Evidence-gap analysis: identify eras, countries, minerals, and agencies that
+  need additional FRUS, NARA, USGS, presidential-library, or congressional
+  indexing.
 
-Recommended workflow:
+## Recommended Workflow
 
-1. Start with a policy question: which mineral, country, supply-chain stage, and time period need explanation?
-2. Use the Global Supply-Chain Change View to compare country coverage, source mix, and record timing.
-3. Filter records by mineral, country, source type, evidence type, supply-chain stage, agency, date, and subject.
-4. Treat FRUS and NARA records as historical context and archival leads until the item-level metadata and citation are verified.
-5. Treat Census HS-code records as trade-flow proxies; preserve query details and caveats before using figures.
-6. Generate analytical notes from metadata, or paste a short official-source passage when fuller context is needed.
-7. Keep caveats visible, especially for placeholder records, HS-code proxy data, and low-confidence records.
-8. Use Clearance Status to track review.
-9. Export the Word document for clearance or offline meeting prep.
+1. Start with a historical question, not a desired conclusion.
+2. Use the era rail and global map to understand current metadata coverage.
+3. Filter by mineral, country, source type, supply-chain stage, and era.
+4. Open the authoritative source and verify the document-level context.
+5. Preserve historical geography, terminology, and units in notes and citations.
+6. Treat NARA search results as discovery leads until a stable NAID record is
+   captured.
+7. Treat Census HS-code rows as product-flow proxies, not proof of mined origin.
+8. Keep caveats attached when sharing a deep-linked evidence view.
+
+## Citation Discipline
+
+Natural-language search in the static portal is deterministic metadata search.
+It returns source records and does not generate unsourced narrative answers.
+Future AI-assisted synthesis must be retrieval-bound, quote-aware, and unable to
+emit a factual claim without a visible supporting citation.

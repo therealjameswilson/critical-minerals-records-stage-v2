@@ -58,3 +58,4 @@ __pycache__/
 .nara_key
 .nara_key.xml
 !/data/frus/
+!/data/portal-data.js
