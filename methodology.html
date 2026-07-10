@@ -6,17 +6,17 @@
   <meta name="description" content="Methodology for The United States and Strategic Resources, 1861–1992.">
   <meta name="theme-color" content="#153650">
   <title>Methodology | Strategic Resources, 1861–1992</title>
-  <link rel="stylesheet" href="assets/portal.css?v=2.0.0">
+  <link rel="stylesheet" href="assets/portal.css?v=2.1.1">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="site-header">
     <div class="header-main">
       <a class="brand" href="records-stage.html"><span class="brand-mark" aria-hidden="true">FRUS</span><span><small>Historical decision support</small><strong>Strategic Resources, 1861–1992</strong></span></a>
-      <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="records-stage.html#minerals">Minerals</a><a href="records-stage.html#countries">Countries</a><a href="records-stage.html#periods">Periods</a><a href="records-stage.html#map">Map</a><a href="records-stage.html#instruments">Treaties &amp; Law</a><a href="records-stage.html#archives">Archives</a><a href="records-stage.html#frus">FRUS Index</a></nav>
+      <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="records-stage.html#minerals">Minerals</a><a href="records-stage.html#countries">Countries</a><a href="records-stage.html#periods">Periods</a><a href="records-stage.html#map">Atlas</a><a href="records-stage.html#instruments">Treaties &amp; Law</a><a href="records-stage.html#archives">Archives</a><a href="records-stage.html#frus">FRUS Index</a></nav>
       <div class="header-actions"><button class="header-button nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">☰</span><span class="visually-hidden">Menu</span></button><button class="header-button" id="themeToggle" type="button"><span aria-hidden="true">◐</span><span class="visually-hidden">Toggle color theme</span></button></div>
     </div>
-    <p class="status-line">Public research demonstrator · Methodology version 2.0 · Not an official Department of State product</p>
+    <p class="status-line">Public research demonstrator · Methodology version 2.1 · Not an official Department of State product</p>
   </header>
 
   <main id="main-content">
@@ -27,7 +27,7 @@
     <div class="prose-page">
       <aside class="method-toc" aria-label="Methodology sections">
         <strong>On this page</strong>
-        <a href="#scope">Historical scope</a><a href="#frus-method">FRUS as spine</a><a href="#hierarchy">Source hierarchy</a><a href="#statistics-method">Statistics</a><a href="#geography-method">Historical geography</a><a href="#agreements-method">Treaties and law</a><a href="#nara-method">NARA discovery</a><a href="#ocr-method">OCR and transcription</a><a href="#uncertainty-method">Gaps and uncertainty</a><a href="#modern-method">Modern Context</a><a href="#citation-method">How to cite</a>
+        <a href="#scope">Historical scope</a><a href="#frus-method">FRUS as spine</a><a href="#hierarchy">Source hierarchy</a><a href="#statistics-method">Statistics</a><a href="#geography-method">Historical atlas</a><a href="#agreements-method">Treaties and law</a><a href="#nara-method">NARA discovery</a><a href="#ocr-method">OCR and transcription</a><a href="#uncertainty-method">Gaps and uncertainty</a><a href="#modern-method">Modern Context</a><a href="#citation-method">How to cite</a>
       </aside>
       <article class="prose-content">
         <div class="method-principle"><p class="eyebrow">Governing principle</p><h2>FRUS explains what policymakers were thinking. Other official U.S. Government sources explain what they were looking at.</h2><p>That division is functional, not absolute. FRUS can contain data, and statistical publications can reflect policy choices. The interface nevertheless keeps documentary narrative, quantitative context, legal authority, and archival discovery visibly distinct.</p></div>
@@ -40,7 +40,7 @@
 
         <section class="prose-section" id="statistics-method"><h2>Selection and treatment of statistics</h2><p>The quantitative pilot uses official USGS Data Series 140 XLSX workbooks. The ingestion script selects bounded benchmark years through 1992 and writes only numeric cells. It does not interpolate, estimate missing cells, or convert withheld and nonnumeric entries to zero.</p><p>Every observation retains the metric, mineral, year, value, unit, price basis, publication title, workbook location, agency, source URL, access date, extraction status, original unit, displayed unit, conversion method, notes, and confidence flag.</p><ul><li>Nominal and real price series remain distinct.</li><li>Production, imports, exports, consumption, stocks, and world production remain distinct metrics.</li><li>The project retains USGS-standardized historical units and discloses that USGS may have converted earlier source units.</li><li>Country shares, import dependence, and route volumes remain blank until an official table supports them.</li></ul></section>
 
-        <section class="prose-section" id="geography-method"><h2>Historical country names and geography</h2><p>Country and territory records store names by period, alternate historical names, present-day names, and selected sovereignty changes. Search may connect a modern name to a historical entity, but the display preserves the name appropriate to the selected year.</p><p>The pilot map uses country-level centroids. Marker placement does not assert a mine, smelter, port, railway, pipeline, base, or diplomatic-post coordinate. Those features will be added only with cited location evidence.</p></section>
+        <section class="prose-section" id="geography-method"><h2>Historical Geostrategic Atlas</h2><p>Country and territory records store names by period, alternate historical names, present-day names, and selected sovereignty changes. Search may connect a modern name to a historical entity, but the atlas displays the name appropriate to the selected year.</p><p>The atlas uses public-domain Natural Earth 1:110m modern generalized country polygons only for spatial orientation. Natural Earth is not an official U.S. Government evidence source and its geometry is not used to substantiate historical claims. Historical borders are not yet reconstructed. Dated project records control historical names and status.</p><div class="method-callout"><strong>What atlas symbols mean</strong><p>FRUS shading measures linked pilot records whose volume span includes the selected year. Access lines connect countries named in linked negotiations or policy instruments; line width measures linked pilot FRUS records, never trade volume, import dependence, or strategic importance. Square markers identify agreements, stockpile-policy pathways, and NARA query plans at country-level precision.</p></div><p>Production, supplier-share, quantitative trade-flow, infrastructure, alliance-boundary, and strategic-risk modes remain visible but locked. Each states the fields and official citation needed before activation. Country centroids are never presented as mine, smelter, port, railway, pipeline, base, stockpile-site, or diplomatic-post coordinates.</p><p>The vector engine is a pinned, vendored copy of MapLibre GL JS. Every view has a synchronized text panel and accessible table alternative, and shareable URL state records the selected year, material, country, lens, and active layers.</p></section>
 
         <section class="prose-section" id="agreements-method"><h2>Treaties, agreements, and law</h2><p>The instruments layer distinguishes formal treaties and executive agreements from purchasing agreements, commodity agreements, concessions, negotiation records, and domestic policy instruments. A FRUS chapter describing negotiations is not upgraded into a formal treaty record without an official title and citation.</p><p>Law records identify official title, public-law number, Statutes at Large citation, enactment date, linked entities, and official GovInfo text. Summaries are orientation only; the official text controls.</p></section>
 
@@ -58,7 +58,7 @@
   </main>
 
   <footer class="site-footer"><div class="footer-inner"><div><strong>Methodology</strong><p>Source distinctions and uncertainty are part of the product, not fine print.</p></div><a href="records-stage.html">Return to historical portal</a></div></footer>
-  <script src="assets/history-data.js?v=2.0.0"></script>
+  <script src="assets/history-data.js?v=2.1.0"></script>
   <script>window.HistoryData.initTheme(document.getElementById('themeToggle')); window.HistoryData.initNavigation(document.getElementById('navToggle'), document.getElementById('primaryNav'));</script>
 </body>
 </html>

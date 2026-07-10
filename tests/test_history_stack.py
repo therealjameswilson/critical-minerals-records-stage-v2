@@ -148,7 +148,7 @@ def test_no_post_1992_event_cache_is_embedded_in_homepage():
 def test_frontend_has_accessible_visualization_alternatives():
     html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
     script = (ROOT / "assets" / "history-stack.js").read_text(encoding="utf-8")
-    assert "Open accessible map table" in html
+    assert "Open accessible atlas table" in html
     assert "role=\"img\"" in script
     assert "A table follows the chart" in script
     assert "prefers-reduced-motion" in (ROOT / "assets" / "portal.css").read_text(encoding="utf-8")
@@ -157,6 +157,52 @@ def test_frontend_has_accessible_visualization_alternatives():
 def test_public_pages_do_not_contain_social_drafting_language():
     public = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in [
         "records-stage.html", "history-stack.html", "methodology.html",
-        "assets/portal.js", "assets/history-stack.js"
+        "assets/portal.js", "assets/atlas.js", "assets/history-stack.js"
     ]).lower()
     assert not re.search(r"\b(tweet|social media campaign|draft post|clearance status)\b", public)
+
+
+def test_atlas_layers_are_source_bounded_and_unsupported_modes_stay_locked():
+    atlas = json.loads((ROOT / "data" / "atlas" / "atlas.json").read_text(encoding="utf-8"))
+    assert atlas["meta"]["historical_start"] == 1861
+    assert atlas["meta"]["historical_end"] == 1992
+    by_id = {row["id"]: row for row in atlas["layers"]}
+    for layer_id in [
+        "frus-activity", "access-relationships", "agreements",
+        "stockpile-policy", "historical-events", "nara-discovery",
+        "resource-geography",
+    ]:
+        assert by_id[layer_id]["availability"] == "supported"
+        assert by_id[layer_id]["value_semantics"]
+        assert by_id[layer_id]["source_ids"]
+        assert by_id[layer_id]["caveat"]
+    for layer_id in [
+        "mineral-production", "import-dependence", "quantitative-trade-flows",
+        "infrastructure", "alliances-boundaries", "strategic-risk",
+    ]:
+        assert by_id[layer_id]["availability"] == "locked"
+        assert by_id[layer_id]["required_data"]
+    assert all(row["line_value_semantics"] == "linked pilot FRUS records" for row in atlas["relationships"])
+
+
+def test_atlas_uses_local_vector_runtime_and_orientation_geometry():
+    html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
+    assert "assets/vendor/maplibre-gl/maplibre-gl.js?v=5.24.0" in html
+    assert "unpkg.com" not in html
+    assert (ROOT / "assets" / "vendor" / "maplibre-gl" / "LICENSE.txt").exists()
+    geometry = json.loads((ROOT / "data" / "atlas" / "world-orientation.geojson").read_text(encoding="utf-8"))
+    codes = {row["properties"]["ADM0_A3"] for row in geometry["features"]}
+    assert {"USA", "BOL", "CHL", "COD", "ZMB", "ZAF", "SUR", "TUR"} <= codes
+    assert "historical borders are not yet reconstructed" in (ROOT / "methodology.html").read_text(encoding="utf-8").lower()
+
+
+def test_atlas_url_state_and_accessible_contracts_are_visible():
+    portal = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
+    atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
+    html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
+    for key in ["country", "atlas", "layers", "mineral", "year"]:
+        assert f"{key}:" in portal
+    assert 'role="tablist"' in html
+    assert 'role="tabpanel"' in html
+    assert "ArrowLeft" in atlas and "ArrowRight" in atlas
+    assert "Counts are documentary coverage" in html

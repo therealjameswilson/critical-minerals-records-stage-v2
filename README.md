@@ -16,7 +16,7 @@ appears only in a separately labeled Modern Context layer.
 
 ## What v2 Provides
 
-- A historical homepage organized by mineral, country, period, episode, map,
+- A historical homepage organized by atlas, mineral, country, period, episode,
   agreement, law, archive, stockpile case, and FRUS record.
 - Reusable History Stack pages that connect an entity to twelve layers: FRUS,
   timeline, official statistics, agreements, geography, law, stockpiles,
@@ -28,8 +28,12 @@ appears only in a separately labeled Modern Context layer.
   cases, 20 linked FRUS records, and 25 NARA query plans.
 - 1,114 unit-defined historical observations extracted from official USGS Data
   Series 140 workbooks without project interpolation.
-- A country-level evidence map with a 1861–1992 year control and accessible
-  table alternative.
+- A Historical Geostrategic Atlas with a 1861–1992 year control, historical
+  names, documentary access lines, agreements, stockpile policy, NARA query
+  plans, synchronized evidence panels, and an accessible table alternative.
+- A visible atlas layer registry that locks production, supplier-share, trade
+  volume, infrastructure, alliance, boundary, and risk views until compatible
+  official data and citations exist.
 - A source-visible NARA discovery layer that can use a secret-bearing serverless
   proxy without exposing the API key to GitHub Pages.
 
@@ -61,14 +65,18 @@ Read the [full methodology](methodology.html) or
 - `records-stage.html`: historical portal entry point
 - `history-stack.html`: reusable entity and document detail route
 - `methodology.html`: public methodology page
-- `assets/portal.js`: homepage rendering, filters, map, search, and FRUS index
+- `assets/portal.js`: homepage rendering, filters, search, and FRUS index
+- `assets/atlas.js`: MapLibre atlas state, layers, synchronization, and URL state
+- `assets/vendor/maplibre-gl/`: pinned MapLibre GL JS 5.24.0 runtime and license
 - `assets/history-stack.js`: reusable twelve-layer entity rendering
 - `assets/history-data.js`: shared loaders, escaping, badges, links, and cards
 - `assets/portal.css`: responsive, accessible archival interface
 - `assets/frus-subjects-index.js`: full metadata-only FRUS discovery index
 - `data/history-stack/`: normalized pilot JSON modules
+- `data/atlas/`: generated atlas layer registry, overlays, and orientation geometry
 - `schemas/`: JSON schemas for core entity types
 - `scripts/build_history_pilot.py`: reproducible editorial pilot builder
+- `scripts/build_atlas_data.py`: reproducible atlas overlays and basemap builder
 - `scripts/ingest_usgs_ds140.py`: official XLSX extractor
 - `scripts/validate_history_data.py`: dates, references, provenance, and secret checks
 - `connectors/nara.py`: server-side, metadata-only NARA API client
@@ -87,6 +95,7 @@ python3 -m venv .venv
 pip install -r requirements.txt
 python scripts/build_history_pilot.py
 python scripts/ingest_usgs_ds140.py
+python scripts/build_atlas_data.py
 python scripts/validate_history_data.py
 python -m http.server 8000
 open http://localhost:8000/records-stage.html
@@ -113,6 +122,27 @@ python scripts/validate_history_data.py
 ```
 
 Use `--cache-dir <path>` to retain downloaded XLSX files outside the repository.
+
+## Rebuild the Historical Atlas
+
+The atlas builder derives relationships, instruments, events, stockpile-policy
+markers, and NARA discovery overlays from the normalized History Stack IDs. It
+does not infer production, supplier shares, route volume, alliance membership,
+facility coordinates, or strategic risk.
+
+```bash
+python scripts/build_atlas_data.py
+python scripts/validate_history_data.py
+```
+
+The builder also downloads and trims the public-domain Natural Earth 1:110m
+country polygons used for modern spatial orientation. Use `--skip-basemap` when
+only regenerating documentary overlays. Historical names and status come from
+dated project records; these polygons are not historical boundary evidence.
+
+The site vendors MapLibre GL JS 5.24.0 so GitHub Pages does not depend on a
+runtime map CDN. Its BSD license is retained at
+`assets/vendor/maplibre-gl/LICENSE.txt`.
 
 ## Configure NARA Safely
 
@@ -193,8 +223,8 @@ python scripts/validate_history_data.py
 ```
 
 Validation checks entity minimums, unique IDs, cross-file references, the
-1861–1992 boundary, statistical provenance, `.env.example`, and tracked-file
-secret patterns.
+1861–1992 boundary, statistical provenance, atlas layer semantics,
+`.env.example`, and tracked-file secret patterns.
 
 ## Provenance
 

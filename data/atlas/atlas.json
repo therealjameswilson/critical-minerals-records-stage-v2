@@ -1,0 +1,1845 @@
+{
+  "meta": {
+    "title": "Historical Geostrategic Atlas pilot",
+    "historical_start": 1861,
+    "historical_end": 1992,
+    "default_year": 1942,
+    "default_mineral": "tin",
+    "orientation_geometry": "Natural Earth 1:110m modern generalized country geometry",
+    "orientation_url": "https://www.naturalearthdata.com/downloads/110m-cultural-vectors/110m-admin-0-countries/",
+    "orientation_license": "Public domain",
+    "orientation_caveat": "Modern generalized geometry is used only for spatial orientation. Historical names and status come from dated project records; historical borders are not yet reconstructed."
+  },
+  "layers": [
+    {
+      "id": "frus-activity",
+      "title": "FRUS activity",
+      "short_title": "FRUS",
+      "availability": "supported",
+      "geometry": "country-fill",
+      "value_semantics": "Linked pilot FRUS records whose volume span includes the selected year.",
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "caveat": "Record count measures indexed documentary coverage, not diplomatic importance or policy intensity."
+    },
+    {
+      "id": "access-relationships",
+      "title": "Documented access relationships",
+      "short_title": "Access",
+      "availability": "supported",
+      "geometry": "relationship-lines",
+      "value_semantics": "Lines connect the United States to a country named in a linked negotiation, agreement, or FRUS pathway.",
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "caveat": "Line width represents linked pilot records, not shipment volume, import dependence, or strategic importance."
+    },
+    {
+      "id": "agreements",
+      "title": "Treaties and policy instruments",
+      "short_title": "Instruments",
+      "availability": "supported",
+      "geometry": "country-markers",
+      "value_semantics": "Dated or FRUS-volume-dated pilot agreements and policy instruments linked to a country.",
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index",
+        "state-treaties"
+      ],
+      "caveat": "A marker does not imply that the record is a formal treaty. Record type and date precision remain visible."
+    },
+    {
+      "id": "stockpile-policy",
+      "title": "Strategic stockpile policy",
+      "short_title": "Stockpile",
+      "availability": "supported",
+      "geometry": "policy-markers",
+      "value_semantics": "Pilot stockpile planning episodes and statutory pathways located at country-level U.S. geography.",
+      "source_ids": [
+        "frus-history-at-state",
+        "govinfo-statutes",
+        "gsa-stockpile"
+      ],
+      "caveat": "Markers represent policy geography, not storage sites, holdings, acquisitions, or releases."
+    },
+    {
+      "id": "historical-events",
+      "title": "Historical episodes",
+      "short_title": "Episodes",
+      "availability": "supported",
+      "geometry": "country-outline",
+      "value_semantics": "Countries linked to a pilot historical episode during its documented date range.",
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index",
+        "govinfo-statutes"
+      ],
+      "caveat": "Episode coverage is selective and does not define the full geography of a war or crisis."
+    },
+    {
+      "id": "nara-discovery",
+      "title": "NARA archival discovery",
+      "short_title": "NARA",
+      "availability": "supported",
+      "geometry": "country-markers",
+      "value_semantics": "Structured NARA Catalog query plans that include the selected country, mineral, and year.",
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "caveat": "Query plans are archival leads. They are not reviewed catalog results and the site stores no API response content."
+    },
+    {
+      "id": "resource-geography",
+      "title": "Resource geography",
+      "short_title": "Resources",
+      "availability": "supported",
+      "geometry": "country-markers",
+      "value_semantics": "Country-level links between pilot mineral profiles and country records.",
+      "source_ids": [
+        "frus-history-at-state",
+        "usgs-statistical-compendium"
+      ],
+      "caveat": "This layer shows evidence associations, not production, reserves, mines, or supplier rank."
+    },
+    {
+      "id": "mineral-production",
+      "title": "Mineral production",
+      "short_title": "Production",
+      "availability": "locked",
+      "geometry": "country-fill",
+      "required_data": "Country, mineral, year, mine or refined basis, value, unit, official table/page, and source URL.",
+      "source_ids": [
+        "usgs-statistical-compendium"
+      ],
+      "caveat": "The checked-in USGS pilot contains U.S. and world totals, not a compatible country-by-year production series."
+    },
+    {
+      "id": "import-dependence",
+      "title": "U.S. import supplier share",
+      "short_title": "Import share",
+      "availability": "locked",
+      "geometry": "country-fill",
+      "required_data": "Country, mineral, year, import definition, quantity or value, denominator, unit, classification, and official citation.",
+      "source_ids": [
+        "census-historical-trade"
+      ],
+      "caveat": "No country-supplier share is calculated from the current aggregate import series."
+    },
+    {
+      "id": "quantitative-trade-flows",
+      "title": "Quantitative trade flows",
+      "short_title": "Trade volume",
+      "availability": "locked",
+      "geometry": "relationship-lines",
+      "required_data": "Origin, destination, mineral or product code, year, flow, quantity/value, unit, classification, and official citation.",
+      "source_ids": [
+        "census-historical-trade"
+      ],
+      "caveat": "Documented access lines must not be interpreted as trade volume."
+    },
+    {
+      "id": "infrastructure",
+      "title": "Mines, smelters, ports, and routes",
+      "short_title": "Infrastructure",
+      "availability": "locked",
+      "geometry": "site-and-line-features",
+      "required_data": "Feature name, type, active dates, coordinates or geometry, precision, ownership/status where relevant, and official citation.",
+      "source_ids": [
+        "nara-catalog-api",
+        "usgs-statistical-compendium"
+      ],
+      "caveat": "Country centroids are never presented as facility or route coordinates."
+    },
+    {
+      "id": "alliances-boundaries",
+      "title": "Alliances and historical boundaries",
+      "short_title": "Alliances",
+      "availability": "locked",
+      "geometry": "dated-polygons",
+      "required_data": "Year-bounded membership and historically reviewed boundary geometry with source and territorial-status notes.",
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "caveat": "The orientation basemap uses modern generalized geometry and is not evidence for historical borders or alliance membership."
+    },
+    {
+      "id": "strategic-risk",
+      "title": "Strategic risk",
+      "short_title": "Risk",
+      "availability": "locked",
+      "geometry": "country-fill",
+      "required_data": "Published methodology plus sourced supplier concentration, import dependence, substitution, stockpile, and disruption variables for a common year.",
+      "source_ids": [
+        "usgs-ds140",
+        "census-historical-trade",
+        "gsa-stockpile"
+      ],
+      "caveat": "The portal does not convert record counts or editorial judgments into a quantitative vulnerability score."
+    }
+  ],
+  "countries": [
+    {
+      "id": "united-states",
+      "a3": "USA",
+      "coordinates": [
+        -97.0,
+        38.0
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "United States",
+          "start": 1861,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "aluminum",
+        "bauxite",
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1914supp-d423",
+        "frus-1914supp-d427",
+        "frus-1925v02-d327",
+        "frus-1925v02-d344",
+        "frus-1939v01-d934",
+        "frus-1939v01-d939",
+        "frus-1941v02-d805",
+        "frus-1941v02-d821",
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038",
+        "frus-1942v02-d3",
+        "frus-1942v02-d14",
+        "frus-1942v05-d493",
+        "frus-1942v01-d440",
+        "frus-1942v05-d564",
+        "frus-1944v02-d886",
+        "frus-1947v01-d395",
+        "frus-1950v01-d95",
+        "frus-1952-54v11p1-d27",
+        "frus-1964-68v09-d344"
+      ],
+      "agreement_ids": [],
+      "episode_ids": [
+        "world-war-i-resource-access",
+        "interwar-planning",
+        "world-war-ii-procurement",
+        "early-cold-war-mobilization",
+        "decolonization-and-resource-access",
+        "late-cold-war-resource-policy"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "usgs-ds140"
+      ]
+    },
+    {
+      "id": "bolivia",
+      "a3": "BOL",
+      "coordinates": [
+        -63.6,
+        -16.3
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "Bolivia",
+          "start": 1861,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "tin",
+        "tungsten",
+        "copper"
+      ],
+      "frus_document_ids": [
+        "frus-1942v05-d493",
+        "frus-1942v05-d564"
+      ],
+      "agreement_ids": [
+        "bolivian-strategic-materials-purchase-1942",
+        "us-bolivia-economic-cooperation-1942"
+      ],
+      "episode_ids": [
+        "world-war-ii-procurement"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ]
+    },
+    {
+      "id": "chile",
+      "a3": "CHL",
+      "coordinates": [
+        -70.7,
+        -33.4
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "Chile",
+          "start": 1861,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "copper"
+      ],
+      "frus_document_ids": [],
+      "agreement_ids": [],
+      "episode_ids": [
+        "decolonization-and-resource-access",
+        "late-cold-war-resource-policy"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "usgs-statistical-compendium"
+      ]
+    },
+    {
+      "id": "belgian-congo",
+      "a3": "COD",
+      "coordinates": [
+        23.7,
+        -2.9
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "Belgian Congo",
+          "start": 1908,
+          "end": 1960
+        },
+        {
+          "name": "Republic of the Congo (Leopoldville)",
+          "start": 1960,
+          "end": 1964
+        },
+        {
+          "name": "Democratic Republic of the Congo",
+          "start": 1964,
+          "end": 1971
+        },
+        {
+          "name": "Zaire",
+          "start": 1971,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "cobalt",
+        "copper",
+        "tin"
+      ],
+      "frus_document_ids": [
+        "frus-1942v02-d3",
+        "frus-1942v02-d14",
+        "frus-1944v02-d886",
+        "frus-1952-54v11p1-d27"
+      ],
+      "agreement_ids": [
+        "congo-tripartite-trade-negotiations-1942",
+        "tripartite-uranium-control-1944"
+      ],
+      "episode_ids": [
+        "world-war-ii-procurement",
+        "decolonization-and-resource-access"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ]
+    },
+    {
+      "id": "northern-rhodesia",
+      "a3": "ZMB",
+      "coordinates": [
+        27.8,
+        -13.1
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "Northern Rhodesia",
+          "start": 1924,
+          "end": 1964
+        },
+        {
+          "name": "Zambia",
+          "start": 1964,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "cobalt",
+        "copper"
+      ],
+      "frus_document_ids": [
+        "frus-1952-54v11p1-d27"
+      ],
+      "agreement_ids": [],
+      "episode_ids": [
+        "decolonization-and-resource-access"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ]
+    },
+    {
+      "id": "south-africa",
+      "a3": "ZAF",
+      "coordinates": [
+        22.9,
+        -30.6
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "Union of South Africa",
+          "start": 1910,
+          "end": 1961
+        },
+        {
+          "name": "Republic of South Africa",
+          "start": 1961,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "chromium",
+        "cobalt",
+        "manganese"
+      ],
+      "frus_document_ids": [
+        "frus-1952-54v11p1-d27"
+      ],
+      "agreement_ids": [],
+      "episode_ids": [
+        "early-cold-war-mobilization",
+        "decolonization-and-resource-access",
+        "late-cold-war-resource-policy"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ]
+    },
+    {
+      "id": "surinam",
+      "a3": "SUR",
+      "coordinates": [
+        -56.0,
+        4.1
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "Surinam (Dutch Guiana)",
+          "start": 1861,
+          "end": 1954
+        },
+        {
+          "name": "Surinam",
+          "start": 1954,
+          "end": 1975
+        },
+        {
+          "name": "Suriname",
+          "start": 1975,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "bauxite",
+        "aluminum"
+      ],
+      "frus_document_ids": [
+        "frus-1941v02-d805",
+        "frus-1941v02-d821"
+      ],
+      "agreement_ids": [
+        "surinam-bauxite-protection-1941"
+      ],
+      "episode_ids": [
+        "world-war-ii-procurement"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ]
+    },
+    {
+      "id": "turkey",
+      "a3": "TUR",
+      "coordinates": [
+        35.2,
+        39.0
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "Ottoman Empire",
+          "start": 1861,
+          "end": 1922
+        },
+        {
+          "name": "Republic of Turkey",
+          "start": 1923,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "chromium"
+      ],
+      "frus_document_ids": [
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038"
+      ],
+      "agreement_ids": [
+        "turkish-chrome-negotiations-1941"
+      ],
+      "episode_ids": [
+        "world-war-ii-procurement"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "atlas-surinam-bauxite-protection-1941-surinam",
+      "title": "Arrangements for protection of Surinam bauxite mines",
+      "year": 1941,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "surinam",
+      "mineral_ids": [
+        "bauxite",
+        "aluminum"
+      ],
+      "agreement_id": "surinam-bauxite-protection-1941",
+      "record_type": "other",
+      "frus_document_ids": [
+        "frus-1941v02-d805",
+        "frus-1941v02-d821"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial",
+      "from_country_id": "surinam",
+      "to_country_id": "united-states",
+      "line_value": 2,
+      "line_value_semantics": "linked pilot FRUS records"
+    },
+    {
+      "id": "atlas-turkish-chrome-negotiations-1941-turkey",
+      "title": "U.S.-British negotiations for Turkish chrome",
+      "year": 1941,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "turkey",
+      "mineral_ids": [
+        "chromium"
+      ],
+      "agreement_id": "turkish-chrome-negotiations-1941",
+      "record_type": "negotiation-record",
+      "frus_document_ids": [
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial",
+      "from_country_id": "turkey",
+      "to_country_id": "united-states",
+      "line_value": 2,
+      "line_value_semantics": "linked pilot FRUS records"
+    },
+    {
+      "id": "atlas-congo-tripartite-trade-negotiations-1942-belgian-congo",
+      "title": "U.S.-U.K.-Belgium negotiations on Belgian Congo trade",
+      "year": 1942,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "belgian-congo",
+      "mineral_ids": [
+        "cobalt",
+        "copper",
+        "tin"
+      ],
+      "agreement_id": "congo-tripartite-trade-negotiations-1942",
+      "record_type": "negotiation-record",
+      "frus_document_ids": [
+        "frus-1942v02-d3",
+        "frus-1942v02-d14"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial",
+      "from_country_id": "belgian-congo",
+      "to_country_id": "united-states",
+      "line_value": 2,
+      "line_value_semantics": "linked pilot FRUS records"
+    },
+    {
+      "id": "atlas-bolivian-strategic-materials-purchase-1942-bolivia",
+      "title": "Negotiations for U.S. purchase of strategic materials from Bolivia",
+      "year": 1942,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "bolivia",
+      "mineral_ids": [
+        "tin",
+        "tungsten",
+        "copper"
+      ],
+      "agreement_id": "bolivian-strategic-materials-purchase-1942",
+      "record_type": "purchasing-agreement",
+      "frus_document_ids": [
+        "frus-1942v05-d493"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial",
+      "from_country_id": "bolivia",
+      "to_country_id": "united-states",
+      "line_value": 1,
+      "line_value_semantics": "linked pilot FRUS records"
+    },
+    {
+      "id": "atlas-us-bolivia-economic-cooperation-1942-bolivia",
+      "title": "U.S.-Bolivia economic cooperation program",
+      "year": 1942,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "bolivia",
+      "mineral_ids": [
+        "tin"
+      ],
+      "agreement_id": "us-bolivia-economic-cooperation-1942",
+      "record_type": "negotiation-record",
+      "frus_document_ids": [
+        "frus-1942v05-d564"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial",
+      "from_country_id": "bolivia",
+      "to_country_id": "united-states",
+      "line_value": 1,
+      "line_value_semantics": "linked pilot FRUS records"
+    },
+    {
+      "id": "atlas-tripartite-uranium-control-1944-belgian-congo",
+      "title": "U.S.-U.K.-Belgium uranium control agreement",
+      "year": 1944,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "belgian-congo",
+      "mineral_ids": [],
+      "agreement_id": "tripartite-uranium-control-1944",
+      "record_type": "executive-agreement",
+      "frus_document_ids": [
+        "frus-1944v02-d886"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial",
+      "from_country_id": "belgian-congo",
+      "to_country_id": "united-states",
+      "line_value": 1,
+      "line_value_semantics": "linked pilot FRUS records"
+    }
+  ],
+  "instruments": [
+    {
+      "id": "atlas-surinam-bauxite-protection-1941-surinam",
+      "title": "Arrangements for protection of Surinam bauxite mines",
+      "year": 1941,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "surinam",
+      "mineral_ids": [
+        "bauxite",
+        "aluminum"
+      ],
+      "agreement_id": "surinam-bauxite-protection-1941",
+      "record_type": "other",
+      "frus_document_ids": [
+        "frus-1941v02-d805",
+        "frus-1941v02-d821"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial"
+    },
+    {
+      "id": "atlas-turkish-chrome-negotiations-1941-turkey",
+      "title": "U.S.-British negotiations for Turkish chrome",
+      "year": 1941,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "turkey",
+      "mineral_ids": [
+        "chromium"
+      ],
+      "agreement_id": "turkish-chrome-negotiations-1941",
+      "record_type": "negotiation-record",
+      "frus_document_ids": [
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial"
+    },
+    {
+      "id": "atlas-congo-tripartite-trade-negotiations-1942-belgian-congo",
+      "title": "U.S.-U.K.-Belgium negotiations on Belgian Congo trade",
+      "year": 1942,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "belgian-congo",
+      "mineral_ids": [
+        "cobalt",
+        "copper",
+        "tin"
+      ],
+      "agreement_id": "congo-tripartite-trade-negotiations-1942",
+      "record_type": "negotiation-record",
+      "frus_document_ids": [
+        "frus-1942v02-d3",
+        "frus-1942v02-d14"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial"
+    },
+    {
+      "id": "atlas-bolivian-strategic-materials-purchase-1942-bolivia",
+      "title": "Negotiations for U.S. purchase of strategic materials from Bolivia",
+      "year": 1942,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "bolivia",
+      "mineral_ids": [
+        "tin",
+        "tungsten",
+        "copper"
+      ],
+      "agreement_id": "bolivian-strategic-materials-purchase-1942",
+      "record_type": "purchasing-agreement",
+      "frus_document_ids": [
+        "frus-1942v05-d493"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial"
+    },
+    {
+      "id": "atlas-us-bolivia-economic-cooperation-1942-bolivia",
+      "title": "U.S.-Bolivia economic cooperation program",
+      "year": 1942,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "bolivia",
+      "mineral_ids": [
+        "tin"
+      ],
+      "agreement_id": "us-bolivia-economic-cooperation-1942",
+      "record_type": "negotiation-record",
+      "frus_document_ids": [
+        "frus-1942v05-d564"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial"
+    },
+    {
+      "id": "atlas-tripartite-uranium-control-1944-belgian-congo",
+      "title": "U.S.-U.K.-Belgium uranium control agreement",
+      "year": 1944,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "belgian-congo",
+      "mineral_ids": [],
+      "agreement_id": "tripartite-uranium-control-1944",
+      "record_type": "executive-agreement",
+      "frus_document_ids": [
+        "frus-1944v02-d886"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial"
+    }
+  ],
+  "events": [
+    {
+      "id": "atlas-world-war-i-resource-access-united-states",
+      "episode_id": "world-war-i-resource-access",
+      "title": "World War I resource access",
+      "start": 1914,
+      "end": 1918,
+      "country_id": "united-states",
+      "mineral_ids": [
+        "copper"
+      ],
+      "frus_document_ids": [
+        "frus-1914supp-d423",
+        "frus-1914supp-d427"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-interwar-planning-united-states",
+      "episode_id": "interwar-planning",
+      "title": "Interwar concessions and stockpile planning",
+      "start": 1925,
+      "end": 1939,
+      "country_id": "united-states",
+      "mineral_ids": [],
+      "frus_document_ids": [
+        "frus-1925v02-d327",
+        "frus-1925v02-d344",
+        "frus-1939v01-d934",
+        "frus-1939v01-d939"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "partial"
+    },
+    {
+      "id": "atlas-world-war-ii-procurement-bolivia",
+      "episode_id": "world-war-ii-procurement",
+      "title": "World War II procurement and access",
+      "start": 1941,
+      "end": 1945,
+      "country_id": "bolivia",
+      "mineral_ids": [
+        "aluminum",
+        "bauxite",
+        "chromium",
+        "cobalt",
+        "copper",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1941v02-d805",
+        "frus-1941v02-d821",
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038",
+        "frus-1942v01-d440",
+        "frus-1942v02-d3",
+        "frus-1942v02-d14",
+        "frus-1942v05-d493",
+        "frus-1942v05-d564",
+        "frus-1944v02-d886"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index",
+        "usgs-ds140"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-world-war-ii-procurement-belgian-congo",
+      "episode_id": "world-war-ii-procurement",
+      "title": "World War II procurement and access",
+      "start": 1941,
+      "end": 1945,
+      "country_id": "belgian-congo",
+      "mineral_ids": [
+        "aluminum",
+        "bauxite",
+        "chromium",
+        "cobalt",
+        "copper",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1941v02-d805",
+        "frus-1941v02-d821",
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038",
+        "frus-1942v01-d440",
+        "frus-1942v02-d3",
+        "frus-1942v02-d14",
+        "frus-1942v05-d493",
+        "frus-1942v05-d564",
+        "frus-1944v02-d886"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index",
+        "usgs-ds140"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-world-war-ii-procurement-surinam",
+      "episode_id": "world-war-ii-procurement",
+      "title": "World War II procurement and access",
+      "start": 1941,
+      "end": 1945,
+      "country_id": "surinam",
+      "mineral_ids": [
+        "aluminum",
+        "bauxite",
+        "chromium",
+        "cobalt",
+        "copper",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1941v02-d805",
+        "frus-1941v02-d821",
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038",
+        "frus-1942v01-d440",
+        "frus-1942v02-d3",
+        "frus-1942v02-d14",
+        "frus-1942v05-d493",
+        "frus-1942v05-d564",
+        "frus-1944v02-d886"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index",
+        "usgs-ds140"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-world-war-ii-procurement-turkey",
+      "episode_id": "world-war-ii-procurement",
+      "title": "World War II procurement and access",
+      "start": 1941,
+      "end": 1945,
+      "country_id": "turkey",
+      "mineral_ids": [
+        "aluminum",
+        "bauxite",
+        "chromium",
+        "cobalt",
+        "copper",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1941v02-d805",
+        "frus-1941v02-d821",
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038",
+        "frus-1942v01-d440",
+        "frus-1942v02-d3",
+        "frus-1942v02-d14",
+        "frus-1942v05-d493",
+        "frus-1942v05-d564",
+        "frus-1944v02-d886"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index",
+        "usgs-ds140"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-world-war-ii-procurement-united-states",
+      "episode_id": "world-war-ii-procurement",
+      "title": "World War II procurement and access",
+      "start": 1941,
+      "end": 1945,
+      "country_id": "united-states",
+      "mineral_ids": [
+        "aluminum",
+        "bauxite",
+        "chromium",
+        "cobalt",
+        "copper",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1941v02-d805",
+        "frus-1941v02-d821",
+        "frus-1941v03-d1006",
+        "frus-1941v03-d1038",
+        "frus-1942v01-d440",
+        "frus-1942v02-d3",
+        "frus-1942v02-d14",
+        "frus-1942v05-d493",
+        "frus-1942v05-d564",
+        "frus-1944v02-d886"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index",
+        "usgs-ds140"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-early-cold-war-mobilization-belgian-congo",
+      "episode_id": "early-cold-war-mobilization",
+      "title": "Early Cold War mobilization and permanent stockpiling",
+      "start": 1946,
+      "end": 1960,
+      "country_id": "belgian-congo",
+      "mineral_ids": [
+        "aluminum",
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1947v01-d395",
+        "frus-1950v01-d95",
+        "frus-1952-54v11p1-d27"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "govinfo-statutes"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-early-cold-war-mobilization-northern-rhodesia",
+      "episode_id": "early-cold-war-mobilization",
+      "title": "Early Cold War mobilization and permanent stockpiling",
+      "start": 1946,
+      "end": 1960,
+      "country_id": "northern-rhodesia",
+      "mineral_ids": [
+        "aluminum",
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1947v01-d395",
+        "frus-1950v01-d95",
+        "frus-1952-54v11p1-d27"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "govinfo-statutes"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-early-cold-war-mobilization-south-africa",
+      "episode_id": "early-cold-war-mobilization",
+      "title": "Early Cold War mobilization and permanent stockpiling",
+      "start": 1946,
+      "end": 1960,
+      "country_id": "south-africa",
+      "mineral_ids": [
+        "aluminum",
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1947v01-d395",
+        "frus-1950v01-d95",
+        "frus-1952-54v11p1-d27"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "govinfo-statutes"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-early-cold-war-mobilization-united-states",
+      "episode_id": "early-cold-war-mobilization",
+      "title": "Early Cold War mobilization and permanent stockpiling",
+      "start": 1946,
+      "end": 1960,
+      "country_id": "united-states",
+      "mineral_ids": [
+        "aluminum",
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1947v01-d395",
+        "frus-1950v01-d95",
+        "frus-1952-54v11p1-d27"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "govinfo-statutes"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-decolonization-and-resource-access-belgian-congo",
+      "episode_id": "decolonization-and-resource-access",
+      "title": "Decolonization and resource access",
+      "start": 1952,
+      "end": 1975,
+      "country_id": "belgian-congo",
+      "mineral_ids": [
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin"
+      ],
+      "frus_document_ids": [
+        "frus-1952-54v11p1-d27",
+        "frus-1964-68v09-d344"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-decolonization-and-resource-access-northern-rhodesia",
+      "episode_id": "decolonization-and-resource-access",
+      "title": "Decolonization and resource access",
+      "start": 1952,
+      "end": 1975,
+      "country_id": "northern-rhodesia",
+      "mineral_ids": [
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin"
+      ],
+      "frus_document_ids": [
+        "frus-1952-54v11p1-d27",
+        "frus-1964-68v09-d344"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-decolonization-and-resource-access-south-africa",
+      "episode_id": "decolonization-and-resource-access",
+      "title": "Decolonization and resource access",
+      "start": 1952,
+      "end": 1975,
+      "country_id": "south-africa",
+      "mineral_ids": [
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin"
+      ],
+      "frus_document_ids": [
+        "frus-1952-54v11p1-d27",
+        "frus-1964-68v09-d344"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-decolonization-and-resource-access-chile",
+      "episode_id": "decolonization-and-resource-access",
+      "title": "Decolonization and resource access",
+      "start": 1952,
+      "end": 1975,
+      "country_id": "chile",
+      "mineral_ids": [
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin"
+      ],
+      "frus_document_ids": [
+        "frus-1952-54v11p1-d27",
+        "frus-1964-68v09-d344"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-decolonization-and-resource-access-united-states",
+      "episode_id": "decolonization-and-resource-access",
+      "title": "Decolonization and resource access",
+      "start": 1952,
+      "end": 1975,
+      "country_id": "united-states",
+      "mineral_ids": [
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin"
+      ],
+      "frus_document_ids": [
+        "frus-1952-54v11p1-d27",
+        "frus-1964-68v09-d344"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-late-cold-war-resource-policy-chile",
+      "episode_id": "late-cold-war-resource-policy",
+      "title": "Late Cold War resource and stockpile policy",
+      "start": 1976,
+      "end": 1992,
+      "country_id": "chile",
+      "mineral_ids": [
+        "chromium",
+        "copper",
+        "manganese"
+      ],
+      "frus_document_ids": [],
+      "source_ids": [
+        "govinfo-statutes"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-late-cold-war-resource-policy-south-africa",
+      "episode_id": "late-cold-war-resource-policy",
+      "title": "Late Cold War resource and stockpile policy",
+      "start": 1976,
+      "end": 1992,
+      "country_id": "south-africa",
+      "mineral_ids": [
+        "chromium",
+        "copper",
+        "manganese"
+      ],
+      "frus_document_ids": [],
+      "source_ids": [
+        "govinfo-statutes"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-late-cold-war-resource-policy-united-states",
+      "episode_id": "late-cold-war-resource-policy",
+      "title": "Late Cold War resource and stockpile policy",
+      "start": 1976,
+      "end": 1992,
+      "country_id": "united-states",
+      "mineral_ids": [
+        "chromium",
+        "copper",
+        "manganese"
+      ],
+      "frus_document_ids": [],
+      "source_ids": [
+        "govinfo-statutes"
+      ],
+      "completeness": "research-queue"
+    }
+  ],
+  "stockpile_policy": [
+    {
+      "id": "atlas-stockpile-planning-1939",
+      "stockpile_case_id": "stockpile-planning-1939",
+      "title": "From contingency planning to a strategic raw-materials stockpile",
+      "start": 1939,
+      "end": 1946,
+      "country_id": "united-states",
+      "mineral_ids": [],
+      "frus_document_ids": [
+        "frus-1939v01-d934",
+        "frus-1939v01-d939"
+      ],
+      "law_ids": [
+        "stock-piling-act-1946"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index",
+        "govinfo-statutes"
+      ],
+      "precision": "country-policy",
+      "completeness": "partial"
+    },
+    {
+      "id": "atlas-stockpile-objectives-1950-1967",
+      "stockpile_case_id": "stockpile-objectives-1950-1967",
+      "title": "Foreign-source assumptions and stockpile objectives",
+      "start": 1950,
+      "end": 1967,
+      "country_id": "united-states",
+      "mineral_ids": [
+        "aluminum",
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin",
+        "tungsten"
+      ],
+      "frus_document_ids": [
+        "frus-1950v01-d95",
+        "frus-1964-68v09-d344"
+      ],
+      "law_ids": [
+        "stock-piling-act-1946",
+        "defense-production-act-1950"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "govinfo-statutes"
+      ],
+      "precision": "country-policy",
+      "completeness": "verified-pilot"
+    }
+  ],
+  "archival_plans": [
+    {
+      "id": "nara-rg59-bolivian-tin",
+      "title": "Bolivia tin strategic materials",
+      "query": "Bolivia tin strategic materials",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1941,
+      "end": 1945,
+      "country_ids": [
+        "bolivia"
+      ],
+      "mineral_ids": [
+        "tin"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-surinam-bauxite",
+      "title": "Surinam bauxite mines",
+      "query": "Surinam bauxite mines",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1940,
+      "end": 1945,
+      "country_ids": [
+        "surinam"
+      ],
+      "mineral_ids": [
+        "bauxite",
+        "aluminum"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg165-strategic-materials",
+      "title": "strategic materials procurement",
+      "query": "strategic materials procurement",
+      "record_groups": [
+        "165"
+      ],
+      "start": 1917,
+      "end": 1945,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg169-bolivia-tin",
+      "title": "Bolivia tin purchasing",
+      "query": "Bolivia tin purchasing",
+      "record_groups": [
+        "169"
+      ],
+      "start": 1941,
+      "end": 1945,
+      "country_ids": [
+        "bolivia"
+      ],
+      "mineral_ids": [
+        "tin"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg169-turkish-chrome",
+      "title": "Turkey chrome purchasing",
+      "query": "Turkey chrome purchasing",
+      "record_groups": [
+        "169"
+      ],
+      "start": 1940,
+      "end": 1945,
+      "country_ids": [
+        "turkey"
+      ],
+      "mineral_ids": [
+        "chromium"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg218-congo-uranium",
+      "title": "Belgian Congo uranium",
+      "query": "Belgian Congo uranium",
+      "record_groups": [
+        "218"
+      ],
+      "start": 1943,
+      "end": 1955,
+      "country_ids": [
+        "belgian-congo"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg229-rubber-minerals",
+      "title": "rubber strategic materials Latin America",
+      "query": "rubber strategic materials Latin America",
+      "record_groups": [
+        "229"
+      ],
+      "start": 1940,
+      "end": 1946,
+      "country_ids": [],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg234-strategic-materials",
+      "title": "strategic materials production",
+      "query": "strategic materials production",
+      "record_groups": [
+        "234"
+      ],
+      "start": 1939,
+      "end": 1957,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg287-stockpile-reports",
+      "title": "strategic critical materials stockpile",
+      "query": "strategic critical materials stockpile",
+      "record_groups": [
+        "287"
+      ],
+      "start": 1939,
+      "end": 1992,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg330-stockpile-objectives",
+      "title": "stockpile objectives strategic materials",
+      "query": "stockpile objectives strategic materials",
+      "record_groups": [
+        "330"
+      ],
+      "start": 1950,
+      "end": 1970,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg353-stockpile-objectives",
+      "title": "stockpile objectives foreign sources",
+      "query": "stockpile objectives foreign sources",
+      "record_groups": [
+        "353"
+      ],
+      "start": 1947,
+      "end": 1970,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-accessible-foreign-sources",
+      "title": "accessible foreign sources strategic materials",
+      "query": "accessible foreign sources strategic materials",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1946,
+      "end": 1970,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-strategic-materials-erp",
+      "title": "European Recovery Program strategic materials",
+      "query": "European Recovery Program strategic materials",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1947,
+      "end": 1952,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-nsc68-strategic-materials",
+      "title": "NSC 68 strategic materials stockpile",
+      "query": "NSC 68 strategic materials stockpile",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1949,
+      "end": 1953,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-tropical-africa-strategic-materials",
+      "title": "Tropical Africa strategic materials",
+      "query": "Tropical Africa strategic materials",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1950,
+      "end": 1960,
+      "country_ids": [
+        "belgian-congo",
+        "northern-rhodesia",
+        "south-africa"
+      ],
+      "mineral_ids": [
+        "cobalt",
+        "copper",
+        "chromium",
+        "manganese",
+        "tin"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg218-africa-raw-materials",
+      "title": "Africa strategic raw materials",
+      "query": "Africa strategic raw materials",
+      "record_groups": [
+        "218"
+      ],
+      "start": 1948,
+      "end": 1965,
+      "country_ids": [
+        "belgian-congo",
+        "northern-rhodesia",
+        "south-africa"
+      ],
+      "mineral_ids": [
+        "cobalt",
+        "copper",
+        "chromium",
+        "manganese"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg84-la-paz-tin",
+      "title": "tin strategic materials",
+      "query": "tin strategic materials",
+      "record_groups": [
+        "84"
+      ],
+      "start": 1940,
+      "end": 1955,
+      "country_ids": [
+        "bolivia"
+      ],
+      "mineral_ids": [
+        "tin"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg84-santiago-copper",
+      "title": "copper nationalization",
+      "query": "copper nationalization",
+      "record_groups": [
+        "84"
+      ],
+      "start": 1960,
+      "end": 1980,
+      "country_ids": [
+        "chile"
+      ],
+      "mineral_ids": [
+        "copper"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg84-leopoldville-cobalt",
+      "title": "cobalt copper strategic minerals",
+      "query": "cobalt copper strategic minerals",
+      "record_groups": [
+        "84"
+      ],
+      "start": 1945,
+      "end": 1971,
+      "country_ids": [
+        "belgian-congo"
+      ],
+      "mineral_ids": [
+        "cobalt",
+        "copper"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg84-pretoria-strategic-minerals",
+      "title": "chromium manganese strategic minerals",
+      "query": "chromium manganese strategic minerals",
+      "record_groups": [
+        "84"
+      ],
+      "start": 1945,
+      "end": 1992,
+      "country_ids": [
+        "south-africa"
+      ],
+      "mineral_ids": [
+        "chromium",
+        "manganese"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-chilean-copper",
+      "title": "Chile copper nationalization",
+      "query": "Chile copper nationalization",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1960,
+      "end": 1980,
+      "country_ids": [
+        "chile"
+      ],
+      "mineral_ids": [
+        "copper"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-congo-cobalt",
+      "title": "Congo cobalt strategic materials",
+      "query": "Congo cobalt strategic materials",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1945,
+      "end": 1975,
+      "country_ids": [
+        "belgian-congo"
+      ],
+      "mineral_ids": [
+        "cobalt"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-rhodesia-chromium",
+      "title": "Rhodesia chrome chromium sanctions",
+      "query": "Rhodesia chrome chromium sanctions",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1965,
+      "end": 1980,
+      "country_ids": [
+        "northern-rhodesia"
+      ],
+      "mineral_ids": [
+        "chromium"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-south-africa-minerals",
+      "title": "South Africa strategic minerals",
+      "query": "South Africa strategic minerals",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1945,
+      "end": 1992,
+      "country_ids": [
+        "south-africa"
+      ],
+      "mineral_ids": [
+        "chromium",
+        "manganese"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-turkish-chrome",
+      "title": "Turkey chrome Germany",
+      "query": "Turkey chrome Germany",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1939,
+      "end": 1945,
+      "country_ids": [
+        "turkey"
+      ],
+      "mineral_ids": [
+        "chromium"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    }
+  ]
+}

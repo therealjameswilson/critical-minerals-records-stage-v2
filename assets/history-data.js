@@ -32,8 +32,15 @@
   }
 
   async function loadAll() {
-    const rows = await Promise.all(FILES.map(loadJson));
+    const [rows, atlas] = await Promise.all([
+      Promise.all(FILES.map(loadJson)),
+      fetch("data/atlas/atlas.json", { cache: "no-cache" }).then((response) => {
+        if (!response.ok) throw new Error(`atlas: HTTP ${response.status}`);
+        return response.json();
+      })
+    ]);
     const data = Object.fromEntries(FILES.map((name, index) => [name, rows[index]]));
+    data.atlas = atlas;
     data.indexes = {};
     FILES.forEach((name) => {
       data.indexes[name] = new Map((data[name] || []).map((row) => [row.id, row]));

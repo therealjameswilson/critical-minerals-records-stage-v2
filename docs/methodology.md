@@ -25,6 +25,13 @@ Core rules:
 9. NARA results remain unreviewed archival leads until substantive inspection.
 10. Post-1992 information is confined to Modern Context and does not control the
     historical narrative.
+11. Atlas FRUS shading and line widths measure documentary coverage, never
+    production, import dependence, trade volume, or strategic importance.
+12. Modern generalized Natural Earth geometry is orientation only; historical
+    names come from dated project records and historical boundaries are not yet
+    reconstructed.
+13. Quantitative and infrastructure atlas layers stay locked until their
+    required official fields and citations are present.
 
 See the HTML methodology for the full treatment of source hierarchy, USGS
 ingestion, NARA relevance, OCR review, uncertainty, and citation practice.

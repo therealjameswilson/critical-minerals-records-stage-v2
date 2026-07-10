@@ -31,6 +31,13 @@ The main routes are:
 - `history-stack.html?type=...&id=...`: reusable entity and document profiles
 - `methodology.html`: source and data-quality rules
 
+The homepage now treats the Historical Geostrategic Atlas as its principal
+orientation surface. `data/atlas/atlas.json` is generated from shared History
+Stack IDs; `assets/atlas.js` renders the vector map, historical names,
+documentary access relationships, instruments, NARA discovery, synchronized
+evidence panels, and accessible tables without duplicating the underlying
+evidence records.
+
 The FRUS index remains a separate advanced discovery layer. Its unreviewed rows
 display only volume span, document identifier, subject flags, chapter context,
 and authoritative URL.
@@ -59,6 +66,10 @@ The pilot demonstrates all major contracts without pretending to be complete:
 - Treaty-series and TIAS citations are incomplete for most wartime purchasing
   and control records.
 - Mine, smelter, port, rail, and shipping-route coordinates remain unpopulated.
+- Historical boundary geometry and sourced alliance membership remain
+  unpopulated; the basemap is modern orientation geometry only.
+- Atlas production, supplier-share, quantitative-flow, and risk modes are
+  deliberately locked until compatible official country-year series exist.
 - Historical outcomes are mostly research queues rather than inferred stories.
 - The pilot has four administration profiles, not complete Lincoln-through-Bush
   coverage.

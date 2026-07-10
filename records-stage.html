@@ -6,7 +6,8 @@
   <meta name="description" content="Explore how U.S. diplomacy, trade, law, geography, and national security shaped access to strategic resources from 1861 through 1992, with FRUS as the documentary spine.">
   <meta name="theme-color" content="#153650">
   <title>The United States and Strategic Resources, 1861–1992</title>
-  <link rel="stylesheet" href="assets/portal.css?v=2.0.0">
+  <link rel="stylesheet" href="assets/vendor/maplibre-gl/maplibre-gl.css?v=5.24.0">
+  <link rel="stylesheet" href="assets/portal.css?v=2.1.1">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -23,7 +24,7 @@
         <a href="#countries">Countries</a>
         <a href="#periods">Periods</a>
         <a href="#episode">Episode</a>
-        <a href="#map">Map</a>
+        <a href="#map">Atlas</a>
         <a href="#instruments">Treaties &amp; Law</a>
         <a href="#archives">Archives</a>
         <a href="#frus">FRUS Index</a>
@@ -82,6 +83,71 @@
       <div class="search-result-grid" id="globalResults"></div>
     </section>
 
+    <section class="atlas-band" id="map" aria-labelledby="map-title">
+      <div class="section atlas-heading">
+        <div>
+          <p class="eyebrow">Historical Geostrategic Atlas</p>
+          <h2 id="map-title">See the documentary geography of strategic-resource diplomacy</h2>
+        </div>
+        <p>Select a year and material to connect historical names, FRUS activity, access negotiations, agreements, stockpile policy, and archival discovery. Unsupported quantitative layers remain visibly locked until official series are added.</p>
+      </div>
+
+      <div class="atlas-shell">
+        <div class="atlas-timebar" aria-label="Atlas time and material controls">
+          <button class="atlas-icon-button" id="atlasPlay" type="button" aria-pressed="false" title="Play timeline"><span aria-hidden="true">▶</span><span class="visually-hidden">Play timeline</span></button>
+          <button class="atlas-icon-button" id="atlasPrevYear" type="button" title="Previous year"><span aria-hidden="true">−</span><span class="visually-hidden">Previous year</span></button>
+          <div class="atlas-year-control">
+            <label for="mapYear">Historical year <output id="mapYearValue" for="mapYear">1942</output></label>
+            <input id="mapYear" type="range" min="1861" max="1992" value="1942" step="1">
+            <div class="atlas-era-labels" aria-hidden="true"><span>1861</span><span>1914</span><span>1941</span><span>1960</span><span>1992</span></div>
+          </div>
+          <button class="atlas-icon-button" id="atlasNextYear" type="button" title="Next year"><span aria-hidden="true">+</span><span class="visually-hidden">Next year</span></button>
+          <div class="control atlas-mineral-control"><label for="mapMineral">Material</label><select id="mapMineral"></select></div>
+          <div class="control atlas-mode-control"><label for="atlasMode">Analytical lens</label><select id="atlasMode"></select></div>
+        </div>
+
+        <div class="atlas-workbench">
+          <aside class="atlas-layer-rail" aria-labelledby="atlas-layers-title">
+            <div class="atlas-rail-heading"><span class="atlas-folio">Layers</span><h3 id="atlas-layers-title">Build the view</h3></div>
+            <div id="atlasLayerControls"></div>
+            <div class="atlas-layer-note" id="atlasLayerNote" aria-live="polite"></div>
+          </aside>
+
+          <div class="atlas-map-column">
+            <div class="atlas-map" id="atlasMap" aria-label="Interactive world atlas for historical strategic-resource evidence"></div>
+            <div class="atlas-map-fallback" id="atlasMapFallback" hidden>
+              <strong>The vector atlas could not load.</strong>
+              <span>The synchronized evidence panels and accessible table remain available below.</span>
+            </div>
+            <div class="atlas-map-status" id="atlasMapStatus" role="status" aria-live="polite"></div>
+            <div class="atlas-legend" id="atlasLegend" aria-label="Atlas legend"></div>
+          </div>
+
+          <aside class="atlas-drawer" id="mapInspector" aria-live="polite" aria-label="Selected country evidence"></aside>
+        </div>
+
+        <div class="atlas-evidence-desk">
+          <div class="atlas-tabs" role="tablist" aria-label="Synchronized atlas evidence">
+            <button type="button" role="tab" id="atlasTabSummary" data-atlas-tab="summary" aria-controls="atlasPanel" aria-selected="true">At a glance</button>
+            <button type="button" role="tab" id="atlasTabFrus" data-atlas-tab="frus" aria-controls="atlasPanel" aria-selected="false">FRUS</button>
+            <button type="button" role="tab" id="atlasTabNumbers" data-atlas-tab="numbers" aria-controls="atlasPanel" aria-selected="false">Policy in Numbers</button>
+            <button type="button" role="tab" id="atlasTabInstruments" data-atlas-tab="instruments" aria-controls="atlasPanel" aria-selected="false">Agreements</button>
+            <button type="button" role="tab" id="atlasTabArchives" data-atlas-tab="archives" aria-controls="atlasPanel" aria-selected="false">NARA</button>
+          </div>
+          <div class="atlas-panel" id="atlasPanel" role="tabpanel" aria-labelledby="atlasTabSummary"></div>
+        </div>
+
+        <details class="accessible-table atlas-accessible-table">
+          <summary>Open accessible atlas table and layer definitions</summary>
+          <p>The table presents the same selected-year evidence without requiring the map. Counts are documentary coverage, not production or strategic weight.</p>
+          <div class="table-scroll"><table><thead><tr><th>Country or territory</th><th>Historical name</th><th>Selected-year evidence</th><th>Linked materials</th><th>FRUS records</th><th>Precision</th></tr></thead><tbody id="mapTableBody"></tbody></table></div>
+          <div class="atlas-layer-table" id="atlasLayerTable"></div>
+        </details>
+
+        <p class="atlas-basemap-note"><strong>Map-reading note:</strong> Modern generalized country geometry is used only for spatial orientation. It does not reconstruct historical borders. Historical names and status come from dated project records. Natural Earth orientation geometry is public domain; all substantive overlays link to the portal’s official-source registry.</p>
+      </div>
+    </section>
+
     <section class="section" id="minerals" aria-labelledby="minerals-title">
       <div class="section-heading">
         <div><p class="eyebrow">Explore by mineral</p><h2 id="minerals-title">State of the Mineral</h2></div>
@@ -126,26 +192,6 @@
           <a class="button-link" href="history-stack.html?type=mineral&amp;id=tin">Open full tin profile</a>
         </aside>
       </div>
-    </section>
-
-    <section class="section" id="map" aria-labelledby="map-title">
-      <div class="section-heading">
-        <div><p class="eyebrow">Interactive historical map</p><h2 id="map-title">Evidence geography, 1861–1992</h2></div>
-        <p>Country markers show linked pilot records at country-level precision. They do not show production, reserves, bilateral importance, or exact facilities.</p>
-      </div>
-      <div class="map-toolbar">
-        <div class="control"><label for="mapMineral">Mineral</label><select id="mapMineral"></select></div>
-        <div class="control grow"><label for="mapYear">Year <output id="mapYearValue" for="mapYear">1942</output></label><input id="mapYear" type="range" min="1861" max="1992" value="1942" step="1"></div>
-        <div class="map-mode"><strong>Mode</strong><span>Evidence coverage</span></div>
-      </div>
-      <div class="map-layout">
-        <div class="map-canvas" id="mapCanvas"></div>
-        <aside class="map-inspector" id="mapInspector" aria-live="polite"></aside>
-      </div>
-      <details class="accessible-table">
-        <summary>Open accessible map table</summary>
-        <table><thead><tr><th>Country or territory</th><th>Historical name in selected year</th><th>Linked minerals</th><th>Linked FRUS records</th><th>Precision</th></tr></thead><tbody id="mapTableBody"></tbody></table>
-      </details>
     </section>
 
     <section class="section-band" id="instruments">
@@ -247,8 +293,10 @@
   </footer>
 
   <script src="assets/runtime-config.js?v=2.0.0"></script>
+  <script src="assets/vendor/maplibre-gl/maplibre-gl.js?v=5.24.0"></script>
   <script src="assets/frus-subjects-index.js?v=2.0.0"></script>
-  <script src="assets/history-data.js?v=2.0.0"></script>
-  <script src="assets/portal.js?v=2.0.0"></script>
+  <script src="assets/history-data.js?v=2.1.0"></script>
+  <script src="assets/atlas.js?v=2.1.2"></script>
+  <script src="assets/portal.js?v=2.1.0"></script>
 </body>
 </html>

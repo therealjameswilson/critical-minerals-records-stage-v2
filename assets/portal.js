@@ -6,9 +6,11 @@
   const state = {
     data: null,
     periodId: null,
-    mapMineral: "all",
+    mapMineral: "tin",
     mapYear: 1942,
     mapCountry: null,
+    mapMode: "frus-activity",
+    mapLayers: [],
     instrumentType: "all",
     instrumentMineral: "all",
     frusQuery: "",
@@ -24,8 +26,11 @@
 
   function getUrlState() {
     const params = new URLSearchParams(window.location.search);
-    state.mapMineral = params.get("mineral") || "all";
+    state.mapMineral = params.get("mineral") || "tin";
     state.mapYear = Math.max(1861, Math.min(1992, Number(params.get("year")) || 1942));
+    state.mapCountry = params.get("country") || null;
+    state.mapMode = params.get("atlas") || "frus-activity";
+    state.mapLayers = (params.get("layers") || "").split(",").filter(Boolean);
     state.frusQuery = params.get("frusq") || "";
     state.frusSubject = params.get("frussubject") || "all";
     state.frusFrom = Math.max(1861, Math.min(1992, Number(params.get("from")) || 1861));
@@ -36,8 +41,11 @@
   function syncUrl(extra) {
     const params = new URLSearchParams(window.location.search);
     const values = {
-      mineral: state.mapMineral === "all" ? "" : state.mapMineral,
+      mineral: state.mapMineral === "tin" ? "" : state.mapMineral,
       year: state.mapYear === 1942 ? "" : state.mapYear,
+      country: state.mapCountry || "",
+      atlas: state.mapMode === "frus-activity" ? "" : state.mapMode,
+      layers: state.mapLayers.length ? state.mapLayers.join(",") : "",
       frusq: state.frusQuery,
       frussubject: state.frusSubject === "all" ? "" : state.frusSubject,
       from: state.frusFrom === 1861 ? "" : state.frusFrom,
@@ -120,87 +128,26 @@
     }).join("");
   }
 
-  function historicalName(country, year) {
-    const period = country.names_by_period.find((item) => item.start <= year && item.end >= year);
-    return period ? period.name : country.canonical_historical_name;
-  }
-
-  function countryActive(country) {
-    const exists = country.names_by_period.some((item) => item.start <= state.mapYear && item.end >= state.mapYear);
-    const linkedFrus = country.frus_document_ids.some((id) => {
-      const row = state.data.indexes["frus-documents"].get(id);
-      return row && row.volume_year_start <= state.mapYear && row.volume_year_end >= state.mapYear;
+  async function renderMap() {
+    if (!window.HistoricalAtlas) throw new Error("Historical atlas module did not load");
+    await window.HistoricalAtlas.init({
+      data: state.data,
+      state: {
+        year: state.mapYear,
+        mineral: state.mapMineral,
+        country: state.mapCountry,
+        mode: state.mapMode,
+        layers: state.mapLayers
+      },
+      onChange(next) {
+        state.mapYear = next.year;
+        state.mapMineral = next.mineral;
+        state.mapCountry = next.country;
+        state.mapMode = next.mode;
+        state.mapLayers = next.layers;
+        syncUrl();
+      }
     });
-    const linkedEpisode = country.episode_ids.some((id) => {
-      const row = state.data.indexes.episodes.get(id);
-      return row && row.start <= state.mapYear && row.end >= state.mapYear;
-    });
-    return exists && (linkedFrus || linkedEpisode) && (state.mapMineral === "all" || country.mineral_ids.includes(state.mapMineral));
-  }
-
-  function renderMapControls() {
-    const data = state.data;
-    $("mapMineral").innerHTML = option("all", "All pilot minerals", state.mapMineral) + data.minerals.map((row) => option(row.id, row.canonical_name, state.mapMineral)).join("");
-    $("mapYear").value = state.mapYear;
-    $("mapYearValue").textContent = state.mapYear;
-    $("mapMineral").addEventListener("change", (event) => {
-      state.mapMineral = event.target.value;
-      state.mapCountry = null;
-      renderMap();
-      syncUrl();
-    });
-    $("mapYear").addEventListener("input", (event) => {
-      state.mapYear = Number(event.target.value);
-      $("mapYearValue").textContent = state.mapYear;
-      state.mapCountry = null;
-      renderMap();
-      syncUrl();
-    });
-  }
-
-  function renderMap() {
-    const data = state.data;
-    const countries = data.countries.filter(countryActive);
-    const marker = (country) => {
-      const x = ((country.marker.longitude + 180) / 360) * 960;
-      const y = ((90 - country.marker.latitude) / 180) * 500;
-      const count = country.frus_document_ids.length;
-      const radius = 7 + Math.min(7, count);
-      return `<g class="map-marker${country.id === state.mapCountry ? " is-selected" : ""}" tabindex="0" role="button" data-country="${H.escape(country.id)}" aria-label="${H.escape(historicalName(country, state.mapYear))}, ${count} linked FRUS records"><circle cx="${x}" cy="${y}" r="${radius}"></circle><text x="${x}" y="${y - radius - 7}" text-anchor="middle">${H.escape(historicalName(country, state.mapYear))}</text></g>`;
-    };
-    $("mapCanvas").innerHTML = `<svg viewBox="0 0 960 500" role="img" aria-label="World evidence-coverage map for ${state.mapYear}">
-      <rect width="960" height="500" class="ocean"></rect>
-      <g class="graticule"><path d="M0 125H960M0 250H960M0 375H960M240 0V500M480 0V500M720 0V500"></path></g>
-      <g class="land" aria-hidden="true">
-        <path d="M72 160 C130 96 236 92 290 148 C325 184 305 244 258 276 C225 299 214 347 184 385 C156 362 148 306 112 279 C72 249 45 194 72 160Z"></path>
-        <path d="M404 128 C442 96 501 89 536 115 C565 91 628 95 684 132 C726 161 745 212 713 241 C681 270 632 250 611 280 C588 314 572 369 527 390 C488 353 493 297 456 267 C417 236 372 159 404 128Z"></path>
-        <path d="M682 128 C748 88 852 105 913 166 C947 199 932 255 894 275 C855 297 819 270 778 282 C735 295 692 248 664 202 C647 174 653 145 682 128Z"></path>
-        <path d="M740 345 C781 319 849 334 880 376 C855 412 783 420 727 390 C714 372 720 354 740 345Z"></path>
-        <path d="M330 62 C350 40 382 45 393 70 C378 94 348 98 326 82Z"></path>
-      </g>
-      <g>${countries.map(marker).join("")}</g>
-    </svg>`;
-    $("mapCanvas").querySelectorAll(".map-marker").forEach((node) => {
-      const activate = () => {
-        state.mapCountry = node.dataset.country;
-        renderMap();
-      };
-      node.addEventListener("click", activate);
-      node.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          activate();
-        }
-      });
-    });
-    const selected = data.indexes.countries.get(state.mapCountry) || countries[0];
-    if (selected) {
-      const minerals = selected.mineral_ids.map((id) => data.indexes.minerals.get(id)?.canonical_name || id);
-      $("mapInspector").innerHTML = `<p class="eyebrow">Selected geography</p><h3>${H.escape(historicalName(selected, state.mapYear))}</h3><p>${selected.present_day_name && historicalName(selected, state.mapYear) !== selected.present_day_name ? `Present-day name: ${H.escape(selected.present_day_name)}.` : "Historical name unchanged in this pilot."}</p><dl><div><dt>Linked minerals</dt><dd>${H.escape(minerals.join(", ") || "Context entity")}</dd></div><div><dt>FRUS pilot records</dt><dd>${selected.frus_document_ids.length}</dd></div><div><dt>Marker precision</dt><dd>${H.escape(selected.marker.precision)} level</dd></div></dl><p class="caveat">${H.escape(selected.data_gaps[0] || "Coverage remains incomplete.")}</p><a class="button-link" href="${H.detailHref("countries", selected.id)}">Open country History Stack</a>`;
-    } else {
-      $("mapInspector").innerHTML = `<p class="empty-note">No pilot country matches this mineral and year.</p>`;
-    }
-    $("mapTableBody").innerHTML = countries.map((country) => `<tr><td><a href="${H.detailHref("countries", country.id)}">${H.escape(country.canonical_historical_name)}</a></td><td>${H.escape(historicalName(country, state.mapYear))}</td><td>${H.escape(country.mineral_ids.map((id) => data.indexes.minerals.get(id)?.canonical_name || id).join(", ") || "Context only")}</td><td>${country.frus_document_ids.length}</td><td>${H.escape(country.marker.precision)}</td></tr>`).join("");
   }
 
   function renderInstruments() {
@@ -429,8 +376,7 @@
       renderCountries();
       renderPeriods();
       renderFeature();
-      renderMapControls();
-      renderMap();
+      await renderMap();
       renderInstruments();
       bindInstrumentControls();
       renderNaraSetup();

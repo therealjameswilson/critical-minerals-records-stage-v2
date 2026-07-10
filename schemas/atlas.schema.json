@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://therealjameswilson.github.io/critical-minerals-records-stage-v2/schemas/atlas.schema.json",
+  "title": "Historical Geostrategic Atlas pilot",
+  "type": "object",
+  "required": ["meta", "layers", "countries", "relationships", "instruments", "events", "stockpile_policy", "archival_plans"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["historical_start", "historical_end", "default_year", "default_mineral", "orientation_caveat"]
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "short_title", "availability", "geometry", "source_ids", "caveat"],
+        "properties": {
+          "availability": {"enum": ["supported", "locked"]},
+          "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+        }
+      }
+    },
+    "countries": {"type": "array"},
+    "relationships": {"type": "array"},
+    "instruments": {"type": "array"},
+    "events": {"type": "array"},
+    "stockpile_policy": {"type": "array"},
+    "archival_plans": {"type": "array"}
+  }
+}

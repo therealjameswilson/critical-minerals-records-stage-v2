@@ -55,6 +55,7 @@ def main() -> None:
     datasets["statistics"] = load("statistics")
     datasets["sources"] = load("sources")
     datasets["nara-queries"] = load("nara-queries")
+    atlas = json.loads((ROOT / "data" / "atlas" / "atlas.json").read_text(encoding="utf-8"))
 
     for name, minimum in EXPECTED_MINIMUMS.items():
         if len(datasets[name]) < minimum:
@@ -96,6 +97,38 @@ def main() -> None:
             errors.append(f"statistics/{row.get('id')}: missing {', '.join(missing)}")
         if row.get("mineral_id") not in ids["minerals"]:
             errors.append(f"statistics/{row.get('id')}: unknown mineral {row.get('mineral_id')}")
+
+    if atlas.get("meta", {}).get("historical_start") != HISTORICAL_START or atlas.get("meta", {}).get("historical_end") != HISTORICAL_END:
+        errors.append("atlas: historical bounds must be 1861-1992")
+    atlas_layers = atlas.get("layers", [])
+    layer_ids = [row.get("id") for row in atlas_layers]
+    if len(layer_ids) != len(set(layer_ids)):
+        errors.append("atlas: duplicate layer ids detected")
+    for row in atlas_layers:
+        if row.get("availability") not in {"supported", "locked"}:
+            errors.append(f"atlas/{row.get('id')}: invalid availability")
+        if not row.get("source_ids") or not row.get("caveat"):
+            errors.append(f"atlas/{row.get('id')}: source_ids and caveat are required")
+        if row.get("availability") == "supported" and not row.get("value_semantics"):
+            errors.append(f"atlas/{row.get('id')}: supported layer needs value_semantics")
+        if row.get("availability") == "locked" and not row.get("required_data"):
+            errors.append(f"atlas/{row.get('id')}: locked layer needs required_data")
+        for source_id in row.get("source_ids", []):
+            if source_id not in ids["sources"]:
+                errors.append(f"atlas/{row.get('id')}: missing source id {source_id}")
+    for row in atlas.get("countries", []):
+        if row.get("id") not in ids["countries"]:
+            errors.append(f"atlas: missing country reference {row.get('id')}")
+        if not row.get("a3") or len(row.get("coordinates", [])) != 2:
+            errors.append(f"atlas/{row.get('id')}: A3 code and country coordinates are required")
+    for row in atlas.get("relationships", []):
+        if row.get("line_value_semantics") != "linked pilot FRUS records":
+            errors.append(f"atlas/{row.get('id')}: access line width must retain documentary semantics")
+        if row.get("from_country_id") not in ids["countries"] or row.get("to_country_id") not in ids["countries"]:
+            errors.append(f"atlas/{row.get('id')}: relationship country reference is missing")
+        for record_id in row.get("frus_document_ids", []):
+            if record_id not in ids["frus-documents"]:
+                errors.append(f"atlas/{row.get('id')}: missing FRUS reference {record_id}")
 
     env_example = (ROOT / ".env.example").read_text(encoding="utf-8")
     if env_example != "NARA_API_KEY=\n":

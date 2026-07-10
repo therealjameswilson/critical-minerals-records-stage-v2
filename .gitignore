@@ -64,6 +64,10 @@ __pycache__/
 !/data/portal-data.js
 !/data/history-stack/
 !/data/history-stack/*.json
+!/data/atlas/
+!/data/atlas/*.json
+!/data/atlas/*.geojson
+!/data/atlas/README.md
 !/data/nara/
 !/data/nara/*.json
 

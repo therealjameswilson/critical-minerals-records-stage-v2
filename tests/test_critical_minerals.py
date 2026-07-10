@@ -104,7 +104,8 @@ def test_portal_shell_has_history_stack_sections_and_no_operational_ui():
     assert "State of the Mineral" in html
     assert "Historical resource relationships" in html
     assert "Policy in Numbers" in html
-    assert "Evidence geography, 1861–1992" in html
+    assert "Historical Geostrategic Atlas" in html
+    assert "See the documentary geography of strategic-resource diplomacy" in html
     assert "Treaties, agreements, and law" in html
     assert "NARA archival discovery" in html
     assert "FRUS strategic-resources index" in html
@@ -147,14 +148,18 @@ def test_curated_frus_records_are_visibly_separate_from_discovery_leads():
 
 def test_search_map_and_mobile_navigation_contracts_are_present():
     javascript = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
+    atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
     css = (ROOT / "assets" / "portal.css").read_text(encoding="utf-8")
     assert "function runGlobalSearch" in javascript
     assert "function renderFrus" in javascript
     assert "function renderMap" in javascript
+    assert "window.HistoricalAtlas" in atlas
+    assert "line_value_semantics" in atlas
+    assert "maplibre-gl" in (ROOT / "records-stage.html").read_text(encoding="utf-8")
     assert "history-stack.html" in (ROOT / "assets" / "history-data.js").read_text(encoding="utf-8")
     assert ".primary-nav.is-open" in css
     assert ".nav-toggle" in css
-    assert "Evidence coverage" in (ROOT / "records-stage.html").read_text(encoding="utf-8")
+    assert "Open accessible atlas table" in (ROOT / "records-stage.html").read_text(encoding="utf-8")
 
 
 def test_landau_report_is_preserved_outside_browser_cache():

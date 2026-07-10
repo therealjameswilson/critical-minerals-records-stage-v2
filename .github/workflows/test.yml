@@ -46,6 +46,7 @@ jobs:
       - name: Check browser JavaScript syntax
         run: |
           node --check assets/history-data.js
+          node --check assets/atlas.js
           node --check assets/portal.js
           node --check assets/history-stack.js
           node --check nara_proxy_worker.js
