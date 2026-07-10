@@ -48,7 +48,9 @@ python local_server.py --no-browser-open
 
 The server checks the process environment first and `.env.local` second. It
 never prints the key or its length. `.env.local`, `.env.*`, and legacy local-key
-patterns are ignored by Git.
+patterns are ignored by Git. `assets/runtime-config.js` points local site hosts
+to `http://localhost:5757` automatically; the deployed proxy URL remains blank
+until explicitly configured.
 
 ## Deploy the Worker
 

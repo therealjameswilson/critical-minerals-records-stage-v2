@@ -133,6 +133,9 @@ pip install flask flask-cors
 python local_server.py --no-browser-open
 ```
 
+When the site itself is served from `localhost` or `127.0.0.1`, the browser
+automatically uses `http://localhost:5757` for NARA requests.
+
 GitHub Pages cannot hold a server-side secret. Deploy `nara_proxy_worker.js` as a
 serverless Worker, store the key as a secret named `NARA_API_KEY`, and put only
 the public Worker URL in `assets/runtime-config.js`:
