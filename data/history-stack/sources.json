@@ -88,5 +88,55 @@
     "url": "https://www.dla.mil/Strategic-Materials/",
     "scope": "Official orientation for the stockpile program and its institutional successors.",
     "trust_note": "Historical holdings and goals require report- or statute-level citations; they are not inferred here."
+  },
+  {
+    "id": "state-country-guide-bolivia",
+    "label": "U.S. Recognition and Relations: Bolivia",
+    "agency": "U.S. Department of State, Office of the Historian",
+    "source_type": "diplomatic-history",
+    "tier": 1,
+    "url": "https://history.state.gov/countries/bolivia",
+    "scope": "Official chronology of U.S. recognition, diplomatic relations, and mission status for Bolivia.",
+    "trust_note": "Used for dated recognition and diplomatic-post facts, not as a complete political or economic profile."
+  },
+  {
+    "id": "state-country-guide-chile",
+    "label": "U.S. Recognition and Relations: Chile",
+    "agency": "U.S. Department of State, Office of the Historian",
+    "source_type": "diplomatic-history",
+    "tier": 1,
+    "url": "https://history.state.gov/countries/chile",
+    "scope": "Official chronology of U.S. recognition, diplomatic relations, and mission status for Chile.",
+    "trust_note": "Used for dated recognition and diplomatic-post facts, not as a complete political or economic profile."
+  },
+  {
+    "id": "state-country-guide-congo-democratic-republic",
+    "label": "U.S. Recognition and Relations: Democratic Republic of the Congo",
+    "agency": "U.S. Department of State, Office of the Historian",
+    "source_type": "diplomatic-history",
+    "tier": 1,
+    "url": "https://history.state.gov/countries/congo-democratic-republic",
+    "scope": "Official chronology of independence, U.S. recognition, diplomatic relations, and the American Embassy in Leopoldville.",
+    "trust_note": "The 1960 independence chronology is used to clarify the Belgian Congo's non-sovereign status in 1953."
+  },
+  {
+    "id": "state-country-guide-indonesia",
+    "label": "U.S. Recognition and Relations: Indonesia",
+    "agency": "U.S. Department of State, Office of the Historian",
+    "source_type": "diplomatic-history",
+    "tier": 1,
+    "url": "https://history.state.gov/countries/indonesia",
+    "scope": "Official chronology of U.S. consular presence, recognition, and diplomatic relations with Indonesia.",
+    "trust_note": "Used for dated recognition and diplomatic-post facts, not as a complete political or economic profile."
+  },
+  {
+    "id": "loc-indonesia-mineral-regulation",
+    "label": "Indonesia: Regulations on Mineral",
+    "agency": "Library of Congress, Law Library",
+    "source_type": "official-legal-report",
+    "tier": 1,
+    "url": "https://tile.loc.gov/storage-services/service/ll/llglrd/2021700179/2021700179.pdf",
+    "scope": "Official legal research report describing Indonesia's mineral sector and the classifications in the 1967 mining law.",
+    "trust_note": "This is post-1965 context. It is not used as evidence for 1965 production, trade, reserves, or U.S. dependence."
   }
 ]

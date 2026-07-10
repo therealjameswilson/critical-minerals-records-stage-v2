@@ -13,6 +13,8 @@ import json
 import re
 from pathlib import Path
 
+from country_brief_data import COUNTRY_BRIEFS, COUNTRY_BRIEF_SOURCES
+
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "data" / "history-stack"
@@ -122,7 +124,7 @@ SOURCES = [
         "scope": "Official orientation for the stockpile program and its institutional successors.",
         "trust_note": "Historical holdings and goals require report- or statute-level citations; they are not inferred here."
     }
-]
+] + COUNTRY_BRIEF_SOURCES
 
 
 MINERALS = [
@@ -240,7 +242,11 @@ PILOT_FRUS_KEYS = [
     ("frus1942v05", "d493"), ("frus1942v01", "d440"),
     ("frus1942v05", "d564"), ("frus1944v02", "d886"),
     ("frus1947v01", "d395"), ("frus1950v01", "d95"),
-    ("frus1952-54v11p1", "d27"), ("frus1964-68v09", "d344")
+    ("frus1952-54v11p1", "d27"), ("frus1964-68v09", "d344"),
+    ("frus1969-76v21", "d250"), ("frus1969-76v21", "d256"),
+    ("frus1969-76v21", "d261"), ("frus1969-76ve16", "d87"),
+    ("frus1964-68v26", "d138"), ("frus1964-68v26", "d142"),
+    ("frus1964-68v26", "d148")
 ]
 
 
@@ -269,12 +275,14 @@ COUNTRIES = [
     {
         "id": "chile", "canonical_historical_name": "Chile", "present_day_name": "Chile",
         "alternate_historical_names": ["Republic of Chile"], "names_by_period": [{"name": "Chile", "start": 1861, "end": 1992}],
-        "sovereignty_changes": [], "mineral_ids": ["copper"], "frus_document_ids": [], "agreement_ids": [],
-        "episode_ids": ["decolonization-and-resource-access", "late-cold-war-resource-policy"],
+        "sovereignty_changes": [], "mineral_ids": ["copper"],
+        "frus_document_ids": [frus_id("frus1969-76v21", "d250"), frus_id("frus1969-76v21", "d256"), frus_id("frus1969-76v21", "d261"), frus_id("frus1969-76ve16", "d87")],
+        "agreement_ids": ["chile-copper-compensation-1971"],
+        "episode_ids": ["chile-copper-nationalization-1971", "decolonization-and-resource-access", "late-cold-war-resource-policy"],
         "ports": [], "mines": [], "smelters": [], "rail_corridors": [],
         "marker": {"latitude": -33.4, "longitude": -70.7, "precision": "country"},
-        "source_ids": ["frus-history-at-state", "usgs-statistical-compendium"], "completeness": "research-queue",
-        "data_gaps": ["Chilean copper nationalization, compensation, and supplier-share evidence are not yet linked to reviewed records."]
+        "source_ids": ["frus-history-at-state", "state-country-guide-chile", "usgs-ds140"], "completeness": "verified-pilot",
+        "data_gaps": ["Country production, bilateral trade, supplier share, and export-price series remain untranscribed."]
     },
     {
         "id": "belgian-congo", "canonical_historical_name": "Belgian Congo", "present_day_name": "Democratic Republic of the Congo",
@@ -336,6 +344,19 @@ COUNTRIES = [
         "marker": {"latitude": 39.0, "longitude": 35.2, "precision": "country"},
         "source_ids": ["frus-history-at-state", "frus-subject-index"], "completeness": "partial",
         "data_gaps": ["Mine, contract, and shipment details require document-level review."]
+    },
+    {
+        "id": "indonesia", "canonical_historical_name": "Republic of Indonesia", "present_day_name": "Indonesia",
+        "alternate_historical_names": ["Netherlands East Indies", "Republic of the United States of Indonesia", "Indonesia"],
+        "names_by_period": [{"name": "Netherlands East Indies", "start": 1861, "end": 1948}, {"name": "Republic of the United States of Indonesia", "start": 1949, "end": 1949}, {"name": "Republic of Indonesia", "start": 1950, "end": 1992}],
+        "sovereignty_changes": [{"year": 1949, "note": "The United States recognized Indonesian independence and established diplomatic relations on December 28, 1949."}],
+        "mineral_ids": ["tin", "bauxite", "copper"],
+        "frus_document_ids": [frus_id("frus1964-68v26", "d138"), frus_id("frus1964-68v26", "d142"), frus_id("frus1964-68v26", "d148")],
+        "agreement_ids": [], "episode_ids": ["indonesia-political-crisis-1965"],
+        "ports": [], "mines": [], "smelters": [], "rail_corridors": [],
+        "marker": {"latitude": -2.5, "longitude": 118.0, "precision": "country"},
+        "source_ids": ["frus-history-at-state", "state-country-guide-indonesia", "loc-indonesia-mineral-regulation"], "completeness": "partial",
+        "data_gaps": ["The mineral classification is post-1965 context; exact-year production, trade, dependence, reserves, and facility evidence remain unknown."]
     }
 ]
 
@@ -380,10 +401,26 @@ EPISODES = [
         "id": "decolonization-and-resource-access", "title": "Decolonization and resource access", "start": 1952, "end": 1975,
         "summary": "The pilot begins with a reviewed 1953 FRUS intelligence estimate on Tropical Africa; country-specific political transitions and economic bargaining require expansion.",
         "mineral_ids": ["chromium", "cobalt", "copper", "manganese", "tin"],
-        "country_ids": ["belgian-congo", "northern-rhodesia", "south-africa", "chile", "united-states"],
-        "frus_document_ids": [frus_id("frus1952-54v11p1", "d27"), frus_id("frus1964-68v09", "d344")],
-        "agreement_ids": ["stockpile-objectives-review-1967"], "law_ids": [], "source_ids": ["frus-history-at-state"],
+        "country_ids": ["belgian-congo", "northern-rhodesia", "south-africa", "chile", "indonesia", "united-states"],
+        "frus_document_ids": [frus_id("frus1952-54v11p1", "d27"), frus_id("frus1964-68v09", "d344"), frus_id("frus1964-68v26", "d138"), frus_id("frus1964-68v26", "d142"), frus_id("frus1964-68v26", "d148"), frus_id("frus1969-76v21", "d250"), frus_id("frus1969-76v21", "d256"), frus_id("frus1969-76v21", "d261"), frus_id("frus1969-76ve16", "d87")],
+        "agreement_ids": ["stockpile-objectives-review-1967", "chile-copper-compensation-1971"], "law_ids": [], "source_ids": ["frus-history-at-state"],
         "outcome": None, "completeness": "research-queue"
+    },
+    {
+        "id": "chile-copper-nationalization-1971", "title": "Chilean copper nationalization and compensation", "start": 1971, "end": 1971,
+        "summary": "Reviewed FRUS documents connect copper nationalization to compensation, diplomatic representations, interagency review, and Chile's access to international credit.",
+        "mineral_ids": ["copper"], "country_ids": ["chile"],
+        "frus_document_ids": [frus_id("frus1969-76v21", "d250"), frus_id("frus1969-76v21", "d256"), frus_id("frus1969-76v21", "d261"), frus_id("frus1969-76ve16", "d87")],
+        "agreement_ids": ["chile-copper-compensation-1971"], "law_ids": [], "source_ids": ["frus-history-at-state"],
+        "outcome": None, "completeness": "verified-pilot"
+    },
+    {
+        "id": "indonesia-political-crisis-1965", "title": "Indonesian political crisis and U.S. policy reassessment", "start": 1965, "end": 1966,
+        "summary": "Reviewed FRUS documents record strained bilateral relations, concern for American people and property, the October political crisis, and Department guidance to the Embassy. The pilot does not assert that mineral access drove these decisions.",
+        "mineral_ids": [], "country_ids": ["indonesia"],
+        "frus_document_ids": [frus_id("frus1964-68v26", "d138"), frus_id("frus1964-68v26", "d142"), frus_id("frus1964-68v26", "d148")],
+        "agreement_ids": [], "law_ids": [], "source_ids": ["frus-history-at-state"],
+        "outcome": None, "completeness": "verified-pilot"
     },
     {
         "id": "late-cold-war-resource-policy", "title": "Late Cold War resource and stockpile policy", "start": 1976, "end": 1992,
@@ -409,7 +446,8 @@ AGREEMENTS = [
     ("tripartite-uranium-control-1944", "U.S.-U.K.-Belgium uranium control agreement", "executive-agreement", ["United States", "United Kingdom", "Belgium"], None, [], ["belgian-congo"], [frus_id("frus1944v02", "d886")], "https://history.state.gov/historicaldocuments/frus1944v02/d886", "FRUS chapter context identifies a tripartite uranium agreement; formal citation remains to be added."),
     ("erp-strategic-materials-provisions-1947", "European Recovery Program strategic-materials provisions", "negotiation-record", ["United States", "European Recovery Program participants"], None, ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], ["united-states"], [frus_id("frus1947v01", "d395")], "https://history.state.gov/historicaldocuments/frus1947v01/d395", "A reviewed FRUS circular connected recovery planning, overseas production, and U.S. stockpiling; this row does not assert a separate treaty."),
     ("nsc68-materials-program-1950", "NSC-68 materials and stockpile program review", "other", ["United States"], None, ["aluminum", "chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], ["united-states"], [frus_id("frus1950v01", "d95")], "https://history.state.gov/historicaldocuments/frus1950v01/d95", "A reviewed FRUS memorandum discusses strategic stockpile objectives and foreign-source assumptions; this is a policy-process record, not an international agreement."),
-    ("stockpile-objectives-review-1967", "Interagency stockpile objectives review", "other", ["United States"], "1967-06-27", ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], ["united-states"], [frus_id("frus1964-68v09", "d344")], "https://history.state.gov/historicaldocuments/frus1964-68v09/d344", "A reviewed FRUS memorandum records interagency assessment of politically and economically dependable foreign sources; this is a policy-process record, not a treaty.")
+    ("stockpile-objectives-review-1967", "Interagency stockpile objectives review", "other", ["United States"], "1967-06-27", ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], ["united-states"], [frus_id("frus1964-68v09", "d344")], "https://history.state.gov/historicaldocuments/frus1964-68v09/d344", "A reviewed FRUS memorandum records interagency assessment of politically and economically dependable foreign sources; this is a policy-process record, not a treaty."),
+    ("chile-copper-compensation-1971", "Chile copper nationalization and compensation negotiations", "investment-dispute", ["United States", "Chile"], None, ["copper"], ["chile"], [frus_id("frus1969-76v21", "d250"), frus_id("frus1969-76v21", "d256"), frus_id("frus1969-76v21", "d261"), frus_id("frus1969-76ve16", "d87")], "https://history.state.gov/historicaldocuments/frus1969-76v21/d250", "Reviewed FRUS documents describe nationalization, compensation, diplomatic representations, and policy review. This row is a negotiation pathway, not a treaty.")
 ]
 
 
@@ -424,7 +462,7 @@ def agreement_rows() -> list[dict]:
             "mineral_ids": minerals, "country_ids": countries, "frus_document_ids": documents,
             "official_text_url": url, "summary": summary, "implementation_consequences": [],
             "source_ids": ["frus-history-at-state", "frus-subject-index"],
-            "completeness": "verified-pilot" if identifier in {"erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950", "stockpile-objectives-review-1967"} else "partial"
+            "completeness": "verified-pilot" if identifier in {"erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950", "stockpile-objectives-review-1967", "chile-copper-compensation-1971"} else "partial"
         })
     return rows
 
@@ -462,7 +500,8 @@ ADMINISTRATIONS = [
     {"id": "wilson", "president": "Woodrow Wilson", "start": 1913, "end": 1921, "summary": "Pilot coverage currently centers on FRUS discovery leads concerning wartime copper shipments.", "mineral_ids": ["copper"], "country_ids": ["united-states"], "frus_document_ids": [frus_id("frus1914Supp", "d423"), frus_id("frus1914Supp", "d427")], "agreement_ids": ["copper-shipment-correspondence-1914"], "law_ids": [], "episode_ids": ["world-war-i-resource-access"], "source_ids": ["frus-history-at-state", "frus-subject-index"], "completeness": "research-queue"},
     {"id": "franklin-roosevelt", "president": "Franklin D. Roosevelt", "start": 1933, "end": 1945, "summary": "Pilot FRUS pathways cover stockpile planning, bauxite protection, chrome acquisition, tin purchasing, Congo trade, and uranium agreements.", "mineral_ids": ["aluminum", "bauxite", "chromium", "cobalt", "copper", "tin", "tungsten"], "country_ids": ["bolivia", "belgian-congo", "surinam", "turkey", "united-states"], "frus_document_ids": [frus_id("frus1939v01", "d934"), frus_id("frus1939v01", "d939"), frus_id("frus1941v02", "d805"), frus_id("frus1941v02", "d821"), frus_id("frus1941v03", "d1006"), frus_id("frus1941v03", "d1038"), frus_id("frus1942v01", "d440"), frus_id("frus1942v02", "d3"), frus_id("frus1942v02", "d14"), frus_id("frus1942v05", "d493"), frus_id("frus1942v05", "d564"), frus_id("frus1944v02", "d886")], "agreement_ids": [row[0] for row in AGREEMENTS[2:11]], "law_ids": [], "episode_ids": ["interwar-planning", "world-war-ii-procurement"], "source_ids": ["frus-history-at-state", "frus-subject-index"], "completeness": "partial"},
     {"id": "truman", "president": "Harry S. Truman", "start": 1945, "end": 1953, "summary": "Reviewed FRUS records connect recovery planning, stockpile objectives, foreign-source assumptions, and African strategic materials.", "mineral_ids": ["aluminum", "chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], "country_ids": ["belgian-congo", "northern-rhodesia", "south-africa", "united-states"], "frus_document_ids": [frus_id("frus1947v01", "d395"), frus_id("frus1950v01", "d95"), frus_id("frus1952-54v11p1", "d27")], "agreement_ids": ["erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950"], "law_ids": ["stock-piling-act-1946", "defense-production-act-1950"], "episode_ids": ["early-cold-war-mobilization"], "source_ids": ["frus-history-at-state", "govinfo-statutes"], "completeness": "verified-pilot"},
-    {"id": "johnson", "president": "Lyndon B. Johnson", "start": 1963, "end": 1969, "summary": "Pilot coverage currently centers on a reviewed 1967 stockpile-objectives memorandum.", "mineral_ids": ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], "country_ids": ["united-states"], "frus_document_ids": [frus_id("frus1964-68v09", "d344")], "agreement_ids": ["stockpile-objectives-review-1967"], "law_ids": [], "episode_ids": ["decolonization-and-resource-access"], "source_ids": ["frus-history-at-state"], "completeness": "partial"}
+    {"id": "johnson", "president": "Lyndon B. Johnson", "start": 1963, "end": 1969, "summary": "Pilot coverage links a reviewed stockpile-objectives memorandum with three documents on the 1965 Indonesian political crisis. The pilot does not assert a mineral-access motive for the Indonesia policy record.", "mineral_ids": ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], "country_ids": ["indonesia", "united-states"], "frus_document_ids": [frus_id("frus1964-68v09", "d344"), frus_id("frus1964-68v26", "d138"), frus_id("frus1964-68v26", "d142"), frus_id("frus1964-68v26", "d148")], "agreement_ids": ["stockpile-objectives-review-1967"], "law_ids": [], "episode_ids": ["indonesia-political-crisis-1965", "decolonization-and-resource-access"], "source_ids": ["frus-history-at-state"], "completeness": "partial"},
+    {"id": "nixon", "president": "Richard Nixon", "start": 1969, "end": 1974, "summary": "Reviewed FRUS documents connect Chilean copper nationalization to compensation, diplomatic representations, international credit, and interagency policy review.", "mineral_ids": ["copper"], "country_ids": ["chile"], "frus_document_ids": [frus_id("frus1969-76v21", "d250"), frus_id("frus1969-76v21", "d256"), frus_id("frus1969-76v21", "d261"), frus_id("frus1969-76ve16", "d87")], "agreement_ids": ["chile-copper-compensation-1971"], "law_ids": [], "episode_ids": ["chile-copper-nationalization-1971", "decolonization-and-resource-access"], "source_ids": ["frus-history-at-state"], "completeness": "verified-pilot"}
 ]
 
 
@@ -514,6 +553,55 @@ VERIFIED_FRUS = {
         "minerals": ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], "countries": ["united-states"],
         "themes": ["accessible foreign sources", "stockpile objectives", "interagency assessment"], "agreements": ["stockpile-objectives-review-1967"], "laws": ["stock-piling-act-1946"],
         "nara": ["nara-rg59-accessible-foreign-sources", "nara-rg330-stockpile-objectives"]
+    },
+    ("frus1969-76v21", "d250"): {
+        "title": "Telegram From the Department of State to the Embassy in Chile", "date": "1971-08-18",
+        "contextual_summary": "The Department instructed the Embassy to present a formal note concerning Chile's copper nationalization law and compensation for affected U.S. interests.",
+        "minerals": ["copper"], "countries": ["chile"],
+        "themes": ["copper nationalization", "compensation", "diplomatic representation"], "agreements": ["chile-copper-compensation-1971"], "laws": [],
+        "nara": ["nara-rg84-santiago-copper", "nara-rg59-chilean-copper"]
+    },
+    ("frus1969-76v21", "d256"): {
+        "title": "Memorandum From Arnold Nachmanoff of the National Security Council Staff to the President's Assistant for National Security Affairs (Kissinger)", "date": "1971-09-08",
+        "contextual_summary": "An NSC staff memorandum framed compensation and international credit as linked issues for interagency review of Chilean copper nationalization.",
+        "minerals": ["copper"], "countries": ["chile"],
+        "themes": ["copper nationalization", "compensation", "international credit", "interagency review"], "agreements": ["chile-copper-compensation-1971"], "laws": [],
+        "nara": ["nara-rg59-chilean-copper"]
+    },
+    ("frus1969-76v21", "d261"): {
+        "title": "Memorandum From Ashley Hewitt of the National Security Council Staff to the President's Assistant for National Security Affairs (Kissinger)", "date": "1971-09-29",
+        "contextual_summary": "An NSC staff memorandum reviewed the developing copper compensation dispute and the policy questions it raised for the United States.",
+        "minerals": ["copper"], "countries": ["chile"],
+        "themes": ["copper nationalization", "compensation", "policy review"], "agreements": ["chile-copper-compensation-1971"], "laws": [],
+        "nara": ["nara-rg59-chilean-copper"]
+    },
+    ("frus1969-76ve16", "d87"): {
+        "title": "Intelligence Note Prepared in the Bureau of Intelligence and Research", "date": "1971-10-14",
+        "contextual_summary": "A Bureau of Intelligence and Research note assessed copper and domestic politics in Chile after nationalization.",
+        "minerals": ["copper"], "countries": ["chile"],
+        "themes": ["copper nationalization", "domestic politics", "intelligence assessment"], "agreements": ["chile-copper-compensation-1971"], "laws": [],
+        "nara": ["nara-rg59-chilean-copper"]
+    },
+    ("frus1964-68v26", "d138"): {
+        "title": "Telegram From the Embassy in Indonesia to the Department of State", "date": "1965-09-01",
+        "contextual_summary": "The Embassy reported a meeting with President Sukarno amid strained bilateral relations and concerns involving American people and property.",
+        "minerals": [], "countries": ["indonesia"],
+        "themes": ["bilateral relations", "American property", "embassy reporting"], "agreements": [], "laws": [],
+        "nara": ["nara-rg59-indonesia-1965"], "volume_year_start": 1964, "volume_year_end": 1968, "volume_context": "Indonesia"
+    },
+    ("frus1964-68v26", "d142"): {
+        "title": "Memorandum for President Johnson", "date": "1965-10-01",
+        "contextual_summary": "A memorandum briefed President Johnson on the immediate Indonesian political crisis following the events of September 30.",
+        "minerals": [], "countries": ["indonesia"],
+        "themes": ["political crisis", "presidential briefing", "policy reassessment"], "agreements": [], "laws": [],
+        "nara": ["nara-rg59-indonesia-1965"], "volume_year_start": 1964, "volume_year_end": 1968, "volume_context": "Indonesia"
+    },
+    ("frus1964-68v26", "d148"): {
+        "title": "Telegram From the Department of State to the Embassy in Indonesia", "date": "1965-10-06",
+        "contextual_summary": "The Department sent policy guidance to the Embassy during the Indonesian political crisis, including public-information and mission considerations.",
+        "minerals": [], "countries": ["indonesia"],
+        "themes": ["policy guidance", "public information", "embassy operations"], "agreements": [], "laws": [],
+        "nara": ["nara-rg59-indonesia-1965"], "volume_year_start": 1964, "volume_year_end": 1968, "volume_context": "Coup and Counter Reaction: October 1965-March 1966"
     }
 }
 
@@ -538,7 +626,14 @@ FRUS_SELECTIONS = [
     ("frus1947v01", "d395", [], [], [], []),
     ("frus1950v01", "d95", [], [], [], []),
     ("frus1952-54v11p1", "d27", [], [], [], []),
-    ("frus1964-68v09", "d344", [], [], [], [])
+    ("frus1964-68v09", "d344", [], [], [], []),
+    ("frus1969-76v21", "d250", [], [], [], []),
+    ("frus1969-76v21", "d256", [], [], [], []),
+    ("frus1969-76v21", "d261", [], [], [], []),
+    ("frus1969-76ve16", "d87", [], [], [], []),
+    ("frus1964-68v26", "d138", [], [], [], []),
+    ("frus1964-68v26", "d142", [], [], [], []),
+    ("frus1964-68v26", "d148", [], [], [], [])
 ]
 
 
@@ -553,9 +648,9 @@ def build_frus_documents() -> list[dict]:
     documents = []
     for volume, document, minerals, countries, themes, agreements in FRUS_SELECTIONS:
         row = lookup.get((volume, document))
-        if not row:
-            raise SystemExit(f"FRUS index is missing {volume}/{document}")
         verified = VERIFIED_FRUS.get((volume, document))
+        if not row and not verified:
+            raise SystemExit(f"FRUS index is missing {volume}/{document}")
         identifier = frus_id(volume, document)
         documents.append({
             "id": identifier,
@@ -564,15 +659,15 @@ def build_frus_documents() -> list[dict]:
             "document_number": document.removeprefix("d"),
             "title": verified["title"] if verified else None,
             "date": verified["date"] if verified else None,
-            "participants": [],
+            "participants": verified.get("participants", []) if verified else [],
             "country_ids": verified["countries"] if verified else countries,
             "mineral_ids": verified["minerals"] if verified else minerals,
             "policy_themes": verified["themes"] if verified else themes,
             "source_note": None,
             "stable_url": f"https://history.state.gov/historicaldocuments/{volume}/{document}",
-            "volume_context": row[5],
-            "volume_year_start": row[2],
-            "volume_year_end": row[3],
+            "volume_context": row[5] if row else verified["volume_context"],
+            "volume_year_start": row[2] if row else verified["volume_year_start"],
+            "volume_year_end": row[3] if row else verified["volume_year_end"],
             "contextual_summary": verified["contextual_summary"] if verified else None,
             "statistic_ids": [
                 "usgs-ds140-tin-1942-u-s-primary-production",
@@ -616,7 +711,9 @@ NARA_QUERIES = [
     ("nara-rg59-congo-cobalt", "Congo cobalt strategic materials", ["59"], 1945, 1975, ["cobalt"], ["belgian-congo"]),
     ("nara-rg59-rhodesia-chromium", "Rhodesia chrome chromium sanctions", ["59"], 1965, 1980, ["chromium"], ["northern-rhodesia"]),
     ("nara-rg59-south-africa-minerals", "South Africa strategic minerals", ["59"], 1945, 1992, ["chromium", "manganese"], ["south-africa"]),
-    ("nara-rg59-turkish-chrome", "Turkey chrome Germany", ["59"], 1939, 1945, ["chromium"], ["turkey"])
+    ("nara-rg59-turkish-chrome", "Turkey chrome Germany", ["59"], 1939, 1945, ["chromium"], ["turkey"]),
+    ("nara-rg59-indonesia-1965", "Indonesia 1965 political economic relations", ["59"], 1964, 1966, [], ["indonesia"]),
+    ("nara-rg84-djakarta-resources", "Indonesia tin petroleum minerals", ["84"], 1958, 1968, ["tin", "bauxite", "copper"], ["indonesia"])
 ]
 
 
@@ -656,6 +753,7 @@ def main() -> None:
         "stockpile-cases": STOCKPILE_CASES,
         "frus-documents": build_frus_documents(),
         "nara-queries": nara_query_rows(),
+        "country-briefs": COUNTRY_BRIEFS,
         "modern-context": MODERN_CONTEXT
     }
     for name, value in datasets.items():

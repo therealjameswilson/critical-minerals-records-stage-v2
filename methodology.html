@@ -6,7 +6,7 @@
   <meta name="description" content="Methodology for The United States and Strategic Resources, 1861–1992.">
   <meta name="theme-color" content="#153650">
   <title>Methodology | Strategic Resources, 1861–1992</title>
-  <link rel="stylesheet" href="assets/portal.css?v=2.1.3">
+  <link rel="stylesheet" href="assets/portal.css?v=2.2.0">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -16,7 +16,7 @@
       <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="records-stage.html#minerals">Minerals</a><a href="records-stage.html#countries">Countries</a><a href="records-stage.html#periods">Periods</a><a href="records-stage.html#map">Atlas</a><a href="records-stage.html#instruments">Treaties &amp; Law</a><a href="records-stage.html#archives">Archives</a><a href="records-stage.html#frus">FRUS Index</a></nav>
       <div class="header-actions"><button class="header-button nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">☰</span><span class="visually-hidden">Menu</span></button><button class="header-button" id="themeToggle" type="button"><span aria-hidden="true">◐</span><span class="visually-hidden">Toggle color theme</span></button></div>
     </div>
-    <p class="status-line">Public research demonstrator · Methodology version 2.1 · Not an official Department of State product</p>
+    <p class="status-line">Public research demonstrator · Methodology version 2.2 · Not an official Department of State product</p>
   </header>
 
   <main id="main-content">
@@ -27,7 +27,7 @@
     <div class="prose-page">
       <aside class="method-toc" aria-label="Methodology sections">
         <strong>On this page</strong>
-        <a href="#scope">Historical scope</a><a href="#frus-method">FRUS as spine</a><a href="#hierarchy">Source hierarchy</a><a href="#statistics-method">Statistics</a><a href="#geography-method">Historical atlas</a><a href="#agreements-method">Treaties and law</a><a href="#nara-method">NARA discovery</a><a href="#ocr-method">OCR and transcription</a><a href="#uncertainty-method">Gaps and uncertainty</a><a href="#modern-method">Modern Context</a><a href="#citation-method">How to cite</a>
+        <a href="#scope">Historical scope</a><a href="#frus-method">FRUS as spine</a><a href="#hierarchy">Source hierarchy</a><a href="#country-brief-method">Country-year briefs</a><a href="#statistics-method">Statistics</a><a href="#geography-method">Historical atlas</a><a href="#agreements-method">Treaties and law</a><a href="#nara-method">NARA discovery</a><a href="#ocr-method">OCR and transcription</a><a href="#uncertainty-method">Gaps and uncertainty</a><a href="#modern-method">Modern Context</a><a href="#citation-method">How to cite</a>
       </aside>
       <article class="prose-content">
         <div class="method-principle"><p class="eyebrow">Statutory standard</p><h2>A thorough, accurate, and reliable documentary record.</h2><p>Under <a href="https://uscode.house.gov/view.xhtml?req=%28title%3A22%20section%3A4351%20edition%3Aprelim%29" target="_blank" rel="noopener">22 U.S.C. § 4351(a)</a>, the FRUS series documents major U.S. foreign policy decisions and significant diplomatic activity. This portal keeps FRUS documentary evidence distinct from statistical context, legal authority, and archival discovery.</p></div>
@@ -37,6 +37,8 @@
         <section class="prose-section" id="frus-method"><h2>Why FRUS is the narrative spine</h2><p><em>Foreign Relations of the United States</em> is the official documentary historical record of major U.S. foreign-policy decisions and significant diplomatic activity. It provides an edited route into how officials described problems, evaluated options, and recorded decisions.</p><div class="method-callout"><strong>Important limit</strong><p>FRUS is selected and edited. It is not the complete archive. An absence from FRUS does not establish an absence of U.S. interest, deliberation, or action.</p></div><p>The full index uses subject-authority assignments and table-of-contents context from the repository’s FRUS Subjects data. A subject assignment is a discovery signal. Volume dates and chapter headings are navigation context; they are not silently presented as document-level dates, titles, or summaries.</p><p>Only records with explicit document-level pilot metadata receive the “Reviewed FRUS document” label. Every other record remains a “FRUS discovery lead.”</p></section>
 
         <section class="prose-section" id="hierarchy"><h2>Official-source hierarchy</h2><ol><li>Foreign Relations of the United States</li><li>National Archives and Records Administration</li><li>U.S. Geological Survey and historical Bureau of Mines publications</li><li>Department of State treaty publications and Statutes at Large</li><li>U.S. Census Bureau and Department of Commerce historical statistics</li><li>GSA, National Defense Stockpile, Defense, presidential-library, Federal Register, congressional, Library of Congress, CIA, and GAO records</li></ol><p>Non-governmental sources may assist discovery or clarification but are not presented as equivalent to official primary sources. Each source registry entry states its agency, scope, tier, URL, and use note.</p></section>
+
+        <section class="prose-section" id="country-brief-method"><h2>Country-year intelligence briefs</h2><p>A country page combines two distinct views: the complete set of records currently linked to the historical entity and a selected-year briefing assembled from curated country-period records. FRUS remains the first layer. The country brief follows it with political facts, resource context, instruments, NARA discovery plans, and explicit research gaps.</p><ul><li>The selected year is stored in the page URL and is always limited to 1861–1992.</li><li>A fact marked “Verified” carries a link to a source-registry record or reviewed FRUS document.</li><li>A fact marked “Unknown” remains blank; the interface does not estimate or interpolate it.</li><li>Country production, exports, U.S. supplier share, and world rank require country-specific official series.</li><li>USGS observations for the United States or world may appear as context. They are never relabeled as bilateral or country statistics.</li><li>If the selected year has no normalized benchmark, the nearest source year within five years may be shown with its actual year clearly displayed.</li><li>A NARA query plan is an archival discovery aid, not a verified catalog result or substantive finding.</li></ul><div class="method-callout"><strong>Interpretive boundary</strong><p>“Why this country mattered” appears only when a curated period record names its supporting FRUS and official sources. Outside those periods, the page identifies a research queue rather than generating a narrative.</p></div></section>
 
         <section class="prose-section" id="statistics-method"><h2>Selection and treatment of statistics</h2><p>The quantitative pilot uses official USGS Data Series 140 XLSX workbooks. The ingestion script selects bounded benchmark years through 1992 and writes only numeric cells. It does not interpolate, estimate missing cells, or convert withheld and nonnumeric entries to zero.</p><p>Every observation retains the metric, mineral, year, value, unit, price basis, publication title, workbook location, agency, source URL, access date, extraction status, original unit, displayed unit, conversion method, notes, and confidence flag.</p><ul><li>Nominal and real price series remain distinct.</li><li>Production, imports, exports, consumption, stocks, and world production remain distinct metrics.</li><li>The project retains USGS-standardized historical units and discloses that USGS may have converted earlier source units.</li><li>Country shares, import dependence, and route volumes remain blank until an official table supports them.</li></ul></section>
 
@@ -58,7 +60,7 @@
   </main>
 
   <footer class="site-footer"><div class="footer-inner"><div><strong>Methodology</strong><p>Source distinctions and uncertainty are part of the product, not fine print.</p></div><a href="records-stage.html">Return to historical portal</a></div></footer>
-  <script src="assets/history-data.js?v=2.1.0"></script>
+  <script src="assets/history-data.js?v=2.2.0"></script>
   <script>window.HistoryData.initTheme(document.getElementById('themeToggle')); window.HistoryData.initNavigation(document.getElementById('navToggle'), document.getElementById('primaryNav'));</script>
 </body>
 </html>

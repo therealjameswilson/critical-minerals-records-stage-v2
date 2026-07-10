@@ -1,0 +1,594 @@
+[
+  {
+    "id": "bolivia",
+    "country_id": "bolivia",
+    "default_year": 1942,
+    "baseline_facts": {
+      "government_type": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "head_of_state": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "head_of_government": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "capital": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "population": {
+        "value": null,
+        "status": "unknown",
+        "note": "No compatible population series with year and provenance is normalized in the pilot."
+      },
+      "area": {
+        "value": null,
+        "status": "unknown",
+        "note": "No dated area measure with a historical geographic definition is normalized in the pilot."
+      },
+      "currency": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "official_languages": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "official_name": {
+        "value": "Republic of Bolivia",
+        "status": "verified",
+        "source_id": "state-country-guide-bolivia"
+      },
+      "political_status": {
+        "value": "Sovereign state recognized by the United States",
+        "status": "verified",
+        "source_id": "state-country-guide-bolivia"
+      },
+      "recognition": {
+        "value": "The United States recognized Bolivia as a separate state on May 30, 1848.",
+        "status": "verified",
+        "source_id": "state-country-guide-bolivia"
+      },
+      "embassy_status": {
+        "value": "The U.S. Legation in La Paz was elevated to Embassy status in 1942.",
+        "status": "verified",
+        "source_id": "state-country-guide-bolivia"
+      },
+      "major_diplomatic_change": {
+        "value": "U.S. Ambassador Pierre de L. Boal presented credentials in Bolivia on May 23, 1942.",
+        "status": "verified",
+        "source_id": "state-country-guide-bolivia"
+      }
+    },
+    "profile_periods": [],
+    "relationship_periods": [
+      {
+        "start": 1941,
+        "end": 1945,
+        "title": "Wartime strategic-material purchasing and economic cooperation",
+        "why_mattered": "FRUS organizes the 1942 Bolivia record around U.S. negotiations to purchase strategic materials and a parallel program of economic cooperation. The pilot links tin, tungsten, and copper to that documentary pathway.",
+        "resource_summary": "The linked FRUS chapter context identifies strategic-material purchasing; the pilot does not yet contain Bolivian mine-output, export, or U.S. supplier-share tables.",
+        "resource_terms": [
+          "tin",
+          "tungsten",
+          "copper"
+        ],
+        "trade_summary": "Bilateral quantities, prices, shipping routes, and Bolivia's share of U.S. imports remain unknown in the normalized pilot.",
+        "diplomatic_summary": "The documentary record links purchasing negotiations, economic cooperation, and the 1942 elevation of the bilateral missions to embassy rank.",
+        "instrument_labels": [
+          "strategic-material purchase negotiations",
+          "economic cooperation program"
+        ],
+        "mineral_ids": [
+          "tin",
+          "tungsten",
+          "copper"
+        ],
+        "frus_document_ids": [
+          "frus-1942v05-d493",
+          "frus-1942v05-d564"
+        ],
+        "agreement_ids": [
+          "bolivian-strategic-materials-purchase-1942",
+          "us-bolivia-economic-cooperation-1942"
+        ],
+        "nara_query_ids": [
+          "nara-rg59-bolivian-tin",
+          "nara-rg169-bolivia-tin",
+          "nara-rg84-la-paz-tin"
+        ],
+        "source_ids": [
+          "frus-history-at-state",
+          "state-country-guide-bolivia",
+          "usgs-ds140"
+        ],
+        "evidence_status": "verified-pilot"
+      }
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "state-country-guide-bolivia",
+      "usgs-ds140",
+      "nara-catalog-api"
+    ],
+    "mineral_ids": [
+      "tin",
+      "tungsten",
+      "copper"
+    ],
+    "frus_document_ids": [
+      "frus-1942v05-d493",
+      "frus-1942v05-d564"
+    ],
+    "agreement_ids": [
+      "bolivian-strategic-materials-purchase-1942",
+      "us-bolivia-economic-cooperation-1942"
+    ],
+    "nara_query_ids": [
+      "nara-rg59-bolivian-tin",
+      "nara-rg169-bolivia-tin",
+      "nara-rg84-la-paz-tin"
+    ],
+    "data_gaps": [
+      "No country-specific import share, mine output, price contract, or route-volume series is normalized."
+    ]
+  },
+  {
+    "id": "chile",
+    "country_id": "chile",
+    "default_year": 1971,
+    "baseline_facts": {
+      "government_type": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "head_of_state": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "head_of_government": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "capital": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "population": {
+        "value": null,
+        "status": "unknown",
+        "note": "No compatible population series with year and provenance is normalized in the pilot."
+      },
+      "area": {
+        "value": null,
+        "status": "unknown",
+        "note": "No dated area measure with a historical geographic definition is normalized in the pilot."
+      },
+      "currency": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "official_languages": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "official_name": {
+        "value": "Republic of Chile",
+        "status": "verified",
+        "source_id": "state-country-guide-chile"
+      },
+      "political_status": {
+        "value": "Sovereign state recognized by the United States",
+        "status": "verified",
+        "source_id": "state-country-guide-chile"
+      },
+      "recognition": {
+        "value": "The United States recognized Chilean independence on January 27, 1823.",
+        "status": "verified",
+        "source_id": "state-country-guide-chile"
+      },
+      "embassy_status": {
+        "value": "The U.S. Legation in Santiago was elevated to Embassy status in 1914.",
+        "status": "verified",
+        "source_id": "state-country-guide-chile"
+      },
+      "major_diplomatic_change": {
+        "value": null,
+        "status": "unknown",
+        "note": "No single year-specific diplomatic-status change is normalized for this selection."
+      }
+    },
+    "profile_periods": [
+      {
+        "start": 1970,
+        "end": 1973,
+        "facts": {
+          "head_of_state": {
+            "value": "President Salvador Allende",
+            "status": "verified",
+            "frus_document_id": "frus-1969-76v21-d250"
+          }
+        }
+      }
+    ],
+    "relationship_periods": [
+      {
+        "start": 1970,
+        "end": 1972,
+        "title": "Copper nationalization, compensation, and access to credit",
+        "why_mattered": "Reviewed FRUS documents make copper nationalization a bilateral policy problem linking foreign investment, compensation under international law, U.S. diplomatic representations, and Chile's access to international credit.",
+        "resource_summary": "Copper is the directly documented resource. FRUS records discuss the 1971 nationalization law, U.S. investor interests, compensation, CODELCO, and the policy relationship between settlement and international credit.",
+        "resource_terms": [
+          "copper",
+          "major copper mining industry",
+          "CODELCO",
+          "compensation"
+        ],
+        "trade_summary": "The pilot provides U.S. and world copper benchmarks from USGS, but no Chilean production, bilateral trade, supplier-share, or export-price series.",
+        "diplomatic_summary": "The Embassy was instructed to present a formal note; the NSC and Senior Review Group considered compensation and credit options.",
+        "instrument_labels": [
+          "diplomatic note",
+          "interagency policy review",
+          "investment-compensation negotiation"
+        ],
+        "mineral_ids": [
+          "copper"
+        ],
+        "frus_document_ids": [
+          "frus-1969-76v21-d250",
+          "frus-1969-76v21-d256",
+          "frus-1969-76v21-d261",
+          "frus-1969-76ve16-d87"
+        ],
+        "agreement_ids": [
+          "chile-copper-compensation-1971"
+        ],
+        "nara_query_ids": [
+          "nara-rg84-santiago-copper",
+          "nara-rg59-chilean-copper"
+        ],
+        "source_ids": [
+          "frus-history-at-state",
+          "state-country-guide-chile",
+          "usgs-ds140"
+        ],
+        "evidence_status": "verified-pilot"
+      }
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "state-country-guide-chile",
+      "usgs-ds140",
+      "nara-catalog-api"
+    ],
+    "mineral_ids": [
+      "copper"
+    ],
+    "frus_document_ids": [
+      "frus-1969-76v21-d250",
+      "frus-1969-76v21-d256",
+      "frus-1969-76v21-d261",
+      "frus-1969-76ve16-d87"
+    ],
+    "agreement_ids": [
+      "chile-copper-compensation-1971"
+    ],
+    "nara_query_ids": [
+      "nara-rg84-santiago-copper",
+      "nara-rg59-chilean-copper"
+    ],
+    "data_gaps": [
+      "Country production, bilateral trade, U.S. import share, and world-rank series remain untranscribed."
+    ]
+  },
+  {
+    "id": "belgian-congo",
+    "country_id": "belgian-congo",
+    "default_year": 1953,
+    "baseline_facts": {
+      "government_type": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "head_of_state": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "head_of_government": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "capital": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "population": {
+        "value": null,
+        "status": "unknown",
+        "note": "No compatible population series with year and provenance is normalized in the pilot."
+      },
+      "area": {
+        "value": null,
+        "status": "unknown",
+        "note": "No dated area measure with a historical geographic definition is normalized in the pilot."
+      },
+      "currency": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "official_languages": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "official_name": {
+        "value": "Belgian Congo",
+        "status": "verified",
+        "source_id": "state-country-guide-congo-democratic-republic"
+      },
+      "political_status": {
+        "value": "Belgian colony; not an independent sovereign state in 1953",
+        "status": "verified",
+        "source_id": "state-country-guide-congo-democratic-republic"
+      },
+      "recognition": {
+        "value": "U.S. recognition of the independent Republic of the Congo occurred on June 30, 1960.",
+        "status": "verified",
+        "source_id": "state-country-guide-congo-democratic-republic"
+      },
+      "embassy_status": {
+        "value": "The American Embassy in Leopoldville was established on June 30, 1960; no embassy to an independent Congo existed in 1953.",
+        "status": "verified",
+        "source_id": "state-country-guide-congo-democratic-republic"
+      },
+      "major_diplomatic_change": {
+        "value": "Independence from Belgian sovereignty and U.S. recognition followed in 1960.",
+        "status": "verified",
+        "source_id": "state-country-guide-congo-democratic-republic"
+      }
+    },
+    "profile_periods": [],
+    "relationship_periods": [
+      {
+        "start": 1952,
+        "end": 1954,
+        "title": "Strategic African raw materials and political access",
+        "why_mattered": "A reviewed 1953 FRUS National Intelligence Estimate assessed the strategic importance of Tropical Africa and connected access to cobalt, copper, tin, and other raw materials with political conditions in the region.",
+        "resource_summary": "The country record links cobalt, copper, and tin. Exact Belgian Congo production, reserves, mine ownership, refining routes, and U.S. supplier shares are not normalized.",
+        "resource_terms": [
+          "cobalt",
+          "copper",
+          "tin",
+          "strategic raw materials",
+          "political access"
+        ],
+        "trade_summary": "USGS supplies U.S. and world commodity benchmarks for 1953, not Belgian Congo export or bilateral trade values.",
+        "diplomatic_summary": "The principal pilot evidence is an intelligence assessment rather than a procurement agreement concluded in 1953; earlier 1942 and 1944 negotiations remain visible in the longer timeline.",
+        "instrument_labels": [
+          "National Intelligence Estimate",
+          "earlier tripartite trade and uranium-control pathways"
+        ],
+        "mineral_ids": [
+          "cobalt",
+          "copper",
+          "tin"
+        ],
+        "frus_document_ids": [
+          "frus-1952-54v11p1-d27"
+        ],
+        "agreement_ids": [],
+        "nara_query_ids": [
+          "nara-rg59-tropical-africa-strategic-materials",
+          "nara-rg218-africa-raw-materials",
+          "nara-rg84-leopoldville-cobalt",
+          "nara-rg59-congo-cobalt"
+        ],
+        "source_ids": [
+          "frus-history-at-state",
+          "state-country-guide-congo-democratic-republic",
+          "usgs-ds140"
+        ],
+        "evidence_status": "verified-pilot"
+      }
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "state-country-guide-congo-democratic-republic",
+      "usgs-ds140",
+      "nara-catalog-api"
+    ],
+    "mineral_ids": [
+      "cobalt",
+      "copper",
+      "tin"
+    ],
+    "frus_document_ids": [
+      "frus-1952-54v11p1-d27"
+    ],
+    "agreement_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-tropical-africa-strategic-materials",
+      "nara-rg218-africa-raw-materials",
+      "nara-rg84-leopoldville-cobalt",
+      "nara-rg59-congo-cobalt"
+    ],
+    "data_gaps": [
+      "No exact-year mine, reserve, export, refining-route, supplier-share, or colonial-administration table is normalized."
+    ]
+  },
+  {
+    "id": "indonesia",
+    "country_id": "indonesia",
+    "default_year": 1965,
+    "baseline_facts": {
+      "government_type": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "head_of_state": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "head_of_government": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "capital": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "population": {
+        "value": null,
+        "status": "unknown",
+        "note": "No compatible population series with year and provenance is normalized in the pilot."
+      },
+      "area": {
+        "value": null,
+        "status": "unknown",
+        "note": "No dated area measure with a historical geographic definition is normalized in the pilot."
+      },
+      "currency": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "official_languages": {
+        "value": null,
+        "status": "unknown",
+        "note": "No year-specific official source is normalized in the pilot."
+      },
+      "official_name": {
+        "value": "Republic of Indonesia",
+        "status": "verified",
+        "source_id": "state-country-guide-indonesia"
+      },
+      "political_status": {
+        "value": "Sovereign state recognized by the United States in 1949",
+        "status": "verified",
+        "source_id": "state-country-guide-indonesia"
+      },
+      "recognition": {
+        "value": "The United States recognized Indonesian independence on December 28, 1949.",
+        "status": "verified",
+        "source_id": "state-country-guide-indonesia"
+      },
+      "embassy_status": {
+        "value": "Diplomatic relations were established in 1949 when Ambassador H. Merle Cochran presented credentials to President Sukarno.",
+        "status": "verified",
+        "source_id": "state-country-guide-indonesia"
+      },
+      "major_diplomatic_change": {
+        "value": "The 1965 political crisis produced an immediate U.S. policy reassessment documented in FRUS.",
+        "status": "verified",
+        "frus_document_id": "frus-1964-68v26-d142"
+      }
+    },
+    "profile_periods": [
+      {
+        "start": 1965,
+        "end": 1965,
+        "facts": {
+          "head_of_state": {
+            "value": "President Sukarno",
+            "status": "verified",
+            "frus_document_id": "frus-1964-68v26-d138"
+          }
+        }
+      }
+    ],
+    "relationship_periods": [
+      {
+        "start": 1964,
+        "end": 1966,
+        "title": "Bilateral deterioration and political crisis",
+        "why_mattered": "FRUS shows that U.S. policy in 1965 centered on strained bilateral relations, protection of American people and property, confrontation with Malaysia, and the October political crisis. The pilot does not establish that mineral access drove these decisions.",
+        "resource_summary": "A Library of Congress legal report identifies oil, tin, and nickel as strategic under Indonesia's 1967 mining law and bauxite and copper as vital. This is dated post-1965 context, not evidence of 1965 production or U.S. dependence.",
+        "resource_terms": [
+          "petroleum",
+          "tin",
+          "nickel",
+          "bauxite",
+          "copper"
+        ],
+        "trade_summary": "No 1965 bilateral commodity series, U.S. import share, production rank, or stockpile-purchase record is normalized.",
+        "diplomatic_summary": "Reviewed FRUS documents record Embassy contact with Sukarno, the initial crisis report to President Johnson, and Department guidance to the Embassy.",
+        "instrument_labels": [
+          "embassy reporting",
+          "presidential intelligence briefing",
+          "Department policy guidance"
+        ],
+        "mineral_ids": [
+          "tin",
+          "bauxite",
+          "copper"
+        ],
+        "frus_document_ids": [
+          "frus-1964-68v26-d138",
+          "frus-1964-68v26-d142",
+          "frus-1964-68v26-d148"
+        ],
+        "agreement_ids": [],
+        "nara_query_ids": [
+          "nara-rg59-indonesia-1965",
+          "nara-rg84-djakarta-resources"
+        ],
+        "source_ids": [
+          "frus-history-at-state",
+          "state-country-guide-indonesia",
+          "loc-indonesia-mineral-regulation"
+        ],
+        "evidence_status": "partial"
+      }
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "state-country-guide-indonesia",
+      "loc-indonesia-mineral-regulation",
+      "nara-catalog-api",
+      "usgs-ds140"
+    ],
+    "mineral_ids": [
+      "tin",
+      "bauxite",
+      "copper"
+    ],
+    "frus_document_ids": [
+      "frus-1964-68v26-d138",
+      "frus-1964-68v26-d142",
+      "frus-1964-68v26-d148"
+    ],
+    "agreement_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-indonesia-1965",
+      "nara-rg84-djakarta-resources"
+    ],
+    "data_gaps": [
+      "The resource benchmark is post-1965; exact-year production, trade, dependence, reserves, and stockpile evidence remain unknown."
+    ]
+  }
+]

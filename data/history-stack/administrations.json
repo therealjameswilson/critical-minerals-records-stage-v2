@@ -134,7 +134,7 @@
     "president": "Lyndon B. Johnson",
     "start": 1963,
     "end": 1969,
-    "summary": "Pilot coverage currently centers on a reviewed 1967 stockpile-objectives memorandum.",
+    "summary": "Pilot coverage links a reviewed stockpile-objectives memorandum with three documents on the 1965 Indonesian political crisis. The pilot does not assert a mineral-access motive for the Indonesia policy record.",
     "mineral_ids": [
       "chromium",
       "cobalt",
@@ -144,21 +144,57 @@
       "tungsten"
     ],
     "country_ids": [
+      "indonesia",
       "united-states"
     ],
     "frus_document_ids": [
-      "frus-1964-68v09-d344"
+      "frus-1964-68v09-d344",
+      "frus-1964-68v26-d138",
+      "frus-1964-68v26-d142",
+      "frus-1964-68v26-d148"
     ],
     "agreement_ids": [
       "stockpile-objectives-review-1967"
     ],
     "law_ids": [],
     "episode_ids": [
+      "indonesia-political-crisis-1965",
       "decolonization-and-resource-access"
     ],
     "source_ids": [
       "frus-history-at-state"
     ],
     "completeness": "partial"
+  },
+  {
+    "id": "nixon",
+    "president": "Richard Nixon",
+    "start": 1969,
+    "end": 1974,
+    "summary": "Reviewed FRUS documents connect Chilean copper nationalization to compensation, diplomatic representations, international credit, and interagency policy review.",
+    "mineral_ids": [
+      "copper"
+    ],
+    "country_ids": [
+      "chile"
+    ],
+    "frus_document_ids": [
+      "frus-1969-76v21-d250",
+      "frus-1969-76v21-d256",
+      "frus-1969-76v21-d261",
+      "frus-1969-76ve16-d87"
+    ],
+    "agreement_ids": [
+      "chile-copper-compensation-1971"
+    ],
+    "law_ids": [],
+    "episode_ids": [
+      "chile-copper-nationalization-1971",
+      "decolonization-and-resource-access"
+    ],
+    "source_ids": [
+      "frus-history-at-state"
+    ],
+    "completeness": "verified-pilot"
   }
 ]

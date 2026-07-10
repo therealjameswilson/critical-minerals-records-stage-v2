@@ -469,5 +469,41 @@
       "frus-subject-index"
     ],
     "completeness": "verified-pilot"
+  },
+  {
+    "id": "chile-copper-compensation-1971",
+    "official_title": "Chile copper nationalization and compensation negotiations",
+    "short_title": "Chile copper nationalization and compensation negotiations",
+    "record_type": "investment-dispute",
+    "parties": [
+      "United States",
+      "Chile"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "copper"
+    ],
+    "country_ids": [
+      "chile"
+    ],
+    "frus_document_ids": [
+      "frus-1969-76v21-d250",
+      "frus-1969-76v21-d256",
+      "frus-1969-76v21-d261",
+      "frus-1969-76ve16-d87"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1969-76v21/d250",
+    "summary": "Reviewed FRUS documents describe nationalization, compensation, diplomatic representations, and policy review. This row is a negotiation pathway, not a treaty.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "verified-pilot"
   }
 ]

@@ -142,7 +142,7 @@ def test_curated_frus_records_are_visibly_separate_from_discovery_leads():
     records = json.loads((ROOT / "data" / "history-stack" / "frus-documents.json").read_text(encoding="utf-8"))
     reviewed = [row for row in records if row["metadata_status"] == "verified-document"]
     leads = [row for row in records if row["metadata_status"] == "subject-index-lead"]
-    assert len(reviewed) == 4
+    assert len(reviewed) == 11
     assert len(leads) == 16
     assert all(row["title"] and row["date"] and row["contextual_summary"] for row in reviewed)
     assert all(row["title"] is None and row["date"] is None and row["contextual_summary"] is None for row in leads)

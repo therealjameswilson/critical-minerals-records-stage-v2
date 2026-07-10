@@ -541,5 +541,49 @@
     "source_ids": [
       "nara-catalog-api"
     ]
+  },
+  {
+    "id": "nara-rg59-indonesia-1965",
+    "label": "Indonesia 1965 political economic relations",
+    "query": "Indonesia 1965 political economic relations",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1964,
+    "date_end": 1966,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "indonesia"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg84-djakarta-resources",
+    "label": "Indonesia tin petroleum minerals",
+    "query": "Indonesia tin petroleum minerals",
+    "record_groups": [
+      "84"
+    ],
+    "date_start": 1958,
+    "date_end": 1968,
+    "available_online": true,
+    "mineral_ids": [
+      "tin",
+      "bauxite",
+      "copper"
+    ],
+    "country_ids": [
+      "indonesia"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
   }
 ]

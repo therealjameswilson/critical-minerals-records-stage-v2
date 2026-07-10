@@ -32,14 +32,15 @@ def walk_years(node):
 def test_pilot_meets_minimum_entity_counts():
     expected = {
         "minerals": 8,
-        "countries": 6,
-        "episodes": 4,
-        "agreements": 12,
-        "frus-documents": 20,
-        "administrations": 4,
+        "countries": 9,
+        "episodes": 8,
+        "agreements": 15,
+        "frus-documents": 27,
+        "administrations": 5,
         "laws": 3,
         "stockpile-cases": 2,
-        "nara-queries": 25,
+        "nara-queries": 27,
+        "country-briefs": 4,
     }
     for name, minimum in expected.items():
         assert len(load(name)) >= minimum
@@ -80,11 +81,11 @@ def test_policy_in_numbers_uses_expected_official_tin_values():
     assert rows["Unit value"]["price_basis"] == "nominal"
 
 
-def test_history_stack_page_exposes_all_twelve_layers():
+def test_history_stack_page_exposes_all_layers():
     html = (ROOT / "history-stack.html").read_text(encoding="utf-8")
     script = (ROOT / "assets" / "history-stack.js").read_text(encoding="utf-8")
     for layer in [
-        "frus-layer", "timeline-layer", "statistics-layer", "agreements-layer",
+        "frus-layer", "country-brief-layer", "timeline-layer", "statistics-layer", "agreements-layer",
         "geography-layer", "law-layer", "stockpile-layer", "archives-layer",
         "decisions-layer", "outcome-layer", "provenance-layer", "modern-layer"
     ]:
@@ -106,10 +107,69 @@ def test_nara_integration_keeps_secret_out_of_public_files():
 
 def test_nara_query_plans_are_not_cached_api_records():
     plans = load("nara-queries")
-    assert len(plans) == 25
+    assert len(plans) >= 27
     assert all(row["result_status"] == "live-query-plan" for row in plans)
     assert all("naid" not in row and "hits" not in row for row in plans)
     assert all(1861 <= row["date_start"] <= row["date_end"] <= 1992 for row in plans)
+
+
+def test_country_intelligence_pilots_are_source_bounded():
+    briefs = {row["country_id"]: row for row in load("country-briefs")}
+    expected = {
+        "bolivia": 1942,
+        "chile": 1971,
+        "belgian-congo": 1953,
+        "indonesia": 1965,
+    }
+    assert {country: briefs[country]["default_year"] for country in expected} == expected
+    for country, year in expected.items():
+        brief = briefs[country]
+        assert any(row["start"] <= year <= row["end"] for row in brief["relationship_periods"])
+        assert brief["frus_document_ids"]
+        assert brief["source_ids"]
+        assert brief["data_gaps"]
+
+
+def test_country_brief_facts_preserve_verified_and_unknown_status():
+    briefs = load("country-briefs")
+    for brief in briefs:
+        fact_groups = [brief["baseline_facts"]] + [row.get("facts", {}) for row in brief["profile_periods"]]
+        for facts in fact_groups:
+            for fact in facts.values():
+                assert fact["status"] in {"verified", "estimated", "unknown"}
+                if fact["status"] == "unknown":
+                    assert fact["value"] is None
+                if fact["status"] == "verified":
+                    assert fact.get("source_id") or fact.get("frus_document_id")
+
+
+def test_country_interface_has_shareable_year_controls_and_explicit_unknowns():
+    html = (ROOT / "history-stack.html").read_text(encoding="utf-8")
+    script = (ROOT / "assets" / "history-stack.js").read_text(encoding="utf-8")
+    assert 'id="countryBriefNav"' in html
+    for control in ["countryYearRange", "countryYearNumber", "previousCountryYear", "nextCountryYear"]:
+        assert control in script
+    assert 'url.searchParams.set("year"' in script
+    assert "Country production" in script
+    assert "Share of U.S. imports" in script
+    assert "Unknown, not estimated" in script
+    assert "They are not statistics for" in script
+    assert 'class="stack-layer collapsible-layer"' in script
+
+
+def test_chile_and_indonesia_country_briefs_link_reviewed_frus_records():
+    documents = {row["id"]: row for row in load("frus-documents")}
+    briefs = {row["country_id"]: row for row in load("country-briefs")}
+    assert set(briefs["chile"]["frus_document_ids"]) == {
+        "frus-1969-76v21-d250", "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261", "frus-1969-76ve16-d87",
+    }
+    assert set(briefs["indonesia"]["frus_document_ids"]) == {
+        "frus-1964-68v26-d138", "frus-1964-68v26-d142", "frus-1964-68v26-d148",
+    }
+    for identifier in briefs["chile"]["frus_document_ids"] + briefs["indonesia"]["frus_document_ids"]:
+        assert documents[identifier]["metadata_status"] == "verified-document"
+        assert documents[identifier]["stable_url"].startswith("https://history.state.gov/")
 
 
 def test_nara_normalizer_returns_metadata_only_shape():
@@ -201,7 +261,7 @@ def test_atlas_uses_local_vector_runtime_and_orientation_geometry():
     assert (ROOT / "assets" / "vendor" / "maplibre-gl" / "LICENSE.txt").exists()
     geometry = json.loads((ROOT / "data" / "atlas" / "world-orientation.geojson").read_text(encoding="utf-8"))
     codes = {row["properties"]["ADM0_A3"] for row in geometry["features"]}
-    assert {"USA", "BOL", "CHL", "COD", "ZMB", "ZAF", "SUR", "TUR"} <= codes
+    assert {"USA", "BOL", "CHL", "COD", "ZMB", "ZAF", "SUR", "TUR", "IDN"} <= codes
     assert "historical borders are not yet reconstructed" in (ROOT / "methodology.html").read_text(encoding="utf-8").lower()
 
 

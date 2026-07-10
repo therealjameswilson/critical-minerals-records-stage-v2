@@ -765,5 +765,268 @@
     "source_ids": [
       "frus-history-at-state"
     ]
+  },
+  {
+    "id": "frus-1969-76v21-d250",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1969-76v21",
+    "document_number": "250",
+    "title": "Telegram From the Department of State to the Embassy in Chile",
+    "date": "1971-08-18",
+    "participants": [],
+    "country_ids": [
+      "chile"
+    ],
+    "mineral_ids": [
+      "copper"
+    ],
+    "policy_themes": [
+      "copper nationalization",
+      "compensation",
+      "diplomatic representation"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1969-76v21/d250",
+    "volume_context": "Cool and Correct: The U.S. Response to the Allende Administration, November 5, 1970–December 31, 1972",
+    "volume_year_start": 1969,
+    "volume_year_end": 1976,
+    "contextual_summary": "The Department instructed the Embassy to present a formal note concerning Chile's copper nationalization law and compensation for affected U.S. interests.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "chile-copper-compensation-1971"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg84-santiago-copper",
+      "nara-rg59-chilean-copper"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1969-76v21-d256",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1969-76v21",
+    "document_number": "256",
+    "title": "Memorandum From Arnold Nachmanoff of the National Security Council Staff to the President's Assistant for National Security Affairs (Kissinger)",
+    "date": "1971-09-08",
+    "participants": [],
+    "country_ids": [
+      "chile"
+    ],
+    "mineral_ids": [
+      "copper"
+    ],
+    "policy_themes": [
+      "copper nationalization",
+      "compensation",
+      "international credit",
+      "interagency review"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1969-76v21/d256",
+    "volume_context": "Cool and Correct: The U.S. Response to the Allende Administration, November 5, 1970–December 31, 1972",
+    "volume_year_start": 1969,
+    "volume_year_end": 1976,
+    "contextual_summary": "An NSC staff memorandum framed compensation and international credit as linked issues for interagency review of Chilean copper nationalization.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "chile-copper-compensation-1971"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-chilean-copper"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1969-76v21-d261",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1969-76v21",
+    "document_number": "261",
+    "title": "Memorandum From Ashley Hewitt of the National Security Council Staff to the President's Assistant for National Security Affairs (Kissinger)",
+    "date": "1971-09-29",
+    "participants": [],
+    "country_ids": [
+      "chile"
+    ],
+    "mineral_ids": [
+      "copper"
+    ],
+    "policy_themes": [
+      "copper nationalization",
+      "compensation",
+      "policy review"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1969-76v21/d261",
+    "volume_context": "Cool and Correct: The U.S. Response to the Allende Administration, November 5, 1970–December 31, 1972",
+    "volume_year_start": 1969,
+    "volume_year_end": 1976,
+    "contextual_summary": "An NSC staff memorandum reviewed the developing copper compensation dispute and the policy questions it raised for the United States.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "chile-copper-compensation-1971"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-chilean-copper"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1969-76ve16-d87",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1969-76ve16",
+    "document_number": "87",
+    "title": "Intelligence Note Prepared in the Bureau of Intelligence and Research",
+    "date": "1971-10-14",
+    "participants": [],
+    "country_ids": [
+      "chile"
+    ],
+    "mineral_ids": [
+      "copper"
+    ],
+    "policy_themes": [
+      "copper nationalization",
+      "domestic politics",
+      "intelligence assessment"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1969-76ve16/d87",
+    "volume_context": "Cool and Correct: The U.S. Response to the Allende Administration, November 5, 1970–December 31, 1972",
+    "volume_year_start": 1969,
+    "volume_year_end": 1976,
+    "contextual_summary": "A Bureau of Intelligence and Research note assessed copper and domestic politics in Chile after nationalization.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "chile-copper-compensation-1971"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-chilean-copper"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1964-68v26-d138",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1964-68v26",
+    "document_number": "138",
+    "title": "Telegram From the Embassy in Indonesia to the Department of State",
+    "date": "1965-09-01",
+    "participants": [],
+    "country_ids": [
+      "indonesia"
+    ],
+    "mineral_ids": [],
+    "policy_themes": [
+      "bilateral relations",
+      "American property",
+      "embassy reporting"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1964-68v26/d138",
+    "volume_context": "Indonesia",
+    "volume_year_start": 1964,
+    "volume_year_end": 1968,
+    "contextual_summary": "The Embassy reported a meeting with President Sukarno amid strained bilateral relations and concerns involving American people and property.",
+    "statistic_ids": [],
+    "agreement_ids": [],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-indonesia-1965"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1964-68v26-d142",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1964-68v26",
+    "document_number": "142",
+    "title": "Memorandum for President Johnson",
+    "date": "1965-10-01",
+    "participants": [],
+    "country_ids": [
+      "indonesia"
+    ],
+    "mineral_ids": [],
+    "policy_themes": [
+      "political crisis",
+      "presidential briefing",
+      "policy reassessment"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1964-68v26/d142",
+    "volume_context": "Indonesia",
+    "volume_year_start": 1964,
+    "volume_year_end": 1968,
+    "contextual_summary": "A memorandum briefed President Johnson on the immediate Indonesian political crisis following the events of September 30.",
+    "statistic_ids": [],
+    "agreement_ids": [],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-indonesia-1965"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1964-68v26-d148",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1964-68v26",
+    "document_number": "148",
+    "title": "Telegram From the Department of State to the Embassy in Indonesia",
+    "date": "1965-10-06",
+    "participants": [],
+    "country_ids": [
+      "indonesia"
+    ],
+    "mineral_ids": [],
+    "policy_themes": [
+      "policy guidance",
+      "public information",
+      "embassy operations"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1964-68v26/d148",
+    "volume_context": "Coup and Counter Reaction: October 1965–March 1966",
+    "volume_year_start": 1964,
+    "volume_year_end": 1968,
+    "contextual_summary": "The Department sent policy guidance to the Embassy during the Indonesian political crisis, including public-information and mission considerations.",
+    "statistic_ids": [],
+    "agreement_ids": [],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-indonesia-1965"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
   }
 ]

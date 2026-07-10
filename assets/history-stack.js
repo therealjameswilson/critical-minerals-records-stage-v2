@@ -12,6 +12,20 @@
   let entity;
   let dataset;
   let entityType;
+  let countryBrief;
+  let selectedYear;
+
+  function activePeriod(periods) {
+    return (periods || []).find((row) => row.start <= selectedYear && row.end >= selectedYear) || null;
+  }
+
+  function activeRelationship() {
+    return countryBrief ? activePeriod(countryBrief.relationship_periods) : null;
+  }
+
+  function activeProfile() {
+    return countryBrief ? activePeriod(countryBrief.profile_periods) : null;
+  }
 
   function relatedIds(field) {
     return Array.isArray(entity[field]) ? entity[field] : [];
@@ -67,6 +81,10 @@
   }
 
   function inferNaraQueries() {
+    const relationship = activeRelationship();
+    if (dataset === "countries" && relationship?.nara_query_ids?.length) {
+      return relationship.nara_query_ids.map((id) => data.indexes["nara-queries"].get(id)).filter(Boolean);
+    }
     const direct = relatedRows("nara-queries", "nara_query_ids");
     if (direct.length) return direct;
     const mineralIds = new Set(inferMineralIds());
@@ -79,9 +97,20 @@
       const wanted = new Set(entity.statistic_ids);
       return data.statistics.filter((row) => wanted.has(row.id));
     }
-    const mineralIds = new Set(inferMineralIds());
+    const relationship = activeRelationship();
+    const mineralIds = new Set(dataset === "countries" && relationship ? relationship.mineral_ids : inferMineralIds());
     let rows = data.statistics.filter((row) => mineralIds.has(row.mineral_id));
-    if (dataset === "countries") rows = rows.filter((row) => row.country_id === entity.id);
+    if (dataset === "countries") {
+      const officialContext = rows.filter((row) => row.country_id === "united-states" || row.country_id == null);
+      const exact = officialContext.filter((row) => row.year === selectedYear);
+      if (exact.length) return exact;
+      const years = [...new Set(officialContext.map((row) => row.year))]
+        .sort((a, b) => Math.abs(a - selectedYear) - Math.abs(b - selectedYear) || a - b);
+      const nearest = years[0];
+      return Number.isFinite(nearest) && Math.abs(nearest - selectedYear) <= 5
+        ? officialContext.filter((row) => row.year === nearest)
+        : [];
+    }
     const start = entity.start || entity.volume_year_start || entity.historical_scope?.start;
     const end = entity.end || entity.volume_year_end || entity.historical_scope?.end;
     if (dataset !== "minerals" && start && end) rows = rows.filter((row) => row.year >= start && row.year <= end);
@@ -90,6 +119,9 @@
 
   function sourceRows() {
     const ids = new Set(relatedIds("source_ids"));
+    if (countryBrief) countryBrief.source_ids.forEach((id) => ids.add(id));
+    const relationship = activeRelationship();
+    if (relationship) relationship.source_ids.forEach((id) => ids.add(id));
     inferFrusRows().forEach((row) => row.source_ids.forEach((id) => ids.add(id)));
     if (inferStatistics().length) ids.add("usgs-ds140");
     if (inferNaraQueries().length) ids.add("nara-catalog-api");
@@ -97,6 +129,10 @@
   }
 
   function summary() {
+    if (dataset === "countries") {
+      const relationship = activeRelationship();
+      return relationship?.why_mattered || `No curated country-year interpretation is available for ${selectedYear}. The page preserves linked FRUS and official-source discovery records as a research queue.`;
+    }
     if (entity.summary) return entity.summary;
     if (entity.contextual_summary) return entity.contextual_summary;
     if (entity.strategic_uses?.length) return entity.strategic_uses[0].use;
@@ -105,19 +141,126 @@
   }
 
   function layer(number, id, title, status, body) {
-    return `<section class="stack-layer" id="${id}" aria-labelledby="${id}-title"><header class="layer-heading"><span class="layer-number">${number}</span><h2 id="${id}-title">${H.escape(title)}</h2>${H.completenessBadge(status || "partial")}</header><div class="layer-body">${body}</div></section>`;
+    const displayNumber = dataset === "countries" && !["frus-layer", "country-brief-layer"].includes(id)
+      ? String(Number(number) + 1).padStart(2, "0") : number;
+    if (dataset === "countries") {
+      const open = ["frus-layer", "country-brief-layer"].includes(id) ? " open" : "";
+      return `<section class="stack-layer collapsible-layer" id="${id}"><details${open}><summary class="layer-heading"><span class="layer-number">${displayNumber}</span><span class="layer-title" role="heading" aria-level="2">${H.escape(title)}</span>${H.completenessBadge(status || "partial")}<span class="layer-toggle" aria-hidden="true"></span></summary><div class="layer-body">${body}</div></details></section>`;
+    }
+    return `<section class="stack-layer" id="${id}" aria-labelledby="${id}-title"><header class="layer-heading"><span class="layer-number">${displayNumber}</span><h2 id="${id}-title">${H.escape(title)}</h2>${H.completenessBadge(status || "partial")}</header><div class="layer-body">${body}</div></section>`;
   }
 
   function empty(message) {
     return `<div class="research-gap"><p class="empty-note">${H.escape(message)}</p>${H.badge("Research queue", "queue")}</div>`;
   }
 
+  function countryYearControls() {
+    return `<div class="country-year-toolbar" aria-label="Country briefing year">
+      <button class="year-step" id="previousCountryYear" type="button" aria-label="Previous year">&#8722;</button>
+      <div class="country-year-range"><label for="countryYearRange">Briefing year <strong id="countryYearLabel">${selectedYear}</strong></label><input id="countryYearRange" type="range" min="1861" max="1992" step="1" value="${selectedYear}"></div>
+      <div class="country-year-number"><label for="countryYearNumber">Year</label><input id="countryYearNumber" type="number" min="1861" max="1992" step="1" value="${selectedYear}"></div>
+      <button class="year-step" id="nextCountryYear" type="button" aria-label="Next year">+</button>
+    </div>`;
+  }
+
+  function briefSection(title, body, open) {
+    return `<details class="brief-section"${open ? " open" : ""}><summary>${H.escape(title)}<span aria-hidden="true"></span></summary><div>${body}</div></details>`;
+  }
+
+  function renderFact(label, fact) {
+    if (!fact || fact.status === "unknown" || fact.value == null) {
+      return `<div class="brief-fact is-unknown"><dt>${H.escape(label)}</dt><dd>Unknown ${H.badge("Unknown", "queue")}${fact?.note ? `<small>${H.escape(fact.note)}</small>` : ""}</dd></div>`;
+    }
+    const source = fact.source_id ? data.indexes.sources.get(fact.source_id) : null;
+    const frus = fact.frus_document_id ? data.indexes["frus-documents"].get(fact.frus_document_id) : null;
+    const citation = source ? `<a href="${H.escape(source.url)}" target="_blank" rel="noopener">${H.escape(source.label)}</a>` :
+      frus ? `<a href="${H.escape(frus.stable_url)}" target="_blank" rel="noopener">FRUS ${H.escape(frus.volume)}, document ${H.escape(frus.document_number)}</a>` : "Source link pending";
+    return `<div class="brief-fact"><dt>${H.escape(label)}</dt><dd>${H.escape(fact.value)} ${H.badge("Verified", "verified")}<small>${citation}${fact.note ? ` · ${H.escape(fact.note)}` : ""}</small></dd></div>`;
+  }
+
+  function statisticCell(row) {
+    if (!row) return '<span class="unknown-value">Unknown</span>';
+    return `<strong>${H.escape(H.formatNumber(row.value))}</strong><small>${H.escape(row.unit)} · ${row.year}<br><a href="${H.escape(row.source_url)}" target="_blank" rel="noopener">${H.escape(row.agency)}, ${H.escape(row.table_or_page)}</a></small>`;
+  }
+
+  function renderCountryCommodityTable(relationship) {
+    const ids = relationship?.mineral_ids?.length ? relationship.mineral_ids : (countryBrief?.mineral_ids || entity.mineral_ids || []);
+    if (!ids.length) return empty("No strategic resource is linked to this country-year briefing.");
+    const context = inferStatistics();
+    const rows = ids.map((id) => {
+      const mineral = data.indexes.minerals.get(id);
+      const mineralRows = context.filter((row) => row.mineral_id === id);
+      const imports = mineralRows.find((row) => /^U\.S\. imports$/i.test(row.metric));
+      const world = mineralRows.find((row) => /^World (mine )?production$/i.test(row.metric));
+      const contextYear = imports?.year || world?.year;
+      return `<tr><th scope="row"><a href="${H.detailHref("minerals", id)}">${H.escape(mineral?.canonical_name || id)}</a>${contextYear && contextYear !== selectedYear ? `<small>Nearest official benchmark: ${contextYear}</small>` : ""}</th><td><span class="unknown-value">Unknown</span></td><td><span class="unknown-value">Unknown</span></td><td><span class="unknown-value">Unknown</span></td><td><span class="unknown-value">Unknown</span></td><td>${statisticCell(imports)}</td><td>${statisticCell(world)}</td></tr>`;
+    }).join("");
+    return `<p class="table-scope-note"><strong>Scope:</strong> Country production, exports, U.S. import share, and world rank remain unknown unless a country-specific official series is normalized. U.S. and world figures are context, not bilateral evidence.</p><div class="data-table-wrap country-commodity-table"><table><caption>Country evidence and official U.S. or world commodity context for ${selectedYear}</caption><thead><tr><th>Resource</th><th>Country production</th><th>Country exports</th><th>Share of U.S. imports</th><th>World rank</th><th>U.S. imports</th><th>World production</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+
+  function renderCountryScorecard(relationship) {
+    const frus = relationship ? relationship.frus_document_ids.map((id) => data.indexes["frus-documents"].get(id)).filter(Boolean) : [];
+    const agreements = relationship ? relationship.agreement_ids.map((id) => data.indexes.agreements.get(id)).filter(Boolean) : [];
+    const nara = relationship ? relationship.nara_query_ids.map((id) => data.indexes["nara-queries"].get(id)).filter(Boolean) : [];
+    const statistics = inferStatistics();
+    const contextYear = statistics[0]?.year;
+    const indicators = [
+      ["Principal strategic commodities", relationship?.resource_terms?.join(", ") || "Unknown", relationship ? "supported" : "unknown"],
+      ["U.S. dependence", "Unknown; no bilateral supplier-share series normalized", "unknown"],
+      ["World production significance", "Unknown for this country", "unknown"],
+      ["FRUS documentary coverage", `${frus.length} reviewed record${frus.length === 1 ? "" : "s"} linked to this period`, frus.length ? "supported" : "unknown"],
+      ["Treaty or instrument coverage", `${agreements.length} linked instrument${agreements.length === 1 ? "" : "s"}`, agreements.length ? "limited" : "unknown"],
+      ["NARA archival discovery", `${nara.length} structured query plan${nara.length === 1 ? "" : "s"}; results require review`, nara.length ? "limited" : "unknown"],
+      ["Official statistical context", statistics.length ? `${statistics.length} U.S./world observations for ${contextYear}${contextYear === selectedYear ? "" : " (nearest source year)"}` : "No nearby benchmark normalized", statistics.length ? "limited" : "unknown"],
+      ["Strategic stockpile relevance", "Unknown unless documented in a linked instrument or stockpile case", "unknown"]
+    ];
+    return `<div class="country-scorecard">${indicators.map(([label, value, status]) => `<div><span>${H.escape(label)}</span><strong>${H.escape(value)}</strong>${H.badge(status === "supported" ? "Supported" : status === "limited" ? "Limited evidence" : "Unknown", status === "supported" ? "verified" : status === "limited" ? "partial" : "queue")}</div>`).join("")}</div>`;
+  }
+
+  function renderCountryBriefLayer() {
+    const relationship = activeRelationship();
+    if (!countryBrief) {
+      return layer("02", "country-brief-layer", `Country intelligence brief · ${selectedYear}`, "research-queue", `${countryYearControls()}${empty("No curated country-year brief has been added for this country. Linked FRUS, NARA, and source records remain available below.")}`);
+    }
+    const profile = activeProfile();
+    const facts = { ...countryBrief.baseline_facts, ...(profile?.facts || {}) };
+    const factLabels = {
+      official_name: "Official name", political_status: "Political status", government_type: "Government type",
+      head_of_state: "Head of state", head_of_government: "Head of government", capital: "Capital",
+      population: "Population", area: "Area", currency: "Currency", official_languages: "Official languages",
+      recognition: "U.S. recognition", embassy_status: "Embassy status", major_diplomatic_change: "Major diplomatic change"
+    };
+    const factGrid = `<dl class="brief-fact-grid">${Object.entries(factLabels).map(([key, label]) => renderFact(label, facts[key])).join("")}</dl>`;
+    const frusCount = relationship?.frus_document_ids?.length || 0;
+    const agreementCount = relationship?.agreement_ids?.length || 0;
+    const naraCount = relationship?.nara_query_ids?.length || 0;
+    const policyNumbers = `<div class="policy-number-grid"><div><span>Historical name</span><strong>${H.escape(historicalName(entity, selectedYear))}</strong></div><div><span>Strategic resources linked</span><strong>${relationship?.mineral_ids?.length || 0}</strong></div><div><span>Reviewed FRUS records</span><strong>${frusCount}</strong></div><div><span>Linked instruments</span><strong>${agreementCount}</strong></div><div><span>NARA query plans</span><strong>${naraCount}</strong></div><div><span>Country statistical series</span><strong>0</strong><small>Unknown, not estimated</small></div></div>`;
+    const instruments = relationship ? relationship.agreement_ids.map((id) => data.indexes.agreements.get(id)).filter(Boolean) : [];
+    const nara = relationship ? relationship.nara_query_ids.map((id) => data.indexes["nara-queries"].get(id)).filter(Boolean) : [];
+    const relationshipBody = relationship ? `<div class="brief-thesis"><div>${H.badge("Editorial synthesis", "concept")} ${H.badge(relationship.evidence_status === "verified-pilot" ? "Reviewed evidence" : "Partial evidence", relationship.evidence_status === "verified-pilot" ? "verified" : "partial")}</div><h3>${H.escape(relationship.title)}</h3><p>${H.escape(relationship.why_mattered)}</p></div><dl class="relationship-summary"><div><dt>Strategic-resource profile</dt><dd>${H.escape(relationship.resource_summary)}</dd></div><div><dt>U.S.-country resource trade</dt><dd>${H.escape(relationship.trade_summary)}</dd></div><div><dt>Diplomatic relationship</dt><dd>${H.escape(relationship.diplomatic_summary)}</dd></div><div><dt>Documented instruments</dt><dd>${H.escape(relationship.instrument_labels.join("; "))}</dd></div></dl>` : empty(`No curated relationship episode covers ${selectedYear}. The absence of a brief does not establish an absence of U.S. interest or activity.`);
+    const instrumentBody = instruments.length ? `<div class="record-list">${instruments.map(agreementCard).join("")}</div>` : empty("No treaty, agreement, or policy instrument is linked to this country-year.");
+    const naraBody = nara.length ? `<ul class="brief-link-list">${nara.map((row) => `<li><strong>RG ${H.escape(row.record_groups.join(", "))}</strong><span>${H.escape(row.label)}</span><a href="https://catalog.archives.gov/search?q=${encodeURIComponent(row.query)}" target="_blank" rel="noopener">Search NARA Catalog</a></li>`).join("")}</ul>` : empty("No structured NARA query plan is linked to this country-year.");
+    const gaps = [...new Set([...(countryBrief.data_gaps || []), ...(entity.data_gaps || [])])];
+    const body = `${countryYearControls()}${relationshipBody}${briefSection("Political profile", factGrid, true)}${briefSection("Policy in Numbers and commodity evidence", `${policyNumbers}${renderCountryCommodityTable(relationship)}`, true)}${briefSection("Treaties, agreements, and policy instruments", instrumentBody, false)}${briefSection("NARA archival discovery", naraBody, false)}${briefSection("Strategic Resource Relationship Scorecard", renderCountryScorecard(relationship), false)}${briefSection("Data gaps and research still needed", `<ul class="gap-list">${gaps.map((gap) => `<li>${H.escape(gap)}</li>`).join("")}</ul>`, false)}`;
+    return layer("02", "country-brief-layer", `Country intelligence brief · ${selectedYear}`, relationship ? relationship.evidence_status : "research-queue", body);
+  }
+
   function renderFrusLayer() {
-    const rows = inferFrusRows().sort((a, b) => (a.date || `${a.volume_year_start}`).localeCompare(b.date || `${b.volume_year_start}`));
+    const relationship = activeRelationship();
+    const relationshipIds = new Set(relationship?.frus_document_ids || []);
+    const rows = inferFrusRows().sort((a, b) => {
+      const aPriority = relationshipIds.has(a.id) ? 0 : 1;
+      const bPriority = relationshipIds.has(b.id) ? 0 : 1;
+      return aPriority - bPriority || (a.date || `${a.volume_year_start}`).localeCompare(b.date || `${b.volume_year_start}`);
+    });
     let orientation = "";
     if (dataset === "minerals" && rows.length) {
       const first = rows[0];
       orientation = `<p class="orientation-note"><strong>First appearance in this pilot:</strong> ${H.escape(first.title || first.volume_context)} (${first.date || `${first.volume_year_start}–${first.volume_year_end}`}). ${first.metadata_status === "subject-index-lead" ? "This is a discovery-index appearance, not yet a document-level finding." : "This record has document-level pilot metadata."}</p>`;
+    }
+    if (dataset === "countries") {
+      const exact = rows.filter((row) => row.date && Number(row.date.slice(0, 4)) === selectedYear).length;
+      orientation = `<p class="orientation-note"><strong>FRUS remains the documentary backbone.</strong> ${exact ? `${exact} reviewed document${exact === 1 ? "" : "s"} date${exact === 1 ? "s" : ""} to ${selectedYear}.` : `No reviewed document is dated exactly to ${selectedYear}.`} ${relationshipIds.size ? `${relationshipIds.size} record${relationshipIds.size === 1 ? " is" : "s are"} linked to the active country-period briefing.` : "Other country records remain visible as longer historical context."}</p>`;
     }
     return layer("01", "frus-layer", "FRUS narrative", rows.some((row) => row.metadata_status === "verified-document") ? "verified-pilot" : "research-queue", orientation + (rows.length ? `<div class="record-list">${rows.map((row) => H.frusCard(row, false)).join("")}</div>` : empty("No FRUS document is linked to this pilot entity yet.")));
   }
@@ -125,11 +268,17 @@
   function renderTimelineLayer() {
     const episodes = inferEpisodes();
     const administrations = inferAdministrations();
+    const countryItems = dataset === "countries" ? [
+      ...(entity.sovereignty_changes || []).map((row) => ({ date: row.year, end: row.year, title: "Political-status change", summary: row.note, href: null, label: "Country history" })),
+      ...inferFrusRows().filter((row) => row.date).map((row) => ({ date: Number(row.date.slice(0, 4)), end: Number(row.date.slice(0, 4)), title: row.title, summary: row.contextual_summary || row.volume_context, href: H.detailHref("frus-documents", row.id), label: "FRUS document" })),
+      ...inferAgreements().filter((row) => row.signature_date).map((row) => ({ date: Number(row.signature_date.slice(0, 4)), end: Number(row.signature_date.slice(0, 4)), title: row.short_title, summary: row.summary, href: H.detailHref("agreements", row.id), label: "Instrument" }))
+    ] : [];
     const items = [
+      ...countryItems,
       ...episodes.map((row) => ({ date: row.start, end: row.end, title: row.title, summary: row.summary, href: H.detailHref("episodes", row.id), label: "Episode" })),
       ...administrations.map((row) => ({ date: row.start, end: row.end, title: `${row.president} administration`, summary: row.summary, href: H.detailHref("administrations", row.id), label: "Administration" }))
     ].sort((a, b) => a.date - b.date);
-    const body = items.length ? `<ol class="detail-timeline">${items.map((item) => `<li><span>${item.date}–${item.end}</span><div>${H.badge(item.label, "concept")}<h3><a href="${item.href}">${H.escape(item.title)}</a></h3><p>${H.escape(item.summary)}</p></div></li>`).join("")}</ol>` : empty("No period or administration record is linked yet.");
+    const body = items.length ? `<ol class="detail-timeline">${items.map((item) => `<li><span>${item.date === item.end ? item.date : `${item.date}–${item.end}`}</span><div>${H.badge(item.label, "concept")}<h3>${item.href ? `<a href="${item.href}">${H.escape(item.title)}</a>` : H.escape(item.title)}</h3><p>${H.escape(item.summary)}</p></div></li>`).join("")}</ol>` : empty("No period or administration record is linked yet.");
     return layer("02", "timeline-layer", "Historical timeline", items.length ? "partial" : "research-queue", body);
   }
 
@@ -151,12 +300,14 @@
 
   function renderStatisticsLayer() {
     const rows = inferStatistics();
-    if (!rows.length) return layer("03", "statistics-layer", "Official statistics", "research-queue", empty("No compatible, unit-defined official statistical series is linked to this entity yet."));
+    const title = dataset === "countries" ? "Official statistics: U.S. and world context" : "Official statistics";
+    if (!rows.length) return layer("03", "statistics-layer", title, "research-queue", empty("No compatible, unit-defined official statistical series is linked to this entity yet."));
     const metrics = [...new Set(rows.map((row) => row.metric))].sort();
     const metric = metrics.find((item) => rows.filter((row) => row.metric === item).length >= 2) || metrics[0];
     const table = `<div class="data-table-wrap"><table><caption class="visually-hidden">Official statistics with units and provenance</caption><thead><tr><th>Year</th><th>Metric</th><th>Value</th><th>Unit</th><th>Agency</th><th>Publication location</th></tr></thead><tbody>${rows.slice(0, 200).map((row) => `<tr><td>${row.year}</td><td>${H.escape(row.metric)}</td><td>${H.formatNumber(row.value)}</td><td>${H.escape(row.unit)}</td><td>${H.escape(row.agency)}</td><td><a href="${H.escape(row.source_url)}" target="_blank" rel="noopener">${H.escape(row.table_or_page)}</a></td></tr>`).join("")}</tbody></table></div>`;
-    const body = `<div class="stat-toolbar"><div class="control"><label for="detailMetric">Chart metric</label><select id="detailMetric">${metrics.map((item) => `<option value="${H.escape(item)}"${item === metric ? " selected" : ""}>${H.escape(item)}</option>`).join("")}</select></div><p>${rows.length} observations. No project interpolation; original USGS-standardized units retained.</p></div><div id="detailChart">${chartSvg(rows, metric)}</div>${table}`;
-    return layer("03", "statistics-layer", "Official statistics", "verified-pilot", body);
+    const contextNote = dataset === "countries" ? `<p class="orientation-note"><strong>Context only:</strong> These are U.S. and world commodity observations for ${rows[0].year}${rows[0].year === selectedYear ? "" : `, the nearest normalized source year to ${selectedYear}`}. They are not statistics for ${H.escape(historicalName(entity, selectedYear))} and are not used to calculate bilateral dependence.</p>` : "";
+    const body = `${contextNote}<div class="stat-toolbar"><div class="control"><label for="detailMetric">Chart metric</label><select id="detailMetric">${metrics.map((item) => `<option value="${H.escape(item)}"${item === metric ? " selected" : ""}>${H.escape(item)}</option>`).join("")}</select></div><p>${rows.length} observations. No project interpolation; original USGS-standardized units retained.</p></div><div id="detailChart">${chartSvg(rows, metric)}</div>${table}`;
+    return layer("03", "statistics-layer", title, "verified-pilot", body);
   }
 
   function agreementCard(row) {
@@ -185,7 +336,7 @@
 
   function renderGeographyLayer() {
     const countries = inferCountryIds().map((id) => data.indexes.countries.get(id)).filter(Boolean);
-    const year = entity.date ? Number(entity.date.slice(0, 4)) : entity.start || entity.volume_year_start || 1950;
+    const year = dataset === "countries" ? selectedYear : entity.date ? Number(entity.date.slice(0, 4)) : entity.start || entity.volume_year_start || 1950;
     return layer("05", "geography-layer", "Maps and geography", countries.length ? "partial" : "research-queue", `<p class="orientation-note">Markers are country-level centroids unless a record explicitly says otherwise. No mine, port, railway, or smelter coordinate is invented.</p>${miniMap(countries, year)}`);
   }
 
@@ -252,8 +403,9 @@
     ];
     const totalPossible = counts.length;
     const covered = counts.filter((item) => item[1] > 0).length;
-    const gaps = entity.data_gaps || [];
-    $("stackAside").innerHTML = `<section class="aside-panel"><p class="eyebrow">History Stack coverage</p><h2>${covered} of ${totalPossible} evidence layers linked</h2><div class="completeness-bar" aria-label="${covered} of ${totalPossible} evidence layers linked"><span style="width:${(covered / totalPossible) * 100}%"></span></div><ul>${counts.map(([label, count]) => `<li><strong>${count}</strong> ${H.escape(label)}</li>`).join("")}</ul></section><section class="aside-panel"><p class="eyebrow">Data quality</p><h2>Known gaps</h2>${gaps.length ? `<ul>${gaps.map((gap) => `<li>${H.escape(gap)}</li>`).join("")}</ul>` : '<p class="empty-note">No entity-specific gap note; layer-level gaps still apply.</p>'}</section><section class="aside-panel"><p class="eyebrow">Cite responsibly</p><p>Use this page to locate evidence. Cite the linked FRUS document, statute, official table, or archival record rather than this interface when possible.</p></section>`;
+    const gaps = [...new Set([...(entity.data_gaps || []), ...(countryBrief?.data_gaps || [])])];
+    const yearHeading = dataset === "countries" ? `<p class="aside-year"><span>Selected year</span><strong>${selectedYear}</strong><small>${H.escape(historicalName(entity, selectedYear))}</small></p>` : "";
+    $("stackAside").innerHTML = `<section class="aside-panel">${yearHeading}<p class="eyebrow">History Stack coverage</p><h2>${covered} of ${totalPossible} evidence layers linked</h2><div class="completeness-bar" aria-label="${covered} of ${totalPossible} evidence layers linked"><span style="width:${(covered / totalPossible) * 100}%"></span></div><ul>${counts.map(([label, count]) => `<li><strong>${count}</strong> ${H.escape(label)}</li>`).join("")}</ul></section><section class="aside-panel"><p class="eyebrow">Data quality</p><h2>Known gaps</h2>${gaps.length ? `<ul>${gaps.map((gap) => `<li>${H.escape(gap)}</li>`).join("")}</ul>` : '<p class="empty-note">No entity-specific gap note; layer-level gaps still apply.</p>'}</section><section class="aside-panel"><p class="eyebrow">Cite responsibly</p><p>Use this page to locate evidence. Cite the linked FRUS document, statute, official table, or archival record rather than this interface when possible.</p></section>`;
   }
 
   async function runLiveNara(button) {
@@ -280,18 +432,56 @@
     const metric = $("detailMetric");
     if (metric) metric.addEventListener("change", () => { $("detailChart").innerHTML = chartSvg(rows, metric.value); });
     document.querySelectorAll(".live-nara").forEach((button) => button.addEventListener("click", () => runLiveNara(button)));
+    const range = $("countryYearRange");
+    const number = $("countryYearNumber");
+    if (range) {
+      range.addEventListener("input", () => {
+        $("countryYearLabel").textContent = range.value;
+        if (number) number.value = range.value;
+      });
+      range.addEventListener("change", () => setCountryYear(range.value));
+    }
+    if (number) {
+      number.addEventListener("input", () => {
+        const value = Number.parseInt(number.value, 10);
+        if (value >= 1861 && value <= 1992) setCountryYear(value);
+      });
+      number.addEventListener("change", () => setCountryYear(number.value));
+    }
+    $("previousCountryYear")?.addEventListener("click", () => setCountryYear(selectedYear - 1));
+    $("nextCountryYear")?.addEventListener("click", () => setCountryYear(selectedYear + 1));
+  }
+
+  function setCountryYear(value) {
+    const year = Math.max(1861, Math.min(1992, Number.parseInt(value, 10) || selectedYear));
+    if (year === selectedYear) return;
+    selectedYear = year;
+    const url = new URL(location.href);
+    url.searchParams.set("year", String(selectedYear));
+    history.replaceState(null, "", url);
+    render();
+  }
+
+  function openHashLayer() {
+    if (!location.hash) return;
+    const target = document.querySelector(location.hash);
+    const details = target?.matches("details") ? target : target?.querySelector("details");
+    if (details) details.open = true;
   }
 
   function render() {
-    document.title = `${H.displayName(entity, dataset)} | History Stack`;
+    const displayTitle = dataset === "countries" ? historicalName(entity, selectedYear) : H.displayName(entity, dataset);
+    document.title = `${displayTitle}${dataset === "countries" ? `, ${selectedYear}` : ""} | History Stack`;
     $("breadcrumbType").textContent = entityType.replaceAll("-", " ");
-    $("detailEyebrow").textContent = `${entityType.replaceAll("-", " ")} History Stack · 1861–1992`;
-    $("detailTitle").textContent = H.displayName(entity, dataset);
+    $("detailEyebrow").textContent = `${entityType.replaceAll("-", " ")} History Stack · 1861–1992${dataset === "countries" ? ` · Selected year ${selectedYear}` : ""}`;
+    $("detailTitle").textContent = displayTitle;
     $("detailSummary").textContent = summary();
     $("detailBadges").innerHTML = `${H.completenessBadge(entity.completeness || entity.metadata_status)} ${sourceRows().slice(0, 4).map(H.sourceBadge).join("")}`;
-    $("stackMain").innerHTML = [renderFrusLayer(), renderTimelineLayer(), renderStatisticsLayer(), renderAgreementsLayer(), renderGeographyLayer(), renderLawLayer(), renderStockpileLayer(), renderArchivesLayer(), renderDecisionLayer(), renderOutcomeLayer(), renderProvenanceLayer(), renderModernLayer()].join("");
+    $("countryBriefNav").hidden = dataset !== "countries";
+    $("stackMain").innerHTML = [renderFrusLayer(), dataset === "countries" ? renderCountryBriefLayer() : "", renderTimelineLayer(), renderStatisticsLayer(), renderAgreementsLayer(), renderGeographyLayer(), renderLawLayer(), renderStockpileLayer(), renderArchivesLayer(), renderDecisionLayer(), renderOutcomeLayer(), renderProvenanceLayer(), renderModernLayer()].join("");
     renderAside();
     bindLayerInteractions();
+    openHashLayer();
   }
 
   async function init() {
@@ -305,6 +495,12 @@
       data = await H.loadAll();
       entity = dataset && id ? data.indexes[dataset].get(id) : null;
       if (!entity) throw new Error("The requested History Stack record does not exist in this pilot.");
+      countryBrief = dataset === "countries" ? data.indexes["country-briefs"].get(entity.id) : null;
+      const requestedYear = Number.parseInt(params.get("year"), 10);
+      selectedYear = dataset === "countries"
+        ? Math.max(1861, Math.min(1992, Number.isFinite(requestedYear) ? requestedYear : (countryBrief?.default_year || 1950)))
+        : null;
+      window.addEventListener("hashchange", openHashLayer);
       render();
     } catch (error) {
       $("detailTitle").textContent = "History Stack unavailable";

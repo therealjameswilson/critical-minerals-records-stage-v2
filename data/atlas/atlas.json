@@ -226,7 +226,14 @@
         "frus-1947v01-d395",
         "frus-1950v01-d95",
         "frus-1952-54v11p1-d27",
-        "frus-1964-68v09-d344"
+        "frus-1964-68v09-d344",
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87",
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148"
       ],
       "agreement_ids": [],
       "episode_ids": [
@@ -296,15 +303,24 @@
       "mineral_ids": [
         "copper"
       ],
-      "frus_document_ids": [],
-      "agreement_ids": [],
+      "frus_document_ids": [
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
+      ],
+      "agreement_ids": [
+        "chile-copper-compensation-1971"
+      ],
       "episode_ids": [
+        "chile-copper-nationalization-1971",
         "decolonization-and-resource-access",
         "late-cold-war-resource-policy"
       ],
       "source_ids": [
         "frus-history-at-state",
-        "usgs-statistical-compendium"
+        "state-country-guide-chile",
+        "usgs-ds140"
       ]
     },
     {
@@ -515,6 +531,51 @@
         "frus-history-at-state",
         "frus-subject-index"
       ]
+    },
+    {
+      "id": "indonesia",
+      "a3": "IDN",
+      "coordinates": [
+        118.0,
+        -2.5
+      ],
+      "precision": "country",
+      "names_by_period": [
+        {
+          "name": "Netherlands East Indies",
+          "start": 1861,
+          "end": 1948
+        },
+        {
+          "name": "Republic of the United States of Indonesia",
+          "start": 1949,
+          "end": 1949
+        },
+        {
+          "name": "Republic of Indonesia",
+          "start": 1950,
+          "end": 1992
+        }
+      ],
+      "mineral_ids": [
+        "tin",
+        "bauxite",
+        "copper"
+      ],
+      "frus_document_ids": [
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148"
+      ],
+      "agreement_ids": [],
+      "episode_ids": [
+        "indonesia-political-crisis-1965"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "state-country-guide-indonesia",
+        "loc-indonesia-mineral-regulation"
+      ]
     }
   ],
   "relationships": [
@@ -667,6 +728,33 @@
       "to_country_id": "united-states",
       "line_value": 1,
       "line_value_semantics": "linked pilot FRUS records"
+    },
+    {
+      "id": "atlas-chile-copper-compensation-1971-chile",
+      "title": "Chile copper nationalization and compensation negotiations",
+      "year": 1969,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "chile",
+      "mineral_ids": [
+        "copper"
+      ],
+      "agreement_id": "chile-copper-compensation-1971",
+      "record_type": "investment-dispute",
+      "frus_document_ids": [
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "verified-pilot",
+      "from_country_id": "chile",
+      "to_country_id": "united-states",
+      "line_value": 4,
+      "line_value_semantics": "linked pilot FRUS records"
     }
   ],
   "instruments": [
@@ -795,6 +883,29 @@
         "frus-subject-index"
       ],
       "completeness": "partial"
+    },
+    {
+      "id": "atlas-chile-copper-compensation-1971-chile",
+      "title": "Chile copper nationalization and compensation negotiations",
+      "year": 1969,
+      "date_precision": "FRUS-volume-context",
+      "country_id": "chile",
+      "mineral_ids": [
+        "copper"
+      ],
+      "agreement_id": "chile-copper-compensation-1971",
+      "record_type": "investment-dispute",
+      "frus_document_ids": [
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
+      ],
+      "source_ids": [
+        "frus-history-at-state",
+        "frus-subject-index"
+      ],
+      "completeness": "verified-pilot"
     }
   ],
   "events": [
@@ -1137,7 +1248,14 @@
       ],
       "frus_document_ids": [
         "frus-1952-54v11p1-d27",
-        "frus-1964-68v09-d344"
+        "frus-1964-68v09-d344",
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148",
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
       ],
       "source_ids": [
         "frus-history-at-state"
@@ -1160,7 +1278,14 @@
       ],
       "frus_document_ids": [
         "frus-1952-54v11p1-d27",
-        "frus-1964-68v09-d344"
+        "frus-1964-68v09-d344",
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148",
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
       ],
       "source_ids": [
         "frus-history-at-state"
@@ -1183,7 +1308,14 @@
       ],
       "frus_document_ids": [
         "frus-1952-54v11p1-d27",
-        "frus-1964-68v09-d344"
+        "frus-1964-68v09-d344",
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148",
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
       ],
       "source_ids": [
         "frus-history-at-state"
@@ -1206,7 +1338,44 @@
       ],
       "frus_document_ids": [
         "frus-1952-54v11p1-d27",
-        "frus-1964-68v09-d344"
+        "frus-1964-68v09-d344",
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148",
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-decolonization-and-resource-access-indonesia",
+      "episode_id": "decolonization-and-resource-access",
+      "title": "Decolonization and resource access",
+      "start": 1952,
+      "end": 1975,
+      "country_id": "indonesia",
+      "mineral_ids": [
+        "chromium",
+        "cobalt",
+        "copper",
+        "manganese",
+        "tin"
+      ],
+      "frus_document_ids": [
+        "frus-1952-54v11p1-d27",
+        "frus-1964-68v09-d344",
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148",
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
       ],
       "source_ids": [
         "frus-history-at-state"
@@ -1229,12 +1398,58 @@
       ],
       "frus_document_ids": [
         "frus-1952-54v11p1-d27",
-        "frus-1964-68v09-d344"
+        "frus-1964-68v09-d344",
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148",
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
       ],
       "source_ids": [
         "frus-history-at-state"
       ],
       "completeness": "research-queue"
+    },
+    {
+      "id": "atlas-chile-copper-nationalization-1971-chile",
+      "episode_id": "chile-copper-nationalization-1971",
+      "title": "Chilean copper nationalization and compensation",
+      "start": 1971,
+      "end": 1971,
+      "country_id": "chile",
+      "mineral_ids": [
+        "copper"
+      ],
+      "frus_document_ids": [
+        "frus-1969-76v21-d250",
+        "frus-1969-76v21-d256",
+        "frus-1969-76v21-d261",
+        "frus-1969-76ve16-d87"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "completeness": "verified-pilot"
+    },
+    {
+      "id": "atlas-indonesia-political-crisis-1965-indonesia",
+      "episode_id": "indonesia-political-crisis-1965",
+      "title": "Indonesian political crisis and U.S. policy reassessment",
+      "start": 1965,
+      "end": 1966,
+      "country_id": "indonesia",
+      "mineral_ids": [],
+      "frus_document_ids": [
+        "frus-1964-68v26-d138",
+        "frus-1964-68v26-d142",
+        "frus-1964-68v26-d148"
+      ],
+      "source_ids": [
+        "frus-history-at-state"
+      ],
+      "completeness": "verified-pilot"
     },
     {
       "id": "atlas-late-cold-war-resource-policy-chile",
@@ -1835,6 +2050,46 @@
       ],
       "mineral_ids": [
         "chromium"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-indonesia-1965",
+      "title": "Indonesia 1965 political economic relations",
+      "query": "Indonesia 1965 political economic relations",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1964,
+      "end": 1966,
+      "country_ids": [
+        "indonesia"
+      ],
+      "mineral_ids": [],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg84-djakarta-resources",
+      "title": "Indonesia tin petroleum minerals",
+      "query": "Indonesia tin petroleum minerals",
+      "record_groups": [
+        "84"
+      ],
+      "start": 1958,
+      "end": 1968,
+      "country_ids": [
+        "indonesia"
+      ],
+      "mineral_ids": [
+        "tin",
+        "bauxite",
+        "copper"
       ],
       "source_ids": [
         "nara-catalog-api"

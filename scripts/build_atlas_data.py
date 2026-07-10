@@ -32,6 +32,7 @@ COUNTRY_A3 = {
     "south-africa": "ZAF",
     "surinam": "SUR",
     "turkey": "TUR",
+    "indonesia": "IDN",
 }
 
 LAYER_REGISTRY = [

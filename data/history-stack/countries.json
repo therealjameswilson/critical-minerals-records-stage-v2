@@ -42,7 +42,14 @@
       "frus-1947v01-d395",
       "frus-1950v01-d95",
       "frus-1952-54v11p1-d27",
-      "frus-1964-68v09-d344"
+      "frus-1964-68v09-d344",
+      "frus-1969-76v21-d250",
+      "frus-1969-76v21-d256",
+      "frus-1969-76v21-d261",
+      "frus-1969-76ve16-d87",
+      "frus-1964-68v26-d138",
+      "frus-1964-68v26-d142",
+      "frus-1964-68v26-d148"
     ],
     "agreement_ids": [],
     "episode_ids": [
@@ -139,9 +146,17 @@
     "mineral_ids": [
       "copper"
     ],
-    "frus_document_ids": [],
-    "agreement_ids": [],
+    "frus_document_ids": [
+      "frus-1969-76v21-d250",
+      "frus-1969-76v21-d256",
+      "frus-1969-76v21-d261",
+      "frus-1969-76ve16-d87"
+    ],
+    "agreement_ids": [
+      "chile-copper-compensation-1971"
+    ],
     "episode_ids": [
+      "chile-copper-nationalization-1971",
       "decolonization-and-resource-access",
       "late-cold-war-resource-policy"
     ],
@@ -156,11 +171,12 @@
     },
     "source_ids": [
       "frus-history-at-state",
-      "usgs-statistical-compendium"
+      "state-country-guide-chile",
+      "usgs-ds140"
     ],
-    "completeness": "research-queue",
+    "completeness": "verified-pilot",
     "data_gaps": [
-      "Chilean copper nationalization, compensation, and supplier-share evidence are not yet linked to reviewed records."
+      "Country production, bilateral trade, supplier share, and export-price series remain untranscribed."
     ]
   },
   {
@@ -467,6 +483,71 @@
     "completeness": "partial",
     "data_gaps": [
       "Mine, contract, and shipment details require document-level review."
+    ]
+  },
+  {
+    "id": "indonesia",
+    "canonical_historical_name": "Republic of Indonesia",
+    "present_day_name": "Indonesia",
+    "alternate_historical_names": [
+      "Netherlands East Indies",
+      "Republic of the United States of Indonesia",
+      "Indonesia"
+    ],
+    "names_by_period": [
+      {
+        "name": "Netherlands East Indies",
+        "start": 1861,
+        "end": 1948
+      },
+      {
+        "name": "Republic of the United States of Indonesia",
+        "start": 1949,
+        "end": 1949
+      },
+      {
+        "name": "Republic of Indonesia",
+        "start": 1950,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [
+      {
+        "year": 1949,
+        "note": "The United States recognized Indonesian independence and established diplomatic relations on December 28, 1949."
+      }
+    ],
+    "mineral_ids": [
+      "tin",
+      "bauxite",
+      "copper"
+    ],
+    "frus_document_ids": [
+      "frus-1964-68v26-d138",
+      "frus-1964-68v26-d142",
+      "frus-1964-68v26-d148"
+    ],
+    "agreement_ids": [],
+    "episode_ids": [
+      "indonesia-political-crisis-1965"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": -2.5,
+      "longitude": 118.0,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state",
+      "state-country-guide-indonesia",
+      "loc-indonesia-mineral-regulation"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "The mineral classification is post-1965 context; exact-year production, trade, dependence, reserves, and facility evidence remain unknown."
     ]
   }
 ]

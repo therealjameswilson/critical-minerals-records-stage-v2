@@ -4,7 +4,7 @@
   const FILES = [
     "sources", "minerals", "countries", "episodes", "agreements", "laws",
     "administrations", "stockpile-cases", "frus-documents", "statistics",
-    "nara-queries", "modern-context"
+    "nara-queries", "country-briefs", "modern-context"
   ];
 
   function escape(value) {
@@ -102,7 +102,12 @@
       "govinfo-statutes": "GovInfo",
       "state-treaties": "State treaty series",
       "census-historical-trade": "Census",
-      "gsa-stockpile": "Stockpile records"
+      "gsa-stockpile": "Stockpile records",
+      "state-country-guide-bolivia": "State country guide",
+      "state-country-guide-chile": "State country guide",
+      "state-country-guide-congo-democratic-republic": "State country guide",
+      "state-country-guide-indonesia": "State country guide",
+      "loc-indonesia-mineral-regulation": "Library of Congress"
     }[source.id] || source.label;
     return badge(short, source.tier === 1 ? "source" : "discovery");
   }
