@@ -66,9 +66,9 @@ proxies are visibly marked for review.
 ## Portal Sections
 
 - **2025-2026 Command Center:** current diplomacy connected to historical
-  precedents. The State Department ministerial record is indexed; the requested
-  `Landau-Critical-Minerals-2026.md` report remains source-gated until the file
-  is added to the repository.
+  precedents. The State Department ministerial record, White House policy
+  instruments, DFC investment framework, and Landau analytical report are
+  indexed with distinct source tiers and claim-level caveats.
 - **Interactive Historical Timeline:** era-based questions and verified source
   records from 1861 to the present.
 - **Global Operating Picture:** country relationships, source mix, supply-chain
@@ -121,6 +121,8 @@ The browser cache surfaces these fields through
 - `assets/portal.css`: responsive, accessible portal design
 - `assets/portal.js`: search, deep links, map, timeline, indexes, and filters
 - `data/portal-data.js`: eras, minerals, countries, administrations, and source roles
+- `research/Landau-Critical-Minerals-2026.md`: supplied analytical report,
+  preserved outside the metadata cache
 - `examples/critical_minerals_sample/`: metadata-only sample and verified seeds
 - `parsers/critical_minerals_json_parser.py`: date and field normalization
 - `connectors/`: network-free source connector interfaces

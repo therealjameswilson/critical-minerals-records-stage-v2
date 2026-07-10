@@ -117,6 +117,10 @@
     return normalize(event.cf) === "low" || /placeholder|sample|demonstrator/.test(normalize(event.t));
   }
 
+  function isAnalytical(event) {
+    return normalize(event.st) === "analytical report" || normalize(event.et) === "analytical synthesis";
+  }
+
   function isOfficial(event) {
     return ["frus", "nara", "census", "usgs", "doe", "dla", "federal register", "state", "other usg"]
       .includes(normalize(event.st || event.s));
@@ -135,20 +139,22 @@
     const citation = event.cu && event.cu !== event.u
       ? `<a class="text-link" href="${escapeHtml(event.cu)}" target="_blank" rel="noopener">Citation ↗</a>` : "";
     const official = isOfficial(event) ? '<span class="badge official">Official USG</span>' : "";
+    const analytical = isAnalytical(event) ? '<span class="badge analysis">Analytical synthesis</span>' : "";
     const review = isNeedsReview(event) ? '<span class="badge review">Needs review</span>' : "";
+    const openLabel = isAnalytical(event) ? "Read analytical report" : "Open authoritative source ↗";
     return `
       <article class="record-card ${escapeHtml(confidence)}" data-record-id="${escapeHtml(event.rid || "")}">
         <div class="record-meta"><span>${escapeHtml(eventDate(event))}</span><span>·</span><span>${escapeHtml(event.st || event.s || "Source")}</span></div>
         <h3>${escapeHtml(event.t || "Untitled record")}</h3>
         <p>${escapeHtml(event.de || "Metadata record. Open the authoritative source for full context.")}</p>
         <div class="badge-row" style="margin-top:9px">
-          ${official}${review}
+          ${official}${analytical}${review}
           ${minerals.map((item) => `<span class="badge">${escapeHtml(titleCase(item))}</span>`).join("")}
           ${countries.map((item) => `<span class="badge">${escapeHtml(item)}</span>`).join("")}
         </div>
         ${caveat}
         <div class="record-actions">
-          <a class="text-link" href="${escapeHtml(event.u || event.cu || "#")}" target="_blank" rel="noopener">Open authoritative source ↗</a>
+          <a class="text-link" href="${escapeHtml(event.u || event.cu || "#")}"${isAnalytical(event) ? "" : ' target="_blank" rel="noopener"'}>${openLabel}</a>
           ${citation}
         </div>
       </article>`;
@@ -192,6 +198,39 @@
     $("promptRow").innerHTML = portal.searchPrompts.slice(0, 4).map((prompt) =>
       `<button class="prompt-chip" type="button" data-query="${escapeHtml(prompt)}">${escapeHtml(prompt)}</button>`
     ).join("");
+  }
+
+  function renderCommandCenter() {
+    const command = portal.commandCenter || {};
+    const report = command.report || {};
+    $("commandTimeline").innerHTML = asArray(command.timeline).map((item) => `
+      <div class="operation-row">
+        <span class="operation-date">${escapeHtml(item.date)}</span>
+        <span class="operation-dot" aria-hidden="true"></span>
+        <div class="operation-body"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.detail)}</span></div>
+        <a class="operation-source" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">${escapeHtml(item.source)} ↗</a>
+      </div>`).join("");
+
+    $("commandWorkstreams").innerHTML = asArray(command.workstreams).map((item) => `
+      <div class="workstream-row"><strong>${escapeHtml(item.label)}</strong><span>${escapeHtml(item.detail)}</span></div>`
+    ).join("");
+
+    $("commandPartners").innerHTML = asArray(command.partners).map((country) =>
+      `<button class="partner-node" type="button" data-partner="${escapeHtml(country)}">${escapeHtml(country)}</button>`
+    ).join("");
+
+    $("historicalContinuity").innerHTML = asArray(command.historicalLinks).map((item) => {
+      const record = events.find((event) => event.rid === item.recordId);
+      const href = record?.u || "#evidence";
+      return `<a class="continuity-card" href="${escapeHtml(href)}"${record ? ' target="_blank" rel="noopener"' : ""}>
+        <span class="then-now">Now / then</span><h4>${escapeHtml(item.modern)}</h4><p>${escapeHtml(item.historical)}</p>
+      </a>`;
+    }).join("");
+
+    $("reportProvenance").innerHTML = `
+      <strong>${escapeHtml(report.tier || "Analytical source")}: ${escapeHtml(report.title || "Landau report")}</strong>
+      <span>${escapeHtml(report.caveat || "Validate report claims against primary sources.")}</span>
+      <a class="button-link" href="${escapeHtml(report.url || "#")}">${escapeHtml(report.lines || 0)} lines · ${escapeHtml(report.references || 0)} references</a>`;
   }
 
   function renderEras() {
@@ -429,6 +468,16 @@
       $("evidence").scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
+    $("commandPartners").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-partner]");
+      if (!button) return;
+      searchState.country = button.dataset.partner || "";
+      $("filterCountry").value = searchState.country;
+      renderEvidence();
+      updateUrl();
+      $("evidence").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
     const activateCountry = (row) => {
       searchState.country = row.dataset.country || "";
       $("filterCountry").value = searchState.country;
@@ -503,6 +552,7 @@
     populateControls();
     renderMetrics();
     renderPromptRow();
+    renderCommandCenter();
     renderEras();
     renderTimeline();
     renderMap();

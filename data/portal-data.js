@@ -133,6 +133,10 @@ window.CRITICAL_MINERALS_PORTAL = {
     { name: "Brazil", lon: -52, lat: -10, focus: "Niobium, graphite, rare earths, and industrial partnership" },
     { name: "Peru", lon: -75, lat: -9, focus: "Copper, mining policy, infrastructure, and investment" },
     { name: "Democratic Republic of the Congo", lon: 23, lat: -3, focus: "Cobalt, copper, historical access, and governance" },
+    { name: "Egypt", lon: 30, lat: 27, focus: "Commercial diplomacy, infrastructure, trade corridors, and regional security" },
+    { name: "Ethiopia", lon: 40, lat: 9, focus: "Strategic investment, infrastructure corridors, and commercial engagement" },
+    { name: "Kenya", lon: 38, lat: 1, focus: "Rare-earth potential, investment climate, infrastructure, and regional diplomacy" },
+    { name: "Djibouti", lon: 43, lat: 12, focus: "Port infrastructure, maritime access, security, and commercial ties" },
     { name: "South Africa", lon: 24, lat: -30, focus: "Chromium, manganese, platinum-group metals, and historical access" },
     { name: "Namibia", lon: 17, lat: -22, focus: "Uranium, rare earths, investment, and infrastructure" },
     { name: "Greenland", lon: -42, lat: 72, focus: "Arctic strategy, rare earths, and alliance geography" },
@@ -174,6 +178,77 @@ window.CRITICAL_MINERALS_PORTAL = {
     { name: "State", role: "Current diplomacy, agreements, ministerials, releases, and investment climate", tier: "Official policy record" },
     { name: "DLA", role: "National Defense Stockpile and strategic-material program context", tier: "Official program record" }
   ],
+  commandCenter: {
+    report: {
+      title: "Deputy Secretary Landau and the Critical Minerals Imperative",
+      url: "https://github.com/therealjameswilson/critical-minerals-records-stage/blob/main/research/Landau-Critical-Minerals-2026.md",
+      lines: 191,
+      references: 31,
+      tier: "Analytical synthesis",
+      caveat: "The report combines official records, partner-government material, commercial reporting, and outside analysis. Validate operational claims against the linked primary source."
+    },
+    timeline: [
+      {
+        date: "Jan. 14",
+        title: "Processed-minerals proclamation",
+        detail: "The White House treated processed critical-mineral imports as a national-security issue and directed negotiated adjustment measures.",
+        source: "White House",
+        url: "https://www.whitehouse.gov/presidential-actions/2026/01/adjusting-imports-of-processed-critical-minerals-and-their-derivative-products-into-the-united-states/"
+      },
+      {
+        date: "Jan. 24-Feb. 1",
+        title: "Landau Africa travel",
+        detail: "An official State itinerary covered Egypt, Ethiopia, Kenya, and Djibouti immediately before the ministerial.",
+        source: "State",
+        url: "https://www.state.gov/releases/office-of-the-spokesperson/2026/01/deputy-secretary-landaus-travel-to-egypt-ethiopia-kenya-and-djibouti"
+      },
+      {
+        date: "Feb. 4",
+        title: "Critical Minerals Ministerial",
+        detail: "The ministerial connected bilateral frameworks, project finance, allied coordination, and an industry implementation task force.",
+        source: "State",
+        url: "https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial"
+      },
+      {
+        date: "Feb. 18",
+        title: "Uzbekistan investment framework",
+        detail: "DFC announced a proposed joint framework spanning exploration, extraction, processing, infrastructure, and energy.",
+        source: "DFC",
+        url: "https://www.dfc.gov/media/press-releases/dfc-leadership-lays-foundation-investment-partnership-uzbekistan"
+      },
+      {
+        date: "May 29",
+        title: "National-security investment workforce",
+        detail: "The White House authorized critical-position pay for up to 400 investment, engineering, finance, and legal specialists.",
+        source: "White House",
+        url: "https://www.whitehouse.gov/presidential-actions/2026/05/approving-critical-position-pay-authority-for-national-security-investment-workforce/"
+      }
+    ],
+    workstreams: [
+      { label: "Agreements", detail: "Track the instrument, responsible offices, consultations, deadlines, and implementation status." },
+      { label: "Projects", detail: "Identify bankable projects, ownership, offtake, infrastructure, permitting, and political risk." },
+      { label: "Finance", detail: "Map DFC, EXIM, allied, host-government, and private-capital roles across the value chain." },
+      { label: "Post reporting", detail: "Report regulatory barriers, local politics, community effects, security risks, and partner follow-through." }
+    ],
+    historicalLinks: [
+      {
+        modern: "Agreements linked to investment",
+        historical: "1947 ERP planning paired bilateral commitments with production support and U.S. stockpiling.",
+        recordId: "frus-1947-v1-d395-strategic-materials"
+      },
+      {
+        modern: "Mineral-rich Africa as strategic geography",
+        historical: "A 1953 estimate connected raw-material access, infrastructure, political change, and Western strategy.",
+        recordId: "frus-1952-54-v11p1-d27-tropical-africa"
+      },
+      {
+        modern: "Assessing reliable foreign supply",
+        historical: "A 1967 stockpile debate assigned State a role in judging the political and economic dependability of sources.",
+        recordId: "frus-1964-68-v9-d344-stockpile-objectives"
+      }
+    ],
+    partners: ["Argentina", "Chile", "Democratic Republic of the Congo", "Kazakhstan", "Mexico", "Uzbekistan"]
+  },
   searchPrompts: [
     "cobalt during the early Cold War",
     "strategic materials stockpiling",

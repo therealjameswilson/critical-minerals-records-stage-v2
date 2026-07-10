@@ -84,12 +84,27 @@ def test_verified_historical_seed_records_are_present():
     assert "frus-1964-68-v9-d344-stockpile-objectives" in record_ids
 
 
+def test_landau_command_center_records_are_present_and_tiered():
+    events = list(parse_corpus(SAMPLE))
+    by_id = {event["extra"]["record_id"]: event for event in events}
+    assert "white-house-2026-processed-critical-minerals-proclamation" in by_id
+    assert "state-2026-landau-africa-travel" in by_id
+    assert "dfc-2026-uzbekistan-joint-investment-framework" in by_id
+    assert "white-house-2026-critical-minerals-workforce" in by_id
+    report = by_id["landau-critical-minerals-2026-analytical-report"]
+    assert report["extra"]["source_type"] == "Analytical Report"
+    assert report["extra"]["evidence_type"] == "analytical_synthesis"
+    assert "mixed source tiers" in report["extra"]["caveat"]
+
+
 def test_portal_shell_has_intelligence_sections_and_no_drafting_ui():
     html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
     assert "U.S. Critical Minerals Intelligence Portal" in html
     assert "Interactive historical timeline" in html
     assert "FRUS Critical Minerals Index" in html
     assert "Evidence Explorer" in html
+    assert "From ministerial commitments to post-level execution" in html
+    assert "report ingested and source-tiered" in html
     assert "Anthropic API Key" not in html
     assert "Clearance Status" not in html
     assert "Export Notes as Word" not in html
@@ -104,3 +119,16 @@ def test_portal_data_covers_full_historical_frame():
     assert "end: 2026" in source
     assert source.count("symbol:") >= 13
     assert source.count("focus:") >= 16
+    assert "historicalLinks" in source
+    assert "workstreams" in source
+
+
+def test_landau_report_is_preserved_outside_browser_cache():
+    report = ROOT / "research" / "Landau-Critical-Minerals-2026.md"
+    text = report.read_text(encoding="utf-8")
+    assert text.startswith("# Deputy Secretary Landau and the Critical Minerals Imperative")
+    assert "## Executive Summary" in text
+    assert "## References" in text
+    assert len(text.splitlines()) == 191
+    html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
+    assert "The critical tension identified by multiple analysts" not in html
