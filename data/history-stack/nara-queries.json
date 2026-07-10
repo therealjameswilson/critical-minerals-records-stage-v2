@@ -1,0 +1,545 @@
+[
+  {
+    "id": "nara-rg59-bolivian-tin",
+    "label": "Bolivia tin strategic materials",
+    "query": "Bolivia tin strategic materials",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1941,
+    "date_end": 1945,
+    "available_online": true,
+    "mineral_ids": [
+      "tin"
+    ],
+    "country_ids": [
+      "bolivia"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-surinam-bauxite",
+    "label": "Surinam bauxite mines",
+    "query": "Surinam bauxite mines",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1940,
+    "date_end": 1945,
+    "available_online": true,
+    "mineral_ids": [
+      "bauxite",
+      "aluminum"
+    ],
+    "country_ids": [
+      "surinam"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg165-strategic-materials",
+    "label": "strategic materials procurement",
+    "query": "strategic materials procurement",
+    "record_groups": [
+      "165"
+    ],
+    "date_start": 1917,
+    "date_end": 1945,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg169-bolivia-tin",
+    "label": "Bolivia tin purchasing",
+    "query": "Bolivia tin purchasing",
+    "record_groups": [
+      "169"
+    ],
+    "date_start": 1941,
+    "date_end": 1945,
+    "available_online": true,
+    "mineral_ids": [
+      "tin"
+    ],
+    "country_ids": [
+      "bolivia"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg169-turkish-chrome",
+    "label": "Turkey chrome purchasing",
+    "query": "Turkey chrome purchasing",
+    "record_groups": [
+      "169"
+    ],
+    "date_start": 1940,
+    "date_end": 1945,
+    "available_online": true,
+    "mineral_ids": [
+      "chromium"
+    ],
+    "country_ids": [
+      "turkey"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg218-congo-uranium",
+    "label": "Belgian Congo uranium",
+    "query": "Belgian Congo uranium",
+    "record_groups": [
+      "218"
+    ],
+    "date_start": 1943,
+    "date_end": 1955,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg229-rubber-minerals",
+    "label": "rubber strategic materials Latin America",
+    "query": "rubber strategic materials Latin America",
+    "record_groups": [
+      "229"
+    ],
+    "date_start": 1940,
+    "date_end": 1946,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg234-strategic-materials",
+    "label": "strategic materials production",
+    "query": "strategic materials production",
+    "record_groups": [
+      "234"
+    ],
+    "date_start": 1939,
+    "date_end": 1957,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg287-stockpile-reports",
+    "label": "strategic critical materials stockpile",
+    "query": "strategic critical materials stockpile",
+    "record_groups": [
+      "287"
+    ],
+    "date_start": 1939,
+    "date_end": 1992,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg330-stockpile-objectives",
+    "label": "stockpile objectives strategic materials",
+    "query": "stockpile objectives strategic materials",
+    "record_groups": [
+      "330"
+    ],
+    "date_start": 1950,
+    "date_end": 1970,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg353-stockpile-objectives",
+    "label": "stockpile objectives foreign sources",
+    "query": "stockpile objectives foreign sources",
+    "record_groups": [
+      "353"
+    ],
+    "date_start": 1947,
+    "date_end": 1970,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-accessible-foreign-sources",
+    "label": "accessible foreign sources strategic materials",
+    "query": "accessible foreign sources strategic materials",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1946,
+    "date_end": 1970,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-strategic-materials-erp",
+    "label": "European Recovery Program strategic materials",
+    "query": "European Recovery Program strategic materials",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1947,
+    "date_end": 1952,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-nsc68-strategic-materials",
+    "label": "NSC 68 strategic materials stockpile",
+    "query": "NSC 68 strategic materials stockpile",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1949,
+    "date_end": 1953,
+    "available_online": true,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-tropical-africa-strategic-materials",
+    "label": "Tropical Africa strategic materials",
+    "query": "Tropical Africa strategic materials",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1950,
+    "date_end": 1960,
+    "available_online": true,
+    "mineral_ids": [
+      "cobalt",
+      "copper",
+      "chromium",
+      "manganese",
+      "tin"
+    ],
+    "country_ids": [
+      "belgian-congo",
+      "northern-rhodesia",
+      "south-africa"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg218-africa-raw-materials",
+    "label": "Africa strategic raw materials",
+    "query": "Africa strategic raw materials",
+    "record_groups": [
+      "218"
+    ],
+    "date_start": 1948,
+    "date_end": 1965,
+    "available_online": true,
+    "mineral_ids": [
+      "cobalt",
+      "copper",
+      "chromium",
+      "manganese"
+    ],
+    "country_ids": [
+      "belgian-congo",
+      "northern-rhodesia",
+      "south-africa"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg84-la-paz-tin",
+    "label": "tin strategic materials",
+    "query": "tin strategic materials",
+    "record_groups": [
+      "84"
+    ],
+    "date_start": 1940,
+    "date_end": 1955,
+    "available_online": true,
+    "mineral_ids": [
+      "tin"
+    ],
+    "country_ids": [
+      "bolivia"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg84-santiago-copper",
+    "label": "copper nationalization",
+    "query": "copper nationalization",
+    "record_groups": [
+      "84"
+    ],
+    "date_start": 1960,
+    "date_end": 1980,
+    "available_online": true,
+    "mineral_ids": [
+      "copper"
+    ],
+    "country_ids": [
+      "chile"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg84-leopoldville-cobalt",
+    "label": "cobalt copper strategic minerals",
+    "query": "cobalt copper strategic minerals",
+    "record_groups": [
+      "84"
+    ],
+    "date_start": 1945,
+    "date_end": 1971,
+    "available_online": true,
+    "mineral_ids": [
+      "cobalt",
+      "copper"
+    ],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg84-pretoria-strategic-minerals",
+    "label": "chromium manganese strategic minerals",
+    "query": "chromium manganese strategic minerals",
+    "record_groups": [
+      "84"
+    ],
+    "date_start": 1945,
+    "date_end": 1992,
+    "available_online": true,
+    "mineral_ids": [
+      "chromium",
+      "manganese"
+    ],
+    "country_ids": [
+      "south-africa"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-chilean-copper",
+    "label": "Chile copper nationalization",
+    "query": "Chile copper nationalization",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1960,
+    "date_end": 1980,
+    "available_online": true,
+    "mineral_ids": [
+      "copper"
+    ],
+    "country_ids": [
+      "chile"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-congo-cobalt",
+    "label": "Congo cobalt strategic materials",
+    "query": "Congo cobalt strategic materials",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1945,
+    "date_end": 1975,
+    "available_online": true,
+    "mineral_ids": [
+      "cobalt"
+    ],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-rhodesia-chromium",
+    "label": "Rhodesia chrome chromium sanctions",
+    "query": "Rhodesia chrome chromium sanctions",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1965,
+    "date_end": 1980,
+    "available_online": true,
+    "mineral_ids": [
+      "chromium"
+    ],
+    "country_ids": [
+      "northern-rhodesia"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-south-africa-minerals",
+    "label": "South Africa strategic minerals",
+    "query": "South Africa strategic minerals",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1945,
+    "date_end": 1992,
+    "available_online": true,
+    "mineral_ids": [
+      "chromium",
+      "manganese"
+    ],
+    "country_ids": [
+      "south-africa"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-turkish-chrome",
+    "label": "Turkey chrome Germany",
+    "query": "Turkey chrome Germany",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1939,
+    "date_end": 1945,
+    "available_online": true,
+    "mineral_ids": [
+      "chromium"
+    ],
+    "country_ids": [
+      "turkey"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  }
+]

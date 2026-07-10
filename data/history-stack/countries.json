@@ -1,0 +1,472 @@
+[
+  {
+    "id": "united-states",
+    "canonical_historical_name": "United States",
+    "present_day_name": "United States",
+    "alternate_historical_names": [],
+    "names_by_period": [
+      {
+        "name": "United States",
+        "start": 1861,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [],
+    "mineral_ids": [
+      "aluminum",
+      "bauxite",
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "frus_document_ids": [
+      "frus-1914supp-d423",
+      "frus-1914supp-d427",
+      "frus-1925v02-d327",
+      "frus-1925v02-d344",
+      "frus-1939v01-d934",
+      "frus-1939v01-d939",
+      "frus-1941v02-d805",
+      "frus-1941v02-d821",
+      "frus-1941v03-d1006",
+      "frus-1941v03-d1038",
+      "frus-1942v02-d3",
+      "frus-1942v02-d14",
+      "frus-1942v05-d493",
+      "frus-1942v01-d440",
+      "frus-1942v05-d564",
+      "frus-1944v02-d886",
+      "frus-1947v01-d395",
+      "frus-1950v01-d95",
+      "frus-1952-54v11p1-d27",
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [],
+    "episode_ids": [
+      "world-war-i-resource-access",
+      "interwar-planning",
+      "world-war-ii-procurement",
+      "early-cold-war-mobilization",
+      "decolonization-and-resource-access",
+      "late-cold-war-resource-policy"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": 38.0,
+      "longitude": -97.0,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state",
+      "usgs-ds140"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Map marker is a country centroid, not a facility location."
+    ]
+  },
+  {
+    "id": "bolivia",
+    "canonical_historical_name": "Bolivia",
+    "present_day_name": "Bolivia",
+    "alternate_historical_names": [
+      "Republic of Bolivia"
+    ],
+    "names_by_period": [
+      {
+        "name": "Bolivia",
+        "start": 1861,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [],
+    "mineral_ids": [
+      "tin",
+      "tungsten",
+      "copper"
+    ],
+    "frus_document_ids": [
+      "frus-1942v05-d493",
+      "frus-1942v05-d564"
+    ],
+    "agreement_ids": [
+      "bolivian-strategic-materials-purchase-1942",
+      "us-bolivia-economic-cooperation-1942"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": -16.3,
+      "longitude": -63.6,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "verified-pilot",
+    "data_gaps": [
+      "Mine, rail, smelter, and port links have not been verified for display.",
+      "Partner objectives require document-level annotation."
+    ]
+  },
+  {
+    "id": "chile",
+    "canonical_historical_name": "Chile",
+    "present_day_name": "Chile",
+    "alternate_historical_names": [
+      "Republic of Chile"
+    ],
+    "names_by_period": [
+      {
+        "name": "Chile",
+        "start": 1861,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [],
+    "mineral_ids": [
+      "copper"
+    ],
+    "frus_document_ids": [],
+    "agreement_ids": [],
+    "episode_ids": [
+      "decolonization-and-resource-access",
+      "late-cold-war-resource-policy"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": -33.4,
+      "longitude": -70.7,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state",
+      "usgs-statistical-compendium"
+    ],
+    "completeness": "research-queue",
+    "data_gaps": [
+      "Chilean copper nationalization, compensation, and supplier-share evidence are not yet linked to reviewed records."
+    ]
+  },
+  {
+    "id": "belgian-congo",
+    "canonical_historical_name": "Belgian Congo",
+    "present_day_name": "Democratic Republic of the Congo",
+    "alternate_historical_names": [
+      "Congo (Leopoldville)",
+      "Republic of the Congo",
+      "Zaire",
+      "Democratic Republic of the Congo"
+    ],
+    "names_by_period": [
+      {
+        "name": "Belgian Congo",
+        "start": 1908,
+        "end": 1960
+      },
+      {
+        "name": "Republic of the Congo (Leopoldville)",
+        "start": 1960,
+        "end": 1964
+      },
+      {
+        "name": "Democratic Republic of the Congo",
+        "start": 1964,
+        "end": 1971
+      },
+      {
+        "name": "Zaire",
+        "start": 1971,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [
+      {
+        "year": 1960,
+        "note": "Independence from Belgium; subsequent names are preserved by period."
+      }
+    ],
+    "mineral_ids": [
+      "cobalt",
+      "copper",
+      "tin"
+    ],
+    "frus_document_ids": [
+      "frus-1942v02-d3",
+      "frus-1942v02-d14",
+      "frus-1944v02-d886",
+      "frus-1952-54v11p1-d27"
+    ],
+    "agreement_ids": [
+      "congo-tripartite-trade-negotiations-1942",
+      "tripartite-uranium-control-1944"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement",
+      "decolonization-and-resource-access"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": -2.9,
+      "longitude": 23.7,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Precise mine and transport coordinates are withheld until source verification.",
+      "The 1960-1992 name chronology is simplified for orientation and should be expanded with jurisdiction-level detail."
+    ]
+  },
+  {
+    "id": "northern-rhodesia",
+    "canonical_historical_name": "Northern Rhodesia",
+    "present_day_name": "Zambia",
+    "alternate_historical_names": [
+      "Zambia"
+    ],
+    "names_by_period": [
+      {
+        "name": "Northern Rhodesia",
+        "start": 1924,
+        "end": 1964
+      },
+      {
+        "name": "Zambia",
+        "start": 1964,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [
+      {
+        "year": 1964,
+        "note": "Independence as Zambia."
+      }
+    ],
+    "mineral_ids": [
+      "cobalt",
+      "copper"
+    ],
+    "frus_document_ids": [
+      "frus-1952-54v11p1-d27"
+    ],
+    "agreement_ids": [],
+    "episode_ids": [
+      "decolonization-and-resource-access"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": -13.1,
+      "longitude": 27.8,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state"
+    ],
+    "completeness": "research-queue",
+    "data_gaps": [
+      "Copperbelt mines, rail corridors, and country statistics need official-source verification."
+    ]
+  },
+  {
+    "id": "south-africa",
+    "canonical_historical_name": "Union of South Africa",
+    "present_day_name": "South Africa",
+    "alternate_historical_names": [
+      "Republic of South Africa",
+      "South Africa"
+    ],
+    "names_by_period": [
+      {
+        "name": "Union of South Africa",
+        "start": 1910,
+        "end": 1961
+      },
+      {
+        "name": "Republic of South Africa",
+        "start": 1961,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [
+      {
+        "year": 1961,
+        "note": "The Union became a republic."
+      }
+    ],
+    "mineral_ids": [
+      "chromium",
+      "cobalt",
+      "manganese"
+    ],
+    "frus_document_ids": [
+      "frus-1952-54v11p1-d27"
+    ],
+    "agreement_ids": [],
+    "episode_ids": [
+      "early-cold-war-mobilization",
+      "decolonization-and-resource-access",
+      "late-cold-war-resource-policy"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": -30.6,
+      "longitude": 22.9,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state"
+    ],
+    "completeness": "research-queue",
+    "data_gaps": [
+      "Sanctions, production, transport, and supplier-share evidence require dedicated review."
+    ]
+  },
+  {
+    "id": "surinam",
+    "canonical_historical_name": "Surinam",
+    "present_day_name": "Suriname",
+    "alternate_historical_names": [
+      "Dutch Guiana",
+      "Suriname"
+    ],
+    "names_by_period": [
+      {
+        "name": "Surinam (Dutch Guiana)",
+        "start": 1861,
+        "end": 1954
+      },
+      {
+        "name": "Surinam",
+        "start": 1954,
+        "end": 1975
+      },
+      {
+        "name": "Suriname",
+        "start": 1975,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [
+      {
+        "year": 1975,
+        "note": "Independence from the Netherlands as Suriname."
+      }
+    ],
+    "mineral_ids": [
+      "bauxite",
+      "aluminum"
+    ],
+    "frus_document_ids": [
+      "frus-1941v02-d805",
+      "frus-1941v02-d821"
+    ],
+    "agreement_ids": [
+      "surinam-bauxite-protection-1941"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": 4.1,
+      "longitude": -56.0,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Mine and shipping-route data are not yet verified."
+    ]
+  },
+  {
+    "id": "turkey",
+    "canonical_historical_name": "Turkey",
+    "present_day_name": "Turkiye",
+    "alternate_historical_names": [
+      "Republic of Turkey",
+      "Turkiye"
+    ],
+    "names_by_period": [
+      {
+        "name": "Ottoman Empire",
+        "start": 1861,
+        "end": 1922
+      },
+      {
+        "name": "Republic of Turkey",
+        "start": 1923,
+        "end": 1992
+      }
+    ],
+    "sovereignty_changes": [
+      {
+        "year": 1923,
+        "note": "Republic proclaimed after the end of the Ottoman Empire."
+      }
+    ],
+    "mineral_ids": [
+      "chromium"
+    ],
+    "frus_document_ids": [
+      "frus-1941v03-d1006",
+      "frus-1941v03-d1038"
+    ],
+    "agreement_ids": [
+      "turkish-chrome-negotiations-1941"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement"
+    ],
+    "ports": [],
+    "mines": [],
+    "smelters": [],
+    "rail_corridors": [],
+    "marker": {
+      "latitude": 39.0,
+      "longitude": 35.2,
+      "precision": "country"
+    },
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Mine, contract, and shipment details require document-level review."
+    ]
+  }
+]

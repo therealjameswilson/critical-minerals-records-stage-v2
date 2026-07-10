@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://therealjameswilson.github.io/critical-minerals-records-stage-v2/schemas/statistic.schema.json",
+  "title": "History Stack statistic",
+  "type": "object",
+  "required": ["id", "metric", "mineral_id", "year", "unit", "value", "price_basis", "publication_title", "publication_year", "table_or_page", "agency", "source_url", "access_date", "transcription_status", "original_unit", "displayed_unit", "conversion_methodology", "confidence"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "metric": {"type": "string"},
+    "mineral_id": {"type": "string"},
+    "country_id": {"type": ["string", "null"]},
+    "year": {"type": "integer", "minimum": 1861, "maximum": 1992},
+    "unit": {"type": "string", "minLength": 1},
+    "value": {"type": "number"},
+    "price_basis": {"enum": ["not-price", "nominal", "real-1998-dollars"]},
+    "publication_title": {"type": "string"},
+    "publication_year": {"type": "integer"},
+    "table_or_page": {"type": "string"},
+    "agency": {"type": "string"},
+    "source_url": {"type": "string", "format": "uri"},
+    "download_url": {"type": "string", "format": "uri"},
+    "access_date": {"type": "string", "format": "date"},
+    "transcription_status": {"enum": ["machine-extracted-xlsx", "human-verified", "ocr-assisted-review-required"]},
+    "original_unit": {"type": "string"},
+    "displayed_unit": {"type": "string"},
+    "conversion_methodology": {"type": "string"},
+    "notes": {"type": "string"},
+    "confidence": {"enum": ["high", "medium", "low"]}
+  }
+}

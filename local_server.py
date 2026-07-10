@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 """
-Toolkit Local Server
+Critical Minerals History local server
 
 A tiny local HTTP server that backs the in-browser features of the
 Records Stage HTML tool (fetched via ``fetch_records_stage.py``):
 
   /ping            — health check; reports which features are enabled
-  /summarize       — optional AI summarization of draft text
-                     (requires transformers + torch + a HuggingFace model)
   /nara/search     — proxies the National Archives Catalog v2 API so the
-                     HTML tool can search for photos to attach to a tweet
+                     research site can discover archival descriptions
   /nara/fetch      — streams a NARA S3 image through the proxy, bypassing
                      the browser's CORS restrictions
 
@@ -19,10 +17,9 @@ the HTML tool.
 
 WHAT YOU NEED
 
-Minimum (NARA-only):
+Minimum:
     pip install flask flask-cors
-    Save your NARA Catalog API key to .nara_key in this directory
-    (request one by emailing Catalog_API@nara.gov)
+    Put NARA_API_KEY in .env.local or export it in your shell.
 
 Optional (also enable the AI summarizer, ~300 MB model download):
     pip install transformers torch sentencepiece
@@ -99,17 +96,34 @@ except ImportError:
 
 
 # ── NARA Catalog API key ──────────────────────────────────────────────────────
-# Read from .nara_key in the repo root (gitignored). If absent, the /nara/*
-# routes return 503 with a setup hint — the summarizer keeps working.
+# Prefer the process environment. For local use only, read NARA_API_KEY from
+# .env.local without importing a dotenv dependency. Never print the value or its
+# length, and never serialize it into a response.
 
-_NARA_KEY_PATH = Path(__file__).parent / ".nara_key"
-NARA_API_KEY = _NARA_KEY_PATH.read_text().strip() if _NARA_KEY_PATH.exists() else None
+def _local_env_value(name):
+    value = os.environ.get(name, "").strip()
+    if value:
+        return value
+    path = Path(__file__).parent / ".env.local"
+    if not path.exists():
+        return None
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, candidate = line.split("=", 1)
+        if key.strip() == name:
+            return candidate.strip().strip('"\'') or None
+    return None
+
+
+NARA_API_KEY = _local_env_value("NARA_API_KEY")
 NARA_BASE = "https://catalog.archives.gov/api/v2"
 
 if NARA_API_KEY:
-    print(f"  ✓ NARA key loaded ({len(NARA_API_KEY)} chars) — /nara/search enabled.")
+    print("  ✓ NARA key configured — /nara/search enabled.")
 else:
-    print(f"  ⚠ No .nara_key in {_NARA_KEY_PATH.parent} — /nara/search disabled.")
+    print("  ⚠ NARA_API_KEY is not configured — /nara/search disabled.")
 
 
 # ── Model loading ─────────────────────────────────────────────────────────────
@@ -148,7 +162,7 @@ def preprocess(raw: str) -> str:
 def clean_output(text: str) -> str:
     """Strip wrapping quotes and 'Summary:'-style prefixes."""
     text = text.strip().strip('"\'')
-    text = re.sub(r"^(summary|result|tweet|output)[:\s]+", "", text, flags=re.I)
+    text = re.sub(r"^(summary|result|output)[:\s]+", "", text, flags=re.I)
     return text
 
 
@@ -248,7 +262,7 @@ def summarize():
 # ── NARA Catalog proxy ────────────────────────────────────────────────────────
 # The browser can't call catalog.archives.gov directly (no CORS) and we don't
 # want the API key shipped to clients. These two routes wrap the v2 catalog
-# API and the S3 image hosts so the HTML tool can search and embed photos.
+# API and the image hosts so the research interface can display catalog media.
 
 # Allowed prefixes for /nara/fetch — defensive whitelist so the proxy can't
 # be turned into an open relay. All NARA digital objects live under one of these.
@@ -268,7 +282,7 @@ _RENDERABLE_IMAGE_RE = re.compile(r"\.(jpe?g|png|gif|webp)$", re.IGNORECASE)
 def _nara_unavailable():
     return jsonify({
         "error": "NARA API key not configured",
-        "hint": "Save your key to .nara_key in the repo root and restart this server.",
+        "hint": "Set NARA_API_KEY in .env.local or the process environment, then restart the server.",
     }), 503
 
 
@@ -347,11 +361,15 @@ def _record_naid(hit):
 
 
 def _normalize_hit(hit):
-    """Flatten a NARA hit into the minimal shape the browser cares about."""
+    """Flatten a NARA hit into the metadata-only shape used by the site."""
     naid = _record_naid(hit)
     title = _walk_first(hit, "title") or ""
     lod = _walk_first(hit, "levelOfDescription")
     gtypes = _walk_first(hit, "generalRecordsTypes")
+    date_note = _walk_first(hit, "inclusiveDates", "coverageDates", "date")
+    description = _walk_first(hit, "scopeAndContentNote", "scopeAndContent", "description")
+    creators = _walk_first(hit, "creatingOrganizations", "creators")
+    record_group = _walk_first(hit, "recordGroupNumber")
     use = _walk_first(hit, "useRestriction") or {}
     if isinstance(use, dict):
         use_status = use.get("status") or use.get("note") or ""
@@ -359,11 +377,8 @@ def _normalize_hit(hit):
         use_status = str(use)
 
     digital = _walk_all_digital_objects(hit)
-    # Only surface browser-renderable images (JPG/PNG/GIF/WebP). NARA preservation
-    # masters are TIFF, which no browser can display and social platforms won't
-    # accept, so a record whose only image objects are TIFF yields zero images
-    # here (imageCount 0) and is dropped by the client; the search UI notes that
-    # some items are hidden for format.
+    # Only surface browser-renderable previews. Preservation TIFFs remain
+    # available from the authoritative catalog record.
     images = [
         {
             "url": d.get("objectUrl"),
@@ -387,8 +402,13 @@ def _normalize_hit(hit):
     return {
         "naid": naid,
         "title": title,
+        "catalogUrl": f"https://catalog.archives.gov/id/{naid}" if naid else "https://catalog.archives.gov/",
         "levelOfDescription": lod,
         "generalRecordsTypes": gtypes,
+        "dateNote": date_note,
+        "description": description,
+        "creators": creators,
+        "recordGroupNumber": record_group,
         "useRestriction": use_status,
         "imageCount": len(images),
         "docCount": len(docs),
@@ -399,12 +419,12 @@ def _normalize_hit(hit):
 
 @app.route("/nara/search")
 def nara_search():
-    """Proxy the NARA catalog search with photo-priority defaults baked in.
+    """Proxy a metadata-first NARA Catalog search.
 
     Query params accepted from the browser:
       q              — search string (required)
       limit          — max results to return (default 30, hard-capped 100)
-      photos_only    — '1'/'true' (legacy default) applies the Photographs
+      photos_only    — '1'/'true' applies the Photographs
                        typeOfMaterials + levelOfDescription=item filters. Only
                        used when type_of_materials is absent.
       type_of_materials — NARA typeOfMaterials value, optional (e.g.
@@ -448,7 +468,7 @@ def nara_search():
     except ValueError:
         page = 1
 
-    photos_only = (request.args.get("photos_only", "1").lower()
+    photos_only = (request.args.get("photos_only", "0").lower()
                    not in ("0", "false", "no"))
 
     params = {
@@ -472,7 +492,9 @@ def nara_search():
 
     for key, api_key in [("recurring_day", "recurringDateDay"),
                          ("recurring_month", "recurringDateMonth"),
-                         ("record_group", "recordGroupNumber")]:
+                         ("record_group", "recordGroupNumber"),
+                         ("date_start", "startDate"),
+                         ("date_end", "endDate")]:
         val = (request.args.get(key) or "").strip()
         if val:
             params[api_key] = val
@@ -517,15 +539,17 @@ def nara_search():
     total = find_total(body)
 
     normalized = [_normalize_hit(h) for h in hits]
-    # Surface image-bearing results first; keep doc-only as fallback.
-    normalized.sort(key=lambda r: (-r["imageCount"], -(r["docCount"] or 0)))
-
-    return jsonify({
+    response = jsonify({
         "total": total,
         "returned": len(normalized),
         "query": {"raw": raw_q, "effective": q, "params": params},
         "hits": normalized,
+        "retrievedAt": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
+        "recordStatus": "live",
+        "attribution": "This product uses the National Archives Catalog API but is not endorsed or certified by the National Archives and Records Administration.",
     })
+    response.headers["Cache-Control"] = "no-store"
+    return response
 
 
 @app.route("/nara/fetch")
@@ -562,7 +586,7 @@ def nara_fetch():
     }.get(ext, upstream.headers.get("Content-Type", "application/octet-stream"))
 
     return Response(_capped_stream(upstream), mimetype=content_type, headers={
-        "Cache-Control": "public, max-age=86400",
+        "Cache-Control": "no-store",
     })
 
 
@@ -570,8 +594,8 @@ def nara_fetch():
 # Used by records-stage.html's article-image gallery: the publishing tool
 # knows the IA identifier + PDF page for each image (from the extraction
 # pass), this endpoint fetches the corresponding page-render JPEG and
-# streams it back as a real image/jpeg so the browser can attach it to
-# a tweet card. Bypasses browser-side CORS that IA doesn't set, mirrors
+# streams it back as a real image/jpeg for documentary inspection. This bypasses
+# browser-side CORS that IA does not set and mirrors
 # the /nara/fetch pattern.
 
 _IA_VALID_SIZE = {"full", "pct:25", "pct:50", "pct:75", "pct:100"}
@@ -586,8 +610,8 @@ def ia_fetch():
       page — 1-indexed PDF page number (1 = front cover); converted
              to IA's 0-indexed `n<N>` form internally
       size — optional IIIF region/size token. Defaults to "pct:50",
-             which is plenty for tweet attachment (~1200 px wide on
-             a typical magazine scan). Set to "full" or "pct:100" for
+             which is suitable for browser inspection of a typical scan.
+             Set to "full" or "pct:100" for
              archival-quality fetch.
     """
     identifier = (request.args.get("id") or "").strip()
@@ -636,7 +660,7 @@ def index():
         "(/nara/search, /nara/fetch)</p>"
         if NARA_API_KEY
         else "<p>NARA proxy: <em>disabled</em> — drop a key into "
-             "<code>.nara_key</code> and restart to enable.</p>"
+             "<code>NARA_API_KEY</code> in <code>.env.local</code> and restart.</p>"
     )
     summary_line = (
         f"<p>AI summarizer: <strong>enabled</strong> "
@@ -651,7 +675,7 @@ def index():
         f"{nara_line}"
         f"{summary_line}"
         "<p>IA image proxy: <strong>enabled</strong> (/ia/fetch) — "
-        "lets the publishing tool attach original-issue photos to tweet cards.</p>"
+        "supports inspection of cited official-publication page images.</p>"
         "<p>Keep this terminal open while using the Records Stage HTML tool.</p>"
     )
 

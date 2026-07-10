@@ -43,6 +43,9 @@ __pycache__/
 *.pyo
 .venv/
 .env
+.env.local
+.env.*
+!.env.example
 
 # Pytest
 .pytest_cache/
@@ -59,3 +62,11 @@ __pycache__/
 .nara_key.xml
 !/data/frus/
 !/data/portal-data.js
+!/data/history-stack/
+!/data/history-stack/*.json
+!/data/nara/
+!/data/nara/*.json
+
+# Local NARA and deployment configuration. Public runtime configuration may
+# contain a proxy URL, but never the NARA key itself.
+assets/runtime-config.local.js

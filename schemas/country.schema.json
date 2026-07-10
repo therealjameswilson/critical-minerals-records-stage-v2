@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://therealjameswilson.github.io/critical-minerals-records-stage-v2/schemas/country.schema.json",
+  "title": "History Stack country or territory",
+  "type": "object",
+  "required": ["id", "canonical_historical_name", "names_by_period", "marker", "source_ids", "completeness"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "canonical_historical_name": {"type": "string"},
+    "present_day_name": {"type": ["string", "null"]},
+    "alternate_historical_names": {"type": "array", "items": {"type": "string"}},
+    "names_by_period": {"type": "array", "items": {"type": "object", "required": ["name", "start", "end"]}},
+    "sovereignty_changes": {"type": "array"},
+    "mineral_ids": {"type": "array", "items": {"type": "string"}},
+    "frus_document_ids": {"type": "array", "items": {"type": "string"}},
+    "agreement_ids": {"type": "array", "items": {"type": "string"}},
+    "episode_ids": {"type": "array", "items": {"type": "string"}},
+    "ports": {"type": "array"},
+    "mines": {"type": "array"},
+    "smelters": {"type": "array"},
+    "rail_corridors": {"type": "array"},
+    "marker": {"type": "object", "required": ["latitude", "longitude", "precision"], "properties": {"latitude": {"type": "number"}, "longitude": {"type": "number"}, "precision": {"enum": ["country", "region", "site"]}}},
+    "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "completeness": {"enum": ["verified-pilot", "partial", "research-queue"]},
+    "data_gaps": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "world-war-i-resource-access",
+    "title": "World War I resource access",
+    "start": 1914,
+    "end": 1918,
+    "summary": "FRUS discovery records expose wartime diplomatic correspondence concerning copper shipments; broader material dependence remains a research queue.",
+    "mineral_ids": [
+      "copper"
+    ],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1914supp-d423",
+      "frus-1914supp-d427"
+    ],
+    "agreement_ids": [
+      "copper-shipment-correspondence-1914"
+    ],
+    "law_ids": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "outcome": null,
+    "completeness": "research-queue"
+  },
+  {
+    "id": "interwar-planning",
+    "title": "Interwar concessions and stockpile planning",
+    "start": 1925,
+    "end": 1939,
+    "summary": "The pilot links FRUS pathways on a rubber concession and on formal planning for strategic-raw-material stockpiles.",
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1925v02-d327",
+      "frus-1925v02-d344",
+      "frus-1939v01-d934",
+      "frus-1939v01-d939"
+    ],
+    "agreement_ids": [
+      "firestone-rubber-concession-negotiations-1925",
+      "strategic-stockpile-planning-1939"
+    ],
+    "law_ids": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "outcome": null,
+    "completeness": "partial"
+  },
+  {
+    "id": "world-war-ii-procurement",
+    "title": "World War II procurement and access",
+    "start": 1941,
+    "end": 1945,
+    "summary": "FRUS pathways connect resource access to purchasing, allied coordination, mine protection, trade control, and uranium agreements.",
+    "mineral_ids": [
+      "aluminum",
+      "bauxite",
+      "chromium",
+      "cobalt",
+      "copper",
+      "tin",
+      "tungsten"
+    ],
+    "country_ids": [
+      "bolivia",
+      "belgian-congo",
+      "surinam",
+      "turkey",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1941v02-d805",
+      "frus-1941v02-d821",
+      "frus-1941v03-d1006",
+      "frus-1941v03-d1038",
+      "frus-1942v01-d440",
+      "frus-1942v02-d3",
+      "frus-1942v02-d14",
+      "frus-1942v05-d493",
+      "frus-1942v05-d564",
+      "frus-1944v02-d886"
+    ],
+    "agreement_ids": [
+      "surinam-bauxite-protection-1941",
+      "turkish-chrome-negotiations-1941",
+      "international-tin-control-agreement-1942",
+      "congo-tripartite-trade-negotiations-1942",
+      "bolivian-strategic-materials-purchase-1942",
+      "us-bolivia-economic-cooperation-1942",
+      "us-uk-uranium-acquisition-1944",
+      "tripartite-uranium-control-1944"
+    ],
+    "law_ids": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index",
+      "usgs-ds140"
+    ],
+    "outcome": null,
+    "completeness": "verified-pilot"
+  },
+  {
+    "id": "early-cold-war-mobilization",
+    "title": "Early Cold War mobilization and permanent stockpiling",
+    "start": 1946,
+    "end": 1960,
+    "summary": "Reviewed FRUS records connect foreign-source assumptions, economic recovery, African raw materials, and stockpile requirements.",
+    "mineral_ids": [
+      "aluminum",
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "country_ids": [
+      "belgian-congo",
+      "northern-rhodesia",
+      "south-africa",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1947v01-d395",
+      "frus-1950v01-d95",
+      "frus-1952-54v11p1-d27"
+    ],
+    "agreement_ids": [
+      "erp-strategic-materials-provisions-1947",
+      "nsc68-materials-program-1950"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946",
+      "defense-production-act-1950"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "govinfo-statutes"
+    ],
+    "outcome": null,
+    "completeness": "verified-pilot"
+  },
+  {
+    "id": "decolonization-and-resource-access",
+    "title": "Decolonization and resource access",
+    "start": 1952,
+    "end": 1975,
+    "summary": "The pilot begins with a reviewed 1953 FRUS intelligence estimate on Tropical Africa; country-specific political transitions and economic bargaining require expansion.",
+    "mineral_ids": [
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin"
+    ],
+    "country_ids": [
+      "belgian-congo",
+      "northern-rhodesia",
+      "south-africa",
+      "chile",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1952-54v11p1-d27",
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [
+      "stockpile-objectives-review-1967"
+    ],
+    "law_ids": [],
+    "source_ids": [
+      "frus-history-at-state"
+    ],
+    "outcome": null,
+    "completeness": "research-queue"
+  },
+  {
+    "id": "late-cold-war-resource-policy",
+    "title": "Late Cold War resource and stockpile policy",
+    "start": 1976,
+    "end": 1992,
+    "summary": "The pilot currently represents statutory stockpile revision; commodity, trade, and administration-specific evidence remains incomplete.",
+    "mineral_ids": [
+      "chromium",
+      "copper",
+      "manganese"
+    ],
+    "country_ids": [
+      "chile",
+      "south-africa",
+      "united-states"
+    ],
+    "frus_document_ids": [],
+    "agreement_ids": [],
+    "law_ids": [
+      "stock-piling-revision-act-1979"
+    ],
+    "source_ids": [
+      "govinfo-statutes"
+    ],
+    "outcome": null,
+    "completeness": "research-queue"
+  }
+]

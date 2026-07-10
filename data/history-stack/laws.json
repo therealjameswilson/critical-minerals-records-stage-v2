@@ -1,0 +1,84 @@
+[
+  {
+    "id": "stock-piling-act-1946",
+    "official_title": "Strategic and Critical Materials Stock Piling Act",
+    "public_law_number": "Public Law 79-520",
+    "statutes_at_large_citation": "60 Stat. 596",
+    "enactment_date": "1946-07-23",
+    "summary": "Established a statutory basis for acquiring and retaining strategic and critical materials. Consult the official compilation for amendments and current codification.",
+    "relevant_provisions": [],
+    "mineral_ids": [
+      "chromium",
+      "cobalt",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "frus_document_ids": [
+      "frus-1947v01-d395",
+      "frus-1950v01-d95"
+    ],
+    "episode_ids": [
+      "early-cold-war-mobilization"
+    ],
+    "official_text_url": "https://www.govinfo.gov/app/details/COMPS-674",
+    "source_ids": [
+      "govinfo-statutes"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "defense-production-act-1950",
+    "official_title": "Defense Production Act of 1950",
+    "public_law_number": "Public Law 81-774",
+    "statutes_at_large_citation": "64 Stat. 798",
+    "enactment_date": "1950-09-08",
+    "summary": "Authorized measures affecting production capacity and supply for national defense. The official compilation controls for amended text.",
+    "relevant_provisions": [],
+    "mineral_ids": [
+      "aluminum",
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "frus_document_ids": [
+      "frus-1950v01-d95"
+    ],
+    "episode_ids": [
+      "early-cold-war-mobilization"
+    ],
+    "official_text_url": "https://www.govinfo.gov/app/details/COMPS-8323",
+    "source_ids": [
+      "govinfo-statutes"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "stock-piling-revision-act-1979",
+    "official_title": "Strategic and Critical Materials Stock Piling Revision Act of 1979",
+    "public_law_number": "Public Law 96-41",
+    "statutes_at_large_citation": "93 Stat. 319",
+    "enactment_date": "1979-07-30",
+    "summary": "Revised the national-defense stockpile framework. Project annotations of mineral-specific effects remain a research queue.",
+    "relevant_provisions": [],
+    "mineral_ids": [
+      "chromium",
+      "cobalt",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "frus_document_ids": [],
+    "episode_ids": [
+      "late-cold-war-resource-policy"
+    ],
+    "official_text_url": "https://www.govinfo.gov/app/details/STATUTE-93/STATUTE-93-Pg319",
+    "source_ids": [
+      "govinfo-statutes"
+    ],
+    "completeness": "partial"
+  }
+]

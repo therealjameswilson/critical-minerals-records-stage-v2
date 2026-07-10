@@ -3,335 +3,252 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A FRUS-grounded research environment for the diplomatic history of U.S. access to strategic resources.">
-  <meta name="theme-color" content="#102f4f">
-  <title>Strategic Resources Diplomacy | FRUS Historical Research Desk</title>
-  <link rel="stylesheet" href="assets/portal.css">
+  <meta name="description" content="Explore how U.S. diplomacy, trade, law, geography, and national security shaped access to strategic resources from 1861 through 1992, with FRUS as the documentary spine.">
+  <meta name="theme-color" content="#153650">
+  <title>The United States and Strategic Resources, 1861–1992</title>
+  <link rel="stylesheet" href="assets/portal.css?v=2.0.0">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="#why-history" aria-label="Strategic Resources Diplomacy home">
-        <div class="brand-mark" aria-hidden="true">FRUS</div>
-        <div>
-          <p class="brand-eyebrow">FRUS historical research desk</p>
-          <h1>Strategic Resources Diplomacy</h1>
-        </div>
+      <a class="brand" href="#purpose" aria-label="The United States and Strategic Resources home">
+        <span class="brand-mark" aria-hidden="true">FRUS</span>
+        <span><small>Historical decision support</small><strong>Strategic Resources, 1861–1992</strong></span>
       </a>
       <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation">
-        <a href="#why-history">Why History Matters</a>
-        <a href="#problems">Diplomatic Problems</a>
-        <a href="#pathways">FRUS Pathways</a>
-        <a href="#timeline">Timeline</a>
-        <a href="#countries">Countries</a>
+        <a href="#purpose">Purpose</a>
         <a href="#minerals">Minerals</a>
+        <a href="#countries">Countries</a>
+        <a href="#periods">Periods</a>
+        <a href="#episode">Episode</a>
+        <a href="#map">Map</a>
+        <a href="#instruments">Treaties &amp; Law</a>
+        <a href="#archives">Archives</a>
         <a href="#frus">FRUS Index</a>
-        <a href="#methodology">Method</a>
+        <a href="#method">Method</a>
       </nav>
       <div class="header-actions">
-        <button class="icon-button nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
-        <button class="icon-button" id="themeToggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">◐</button>
+        <button class="header-button nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">☰</span><span class="visually-hidden">Menu</span></button>
+        <button class="header-button" id="themeToggle" type="button"><span aria-hidden="true">◐</span><span class="visually-hidden">Toggle color theme</span></button>
       </div>
     </div>
-    <div class="status-line">Public research demonstrator · Metadata and source links only · Not an official Department of State product</div>
+    <p class="status-line">Public research demonstrator · Metadata, selected statistics, and source links only · Not an official Department of State product</p>
   </header>
 
   <main id="main-content">
-    <section class="hero-section" id="why-history" aria-labelledby="portal-mission">
-      <div class="hero-inner">
+    <section class="hero" id="purpose" aria-labelledby="page-title">
+      <div class="hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">FRUS historical operating picture</p>
-          <h2 id="portal-mission">How the United States used diplomacy to secure access to strategic resources</h2>
-          <p class="mission-copy">Trace how U.S. officials assessed foreign sources, negotiated access, encouraged production, financed infrastructure, coordinated allies, managed stockpiles, and responded to political and technological change.</p>
-          <form class="global-search" id="globalSearchForm" role="search">
-            <label for="globalQuery">Search indexed metadata</label>
-            <div class="global-search-row">
-              <input id="globalQuery" type="search" autocomplete="off" placeholder="Search diplomatic problems, countries, minerals, instruments, or FRUS concepts">
-              <button type="submit">Search metadata</button>
+          <p class="eyebrow">FRUS historical operating picture · 1861–1992</p>
+          <h1 id="page-title">The United States and Strategic Resources, 1861–1992</h1>
+          <p class="hero-deck">Explore how diplomacy, trade, law, geography, and national security shaped American access to critical minerals, with <em>Foreign Relations of the United States</em> as the documentary spine.</p>
+          <form class="search-form" id="globalSearchForm" role="search">
+            <label for="globalQuery">Search the historical pilot</label>
+            <div class="search-row">
+              <input id="globalQuery" name="q" type="search" autocomplete="off" placeholder="Mineral, historical country, treaty, law, episode, or FRUS concept">
+              <button type="submit">Search</button>
             </div>
           </form>
-          <div class="prompt-row" id="promptRow" aria-label="Guided documentary routes"></div>
+          <div class="quick-links" aria-label="Suggested searches">
+            <button type="button" data-search="Bolivian tin">Bolivian tin</button>
+            <button type="button" data-search="accessible foreign sources">Accessible foreign sources</button>
+            <button type="button" data-search="bauxite protection">Bauxite protection</button>
+            <button type="button" data-search="stockpile objectives">Stockpile objectives</button>
+          </div>
         </div>
-        <aside class="hero-orientation" aria-labelledby="orientation-title">
-          <p class="eyebrow" style="color:var(--gold)">Documentary foundation</p>
-          <h3 id="orientation-title">FRUS is the interpretive spine</h3>
-          <p>Begin with a diplomatic problem, move through a curated pathway, and then inspect the underlying documents and wider evidence.</p>
-          <ol>
-            <li><strong>Documented in FRUS</strong><span>Selected and edited records with authoritative links.</span></li>
-            <li><strong>Editorial synthesis</strong><span>Interpretation grounded in explicitly identified records.</span></li>
-            <li><strong>Contemporary comparison</strong><span>Resonance and difference, never a direct prescription.</span></li>
-          </ol>
-          <a class="button-link" href="#methodology">How to read this evidence</a>
+        <aside class="source-principle" aria-labelledby="source-principle-title">
+          <span class="folio">Source principle</span>
+          <h2 id="source-principle-title">FRUS explains what policymakers were thinking.</h2>
+          <p>Other official U.S. Government sources explain what they were looking at.</p>
+          <div class="principle-stack">
+            <div><strong>1</strong><span><b>FRUS narrative</b>Decisions, assumptions, diplomatic instruments</span></div>
+            <div><strong>2</strong><span><b>Official context</b>Production, trade, prices, laws, archives</span></div>
+            <div><strong>3</strong><span><b>Historical outcome</b>What followed, with gaps left visible</span></div>
+          </div>
+          <a class="button-link inverse" href="#method">Read the methodology</a>
         </aside>
       </div>
-      <div class="metrics-strip" id="metricsStrip" aria-label="Historical research coverage"></div>
+      <div class="scope-strip" id="metricsStrip" aria-label="Pilot coverage"></div>
     </section>
 
-    <div class="section-band" id="present-context">
-      <section class="section" aria-labelledby="present-heading">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow" style="color:var(--teal)">Present-day reason to look back</p>
-            <h2 id="present-heading">The present problem: why critical-minerals history matters now</h2>
-          </div>
-          <p>Contemporary priorities associated with Deputy Secretary Landau provide a reason to revisit relevant historical records without organizing or predetermining their interpretation.</p>
-        </div>
-        <div class="present-layout">
-          <div>
-            <h3 class="subsection-title">Current concerns and documentary routes</h3>
-            <div class="present-route-grid" id="presentRoutes"></div>
-          </div>
-          <aside class="context-chronology" aria-labelledby="context-chronology-title">
-            <div class="panel-title-row">
-              <div><p class="eyebrow" style="color:var(--teal)">Contemporary context</p><h3 id="context-chronology-title">Selected 2026 chronology</h3></div>
-              <span class="source-tier">Official records</span>
-            </div>
-            <div class="operations-timeline compact" id="contextChronology"></div>
-          </aside>
-        </div>
-        <div class="comparison-heading">
-          <h3>Historical comparison with guardrails</h3>
-          <p>Each comparison separates the historical problem, contemporary resonance, and critical difference.</p>
-        </div>
-        <div class="comparison-grid" id="historicalComparisons"></div>
-        <div class="report-provenance" id="reportProvenance"></div>
-      </section>
-    </div>
+    <section class="search-results section is-hidden" id="searchResultsSection" aria-labelledby="search-results-title">
+      <div class="section-heading inline-heading">
+        <div><p class="eyebrow">Unified metadata search</p><h2 id="search-results-title">Historical pilot results</h2></div>
+        <button class="quiet-button" id="closeSearch" type="button">Close results</button>
+      </div>
+      <p class="result-summary" id="globalResultsSummary" aria-live="polite"></p>
+      <div class="search-result-grid" id="globalResults"></div>
+    </section>
 
-    <section class="section" id="problems" aria-labelledby="problems-heading">
+    <section class="section" id="minerals" aria-labelledby="minerals-title">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow" style="color:var(--teal)">Guided documentary exploration</p>
-          <h2 id="problems-heading">Recurring diplomatic problems</h2>
-        </div>
-        <p>Enter through the problem officials were trying to solve. Supported lenses open verified records; incomplete themes remain visible as research queues.</p>
+        <div><p class="eyebrow">Explore by mineral</p><h2 id="minerals-title">State of the Mineral</h2></div>
+        <p>Each profile opens a reusable History Stack: FRUS, statistics, agreements, geography, law, stockpiles, archives, decisions, outcomes, and provenance.</p>
       </div>
-      <div class="problem-grid" id="problemGrid"></div>
+      <div class="entity-grid mineral-grid" id="mineralGrid"></div>
     </section>
 
-    <div class="section-band" id="pathways">
-      <section class="section" aria-labelledby="pathways-heading">
+    <section class="section-band" id="countries">
+      <div class="section" aria-labelledby="countries-title">
         <div class="section-heading">
-          <div>
-            <p class="eyebrow" style="color:var(--teal)">Curated documentary routes</p>
-            <h2 id="pathways-heading">FRUS Pathways</h2>
-          </div>
-          <p>Short, source-grounded routes for readers who need the policy problem, State role, instruments, representative records, and limits before opening the full index.</p>
+          <div><p class="eyebrow">Explore by country or territory</p><h2 id="countries-title">Historical resource relationships</h2></div>
+          <p>Historical names and sovereignty changes are preserved by date. Counts describe pilot evidence, not geopolitical importance.</p>
         </div>
-        <div class="pathway-list" id="pathwayList"></div>
-      </section>
-    </div>
+        <div class="country-list" id="countryGrid"></div>
+      </div>
+    </section>
 
-    <section class="section" id="timeline" aria-labelledby="timeline-heading">
+    <section class="section" id="periods" aria-labelledby="periods-title">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow" style="color:var(--teal)">Conceptual history</p>
-          <h2 id="timeline-heading">Strategic-resource diplomacy across time</h2>
+        <div><p class="eyebrow">Explore by period</p><h2 id="periods-title">A changing strategic-resource system</h2></div>
+        <p>The historical experience ends in 1992. Later material appears only in the separately labeled Modern Context panel.</p>
+      </div>
+      <div class="period-rail" id="periodRail"></div>
+      <div class="period-detail" id="periodDetail" aria-live="polite"></div>
+      <div class="admin-strip" id="administrationStrip" aria-label="Pilot administration profiles"></div>
+    </section>
+
+    <section class="feature-band" id="episode" aria-labelledby="episode-title">
+      <div class="section feature-grid">
+        <div class="feature-copy">
+          <p class="eyebrow">Featured historical episode</p>
+          <h2 id="episode-title">Bolivian tin in 1942</h2>
+          <p>The pilot brings together a FRUS purchasing pathway and contemporaneous U.S. mineral statistics without treating chapter-level discovery metadata as document-level fact.</p>
+          <div class="evidence-labels"><span>FRUS narrative</span><span>USGS statistical context</span><span>Research gaps visible</span></div>
+          <div id="featuredFrus"></div>
         </div>
-        <p>The default view begins with contemporary records in historical context. Select an era to inspect terminology, institutions, instruments, tensions, and verified coverage.</p>
-      </div>
-      <div class="era-rail" id="eraRail" aria-label="Historical eras"></div>
-      <div class="timeline-panel">
-        <div class="timeline-context" id="timelineContext"></div>
-        <div class="timeline-records" id="timelineRecords" aria-live="polite"></div>
-      </div>
-      <div class="administration-band" aria-labelledby="admin-title">
-        <div><h3 id="admin-title">Administration coverage</h3><p>Counts show indexed evidence only, not policy intensity.</p></div>
-        <div class="admin-list" id="adminList"></div>
+        <aside class="numbers-panel" aria-labelledby="numbers-title">
+          <div class="panel-heading"><p class="eyebrow">Policy in Numbers</p><h3 id="numbers-title">Tin, United States, 1942</h3></div>
+          <div class="number-grid" id="policyNumbers"></div>
+          <p class="panel-note">Values retain USGS units and definitions. This pilot does not yet calculate Bolivia’s share of U.S. imports or route-level volumes.</p>
+          <a class="button-link" href="history-stack.html?type=mineral&amp;id=tin">Open full tin profile</a>
+        </aside>
       </div>
     </section>
 
-    <div class="section-band" id="countries">
-      <section class="section" aria-labelledby="countries-heading">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow" style="color:var(--teal)">Country histories and evidence geography</p>
-            <h2 id="countries-heading">How strategic-resource relationships changed</h2>
-          </div>
-          <p>Curated histories distinguish documented relationship arcs from current-only evidence and research gaps. The map is an evidence-coverage view, not a production or power ranking.</p>
-        </div>
-        <div class="map-mode-note"><strong>Map mode: Evidence coverage</strong><span>Marker size represents indexed records only. It does not represent production, reserves, strategic importance, or bilateral intensity.</span></div>
-        <div class="toolbar" aria-label="Map controls">
-          <div class="control"><label for="mapMineral">Mineral</label><select id="mapMineral"></select></div>
-          <div class="control"><label for="mapSource">Source</label><select id="mapSource"></select></div>
-          <div class="control">
-            <label for="mapYear">Evidence through year</label>
-            <div class="range-wrap"><input id="mapYear" type="range" min="1861" max="2026" value="2026" step="1"><output class="range-value" id="mapYearValue" for="mapYear">2026</output></div>
-          </div>
-        </div>
-        <div class="map-layout">
-          <div class="map-canvas" id="mapCanvas" aria-live="polite"></div>
-          <aside class="analysis-rail" aria-labelledby="map-analysis-title">
-            <h3 id="map-analysis-title">How to interpret this view</h3>
-            <p class="analysis-summary" id="mapSummary"></p>
-            <p class="mini-heading">Trusted source mix</p><div id="sourceMix"></div>
-            <p class="mini-heading">Supply-chain stage</p><div id="stageMix"></div>
-            <p class="coverage-note">Coverage is not completeness. Missing countries or years identify an indexing priority, not an absence of U.S. interest.</p>
-          </aside>
-        </div>
-        <div class="country-detail" id="countryDetail" aria-live="polite"></div>
-        <div class="country-table-wrap">
-          <table class="country-table">
-            <thead><tr><th>Country</th><th>Historical relationship</th><th>Evidence</th><th>Status</th></tr></thead>
-            <tbody id="countryTableBody"></tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-
-    <section class="section" id="minerals" aria-labelledby="minerals-heading">
+    <section class="section" id="map" aria-labelledby="map-title">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow" style="color:var(--teal)">Mineral histories</p>
-          <h2 id="minerals-heading">Follow a material through changing policy language</h2>
-        </div>
-        <p>Cards distinguish verified FRUS appearances from current records and provide historically attested search language as a research aid.</p>
+        <div><p class="eyebrow">Interactive historical map</p><h2 id="map-title">Evidence geography, 1861–1992</h2></div>
+        <p>Country markers show linked pilot records at country-level precision. They do not show production, reserves, bilateral importance, or exact facilities.</p>
       </div>
-      <div class="intel-grid" id="mineralGrid"></div>
+      <div class="map-toolbar">
+        <div class="control"><label for="mapMineral">Mineral</label><select id="mapMineral"></select></div>
+        <div class="control grow"><label for="mapYear">Year <output id="mapYearValue" for="mapYear">1942</output></label><input id="mapYear" type="range" min="1861" max="1992" value="1942" step="1"></div>
+        <div class="map-mode"><strong>Mode</strong><span>Evidence coverage</span></div>
+      </div>
+      <div class="map-layout">
+        <div class="map-canvas" id="mapCanvas"></div>
+        <aside class="map-inspector" id="mapInspector" aria-live="polite"></aside>
+      </div>
+      <details class="accessible-table">
+        <summary>Open accessible map table</summary>
+        <table><thead><tr><th>Country or territory</th><th>Historical name in selected year</th><th>Linked minerals</th><th>Linked FRUS records</th><th>Precision</th></tr></thead><tbody id="mapTableBody"></tbody></table>
+      </details>
     </section>
 
-    <div class="section-band" id="frus">
-      <section class="section" aria-labelledby="frus-heading">
+    <section class="section-band" id="instruments">
+      <div class="section" aria-labelledby="instruments-title">
         <div class="section-heading">
-          <div>
-            <p class="eyebrow" style="color:var(--teal)">Advanced discovery layer</p>
-            <h2 id="frus-heading">Full FRUS strategic-resources index</h2>
-          </div>
-          <p>Search all subject-authority mappings after using the guided pathways. Curated document metadata and editorial annotations are visibly separated from uncurated index context.</p>
+          <div><p class="eyebrow">Treaties, agreements, and law</p><h2 id="instruments-title">Instruments of access and preparedness</h2></div>
+          <p>Formal treaties are distinguished from purchasing negotiations, concessions, interagency reviews, and other policy instruments.</p>
         </div>
-        <div class="frus-layout">
-          <div class="frus-panel">
-            <div class="frus-stats" id="frusStats"></div>
-            <div class="frus-controls">
-              <div class="control frus-search-control">
-                <label for="frusQuery">Search volume context, document number, or verified title</label>
-                <input id="frusQuery" type="search" placeholder="Try strategic materials, Chile, bauxite, or d395">
-              </div>
-              <div class="control">
-                <label for="frusSubject">Subject authority</label>
-                <select id="frusSubject"></select>
-              </div>
-              <div class="control">
-                <label for="frusFromYear">From volume year</label>
-                <select id="frusFromYear"></select>
-              </div>
-              <div class="control">
-                <label for="frusToYear">To volume year</label>
-                <select id="frusToYear"></select>
-              </div>
-            </div>
-            <div class="frus-result-bar">
-              <strong id="frusResultsCount">Loading FRUS index</strong>
-              <button class="filter-chip" id="frusClear" type="button">Clear FRUS filters</button>
-            </div>
-            <p class="frus-corpus-note" id="frusCorpusNote"></p>
-            <div class="record-list" id="frusRecords" aria-live="polite"></div>
-            <button class="button-link frus-load-more" id="frusLoadMore" type="button">Show more documents</button>
-          </div>
-          <aside class="source-panel">
-            <h3>Index coverage</h3>
-            <p>The complete mappings for Minerals and metals and Natural resources are included, with exact Bauxite and Sea bed mining assignments retained as additional facets.</p>
-            <div class="frus-authority-list" id="frusAuthorityList"></div>
-            <h3 class="frus-query-heading">Literal metadata filters</h3>
-            <p>These filters search official volume context, subject labels, document identifiers, and the small set of verified document titles.</p>
-            <div class="record-list" id="frusQueries"></div>
-            <div class="source-links">
-              <a class="button-link" href="https://history.state.gov/historicaldocuments" target="_blank" rel="noopener">Browse FRUS volumes ↗</a>
-              <a class="button-link" href="https://github.com/therealjameswilson/critical-minerals-records-stage-v2/blob/main/docs/frus-subject-index.md" target="_blank" rel="noopener">Index methodology ↗</a>
-            </div>
-          </aside>
+        <div class="instrument-controls">
+          <div class="control"><label for="instrumentType">Record type</label><select id="instrumentType"></select></div>
+          <div class="control"><label for="instrumentMineral">Mineral</label><select id="instrumentMineral"></select></div>
+          <strong id="instrumentCount" aria-live="polite"></strong>
         </div>
-      </section>
-    </div>
+        <div class="split-layout">
+          <div><h3 class="subheading">Treaties, agreements, and policy instruments</h3><div class="record-list" id="agreementList"></div></div>
+          <aside><h3 class="subheading">Legislative foundations</h3><div class="record-list" id="lawList"></div></aside>
+        </div>
+      </div>
+    </section>
 
-    <section class="section" id="evidence" aria-labelledby="evidence-heading">
+    <section class="section" id="archives" aria-labelledby="archives-title">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow" style="color:var(--teal)">Cross-source discovery</p>
-          <h2 id="evidence-heading">Evidence Explorer</h2>
-        </div>
-        <p>Filter the smaller event-level evidence set across FRUS, NARA, Census, USGS, State, DOE, DLA, and other official sources.</p>
+        <div><p class="eyebrow">NARA archival discovery</p><h2 id="archives-title">Move from FRUS to the wider archive</h2></div>
+        <p>Twenty-five structured query plans target relevant record groups. Returned descriptions remain leads until a researcher reviews their substantive relevance.</p>
       </div>
-
-      <div class="evidence-shell">
-        <div class="evidence-filters">
-          <div class="control search-control">
-            <label for="evidenceQuery">Filter indexed titles, descriptions, subjects, countries, and minerals</label>
-            <input id="evidenceQuery" type="search" placeholder="Filter evidence metadata">
-          </div>
-          <div class="control"><label for="filterMineral">Mineral</label><select id="filterMineral"></select></div>
-          <div class="control"><label for="filterCountry">Country</label><select id="filterCountry"></select></div>
-          <div class="control"><label for="filterSource">Source type</label><select id="filterSource"></select></div>
-          <div class="control"><label for="filterStage">Supply-chain stage</label><select id="filterStage"></select></div>
-          <div class="control"><label for="filterEra">Era</label><select id="filterEra"></select></div>
+      <div class="archive-shell">
+        <div class="archive-controls">
+          <div class="control grow"><label for="naraQuery">Structured query plan</label><select id="naraQuery"></select></div>
+          <button id="runNaraQuery" type="button">Search NARA</button>
         </div>
-        <div class="filter-actions">
-          <strong id="resultsCount">0 records</strong>
-          <div>
-            <button class="filter-chip" id="naraSearch" type="button">Search NARA Catalog ↗</button>
-            <button class="filter-chip" id="shareView" type="button">Copy shareable view</button>
-            <button class="filter-chip" id="clearFilters" type="button">Clear filters</button>
-          </div>
-        </div>
-        <div class="evidence-results" id="evidenceResults" aria-live="polite"></div>
+        <div class="archive-status" id="naraStatus"></div>
+        <div class="record-list nara-results" id="naraResults" aria-live="polite"></div>
+        <p class="nara-attribution">This product uses the National Archives Catalog API but is not endorsed or certified by the National Archives and Records Administration.</p>
       </div>
     </section>
 
-    <div class="section-band" id="methodology">
-      <section class="section" aria-labelledby="method-heading">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow" style="color:var(--teal)">Trust architecture</p>
-            <h2 id="method-heading">How to read FRUS and this portal</h2>
-          </div>
-          <p>FRUS is indispensable, but it is selected and edited rather than a complete archive. The portal preserves that distinction at every layer.</p>
+    <section class="stockpile-band" id="stockpile" aria-labelledby="stockpile-title">
+      <div class="section">
+        <div class="section-heading light-heading">
+          <div><p class="eyebrow">Strategic stockpile</p><h2 id="stockpile-title">Planning, authority, and accessible foreign sources</h2></div>
+          <p>The pilot exposes policy pathways and statutory foundations while leaving unverified material-level goals and holdings blank.</p>
         </div>
-        <div class="method-layout">
-          <div class="method-guide">
-            <h3>Seven rules for interpretation</h3>
-            <ul>
-              <li>FRUS is a selected and edited documentary record, not the complete archive.</li>
-              <li>Subject mappings identify potentially relevant documents; they do not prove minerals are the central topic.</li>
-              <li>Volume dates and chapter headings are navigation context, not necessarily document-level dates or titles.</li>
-              <li>Absence from FRUS does not prove absence of U.S. interest or policy activity.</li>
-              <li>Historical actors often used terms other than “critical minerals.”</li>
-              <li>Modern categories should not be projected backward without explanation.</li>
-              <li>Historical resemblance is not a direct policy prescription.</li>
-            </ul>
-            <details>
-              <summary>Where to look beyond FRUS</summary>
-              <p>NARA, presidential libraries, Defense, Commerce, USGS, aid-agency, intelligence, and congressional records may be necessary to reconstruct procurement, finance, industrial policy, or implementation.</p>
-            </details>
-          </div>
-          <div class="method-grid">
-            <div class="method-card"><h3>FRUS metadata</h3><p>Titles, dates, volume context, identifiers, and authoritative links are documentary metadata.</p></div>
-            <div class="method-card"><h3>Editorial synthesis</h3><p>Interpretive fields appear only where a record has an explicit, human-authored annotation.</p></div>
-            <div class="method-card"><h3>Contemporary comparison</h3><p>Resonance and critical difference are shown together to prevent false equivalence.</p></div>
-            <div class="method-card"><h3>Visible uncertainty</h3><p>Placeholders, proxy data, historical geography, and research queues stay labeled.</p></div>
-          </div>
+        <div class="stockpile-grid" id="stockpileGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="frus" aria-labelledby="frus-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Narrative spine and advanced discovery</p><h2 id="frus-title">FRUS strategic-resources index</h2></div>
+        <p>The full 1861–1992 subject-authority index is searchable here. Volume dates and chapter headings are navigation context, not document dates or titles.</p>
+      </div>
+      <div class="frus-shell">
+        <div class="frus-controls">
+          <div class="control grow"><label for="frusQuery">Filter indexed metadata</label><input id="frusQuery" type="search" placeholder="Strategic materials, Belgian Congo, bauxite, or d395"></div>
+          <div class="control"><label for="frusSubject">Subject authority</label><select id="frusSubject"></select></div>
+          <div class="control"><label for="frusFromYear">From year</label><select id="frusFromYear"></select></div>
+          <div class="control"><label for="frusToYear">To year</label><select id="frusToYear"></select></div>
+          <button class="quiet-button" id="frusClear" type="button">Clear</button>
         </div>
-      </section>
-    </div>
+        <div class="frus-summary"><strong id="frusResultsCount">Loading index</strong><span id="frusCorpusNote"></span></div>
+        <div class="record-list frus-list" id="frusRecords" aria-live="polite"></div>
+        <button class="button-link load-more" id="frusLoadMore" type="button">Show more FRUS records</button>
+      </div>
+    </section>
+
+    <section class="method-band" id="method" aria-labelledby="method-title">
+      <div class="section method-grid">
+        <div>
+          <p class="eyebrow">Methodology and source transparency</p>
+          <h2 id="method-title">How to read this portal</h2>
+          <p>FRUS is selected and edited, not the complete archive. Subject mappings identify potentially relevant documents but do not prove centrality. Absence from FRUS does not prove absence of U.S. interest or activity.</p>
+          <a class="button-link" href="methodology.html">Open full methodology</a>
+        </div>
+        <div class="method-rules">
+          <div><strong>Historical boundary</strong><span>Main data ends in 1992.</span></div>
+          <div><strong>No invented values</strong><span>Missing statistics remain missing.</span></div>
+          <div><strong>Original units</strong><span>Conversions are disclosed or avoided.</span></div>
+          <div><strong>Historical geography</strong><span>Names are preserved by date.</span></div>
+          <div><strong>Visible uncertainty</strong><span>Partial coverage and research queues stay labeled.</span></div>
+          <div><strong>Authoritative links</strong><span>Every pilot claim points back to an official source layer.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="modern-context" id="modernContext" aria-labelledby="modern-context-title">
+      <div class="section modern-inner">
+        <span class="boundary-label">Outside the historical dataset</span>
+        <div><p class="eyebrow">Modern Context</p><h2 id="modern-context-title">Why revisit this record now?</h2></div>
+        <div id="modernContextContent"></div>
+      </div>
+    </aside>
   </main>
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div>
-        <strong>Strategic Resources Diplomacy</strong>
-        <p>Adapted from the Records Toolkit Template. This public demonstrator is not an official U.S. Government product and does not represent Department of State views.</p>
-      </div>
-      <div><a href="https://github.com/therealjameswilson/critical-minerals-records-stage-v2" target="_blank" rel="noopener">Source repository ↗</a></div>
+      <div><strong>The United States and Strategic Resources, 1861–1992</strong><p>Adapted from the <a href="https://github.com/therealjameswilson/toolkit-template" target="_blank" rel="noopener">Records Toolkit Template</a>. Public demonstrator; not an official U.S. Government product.</p></div>
+      <a href="https://github.com/therealjameswilson/critical-minerals-records-stage-v2" target="_blank" rel="noopener">Source repository <span aria-hidden="true">↗</span></a>
     </div>
   </footer>
 
-  <script src="assets/frus-subjects-index.js"></script>
-  <script src="data/portal-data.js"></script>
-  <script>
-    const SUBJECT_TAXONOMY = [{"n":"Critical minerals","c":"Energy technologies","sc":"Energy criticality"},{"n":"Ministerial follow-up","c":"Ministerial follow-up","sc":"FSO outputs"},{"n":"Historical diplomacy","c":"Historical diplomacy","sc":"Historical and archival evidence"},{"n":"Archival discovery","c":"Historical diplomacy","sc":"Historical and archival evidence"},{"n":"FRUS context","c":"Historical diplomacy","sc":"Historical and archival evidence"},{"n":"Trade and import reliance","c":"Trade and import reliance","sc":"Trade data"},{"n":"HS-code proxy","c":"Trade and import reliance","sc":"Trade data"},{"n":"Lithium","c":"Battery minerals","sc":"Core battery inputs"},{"n":"Cobalt","c":"Battery minerals","sc":"Core battery inputs"},{"n":"Nickel","c":"Battery minerals","sc":"Core battery inputs"},{"n":"Graphite","c":"Battery minerals","sc":"Core battery inputs"},{"n":"Rare earth elements","c":"Rare earth elements","sc":"REE diplomacy and processing"},{"n":"Neodymium","c":"Rare earth elements","sc":"REE diplomacy and processing"},{"n":"Dysprosium","c":"Rare earth elements","sc":"REE diplomacy and processing"},{"n":"Gallium","c":"Semiconductor materials","sc":"Chip supply chains"},{"n":"Germanium","c":"Semiconductor materials","sc":"Chip supply chains"},{"n":"Processing and refining","c":"Processing and refining","sc":"Midstream capacity"},{"n":"Recycling and circularity","c":"Processing and refining","sc":"Midstream capacity"},{"n":"Infrastructure and finance","c":"Processing and refining","sc":"Midstream capacity"},{"n":"Strategic stockpiling","c":"Defense industrial base","sc":"Strategic materials"},{"n":"Defense industrial base","c":"Defense industrial base","sc":"Strategic materials"},{"n":"Energy technologies","c":"Energy technologies","sc":"Energy criticality"},{"n":"Resource nationalism","c":"Resource nationalism","sc":"Political economy"},{"n":"Environmental and labor issues","c":"Resource nationalism","sc":"Political economy"},{"n":"Investment climate","c":"Resource nationalism","sc":"Political economy"},{"n":"Policy document","c":"Ministerial follow-up","sc":"FSO outputs"},{"n":"Federal Register","c":"Ministerial follow-up","sc":"FSO outputs"}];
-    const EVENTS_CACHE = {"01-01":[{"y":2025,"t":"Census trade-data example: nickel ores and concentrates imports, HS 260400","u":"https://www.census.gov/data/developers/data-sets/international-trade.html","s":"U.S. Census Bureau","sc":122,"de":"Metadata-only example for an import query by HS code. Values are intentionally omitted from the cache; fetch current figures from the Census API.","dd":"January 2025 example query","sb":[5,6],"mi":["nickel"],"cty":["United States"],"st":"Census","et":"trade_data","ch":["trade"],"fu":["reporting","investment_climate"],"ag":["U.S. Census Bureau"],"cf":"medium","hs":["260400"],"cu":"https://www.census.gov/data/developers/data-sets/international-trade.html","cv":"HS code is a proxy for commodity flow and may not identify mined origin or critical-minerals content with policy precision.","rid":"census-nickel-hs-260400-example"},{"y":1982,"t":"FRUS metadata placeholder: strategic and critical minerals access","u":"https://history.state.gov/historicaldocuments/frus1981-88v41/d116","s":"FRUS / HistoryAtState","sc":118,"de":"Sample metadata-only record for a FRUS document surfaced by a critical-minerals query. Verify exact date, title, and citation before operational use.","dd":"1980s example date - verify exact document date","sb":[0,2,19],"mi":["strategic minerals"],"cty":["United States"],"st":"FRUS","et":"historical_record","ch":["diplomacy","stockpiling"],"fu":["historical_context","meeting_prep"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1981-88v41/d116","cv":"Sample date and title are placeholders for demo use; cite the HistoryAtState document after source-note review.","rid":"frus-1981-88-v41-d116-example"},{"y":1974,"t":"FRUS metadata placeholder: seabed manganese nodules and resource diplomacy","u":"https://history.state.gov/historicaldocuments/frus1969-76ve01/d430","s":"FRUS / HistoryAtState","sc":118,"de":"Sample metadata-only FRUS discovery record for law-of-the-sea and seabed-minerals context. Verify exact document metadata before use.","dd":"1970s example date - verify exact document date","sb":[0,2,22],"mi":["manganese"],"cty":["United States"],"st":"FRUS","et":"historical_record","ch":["diplomacy","mining"],"fu":["historical_context","talking_points"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1969-76ve01/d430","cv":"Sample record flags a topic connection only; verify document-level relevance and exact date.","rid":"frus-1969-76-ve01-d430-example"},{"y":2025,"t":"Census trade-data example: copper ores and refined copper query","u":"https://www.census.gov/data/developers/data-sets/international-trade.html","s":"U.S. Census Bureau","sc":114,"de":"Metadata-only example for a partner-country trade query by HS code. Values are intentionally omitted from the cache; fetch current figures from the Census API.","dd":"January 2025 example query","sb":[0,5,6],"mi":["copper"],"cty":["United States","Chile"],"st":"Census","et":"trade_data","ch":["trade","refining"],"fu":["reporting","supply_chain_mapping"],"ag":["U.S. Census Bureau"],"cf":"low","hs":["260300","740311"],"cu":"https://www.census.gov/data/developers/data-sets/international-trade.html","cv":"Partner-country and HS-code parameters are placeholders; verify Census query fields, commodity coverage, and period before using figures.","rid":"census-copper-chile-hs-example"},{"y":2025,"t":"Census trade-data example: gallium and germanium proxy HS codes","u":"https://www.census.gov/foreign-trade/statistics/historical/hs.html","s":"U.S. Census Bureau","sc":101,"de":"Metadata-only example for semiconductor-material trade monitoring. Confirm HS mappings and query vintage before using in a brief.","dd":"January 2025 example query","sb":[5,6],"mi":["gallium","germanium"],"cty":["United States"],"st":"Census","et":"trade_data","ch":["trade","processing"],"fu":["reporting","talking_points"],"ag":["U.S. Census Bureau"],"cf":"low","hs":["811292","811299"],"cu":"https://www.census.gov/foreign-trade/statistics/historical/hs.html","cv":"Codes are starter proxies only; verify HTS/Schedule B coverage and aggregation before clearance.","rid":"census-gallium-germanium-hs-example"}],"07-09":[{"y":2026,"t":"DLA Strategic Materials overview","u":"https://www.dla.mil/Strategic-Materials/","s":"DLA Strategic Materials","sc":128,"de":"Official DLA reference metadata for defense-relevant strategic materials planning, procurement, and stockpile context.","dd":"Reference record created July 9, 2026","sb":[0,19,20],"mi":["beryllium","germanium","rare earth elements"],"cty":["United States"],"st":"DLA","et":"policy_document","ch":["stockpiling","recycling"],"fu":["meeting_prep","historical_context"],"ag":["Defense Logistics Agency"],"cf":"high","hs":[],"cu":"https://www.dla.mil/Strategic-Materials/","cv":"Use DLA program pages for orientation; cite specific notices or reports for material-specific claims.","rid":"dla-strategic-materials-overview"},{"y":2026,"t":"NARA discovery placeholder: strategic materials and stockpiling","u":"https://catalog.archives.gov/search?q=strategic%20materials%20stockpile","s":"NARA Catalog","sc":108,"de":"Placeholder archival-discovery record for strategic-materials holdings. Use the NARA connector to replace this with cataloged records.","dd":"Search placeholder created July 9, 2026","sb":[3,19,20],"mi":["strategic materials"],"cty":["United States"],"st":"NARA","et":"archival_record","ch":["stockpiling"],"fu":["historical_context","meeting_prep"],"ag":["National Archives and Records Administration","Defense Logistics Agency"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=strategic%20materials%20stockpile","cv":"Search URL only; not a citable archival item.","rid":"nara-strategic-materials-search-placeholder"},{"y":2026,"t":"NARA discovery placeholder: Indonesia nickel and strategic materials","u":"https://catalog.archives.gov/search?q=Indonesia%20nickel%20strategic%20materials","s":"NARA Catalog","sc":108,"de":"Placeholder archival-discovery record showing how a NARA Catalog query for Indonesia and nickel-related strategic-materials context would enter the global view.","dd":"Search placeholder created July 9, 2026","sb":[0,3,16],"mi":["nickel"],"cty":["Indonesia"],"st":"NARA","et":"archival_record","ch":["mining","processing"],"fu":["historical_context","access_analysis"],"ag":["National Archives and Records Administration"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=Indonesia%20nickel%20strategic%20materials","cv":"Search URL only; replace with item- or series-level NARA API metadata before citation.","rid":"nara-indonesia-nickel-search-placeholder"},{"y":2026,"t":"NARA discovery placeholder: Congo cobalt and strategic minerals","u":"https://catalog.archives.gov/search?q=Congo%20cobalt%20strategic%20minerals","s":"NARA Catalog","sc":108,"de":"Placeholder archival-discovery record showing how a NARA Catalog query for Congo, cobalt, and strategic-minerals context would enter the global view.","dd":"Search placeholder created July 9, 2026","sb":[0,3,22],"mi":["cobalt"],"cty":["Democratic Republic of the Congo"],"st":"NARA","et":"archival_record","ch":["mining","diplomacy"],"fu":["historical_context","access_analysis"],"ag":["National Archives and Records Administration"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=Congo%20cobalt%20strategic%20minerals","cv":"Search URL only; country terminology and archival relevance require item-level verification.","rid":"nara-drc-cobalt-search-placeholder"},{"y":2026,"t":"NARA discovery placeholder: critical minerals archival records","u":"https://catalog.archives.gov/search?q=critical%20minerals","s":"NARA Catalog","sc":107,"de":"Placeholder record representing a NARA Catalog search result set to be replaced by item- or series-level catalog metadata.","dd":"Search placeholder created July 9, 2026","sb":[0,2,3],"mi":["critical minerals"],"cty":["United States"],"st":"NARA","et":"archival_record","ch":["diplomacy"],"fu":["historical_context","evidence_pack"],"ag":["National Archives and Records Administration"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=critical%20minerals","cv":"Search URL only; replace with stable NAID records before clearance.","rid":"nara-critical-minerals-search-placeholder"},{"y":2026,"t":"Deputy Secretary Landau and the Critical Minerals Imperative: State Department Priorities in 2026","u":"https://github.com/therealjameswilson/critical-minerals-records-stage-v2/blob/main/research/Landau-Critical-Minerals-2026.md","s":"Landau Critical Minerals Report","sc":92,"de":"Analytical synthesis of Deputy Secretary Christopher Landau's 2025-2026 critical-minerals diplomacy, bilateral engagements, investment frameworks, and implications for State Department operations.","dd":"Report ingested July 9, 2026","sb":[1,2,18],"mi":["critical minerals","rare earth elements","cobalt","copper","lithium","tungsten","vanadium","graphite"],"cty":["United States","Argentina","Chile","Democratic Republic of the Congo","Kazakhstan","Mexico","Uzbekistan","Egypt","Ethiopia","Kenya","Djibouti"],"st":"Analytical Report","et":"analytical_synthesis","ch":["diplomacy","finance","mining","processing","infrastructure"],"fu":["historical_context","meeting_prep","reporting","supply_chain_mapping"],"ag":["Department of State","U.S. International Development Finance Corporation","Export-Import Bank of the United States"],"cf":"medium","hs":[],"cu":"https://github.com/therealjameswilson/critical-minerals-records-stage-v2/blob/main/research/Landau-Critical-Minerals-2026.md","cv":"Analytical report with 31 references across mixed source tiers. Validate each operational claim against the linked official or primary source before reuse.","rid":"landau-critical-minerals-2026-analytical-report"}],"11-07":[{"y":2025,"t":"USGS / Interior final 2025 List of Critical Minerals","u":"https://www.usgs.gov/news/science-snippet/interior-department-releases-final-2025-list-critical-minerals","s":"USGS","sc":131,"de":"Official source metadata for tracking the U.S. critical minerals list and changes to list composition.","dd":"November 7, 2025","sb":[0,1,25],"mi":["critical minerals","copper","rare earth elements"],"cty":["United States"],"st":"USGS","et":"policy_document","ch":["diplomacy","permitting"],"fu":["talking_points","historical_context","meeting_prep"],"ag":["U.S. Geological Survey","Department of the Interior"],"cf":"high","hs":[],"cu":"https://www.usgs.gov/news/science-snippet/interior-department-releases-final-2025-list-critical-minerals","cv":"Use the Federal Register notice for the controlling legal list when needed.","rid":"usgs-2025-critical-minerals-list"},{"y":2025,"t":"Final 2025 List of Critical Minerals","u":"https://www.federalregister.gov/documents/2025/11/07/2025-19813/final-2025-list-of-critical-minerals","s":"Federal Register","sc":124,"de":"Federal Register metadata for the final 2025 critical minerals list.","dd":"November 7, 2025","sb":[0,25,26],"mi":["critical minerals"],"cty":["United States"],"st":"Federal Register","et":"policy_document","ch":["permitting","diplomacy"],"fu":["talking_points","reporting","meeting_prep"],"ag":["Department of the Interior","U.S. Geological Survey"],"cf":"high","hs":[],"cu":"https://www.federalregister.gov/documents/2025/11/07/2025-19813/final-2025-list-of-critical-minerals","cv":"Use notice text for legal citation; this metadata cache is not the source of law.","rid":"federal-register-2025-critical-minerals-list"}],"05-31":[{"y":2023,"t":"DOE 2023 Critical Materials Assessment","u":"https://www.energy.gov/cmei/ammto/articles/2023-doe-critical-materials-assessment","s":"DOE","sc":133,"de":"Official DOE source metadata for energy-technology criticality, supply risk, and material importance context.","dd":"May 2023","sb":[0,16,21],"mi":["lithium","cobalt","rare earth elements","graphite"],"cty":["United States"],"st":"DOE","et":"policy_document","ch":["processing","refining","recycling"],"fu":["meeting_prep","talking_points","access_analysis"],"ag":["Department of Energy"],"cf":"high","hs":[],"cu":"https://www.energy.gov/cmei/ammto/articles/2023-doe-critical-materials-assessment","cv":"Assessment scope is energy materials; do not treat it as identical to the USGS critical-minerals list.","rid":"doe-2023-critical-materials-assessment"}],"02-04":[{"y":2026,"t":"2026 Critical Minerals Ministerial","u":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","s":"State Department","sc":137,"de":"Official State Department release metadata for the 2026 Critical Minerals Ministerial and follow-up evidence review.","dd":"February 4, 2026","sb":[0,1,2],"mi":["critical minerals","rare earth elements","nickel","cobalt","graphite","gallium","germanium","copper"],"cty":["United States"],"st":"State","et":"ministerial_document","ch":["diplomacy","finance","infrastructure"],"fu":["meeting_prep","supply_chain_mapping","ministerial_follow_up","talking_points"],"ag":["Department of State"],"cf":"high","hs":[],"cu":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","cv":"State.gov pages may block automated retrieval; verify live page access in a browser before final clearance.","rid":"state-2026-critical-minerals-ministerial"}],"09-01":[{"y":2025,"t":"Partner-country placeholder: Australia investment climate and critical minerals","u":"https://www.state.gov/reports/2025-investment-climate-statements/australia","s":"State Department","sc":121,"de":"Sample partner-country / investment-climate metadata record. Use the country statement and country-team reporting channels to validate specific claims.","dd":"2025 Investment Climate Statement example","sb":[0,18,24],"mi":["critical minerals"],"cty":["Australia"],"st":"State","et":"policy_document","ch":["finance","processing","infrastructure"],"fu":["investment_climate","meeting_prep","reporting"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://www.state.gov/reports/2025-investment-climate-statements/australia","cv":"Placeholder record for workflow demonstration; verify statement text and country team context.","rid":"state-australia-2025-investment-climate-critical-minerals"}],"02-05":[{"y":2026,"t":"Sample evidence review: rare earths follow-up evidence pack","u":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","s":"Other USG","sc":117,"de":"Demonstrator evidence-review record tying ministerial follow-up to rare earths, processing capacity, partner coordination, and source-backed analysis.","dd":"Ministerial follow-up example","sb":[1,11,16],"mi":["rare earth elements","neodymium","dysprosium"],"cty":["United States"],"st":"Other USG","et":"ministerial_document","ch":["processing","refining","diplomacy"],"fu":["meeting_prep","evidence_pack","questions_for_counterparts"],"ag":["Department of State","Department of Energy","U.S. Geological Survey"],"cf":"low","hs":[],"cu":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","cv":"Internal evidence-review scaffold only; replace with sourced records before operational use.","rid":"ministerial-follow-up-evidence-review-rare-earths"}],"12-22":[{"y":1947,"t":"The Acting Secretary of State to Certain Diplomatic and Consular Offices","u":"https://history.state.gov/historicaldocuments/frus1947v01/d395","s":"FRUS / HistoryAtState","sc":136,"de":"A confidential circular airgram connected European Recovery Program planning to overseas production and U.S. stockpiling of a named list of strategic and critical materials.","dd":"December 22, 1947","sb":[2,5,19],"mi":["antimony","chromium","cobalt","copper","graphite","manganese","nickel","tin","tungsten","vanadium","zinc"],"cty":["United States"],"st":"FRUS","et":"historical_record","ch":["diplomacy","stockpiling","mining","trade"],"fu":["historical_context","access_analysis","supply_chain_mapping"],"ag":["Department of State"],"cf":"high","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1947v01/d395","cv":"The record concerns a broad 1947 strategic-materials list and proposed ERP provisions; mineral-level conclusions should be tied to the document text.","rid":"frus-1947-v1-d395-strategic-materials"},{"y":1953,"t":"National Intelligence Estimate: Conditions and Trends in Tropical Africa","u":"https://history.state.gov/historicaldocuments/frus1952-54v11p1/d27","s":"FRUS / HistoryAtState","sc":123,"de":"A National Intelligence Estimate assessed the strategic importance of Tropical Africa, including access to cobalt, copper, chrome, manganese, tin, graphite, and other raw materials.","dd":"December 22, 1953","sb":[2,5,22],"mi":["cobalt","copper","chromium","manganese","tin","graphite","vanadium"],"cty":["Democratic Republic of the Congo","South Africa"],"st":"FRUS","et":"historical_record","ch":["mining","trade","diplomacy","infrastructure"],"fu":["historical_context","access_analysis","supply_chain_mapping"],"ag":["Department of State"],"cf":"high","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1952-54v11p1/d27","cv":"The document uses 1953 colonial geography and terminology. Modern country tags are discovery aids and must not replace the historical place names in citation or analysis.","rid":"frus-1952-54-v11p1-d27-tropical-africa"}],"05-29":[{"y":1950,"t":"Memorandum by the National Security Resources Board: Comments on NSC/68 Programs","u":"https://history.state.gov/historicaldocuments/frus1950v01/d95","s":"FRUS / HistoryAtState","sc":136,"de":"The National Security Resources Board described strategic stockpile objectives, foreign-source assumptions, and material requirements in planning connected to NSC-68.","dd":"May 29, 1950","sb":[2,19,20],"mi":["aluminum","chromium","cobalt","copper","manganese","nickel","tin","tungsten","zinc"],"cty":["United States"],"st":"FRUS","et":"historical_record","ch":["stockpiling","trade","diplomacy"],"fu":["historical_context","access_analysis","meeting_prep"],"ag":["National Security Resources Board","Department of State"],"cf":"high","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1950v01/d95","cv":"Stockpile quantities and assumptions are historical planning figures from the document and should not be compared with modern units without normalization.","rid":"frus-1950-v1-d95-stockpile-program"},{"y":2026,"t":"Approving Critical Position Pay Authority for National Security Investment Workforce","u":"https://www.whitehouse.gov/presidential-actions/2026/05/approving-critical-position-pay-authority-for-national-security-investment-workforce/","s":"The White House","sc":131,"de":"A presidential memorandum approved critical-position pay for up to 400 positions supporting national-security investment programs, including critical-minerals work.","dd":"May 29, 2026","sb":[0,18,20],"mi":["critical minerals","strategic materials"],"cty":["United States"],"st":"Other USG","et":"policy_document","ch":["finance","diplomacy","infrastructure"],"fu":["historical_context","reporting","access_analysis"],"ag":["The White House","Office of Personnel Management","Office of Management and Budget"],"cf":"high","hs":[],"cu":"https://www.whitehouse.gov/presidential-actions/2026/05/approving-critical-position-pay-authority-for-national-security-investment-workforce/","cv":"The memorandum authorizes a government-wide pay authority; it does not specify how many positions the Department of State would receive or fill.","rid":"white-house-2026-critical-minerals-workforce"}],"06-27":[{"y":1967,"t":"Memorandum on Stockpile Objectives","u":"https://history.state.gov/historicaldocuments/frus1964-68v09/d344","s":"FRUS / HistoryAtState","sc":139,"de":"A Defense memorandum recorded how State and Defense evaluated the political and economic dependability of accessible foreign sources when calculating strategic-material stockpile needs.","dd":"June 27, 1967","sb":[2,19,20],"mi":["chromium","cobalt","copper","manganese","nickel","tin","tungsten"],"cty":["United States","Canada","Mexico"],"st":"FRUS","et":"historical_record","ch":["stockpiling","trade","diplomacy"],"fu":["historical_context","access_analysis","meeting_prep"],"ag":["Department of Defense","Department of State","Office of Emergency Planning"],"cf":"high","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1964-68v09/d344","cv":"The memorandum contrasts agency assumptions and includes illustrative stockpile calculations; it is not a modern supply-risk assessment.","rid":"frus-1964-68-v9-d344-stockpile-objectives"}],"12-19":[{"y":2017,"t":"Critical mineral resources of the United States: An introduction","u":"https://www.usgs.gov/publications/critical-mineral-resources-united-states-introduction","s":"USGS","sc":137,"de":"USGS Professional Paper 1802 introduced a national assessment of 23 mineral commodities or groups and reviewed the history and meaning of strategic and critical materials.","dd":"December 19, 2017","sb":[0,2,5],"mi":["antimony","cobalt","gallium","germanium","graphite","lithium","manganese","rare earth elements","tin","tungsten","vanadium"],"cty":["United States"],"st":"USGS","et":"statistical_release","ch":["mining","processing","trade","recycling"],"fu":["historical_context","access_analysis","supply_chain_mapping"],"ag":["U.S. Geological Survey","Department of the Interior"],"cf":"high","hs":[],"cu":"https://doi.org/10.3133/pp1802A","cv":"This introductory chapter provides national and historical framing; commodity-specific findings belong to the relevant chapters of Professional Paper 1802.","rid":"usgs-2017-pp1802a-critical-mineral-resources"}],"01-14":[{"y":2026,"t":"Adjusting Imports of Processed Critical Minerals and Their Derivative Products into the United States","u":"https://www.whitehouse.gov/presidential-actions/2026/01/adjusting-imports-of-processed-critical-minerals-and-their-derivative-products-into-the-united-states/","s":"The White House","sc":137,"de":"A presidential proclamation recorded the Commerce Department's finding that processed critical-mineral imports threatened to impair national security and directed negotiated measures to adjust imports.","dd":"January 14, 2026","sb":[0,5,20],"mi":["critical minerals","lithium","gallium","germanium","cobalt","nickel","rare earth elements"],"cty":["United States"],"st":"Other USG","et":"policy_document","ch":["processing","trade","diplomacy"],"fu":["historical_context","access_analysis","reporting"],"ag":["The White House","Department of Commerce","Department of State"],"cf":"high","hs":[],"cu":"https://www.whitehouse.gov/presidential-actions/2026/01/adjusting-imports-of-processed-critical-minerals-and-their-derivative-products-into-the-united-states/","cv":"This is a policy instrument and national-security determination, not a commodity-level production or trade dataset.","rid":"white-house-2026-processed-critical-minerals-proclamation"}],"01-24":[{"y":2026,"t":"Deputy Secretary Landau's Travel to Egypt, Ethiopia, Kenya, and Djibouti","u":"https://www.state.gov/releases/office-of-the-spokesperson/2026/01/deputy-secretary-landaus-travel-to-egypt-ethiopia-kenya-and-djibouti","s":"State Department","sc":133,"de":"Official State Department itinerary metadata for Deputy Secretary Landau's pre-ministerial travel focused on commercial engagement, trade, security, and bilateral relationships.","dd":"January 24-February 1, 2026","sb":[0,2,18],"mi":["critical minerals","rare earth elements"],"cty":["Egypt","Ethiopia","Kenya","Djibouti"],"st":"State","et":"policy_document","ch":["diplomacy","finance","infrastructure"],"fu":["historical_context","meeting_prep","reporting"],"ag":["Department of State","U.S. Africa Command"],"cf":"high","hs":[],"cu":"https://www.state.gov/releases/office-of-the-spokesperson/2026/01/deputy-secretary-landaus-travel-to-egypt-ethiopia-kenya-and-djibouti","cv":"The itinerary establishes official travel and stated themes. Mineral-specific interpretations come from the Landau analytical report and require claim-level verification.","rid":"state-2026-landau-africa-travel"}],"02-18":[{"y":2026,"t":"DFC Leadership Lays the Foundation for Investment Partnership with Uzbekistan","u":"https://www.dfc.gov/media/press-releases/dfc-leadership-lays-foundation-investment-partnership-uzbekistan","s":"U.S. International Development Finance Corporation","sc":122,"de":"DFC announced heads of terms for a proposed U.S.-Uzbekistan Joint Investment Framework covering critical minerals, infrastructure, energy, and the value chain from exploration through processing.","dd":"February 18, 2026","sb":[0,16,18],"mi":["critical minerals","rare earth elements","tungsten","lithium","vanadium","graphite"],"cty":["United States","Uzbekistan"],"st":"Other USG","et":"investment_framework","ch":["finance","mining","processing","infrastructure"],"fu":["investment_climate","meeting_prep","reporting","supply_chain_mapping"],"ag":["U.S. International Development Finance Corporation","Export-Import Bank of the United States"],"cf":"high","hs":[],"cu":"https://www.dfc.gov/media/press-releases/dfc-leadership-lays-foundation-investment-partnership-uzbekistan","cv":"The announcement describes proposed structures and intent; it should not be read as evidence that individual projects or financing had closed.","rid":"dfc-2026-uzbekistan-joint-investment-framework"}]};
-  </script>
-  <script src="assets/portal.js"></script>
+  <script src="assets/runtime-config.js?v=2.0.0"></script>
+  <script src="assets/frus-subjects-index.js?v=2.0.0"></script>
+  <script src="assets/history-data.js?v=2.0.0"></script>
+  <script src="assets/portal.js?v=2.0.0"></script>
 </body>
 </html>

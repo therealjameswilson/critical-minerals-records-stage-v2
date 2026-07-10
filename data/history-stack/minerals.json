@@ -1,0 +1,467 @@
+[
+  {
+    "id": "aluminum",
+    "canonical_name": "Aluminum",
+    "alternate_names": [
+      "aluminium"
+    ],
+    "chemical_symbol": "Al",
+    "category": "light metal",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "twentieth century",
+        "use": "Transportation, electrical, construction, packaging, and defense applications are documented in official commodity histories.",
+        "source_ids": [
+          "usgs-statistical-compendium"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "united-states",
+      "surinam"
+    ],
+    "frus_document_ids": [
+      "frus-1941v02-d805",
+      "frus-1941v02-d821",
+      "frus-1950v01-d95"
+    ],
+    "agreement_ids": [
+      "surinam-bauxite-protection-1941"
+    ],
+    "law_ids": [
+      "defense-production-act-1950"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement",
+      "early-cold-war-mobilization"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "usgs-ds140",
+      "usgs-statistical-compendium"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Bauxite-to-alumina-to-aluminum conversion relationships are not yet modeled.",
+      "Stockpile holdings need report-level transcription."
+    ]
+  },
+  {
+    "id": "bauxite",
+    "canonical_name": "Bauxite",
+    "alternate_names": [
+      "aluminum ore",
+      "aluminium ore"
+    ],
+    "chemical_symbol": null,
+    "category": "ore and industrial mineral",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "World War II",
+        "use": "Raw material for alumina and aluminum; FRUS indexes a 1941 chapter on protection of Surinam bauxite mines.",
+        "source_ids": [
+          "frus-history-at-state",
+          "frus-subject-index"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "surinam",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1941v02-d805",
+      "frus-1941v02-d821"
+    ],
+    "agreement_ids": [
+      "surinam-bauxite-protection-1941"
+    ],
+    "law_ids": [],
+    "episode_ids": [
+      "world-war-ii-procurement"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index",
+      "usgs-ds140"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Country production and shipping-route series are not yet transcribed."
+    ]
+  },
+  {
+    "id": "chromium",
+    "canonical_name": "Chromium",
+    "alternate_names": [
+      "chrome",
+      "chromite"
+    ],
+    "chemical_symbol": "Cr",
+    "category": "ferroalloy metal",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "World War II",
+        "use": "FRUS indexes U.S.-British efforts to acquire Turkish chrome and prevent sales to Germany.",
+        "source_ids": [
+          "frus-history-at-state",
+          "frus-subject-index"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "turkey",
+      "south-africa",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1941v03-d1006",
+      "frus-1941v03-d1038",
+      "frus-1947v01-d395",
+      "frus-1950v01-d95",
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [
+      "turkish-chrome-negotiations-1941",
+      "erp-strategic-materials-provisions-1947",
+      "stockpile-objectives-review-1967"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946",
+      "defense-production-act-1950",
+      "stock-piling-revision-act-1979"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement",
+      "early-cold-war-mobilization",
+      "late-cold-war-resource-policy"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index",
+      "usgs-ds140"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Historical country-level chromite series and Rhodesian sanctions evidence remain to be added."
+    ]
+  },
+  {
+    "id": "cobalt",
+    "canonical_name": "Cobalt",
+    "alternate_names": [],
+    "chemical_symbol": "Co",
+    "category": "alloy and battery metal",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "early Cold War",
+        "use": "Reviewed FRUS records identify cobalt among strategic African raw materials and in U.S. stockpile planning.",
+        "source_ids": [
+          "frus-history-at-state"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "belgian-congo",
+      "northern-rhodesia",
+      "south-africa",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1942v02-d3",
+      "frus-1942v02-d14",
+      "frus-1947v01-d395",
+      "frus-1952-54v11p1-d27",
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [
+      "congo-tripartite-trade-negotiations-1942",
+      "erp-strategic-materials-provisions-1947",
+      "stockpile-objectives-review-1967"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946",
+      "defense-production-act-1950"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement",
+      "early-cold-war-mobilization",
+      "decolonization-and-resource-access"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "usgs-ds140",
+      "usgs-statistical-compendium"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Mine-level ownership, refining routes, and country production remain research queues."
+    ]
+  },
+  {
+    "id": "copper",
+    "canonical_name": "Copper",
+    "alternate_names": [],
+    "chemical_symbol": "Cu",
+    "category": "base metal",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "twentieth century",
+        "use": "Official commodity histories document broad electrical and industrial uses; FRUS records connect copper to wartime shipments, stockpiles, and African resource assessments.",
+        "source_ids": [
+          "usgs-statistical-compendium",
+          "frus-history-at-state"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "bolivia",
+      "chile",
+      "belgian-congo",
+      "northern-rhodesia",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1914supp-d423",
+      "frus-1914supp-d427",
+      "frus-1942v05-d493",
+      "frus-1952-54v11p1-d27",
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [
+      "copper-shipment-correspondence-1914",
+      "bolivian-strategic-materials-purchase-1942",
+      "stockpile-objectives-review-1967"
+    ],
+    "law_ids": [
+      "defense-production-act-1950"
+    ],
+    "episode_ids": [
+      "world-war-i-resource-access",
+      "world-war-ii-procurement",
+      "decolonization-and-resource-access"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index",
+      "usgs-ds140",
+      "usgs-statistical-compendium"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Chilean nationalization and U.S. import-source series are not yet populated."
+    ]
+  },
+  {
+    "id": "manganese",
+    "canonical_name": "Manganese",
+    "alternate_names": [
+      "manganese ore"
+    ],
+    "chemical_symbol": "Mn",
+    "category": "ferroalloy metal",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "twentieth century",
+        "use": "Reviewed FRUS records list manganese among strategic materials considered in African-resource and stockpile planning.",
+        "source_ids": [
+          "frus-history-at-state"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "south-africa",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1947v01-d395",
+      "frus-1950v01-d95",
+      "frus-1952-54v11p1-d27",
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [
+      "erp-strategic-materials-provisions-1947",
+      "nsc68-materials-program-1950",
+      "stockpile-objectives-review-1967"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946",
+      "defense-production-act-1950"
+    ],
+    "episode_ids": [
+      "early-cold-war-mobilization",
+      "decolonization-and-resource-access"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "usgs-ds140"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "World War I import dependence and supplier-country statistics remain to be added."
+    ]
+  },
+  {
+    "id": "tin",
+    "canonical_name": "Tin",
+    "alternate_names": [],
+    "chemical_symbol": "Sn",
+    "category": "base and strategic metal",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "World War II",
+        "use": "FRUS indexes strategic-material purchasing from Bolivia and an international tin-control agreement; USGS provides a long-run quantitative series.",
+        "source_ids": [
+          "frus-history-at-state",
+          "frus-subject-index",
+          "usgs-ds140"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "bolivia",
+      "belgian-congo",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1942v01-d440",
+      "frus-1942v05-d493",
+      "frus-1942v05-d564",
+      "frus-1947v01-d395",
+      "frus-1950v01-d95",
+      "frus-1952-54v11p1-d27",
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [
+      "international-tin-control-agreement-1942",
+      "bolivian-strategic-materials-purchase-1942",
+      "us-bolivia-economic-cooperation-1942",
+      "stockpile-objectives-review-1967"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946",
+      "defense-production-act-1950"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement",
+      "early-cold-war-mobilization"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index",
+      "usgs-ds140",
+      "usgs-statistical-compendium"
+    ],
+    "completeness": "verified-pilot",
+    "data_gaps": [
+      "Bolivia's share of U.S. imports and route-level shipping data require additional official tables."
+    ]
+  },
+  {
+    "id": "tungsten",
+    "canonical_name": "Tungsten",
+    "alternate_names": [
+      "wolfram",
+      "wolframite",
+      "scheelite"
+    ],
+    "chemical_symbol": "W",
+    "category": "refractory and alloy metal",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "early Cold War",
+        "use": "Reviewed FRUS stockpile records list tungsten among strategic materials assessed for foreign access and reserve requirements.",
+        "source_ids": [
+          "frus-history-at-state"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "bolivia",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1942v05-d493",
+      "frus-1947v01-d395",
+      "frus-1950v01-d95",
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [
+      "bolivian-strategic-materials-purchase-1942",
+      "erp-strategic-materials-provisions-1947",
+      "stockpile-objectives-review-1967"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946",
+      "defense-production-act-1950"
+    ],
+    "episode_ids": [
+      "world-war-ii-procurement",
+      "early-cold-war-mobilization"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "usgs-ds140"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "Supplier-country and price-contract histories remain to be linked."
+    ]
+  }
+]

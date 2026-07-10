@@ -97,16 +97,18 @@ def test_landau_command_center_records_are_present_and_tiered():
     assert "mixed source tiers" in report["extra"]["caveat"]
 
 
-def test_portal_shell_has_historical_research_sections_and_no_operational_ui():
+def test_portal_shell_has_history_stack_sections_and_no_operational_ui():
     html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
-    assert "Strategic Resources Diplomacy" in html
-    assert "How the United States used diplomacy to secure access to strategic resources" in html
-    assert "Recurring diplomatic problems" in html
-    assert "FRUS Pathways" in html
-    assert "Strategic-resource diplomacy across time" in html
-    assert "Full FRUS strategic-resources index" in html
-    assert "Evidence Explorer" in html
-    assert "How to read FRUS and this portal" in html
+    assert "The United States and Strategic Resources, 1861–1992" in html
+    assert "FRUS explains what policymakers were thinking" in html
+    assert "State of the Mineral" in html
+    assert "Historical resource relationships" in html
+    assert "Policy in Numbers" in html
+    assert "Evidence geography, 1861–1992" in html
+    assert "Treaties, agreements, and law" in html
+    assert "NARA archival discovery" in html
+    assert "FRUS strategic-resources index" in html
+    assert "Modern Context" in html
     assert 'id="navToggle"' in html
     assert 'aria-expanded="false"' in html
     assert "2025-2026 Command Center" not in html
@@ -117,55 +119,42 @@ def test_portal_shell_has_historical_research_sections_and_no_operational_ui():
     assert "Export Notes as Word" not in html
     assert "Analytical Notes" not in html
     assert "Historical question" not in html
-    assert "historical questions" not in html.lower()
+    assert "social media" not in html.lower()
+    assert "tweet" not in html.lower()
 
 
-def test_portal_data_covers_full_historical_frame():
-    source = (ROOT / "data" / "portal-data.js").read_text(encoding="utf-8")
-    assert 'id: "civil-war"' in source
-    assert "start: 1861" in source
-    assert 'id: "ministerial-era"' in source
-    assert "end: 2026" in source
-    assert source.count("symbol:") >= 13
-    assert source.count("focus:") >= 16
-    assert "diplomaticProblems" in source
-    assert "frusPathways" in source
-    assert "frusAnnotations" in source
-    assert "presentContext" in source
-    assert "historicalQuestion" not in source
-    assert "priorities:" in source
-    assert source.count('status: "verified"') >= 9
-    assert source.count('status: "research"') >= 12
+def test_portal_data_is_modular_and_hard_bounded_to_1992():
+    data_root = ROOT / "data" / "history-stack"
+    assert (data_root / "minerals.json").exists()
+    assert (data_root / "countries.json").exists()
+    assert (data_root / "frus-documents.json").exists()
+    episodes = json.loads((data_root / "episodes.json").read_text(encoding="utf-8"))
+    assert min(row["start"] for row in episodes) >= 1861
+    assert max(row["end"] for row in episodes) <= 1992
+    assert any(row["id"] == "world-war-ii-procurement" for row in episodes)
+    assert all(row["id"] != "ministerial-era" for row in episodes)
 
 
-def test_curated_frus_annotations_only_reference_verified_seed_records():
-    source = (ROOT / "data" / "portal-data.js").read_text(encoding="utf-8")
-    expected = {
-        "frus-1947-v1-d395-strategic-materials",
-        "frus-1950-v1-d95-stockpile-program",
-        "frus-1952-54-v11p1-d27-tropical-africa",
-        "frus-1964-68-v9-d344-stockpile-objectives",
-    }
-    annotation_block = source.split("frusAnnotations:", 1)[1].split("presentContext:", 1)[0]
-    for record_id in expected:
-        assert f'"{record_id}"' in annotation_block
-    assert "frus-1981-88-v41-d116-example" not in annotation_block
-    assert "frus-1969-76-ve01-d430-example" not in annotation_block
-    assert "policyProblem" in annotation_block
-    assert "criticalDifference" in source
+def test_curated_frus_records_are_visibly_separate_from_discovery_leads():
+    records = json.loads((ROOT / "data" / "history-stack" / "frus-documents.json").read_text(encoding="utf-8"))
+    reviewed = [row for row in records if row["metadata_status"] == "verified-document"]
+    leads = [row for row in records if row["metadata_status"] == "subject-index-lead"]
+    assert len(reviewed) == 4
+    assert len(leads) == 16
+    assert all(row["title"] and row["date"] and row["contextual_summary"] for row in reviewed)
+    assert all(row["title"] is None and row["date"] is None and row["contextual_summary"] is None for row in leads)
 
 
-def test_guided_search_and_mobile_navigation_contracts_are_present():
+def test_search_map_and_mobile_navigation_contracts_are_present():
     javascript = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
     css = (ROOT / "assets" / "portal.css").read_text(encoding="utf-8")
-    assert "function openLens" in javascript
-    assert "function openFrusQuery" in javascript
-    assert "function setNavOpen" in javascript
-    assert 'searchState.query = query.trim()' in javascript
-    assert 'frusState.query = searchState.query' not in javascript
-    assert '.primary-nav.open' in css
+    assert "function runGlobalSearch" in javascript
+    assert "function renderFrus" in javascript
+    assert "function renderMap" in javascript
+    assert "history-stack.html" in (ROOT / "assets" / "history-data.js").read_text(encoding="utf-8")
+    assert ".primary-nav.is-open" in css
     assert ".nav-toggle" in css
-    assert "Evidence coverage only" in javascript
+    assert "Evidence coverage" in (ROOT / "records-stage.html").read_text(encoding="utf-8")
 
 
 def test_landau_report_is_preserved_outside_browser_cache():

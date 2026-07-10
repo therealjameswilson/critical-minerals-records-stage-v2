@@ -1,137 +1,83 @@
-# Strategic Resources Diplomacy
+# The United States and Strategic Resources, 1861–1992
 
-A static-first, FRUS-grounded research environment for understanding how the
-United States used diplomacy to procure, secure, finance, protect, and reassess
-access to strategic resources.
+A static, FRUS-led historical decision-support and orientation platform for
+understanding how the United States sought access to critical minerals and
+strategic resources. It is designed for Department of State employees, Foreign
+Service Officers, historians, policy researchers, and students.
 
-The primary audience is Foreign Service Officers and policy staff, but the site
-is also designed for historians, journalists, congressional staff, researchers,
-and students. It begins with recurring diplomatic problems and curated FRUS
-pathways, then opens into a conceptual timeline, country and mineral histories,
-the full FRUS subject index, and a filterable official-source evidence set.
+**Live site:**
+[therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html](https://therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html)
 
-Live site:
-[therealjameswilson.github.io/critical-minerals-records-stage-v2](https://therealjameswilson.github.io/critical-minerals-records-stage-v2/)
+> **Governing principle:** FRUS explains what policymakers were thinking. Other
+> official U.S. Government sources explain what they were looking at.
 
-## Historical Operating Picture
+The main historical experience is hard-bounded to 1861–1992. Post-1992 material
+appears only in a separately labeled Modern Context layer.
 
-The portal is organized around diplomatic problems rather than a commodity list.
-It documents how U.S. officials understood and secured access to strategically
-important materials as war, technology, alliances, markets, and supplier
-geography changed.
+## What v2 Provides
 
-The historical frame begins in 1861 and moves through:
+- A historical homepage organized by mineral, country, period, episode, map,
+  agreement, law, archive, stockpile case, and FRUS record.
+- Reusable History Stack pages that connect an entity to twelve layers: FRUS,
+  timeline, official statistics, agreements, geography, law, stockpiles,
+  archives, decision process, outcomes, provenance, and Modern Context.
+- A complete metadata-only FRUS Subjects discovery index for 1861–1992:
+  16,811 document links across 545 volumes.
+- A pilot with 8 minerals, 8 countries or territories, 6 periods, 14 typed
+  agreements or policy instruments, 3 laws, 4 administrations, 2 stockpile
+  cases, 20 linked FRUS records, and 25 NARA query plans.
+- 1,114 unit-defined historical observations extracted from official USGS Data
+  Series 140 workbooks without project interpolation.
+- A country-level evidence map with a 1861–1992 year control and accessible
+  table alternative.
+- A source-visible NARA discovery layer that can use a secret-bearing serverless
+  proxy without exposing the API key to GitHub Pages.
 
-- Civil War and industrial mobilization
-- Industrial expansion and overseas war
-- World War I and interwar mineral planning
-- World War II procurement and strategic materials
-- Early Cold War stockpiling, recovery, and decolonization
-- Cold War assumptions about accessible foreign sources
-- Post-Cold War trade integration
-- The China WTO era
-- Modern critical-minerals strategy
-- The 2025-2026 ministerial era
-
-Verified records and research gaps are visually distinct. A missing record is
-treated as an indexing priority, not evidence that a policy concern did not
-exist.
-
-## Provenance
-
-This repository is a standalone adaptation of
-[therealjameswilson/toolkit-template](https://github.com/therealjameswilson/toolkit-template),
-which descends from the FRUS On This Day toolkit. It preserves the parser,
-scorer, event contract, taxonomy enrichment, and compact-cache build pattern
-while replacing the social-media workflow with a historical research
-interface.
+This is a public research demonstrator, not an official Department of State or
+U.S. Government product.
 
 ## Trust Model
 
-The project is metadata-only. Do not put full FRUS, NARA, report, cable, or
-publication text into `events_cache.json`, `events_cache.js`, or the HTML.
-Store only the fields needed for discovery and citation:
+FRUS is the narrative spine, not the entire archive. The interface distinguishes:
 
-- date and title
-- source and source type
-- short description
-- subjects, minerals, countries, agencies, and supply-chain stages
-- stable source and citation URLs
-- record identifiers
-- confidence and caveats
+- **Reviewed FRUS document:** document-level pilot metadata has been checked.
+- **FRUS discovery lead:** only subject-authority and volume or chapter context
+  are known; open the document before making a claim.
+- **Official statistic:** value, unit, year, publication, workbook location,
+  source URL, extraction method, and confidence are retained.
+- **Partial coverage:** at least one evidence layer is linked and named gaps remain.
+- **Research queue:** the schema or discovery route exists but needs verification.
 
-FRUS, NARA, Census, USGS, State, DOE, DLA, Federal Register, and other official
-U.S. Government sources are prioritized. Placeholder search records and HS-code
-proxies are visibly marked for review.
+The project never embeds full FRUS or NARA document text. Missing values are not
+invented, estimated, or converted to zero. Historical country names are stored
+by period. Formal treaties are distinguished from negotiations, concessions,
+purchasing agreements, and domestic policy instruments.
 
-## Portal Sections
-
-- **Why History Matters:** the FRUS-led purpose, literal metadata search, and
-  distinctions among documentary metadata, editorial synthesis, and comparison.
-- **The Present Problem:** current official and analytical concerns linked to
-  documentary pathways, not an implementation dashboard.
-- **Recurring Diplomatic Problems:** nine problem lenses, with unsupported
-  themes explicitly retained as research queues.
-- **FRUS Pathways:** three verified documentary routes and two research queues
-  built from the records already present in this repository.
-- **Conceptual Timeline:** era-based terminology, institutions,
-  instruments, tensions, and source-backed milestones.
-- **Country and Mineral Histories:** curated relationship arcs where evidence
-  permits, plus historical search language and visible gaps.
-- **Full FRUS Index:** 16,811 metadata-only document links across
-  545 volumes. It includes every document assigned to the Minerals and metals
-  or Natural resources authorities, plus exact Bauxite and Sea bed mining
-  assignments, with official volume context and direct HistoryAtState links.
-- **Evidence Explorer:** filterable records with confidence, caveats, official
-  links, NARA discovery, and shareable URLs.
-- **How to Read FRUS:** concise guidance on selection, subject mappings,
-  historical terminology, comparison limits, and collections beyond FRUS.
-
-## Data Model
-
-Each parser-emitted event must include:
-
-- `source`
-- `year`
-- `month`
-- `day`
-- `title`
-- `url`
-
-Recommended fields are `description`, `subjects`, and `date_display`.
-Critical-minerals fields live under `event["extra"]`:
-
-- `minerals: list[str]`
-- `countries: list[str]`
-- `agencies: list[str]`
-- `source_type`
-- `evidence_type`
-- `supply_chain_stage`
-- `fso_use_case`
-- `hs_codes: list[str]`
-- `record_id`
-- `retrieved_at`
-- `citation_url`
-- `caveat`
-- `confidence: high | medium | low`
-
-The browser cache surfaces these fields through
-`cache_format.COMPACT_EXTRA_FIELDS` without embedding document body text.
+Read the [full methodology](methodology.html) or
+[`docs/methodology.md`](docs/methodology.md).
 
 ## Repository Structure
 
-- `records-stage.html`: GitHub Pages entry point with embedded compact metadata
-- `assets/portal.css`: responsive, accessible portal design
-- `assets/portal.js`: search, deep links, map, timeline, indexes, and filters
-- `assets/frus-subjects-index.js`: generated FRUS subject-authority discovery index
-- `data/portal-data.js`: eras, minerals, countries, administrations, and source roles
-- `research/Landau-Critical-Minerals-2026.md`: supplied analytical report,
-  preserved outside the metadata cache
-- `examples/critical_minerals_sample/`: metadata-only sample and verified seeds
-- `parsers/critical_minerals_json_parser.py`: date and field normalization
-- `connectors/`: network-free source connector interfaces
-- `data/crosswalks/`: mineral, HS-code, country, source, agency, and stage mappings
-- `taxonomy-critical-minerals.json`: controlled subject vocabulary
+- `records-stage.html`: historical portal entry point
+- `history-stack.html`: reusable entity and document detail route
+- `methodology.html`: public methodology page
+- `assets/portal.js`: homepage rendering, filters, map, search, and FRUS index
+- `assets/history-stack.js`: reusable twelve-layer entity rendering
+- `assets/history-data.js`: shared loaders, escaping, badges, links, and cards
+- `assets/portal.css`: responsive, accessible archival interface
+- `assets/frus-subjects-index.js`: full metadata-only FRUS discovery index
+- `data/history-stack/`: normalized pilot JSON modules
+- `schemas/`: JSON schemas for core entity types
+- `scripts/build_history_pilot.py`: reproducible editorial pilot builder
+- `scripts/ingest_usgs_ds140.py`: official XLSX extractor
+- `scripts/validate_history_data.py`: dates, references, provenance, and secret checks
+- `connectors/nara.py`: server-side, metadata-only NARA API client
+- `nara_proxy_worker.js`: deployable serverless proxy for the static site
+- `local_server.py`: optional local NARA proxy
+
+The original parser, scorer, taxonomy, compact event-cache, Records Studio, and
+NARA image-support code remain available for compatible metadata workflows, but
+the v2 homepage no longer uses the old post-1992 demonstration cache.
 
 ## Run Locally
 
@@ -139,25 +85,93 @@ The browser cache surfaces these fields through
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
-python build_cache.py --source-root examples/critical_minerals_sample
+python scripts/build_history_pilot.py
+python scripts/ingest_usgs_ds140.py
+python scripts/validate_history_data.py
 python -m http.server 8000
 open http://localhost:8000/records-stage.html
 ```
 
-`build_cache.py` writes the ignored build artifacts `events_cache.json` and
-`events_cache.js`, then embeds their compact metadata into
-`records-stage.html`. The page remains fully compatible with GitHub Pages and
-requires no database or live API for the demonstration.
+The site must be served over HTTP because browsers do not allow modular JSON
+`fetch()` calls from a `file://` page.
 
-## Rebuild The FRUS Subject Index
+To test only with the committed datasets:
 
-The deployed FRUS index is generated from the subject mappings in
+```bash
+python -m http.server 8000
+```
+
+## Rebuild Official USGS Statistics
+
+The extractor downloads eight official Data Series 140 workbooks and writes
+human-readable JSON. It selects benchmark years through 1992, preserves USGS
+units, and skips missing, withheld, estimated-text, and nonnumeric cells.
+
+```bash
+python scripts/ingest_usgs_ds140.py --access-date YYYY-MM-DD
+python scripts/validate_history_data.py
+```
+
+Use `--cache-dir <path>` to retain downloaded XLSX files outside the repository.
+
+## Configure NARA Safely
+
+Create an ignored local file from the empty example:
+
+```bash
+cp .env.example .env.local
+```
+
+Set `NARA_API_KEY` in `.env.local` or export it in the environment. Never place
+the key in `records-stage.html`, `assets/runtime-config.js`, browser JavaScript,
+screenshots, logs, documentation, or a committed file.
+
+Local proxy:
+
+```bash
+pip install flask flask-cors
+python local_server.py --no-browser-open
+```
+
+GitHub Pages cannot hold a server-side secret. Deploy `nara_proxy_worker.js` as a
+serverless Worker, store the key as a secret named `NARA_API_KEY`, and put only
+the public Worker URL in `assets/runtime-config.js`:
+
+```js
+window.HISTORY_RUNTIME_CONFIG = Object.freeze({
+  naraProxyUrl: "https://your-worker.example"
+});
+```
+
+NARA’s current API terms say not to cache or store returned API content, so v2
+uses on-demand, `no-store` responses instead of a GitHub Actions cache. Static
+query plans and authoritative Catalog links remain available if the API fails.
+See [`docs/nara-integration.md`](docs/nara-integration.md).
+
+## Add or Correct Historical Data
+
+1. Add the official source to `data/history-stack/sources.json` through
+   `scripts/build_history_pilot.py`.
+2. Add or update the normalized entity and link existing IDs rather than copying
+   descriptions into multiple files.
+3. Preserve historical names, dates, units, official URLs, and completeness.
+4. Leave unavailable fields empty and add a precise `data_gaps` note.
+5. Rebuild statistics only from official machine-readable files or reviewed
+   page-level transcriptions.
+6. Run validation and tests before publication.
+
+Core schemas are under `schemas/`. Crosswalks for aliases, HS codes, agencies,
+countries, and supply-chain terms remain under `data/crosswalks/`. HS-code
+mappings must retain confidence and caveats because product codes may not
+identify mined origin.
+
+## Rebuild the FRUS Subject Index
+
+The index combines the subject mappings in
 [`therealjameswilson/frus-subjects`](https://github.com/therealjameswilson/frus-subjects)
-and the official lightweight TOC files in
-[`HistoryAtState/frus`](https://github.com/HistoryAtState/frus). It contains
-identifiers, volume spans, subject flags, and chapter context only. It does not
-contain document body text. The subject-mapping repository is currently private;
-an authorized checkout is required to rebuild the generated index.
+with official lightweight TOC files from
+[`HistoryAtState/frus`](https://github.com/HistoryAtState/frus). It contains no
+document body text.
 
 ```bash
 python build_frus_subject_index.py \
@@ -165,59 +179,24 @@ python build_frus_subject_index.py \
   --toc-root ../frus/frus-toc
 ```
 
-See `docs/frus-subject-index.md` for the corpus boundary, interpretation
-caveats, provenance fields, and sparse-checkout commands.
-
-## Records Studio
-
-The original browser setup wrapper remains available for parser, scorer,
-taxonomy, branding, and cache-build configuration:
-
-```bash
-. .venv/bin/activate
-streamlit run app.py
-```
-
-## Add A Source
-
-1. Add or update a connector interface under `connectors/`.
-2. Return metadata shaped like the sample JSON.
-3. Include stable source URLs, citation URLs, record IDs, retrieval dates,
-   confidence, and caveats.
-4. Save the result as JSON/CSV or feed it through a parser.
-5. Run `python build_cache.py --source-root <path>`.
-6. Verify the embedded Stage locally before publication.
-
-Connector stubs do not make live network calls and never contain API keys. See
-`docs/critical-minerals-data-sources.md` for the intended role of each source.
-
-## NARA API Keys
-
-NARA discovery works without credentials by opening the public Catalog search.
-For later API ingestion, never commit credentials. Local keys belong in
-`.nara_key`, which is ignored by git; deployed integrations should use a
-server-side secret or prebuilt metadata, never browser JavaScript.
-
-## Add A Mineral Or Taxonomy Term
-
-- Minerals and aliases: `data/crosswalks/mineral_aliases.yml`
-- HS mappings: `data/crosswalks/mineral_to_hs_codes.yml`
-- Countries: `data/crosswalks/country_iso.yml`
-- Source tiers: `data/crosswalks/source_tiers.yml`
-- Agencies: `data/crosswalks/agencies.yml`
-- Supply-chain stages: `data/crosswalks/supply_chain_stages.yml`
-- Portal index labels: `data/portal-data.js`
-- Subject taxonomy: `taxonomy-critical-minerals.json`
-
-HS mappings must retain their confidence and caveat because product codes do
-not necessarily identify mined origin.
+See [`docs/frus-subject-index.md`](docs/frus-subject-index.md).
 
 ## Tests
 
 ```bash
 . .venv/bin/activate
 python -m pytest tests/ -v
+python scripts/validate_history_data.py
 ```
 
-Tests cover parser validity, normalized dates, compact extra fields, scoring,
-sample cache builds, crosswalk loading, and portal data-contract checks.
+Validation checks entity minimums, unique IDs, cross-file references, the
+1861–1992 boundary, statistical provenance, `.env.example`, and tracked-file
+secret patterns.
+
+## Provenance
+
+This repository is a standalone v2 adaptation of
+[`therealjameswilson/toolkit-template`](https://github.com/therealjameswilson/toolkit-template),
+which descends from the FRUS On This Day toolkit. The v1 repository remains
+preserved at
+[`therealjameswilson/critical-minerals-records-stage`](https://github.com/therealjameswilson/critical-minerals-records-stage).

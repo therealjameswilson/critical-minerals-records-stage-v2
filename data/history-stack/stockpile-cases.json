@@ -1,0 +1,66 @@
+[
+  {
+    "id": "stockpile-planning-1939",
+    "title": "From contingency planning to a strategic raw-materials stockpile",
+    "start": 1939,
+    "end": 1946,
+    "summary": "FRUS indexes 1939 planning for strategic raw-material stockpiles; the 1946 Act supplies a statutory endpoint for this pilot pathway.",
+    "mineral_ids": [],
+    "frus_document_ids": [
+      "frus-1939v01-d934",
+      "frus-1939v01-d939"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946"
+    ],
+    "acquisitions": [],
+    "disposals": [],
+    "goals": [],
+    "holdings": [],
+    "data_gaps": [
+      "Material-level goals and holdings have not been transcribed."
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index",
+      "govinfo-statutes"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "stockpile-objectives-1950-1967",
+    "title": "Foreign-source assumptions and stockpile objectives",
+    "start": 1950,
+    "end": 1967,
+    "summary": "Two reviewed FRUS records show how agencies debated mobilization requirements and the political and economic accessibility of foreign supply.",
+    "mineral_ids": [
+      "aluminum",
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "frus_document_ids": [
+      "frus-1950v01-d95",
+      "frus-1964-68v09-d344"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946",
+      "defense-production-act-1950"
+    ],
+    "acquisitions": [],
+    "disposals": [],
+    "goals": [],
+    "holdings": [],
+    "data_gaps": [
+      "Historical planning quantities are not normalized or displayed until their units and definitions are verified."
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "govinfo-statutes"
+    ],
+    "completeness": "verified-pilot"
+  }
+]

@@ -13,8 +13,8 @@
 // (steps below). Don't point at someone else's Worker  -  their key, quota, and
 // uptime would become your single point of failure.
 //
-// It mirrors the endpoints the tweet tool uses, with identical JSON
-// shapes, so records-stage.html works by simply pointing at this Worker's URL
+// It exposes the narrow metadata endpoints used by the historical research
+// site, so records-stage.html can point at the Worker URL
 // instead of http://localhost:5757:
 //     /ping            -> { ok, nara }
 //     /nara/search?q=... -> { total, returned, query, hits:[...] }
@@ -33,7 +33,7 @@
 //         Value: your NARA catalog API key
 //      Deploy again so the secret takes effect.
 //   4. Copy the Worker URL (https://nara-proxy.<your-subdomain>.workers.dev)
-//      and paste it into the tweet tool's "NARA proxy URL" setting.
+//      and set it as naraProxyUrl in assets/runtime-config.js.
 // ----------------------------------------------------------------------
 
 const NARA_BASE = "https://catalog.archives.gov/api/v2";
@@ -63,7 +63,7 @@ const CORS = {
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {
     status,
-    headers: { "Content-Type": "application/json", ...CORS },
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store", ...CORS },
   });
 }
 
@@ -155,6 +155,10 @@ function normalizeHit(hit) {
   const title = walkFirst(hit, ["title"]) || "";
   const lod = walkFirst(hit, ["levelOfDescription"]);
   const gtypes = walkFirst(hit, ["generalRecordsTypes"]);
+  const dateNote = walkFirst(hit, ["inclusiveDates", "coverageDates", "date"]);
+  const description = walkFirst(hit, ["scopeAndContentNote", "scopeAndContent", "description"]);
+  const creators = walkFirst(hit, ["creatingOrganizations", "creators"]);
+  const recordGroupNumber = walkFirst(hit, ["recordGroupNumber"]);
   const use = walkFirst(hit, ["useRestriction"]) || {};
   let useStatus;
   if (use && typeof use === "object" && !Array.isArray(use)) {
@@ -165,11 +169,8 @@ function normalizeHit(hit) {
 
   const digital = walkDigitalObjects(hit);
   const toObj = (d) => ({ url: d.objectUrl, type: d.objectType, filename: d.objectFilename });
-  // Only surface browser-renderable images (JPG/PNG/GIF/WebP). NARA preservation
-  // masters are TIFF, which no browser can display in an <img> and which social
-  // platforms won't accept anyway. A record whose only image objects are TIFF
-  // therefore yields zero images here (imageCount 0) and is dropped by the
-  // client; the search UI shows a note that some items are hidden for format.
+  // Only surface browser-renderable previews. Preservation TIFFs remain
+  // available from the authoritative catalog record.
   const images = digital
     .filter((d) => d.objectUrl && (d.objectType || "").includes("Image") && RENDERABLE_IMAGE.test(d.objectUrl))
     .map(toObj);
@@ -180,8 +181,13 @@ function normalizeHit(hit) {
   return {
     naid,
     title,
+    catalogUrl: naid ? `https://catalog.archives.gov/id/${naid}` : "https://catalog.archives.gov/",
     levelOfDescription: lod,
     generalRecordsTypes: gtypes,
+    dateNote,
+    description,
+    creators,
+    recordGroupNumber,
     useRestriction: useStatus,
     imageCount: images.length,
     docCount: docs.length,
@@ -254,7 +260,7 @@ async function handleSearch(url, env) {
   let page = parseInt(p.get("page") || "1", 10);
   if (Number.isNaN(page) || page < 1) page = 1;
 
-  const photosOnly = !["0", "false", "no"].includes((p.get("photos_only") || "1").toLowerCase());
+  const photosOnly = !["0", "false", "no"].includes((p.get("photos_only") || "0").toLowerCase());
 
   const params = new URLSearchParams({
     q,
@@ -280,6 +286,8 @@ async function handleSearch(url, env) {
     ["recurring_day", "recurringDateDay"],
     ["recurring_month", "recurringDateMonth"],
     ["record_group", "recordGroupNumber"],
+    ["date_start", "startDate"],
+    ["date_end", "endDate"],
   ]) {
     const v = (p.get(src) || "").trim();
     if (v) params.set(apiName, v);
@@ -309,9 +317,6 @@ async function handleSearch(url, env) {
   const hits = findHits(body);
   const total = findTotal(body);
   const normalized = hits.map(normalizeHit);
-  // Surface image-bearing results first; keep doc-only as fallback.
-  normalized.sort((a, b) => b.imageCount - a.imageCount || (b.docCount || 0) - (a.docCount || 0));
-
   const paramsObj = {};
   for (const [k, v] of params) paramsObj[k] = v;
 
@@ -320,6 +325,10 @@ async function handleSearch(url, env) {
     returned: normalized.length,
     query: { raw: rawQ, effective: q, params: paramsObj },
     hits: normalized,
+    retrievedAt: new Date().toISOString(),
+    recordStatus: "live",
+    attribution:
+      "This product uses the National Archives Catalog API but is not endorsed or certified by the National Archives and Records Administration.",
   });
 }
 
@@ -357,15 +366,15 @@ async function handleFetch(url) {
     status: 200,
     headers: {
       "Content-Type": contentType,
-      "Cache-Control": "public, max-age=86400",
+      "Cache-Control": "no-store",
       ...CORS,
     },
   });
 }
 
 // -- /ia/fetch ----------------------------------------------------------------------
-// Stream an Internet Archive page-render image through the proxy so the tweet
-// tool can attach article images without a local server. Mirrors
+// Stream an Internet Archive page-render image through the proxy for inspection
+// of cited official-publication pages. Mirrors
 // local_server.py's /ia/fetch route: builds IA's IIIF page-image URL from an
 // identifier + 1-indexed PDF page and streams the JPEG back with CORS.
 const IA_VALID_SIZE = new Set(["full", "pct:25", "pct:50", "pct:75", "pct:100"]);

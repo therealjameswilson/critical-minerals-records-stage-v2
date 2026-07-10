@@ -1,0 +1,473 @@
+[
+  {
+    "id": "copper-shipment-correspondence-1914",
+    "official_title": "Wartime copper-shipment correspondence",
+    "short_title": "Wartime copper-shipment correspondence",
+    "record_type": "negotiation-record",
+    "parties": [
+      "United States"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "copper"
+    ],
+    "country_ids": [],
+    "frus_document_ids": [
+      "frus-1914supp-d423",
+      "frus-1914supp-d427"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1914Supp/d423",
+    "summary": "FRUS chapter context identifies correspondence concerning shipments of copper; formal agreement status is not asserted.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "firestone-rubber-concession-negotiations-1925",
+    "official_title": "Firestone rubber concession and loan negotiations",
+    "short_title": "Firestone rubber concession and loan negotiations",
+    "record_type": "concession",
+    "parties": [
+      "Liberia",
+      "Firestone interests"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [],
+    "country_ids": [],
+    "frus_document_ids": [
+      "frus-1925v02-d327",
+      "frus-1925v02-d344"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1925v02/d327",
+    "summary": "FRUS chapter context identifies negotiations concerning a rubber concession and Finance Corporation of America loan.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "strategic-stockpile-planning-1939",
+    "official_title": "Strategic raw-material stockpile planning record",
+    "short_title": "Strategic raw-material stockpile planning record",
+    "record_type": "other",
+    "parties": [
+      "United States"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1939v01-d934",
+      "frus-1939v01-d939"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1939v01/d934",
+    "summary": "FRUS chapter context identifies formulation of plans to acquire strategic-raw-material stockpiles; this row is a policy instrument, not a treaty.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "surinam-bauxite-protection-1941",
+    "official_title": "Arrangements for protection of Surinam bauxite mines",
+    "short_title": "Arrangements for protection of Surinam bauxite mines",
+    "record_type": "other",
+    "parties": [
+      "United States",
+      "Netherlands"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "bauxite",
+      "aluminum"
+    ],
+    "country_ids": [
+      "surinam"
+    ],
+    "frus_document_ids": [
+      "frus-1941v02-d805",
+      "frus-1941v02-d821"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1941v02/d805",
+    "summary": "FRUS chapter context identifies arrangements for American forces to assist in protecting bauxite mines.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "turkish-chrome-negotiations-1941",
+    "official_title": "U.S.-British negotiations for Turkish chrome",
+    "short_title": "U.S.-British negotiations for Turkish chrome",
+    "record_type": "negotiation-record",
+    "parties": [
+      "United States",
+      "United Kingdom",
+      "Turkey"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "chromium"
+    ],
+    "country_ids": [
+      "turkey"
+    ],
+    "frus_document_ids": [
+      "frus-1941v03-d1006",
+      "frus-1941v03-d1038"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1941v03/d1006",
+    "summary": "FRUS chapter context identifies efforts to acquire Turkish chrome and prevent its sale to Germany.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "international-tin-control-agreement-1942",
+    "official_title": "Agreement continuing international control of tin production and export",
+    "short_title": "Agreement continuing international control of tin production and export",
+    "record_type": "commodity-agreement",
+    "parties": [
+      "International parties; verification pending"
+    ],
+    "signature_date": "1942-09-09",
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "tin"
+    ],
+    "country_ids": [],
+    "frus_document_ids": [
+      "frus-1942v01-d440"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1942v01/d440",
+    "summary": "The FRUS chapter heading states that an agreement was signed September 9, 1942; parties and treaty-series citation remain to be verified.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "congo-tripartite-trade-negotiations-1942",
+    "official_title": "U.S.-U.K.-Belgium negotiations on Belgian Congo trade",
+    "short_title": "U.S.-U.K.-Belgium negotiations on Belgian Congo trade",
+    "record_type": "negotiation-record",
+    "parties": [
+      "United States",
+      "United Kingdom",
+      "Belgium"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "cobalt",
+      "copper",
+      "tin"
+    ],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "frus_document_ids": [
+      "frus-1942v02-d3",
+      "frus-1942v02-d14"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1942v02/d3",
+    "summary": "FRUS chapter context identifies negotiations for a tripartite agreement relating to Belgian Congo imports and exports.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "bolivian-strategic-materials-purchase-1942",
+    "official_title": "Negotiations for U.S. purchase of strategic materials from Bolivia",
+    "short_title": "Negotiations for U.S. purchase of strategic materials from Bolivia",
+    "record_type": "purchasing-agreement",
+    "parties": [
+      "United States",
+      "Bolivia"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "tin",
+      "tungsten",
+      "copper"
+    ],
+    "country_ids": [
+      "bolivia"
+    ],
+    "frus_document_ids": [
+      "frus-1942v05-d493"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1942v05/d493",
+    "summary": "FRUS chapter context identifies purchase negotiations; exact contract title and terms require document-level review.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "us-bolivia-economic-cooperation-1942",
+    "official_title": "U.S.-Bolivia economic cooperation program",
+    "short_title": "U.S.-Bolivia economic cooperation program",
+    "record_type": "negotiation-record",
+    "parties": [
+      "United States",
+      "Bolivia"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "tin"
+    ],
+    "country_ids": [
+      "bolivia"
+    ],
+    "frus_document_ids": [
+      "frus-1942v05-d564"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1942v05/d564",
+    "summary": "FRUS chapter context identifies a program of economic cooperation; legal form and implementation consequences remain under review.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "us-uk-uranium-acquisition-1944",
+    "official_title": "U.S.-U.K. uranium acquisition agreement",
+    "short_title": "U.S.-U.K. uranium acquisition agreement",
+    "record_type": "executive-agreement",
+    "parties": [
+      "United States",
+      "United Kingdom"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [],
+    "country_ids": [],
+    "frus_document_ids": [
+      "frus-1944v02-d886"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1944v02/d886",
+    "summary": "FRUS chapter context identifies an agreement regarding uranium acquisition and control; formal citation remains to be added.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "tripartite-uranium-control-1944",
+    "official_title": "U.S.-U.K.-Belgium uranium control agreement",
+    "short_title": "U.S.-U.K.-Belgium uranium control agreement",
+    "record_type": "executive-agreement",
+    "parties": [
+      "United States",
+      "United Kingdom",
+      "Belgium"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "frus_document_ids": [
+      "frus-1944v02-d886"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1944v02/d886",
+    "summary": "FRUS chapter context identifies a tripartite uranium agreement; formal citation remains to be added.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "erp-strategic-materials-provisions-1947",
+    "official_title": "European Recovery Program strategic-materials provisions",
+    "short_title": "European Recovery Program strategic-materials provisions",
+    "record_type": "negotiation-record",
+    "parties": [
+      "United States",
+      "European Recovery Program participants"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1947v01-d395"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1947v01/d395",
+    "summary": "A reviewed FRUS circular connected recovery planning, overseas production, and U.S. stockpiling; this row does not assert a separate treaty.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "verified-pilot"
+  },
+  {
+    "id": "nsc68-materials-program-1950",
+    "official_title": "NSC-68 materials and stockpile program review",
+    "short_title": "NSC-68 materials and stockpile program review",
+    "record_type": "other",
+    "parties": [
+      "United States"
+    ],
+    "signature_date": null,
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "aluminum",
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1950v01-d95"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1950v01/d95",
+    "summary": "A reviewed FRUS memorandum discusses strategic stockpile objectives and foreign-source assumptions; this is a policy-process record, not an international agreement.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "verified-pilot"
+  },
+  {
+    "id": "stockpile-objectives-review-1967",
+    "official_title": "Interagency stockpile objectives review",
+    "short_title": "Interagency stockpile objectives review",
+    "record_type": "other",
+    "parties": [
+      "United States"
+    ],
+    "signature_date": "1967-06-27",
+    "entry_into_force_date": null,
+    "termination_date": null,
+    "treaty_series_citation": null,
+    "statutes_at_large_citation": null,
+    "tias_number": null,
+    "mineral_ids": [
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1964-68v09-d344"
+    ],
+    "official_text_url": "https://history.state.gov/historicaldocuments/frus1964-68v09/d344",
+    "summary": "A reviewed FRUS memorandum records interagency assessment of politically and economically dependable foreign sources; this is a policy-process record, not a treaty.",
+    "implementation_consequences": [],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "verified-pilot"
+  }
+]

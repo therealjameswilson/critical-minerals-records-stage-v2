@@ -1,0 +1,164 @@
+[
+  {
+    "id": "wilson",
+    "president": "Woodrow Wilson",
+    "start": 1913,
+    "end": 1921,
+    "summary": "Pilot coverage currently centers on FRUS discovery leads concerning wartime copper shipments.",
+    "mineral_ids": [
+      "copper"
+    ],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1914supp-d423",
+      "frus-1914supp-d427"
+    ],
+    "agreement_ids": [
+      "copper-shipment-correspondence-1914"
+    ],
+    "law_ids": [],
+    "episode_ids": [
+      "world-war-i-resource-access"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "research-queue"
+  },
+  {
+    "id": "franklin-roosevelt",
+    "president": "Franklin D. Roosevelt",
+    "start": 1933,
+    "end": 1945,
+    "summary": "Pilot FRUS pathways cover stockpile planning, bauxite protection, chrome acquisition, tin purchasing, Congo trade, and uranium agreements.",
+    "mineral_ids": [
+      "aluminum",
+      "bauxite",
+      "chromium",
+      "cobalt",
+      "copper",
+      "tin",
+      "tungsten"
+    ],
+    "country_ids": [
+      "bolivia",
+      "belgian-congo",
+      "surinam",
+      "turkey",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1939v01-d934",
+      "frus-1939v01-d939",
+      "frus-1941v02-d805",
+      "frus-1941v02-d821",
+      "frus-1941v03-d1006",
+      "frus-1941v03-d1038",
+      "frus-1942v01-d440",
+      "frus-1942v02-d3",
+      "frus-1942v02-d14",
+      "frus-1942v05-d493",
+      "frus-1942v05-d564",
+      "frus-1944v02-d886"
+    ],
+    "agreement_ids": [
+      "strategic-stockpile-planning-1939",
+      "surinam-bauxite-protection-1941",
+      "turkish-chrome-negotiations-1941",
+      "international-tin-control-agreement-1942",
+      "congo-tripartite-trade-negotiations-1942",
+      "bolivian-strategic-materials-purchase-1942",
+      "us-bolivia-economic-cooperation-1942",
+      "us-uk-uranium-acquisition-1944",
+      "tripartite-uranium-control-1944"
+    ],
+    "law_ids": [],
+    "episode_ids": [
+      "interwar-planning",
+      "world-war-ii-procurement"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "frus-subject-index"
+    ],
+    "completeness": "partial"
+  },
+  {
+    "id": "truman",
+    "president": "Harry S. Truman",
+    "start": 1945,
+    "end": 1953,
+    "summary": "Reviewed FRUS records connect recovery planning, stockpile objectives, foreign-source assumptions, and African strategic materials.",
+    "mineral_ids": [
+      "aluminum",
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "country_ids": [
+      "belgian-congo",
+      "northern-rhodesia",
+      "south-africa",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1947v01-d395",
+      "frus-1950v01-d95",
+      "frus-1952-54v11p1-d27"
+    ],
+    "agreement_ids": [
+      "erp-strategic-materials-provisions-1947",
+      "nsc68-materials-program-1950"
+    ],
+    "law_ids": [
+      "stock-piling-act-1946",
+      "defense-production-act-1950"
+    ],
+    "episode_ids": [
+      "early-cold-war-mobilization"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "govinfo-statutes"
+    ],
+    "completeness": "verified-pilot"
+  },
+  {
+    "id": "johnson",
+    "president": "Lyndon B. Johnson",
+    "start": 1963,
+    "end": 1969,
+    "summary": "Pilot coverage currently centers on a reviewed 1967 stockpile-objectives memorandum.",
+    "mineral_ids": [
+      "chromium",
+      "cobalt",
+      "copper",
+      "manganese",
+      "tin",
+      "tungsten"
+    ],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1964-68v09-d344"
+    ],
+    "agreement_ids": [
+      "stockpile-objectives-review-1967"
+    ],
+    "law_ids": [],
+    "episode_ids": [
+      "decolonization-and-resource-access"
+    ],
+    "source_ids": [
+      "frus-history-at-state"
+    ],
+    "completeness": "partial"
+  }
+]

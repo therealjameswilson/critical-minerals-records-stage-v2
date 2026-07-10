@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://therealjameswilson.github.io/critical-minerals-records-stage-v2/schemas/agreement.schema.json",
+  "title": "History Stack treaty or agreement",
+  "type": "object",
+  "required": ["id", "official_title", "record_type", "parties", "mineral_ids", "official_text_url", "source_ids", "completeness"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "official_title": {"type": "string"},
+    "short_title": {"type": "string"},
+    "record_type": {"enum": ["treaty", "executive-agreement", "purchasing-agreement", "commodity-agreement", "concession", "negotiation-record", "other"]},
+    "parties": {"type": "array", "items": {"type": "string"}},
+    "signature_date": {"type": ["string", "null"], "format": "date"},
+    "entry_into_force_date": {"type": ["string", "null"], "format": "date"},
+    "termination_date": {"type": ["string", "null"], "format": "date"},
+    "treaty_series_citation": {"type": ["string", "null"]},
+    "statutes_at_large_citation": {"type": ["string", "null"]},
+    "tias_number": {"type": ["string", "null"]},
+    "mineral_ids": {"type": "array", "items": {"type": "string"}},
+    "country_ids": {"type": "array", "items": {"type": "string"}},
+    "frus_document_ids": {"type": "array", "items": {"type": "string"}},
+    "official_text_url": {"type": "string", "format": "uri"},
+    "summary": {"type": "string"},
+    "implementation_consequences": {"type": "array"},
+    "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "completeness": {"enum": ["verified-pilot", "partial", "research-queue"]}
+  }
+}

@@ -69,10 +69,12 @@ def test_portal_loads_and_filters_the_frus_authority_index():
     html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
     javascript = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
 
-    assert '<script src="assets/frus-subjects-index.js"></script>' in html
+    assert '<script src="assets/frus-subjects-index.js?v=2.0.0"></script>' in html
     assert 'id="frusSubject"' in html
     assert 'id="frusFromYear"' in html
     assert 'id="frusToYear"' in html
-    assert "filteredFrus" in javascript
-    assert 'query: "frus_q"' in javascript
-    assert "restoreHashPosition" in javascript
+    assert "function renderFrus" in javascript
+    assert "subjectNames(mask)" in javascript
+    assert "state.frusFrom" in javascript
+    assert "state.frusTo" in javascript
+    assert "state.frusQuery" in javascript

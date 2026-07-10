@@ -1,0 +1,92 @@
+[
+  {
+    "id": "frus-history-at-state",
+    "label": "Foreign Relations of the United States",
+    "agency": "U.S. Department of State, Office of the Historian",
+    "source_type": "FRUS",
+    "tier": 1,
+    "url": "https://history.state.gov/historicaldocuments",
+    "scope": "Selected and edited documentary record of major U.S. foreign-policy decisions and activity.",
+    "trust_note": "FRUS is the narrative spine, but it is not the complete archival record."
+  },
+  {
+    "id": "frus-subject-index",
+    "label": "FRUS Subjects discovery index",
+    "agency": "Community-maintained index derived from HistoryAtState metadata",
+    "source_type": "discovery-index",
+    "tier": 2,
+    "url": "https://github.com/therealjameswilson/frus-subjects",
+    "scope": "Subject-authority and table-of-contents mappings for FRUS discovery.",
+    "trust_note": "A subject assignment is a lead, not proof that a document is centrally about a resource."
+  },
+  {
+    "id": "usgs-ds140",
+    "label": "Historical Statistics for Mineral and Material Commodities in the United States, Data Series 140",
+    "agency": "U.S. Geological Survey",
+    "source_type": "official-statistics",
+    "tier": 1,
+    "url": "https://www.usgs.gov/centers/national-minerals-information-center/historical-statistics-mineral-commodities-united",
+    "scope": "Long-run U.S. mineral production, trade, consumption, stocks, prices, and world-production series.",
+    "trust_note": "The pilot reproduces numeric XLSX cells, original USGS units, and worksheet locations; missing values are not converted to zero."
+  },
+  {
+    "id": "usgs-statistical-compendium",
+    "label": "Metal Prices in the United States Through 1991 and Statistical Compendium",
+    "agency": "U.S. Geological Survey and predecessor Bureau of Mines",
+    "source_type": "official-publication",
+    "tier": 1,
+    "url": "https://www.usgs.gov/centers/national-minerals-information-center/statistical-compendium",
+    "scope": "Official commodity chapters and historical statistical context through 1990.",
+    "trust_note": "Commodity uses in the pilot are high-level orientation; page-level extraction remains a research task."
+  },
+  {
+    "id": "nara-catalog-api",
+    "label": "National Archives Catalog API",
+    "agency": "National Archives and Records Administration",
+    "source_type": "archival-catalog",
+    "tier": 1,
+    "url": "https://catalog.archives.gov/api/v2/",
+    "scope": "Archival descriptions and links to digitized records or broader series-level holdings.",
+    "trust_note": "Catalog matches require relevance review. The project does not store API response content."
+  },
+  {
+    "id": "govinfo-statutes",
+    "label": "United States Code Compilation and Statutes at Large",
+    "agency": "U.S. Government Publishing Office",
+    "source_type": "law",
+    "tier": 1,
+    "url": "https://www.govinfo.gov/app/collection/COMPS",
+    "scope": "Official compilations and statutory citations for stockpile and production authorities.",
+    "trust_note": "The official text controls; project summaries are orientation only."
+  },
+  {
+    "id": "state-treaties",
+    "label": "Treaties and Other International Acts Series",
+    "agency": "U.S. Department of State",
+    "source_type": "treaty-publication",
+    "tier": 1,
+    "url": "https://www.state.gov/treaties-in-force/",
+    "scope": "Official treaty and international-agreement publication context.",
+    "trust_note": "Pilot purchasing and negotiation records are not labeled formal treaties unless a treaty citation is verified."
+  },
+  {
+    "id": "census-historical-trade",
+    "label": "Historical Foreign Trade Statistics",
+    "agency": "U.S. Census Bureau",
+    "source_type": "official-statistics",
+    "tier": 1,
+    "url": "https://www.census.gov/foreign-trade/statistics/historical/",
+    "scope": "Historical import and export publications and classification references.",
+    "trust_note": "No Census values are yet transcribed into the pilot."
+  },
+  {
+    "id": "gsa-stockpile",
+    "label": "National Defense Stockpile historical records",
+    "agency": "General Services Administration and successor agencies",
+    "source_type": "stockpile-record",
+    "tier": 1,
+    "url": "https://www.dla.mil/Strategic-Materials/",
+    "scope": "Official orientation for the stockpile program and its institutional successors.",
+    "trust_note": "Historical holdings and goals require report- or statute-level citations; they are not inferred here."
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "modern-context-current-usgs-list",
+    "title": "Modern Context",
+    "summary": "Current U.S. critical-minerals categories provide a reason to revisit the historical record, but they are not projected backward as if earlier officials used the same category.",
+    "source_label": "U.S. Geological Survey, 2025 List of Critical Minerals",
+    "source_url": "https://www.usgs.gov/news/science-snippet/interior-department-releases-final-2025-list-critical-minerals",
+    "boundary_note": "This panel is outside the 1861-1992 historical dataset."
+  }
+]

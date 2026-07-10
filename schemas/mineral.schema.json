@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://therealjameswilson.github.io/critical-minerals-records-stage-v2/schemas/mineral.schema.json",
+  "title": "History Stack mineral",
+  "type": "object",
+  "required": ["id", "canonical_name", "category", "historical_scope", "strategic_uses", "source_ids", "completeness"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "canonical_name": {"type": "string", "minLength": 1},
+    "alternate_names": {"type": "array", "items": {"type": "string"}},
+    "chemical_symbol": {"type": ["string", "null"]},
+    "category": {"type": "string"},
+    "historical_scope": {"type": "object", "required": ["start", "end"], "properties": {"start": {"type": "integer", "minimum": 1861, "maximum": 1992}, "end": {"type": "integer", "minimum": 1861, "maximum": 1992}}},
+    "strategic_uses": {"type": "array", "items": {"type": "object", "required": ["period", "use", "source_ids"]}},
+    "military_uses_by_period": {"type": "array"},
+    "industrial_uses_by_period": {"type": "array"},
+    "substitutes": {"type": "array"},
+    "country_ids": {"type": "array", "items": {"type": "string"}},
+    "frus_document_ids": {"type": "array", "items": {"type": "string"}},
+    "agreement_ids": {"type": "array", "items": {"type": "string"}},
+    "law_ids": {"type": "array", "items": {"type": "string"}},
+    "episode_ids": {"type": "array", "items": {"type": "string"}},
+    "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "completeness": {"enum": ["verified-pilot", "partial", "research-queue"]},
+    "data_gaps": {"type": "array", "items": {"type": "string"}}
+  }
+}

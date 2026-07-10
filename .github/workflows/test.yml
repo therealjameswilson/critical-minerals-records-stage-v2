@@ -1,8 +1,7 @@
 name: test
 
-# Runs the toolkit's test suite on every push and PR. Lightweight by design —
-# the toolkit itself is stdlib-only except for the streamlit web wrapper and
-# python-docx (clearance-chain upload), so the install step is fast.
+# Runs the historical data, Python, and static JavaScript checks on every push
+# and pull request.
 
 on:
   push:
@@ -39,3 +38,14 @@ jobs:
       - name: Run pytest
         run: |
           python -m pytest tests/ -v
+
+      - name: Validate History Stack data and tracked secrets
+        run: |
+          python scripts/validate_history_data.py
+
+      - name: Check browser JavaScript syntax
+        run: |
+          node --check assets/history-data.js
+          node --check assets/portal.js
+          node --check assets/history-stack.js
+          node --check nara_proxy_worker.js
