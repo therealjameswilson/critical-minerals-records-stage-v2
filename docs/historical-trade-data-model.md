@@ -85,6 +85,51 @@ The generated detail row retains both a normalized category and the source
 label, quantity and value measurement objects, original source symbol, table
 URL, access date, extraction status, and applicable classification caveats.
 
+## 1962-1992 UN Comtrade Continuity Context
+
+UN Comtrade provides official international reporter-partner merchandise trade
+statistics from 1962. It is a Tier 2 contextual source in this portal: FRUS
+remains the documentary spine, and USITC DataWeb remains the authoritative
+U.S.-reported verification layer where its electronic series is available.
+
+The checked-in rare-earth pilot contains 177 observations recovered from 40
+year-and-reporter queries. It uses:
+
+- SITC Revision 1 for 1962-1975;
+- SITC Revision 2 for 1976-1987; and
+- SITC Revision 3 for 1988-1992.
+
+Each revision remains a separate vintage. The project does not splice them into
+a continuous numeric series. The historical baskets are preserved as distinct
+product families because several are materially broader than rare-earth trade:
+
+- metals proxies may also contain alkali, alkaline-earth, calcium, strontium,
+  or barium trade;
+- the Revision 2 compounds proxy includes thorium and depleted-uranium
+  compounds;
+- the magnet-system proxy includes electromagnets, work holders, couplings,
+  brakes, and lifting heads; and
+- the pyrophoric-alloy proxy includes prepared fuels as well as ferrocerium.
+
+The interface displays U.S.-reported trade with China and the world. It also
+displays China-reported mirror flows where Comtrade contains them. Mirror
+values remain separate because import and export valuation, timing, routing,
+transshipment, and origin rules differ. Converted classifications are visibly
+labeled and never presented as the reporter's original commodity coding.
+
+Every observation retains reporter, partner, flow, classification revision,
+commodity code and description, product-family scope, current-dollar value,
+reported quantity, net weight, estimation flags, original-versus-converted
+status, query identifier, access date, and source URL. Zero-result query years
+remain in the manifest so absence of a displayed row is not confused with an
+unattempted query.
+
+Official references:
+
+- [UN Comtrade](https://comtradeplus.un.org/)
+- [UNSD historical classification and availability explanation](https://unstats.un.org/unsd/trade/dataextract/dataclass.htm)
+- [UN Comtrade methodology guide](https://comtradeapi.un.org/files/v1/app/wiki/MethodologyGuideforComtradePlus.pdf)
+
 ## 1989-1992 USITC DataWeb Partner Trade
 
 USITC DataWeb supplies the first checked-in partner-country layer. DataWeb
@@ -160,12 +205,13 @@ JSON and official workbook control if the source series is refreshed.
 ## Data Rules
 
 1. Do not combine the Census and USGS series into a continuous chart.
-2. Do not infer partner countries, supplier shares, routes, or bilateral flows.
-3. Do not convert physical units or current dollars without a separate,
+2. Do not merge Comtrade classification revisions, product families, or mirror reports.
+3. Do not infer routes, mine origin, ownership, end use, or strategic importance from a reported partner.
+4. Do not convert physical units or current dollars without a separate,
    documented transformation record.
-4. Do not treat missing, withheld, or nonnumeric cells as zero.
-5. Do not use a period average as an exact-year observation.
-6. Preserve publication, table or worksheet location, access date, original
+5. Do not treat missing, withheld, or nonnumeric cells as zero.
+6. Do not use a period average as an exact-year observation.
+7. Preserve publication, table or worksheet location, access date, original
    unit, and extraction status.
 
 ## Refresh and Validation
@@ -173,6 +219,7 @@ JSON and official workbook control if the source series is refreshed.
 ```bash
 python scripts/ingest_trade_data.py --access-date YYYY-MM-DD
 python scripts/build_trade_pilot.py --access-date YYYY-MM-DD --cache-dir .cache/rare-earth-trade
+python scripts/ingest_un_comtrade_rare_earth.py --access-date YYYY-MM-DD --cache-dir .cache/un-comtrade
 python scripts/ingest_usitc_dataweb.py --access-date YYYY-MM-DD --cache-dir .cache/usitc-dataweb
 python scripts/validate_history_data.py
 python -m pytest tests/ -q

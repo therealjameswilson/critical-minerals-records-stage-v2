@@ -4,7 +4,7 @@
   const FILES = [
     "sources", "minerals", "countries", "episodes", "agreements", "laws",
     "administrations", "stockpile-cases", "frus-documents", "statistics", "trade",
-    "trade-details", "trade-research", "dataweb-query-manifest",
+    "trade-details", "trade-research", "dataweb-query-manifest", "comtrade-query-manifest",
     "nara-queries", "country-briefs", "modern-context"
   ];
 
@@ -42,9 +42,10 @@
     ]);
     const data = Object.fromEntries(FILES.map((name, index) => [name, rows[index]]));
     data["dataweb-trade"] = [];
+    data["comtrade-rare-earth"] = [];
     data.atlas = atlas;
     data.indexes = {};
-    [...FILES, "dataweb-trade"].forEach((name) => {
+    [...FILES, "dataweb-trade", "comtrade-rare-earth"].forEach((name) => {
       data.indexes[name] = new Map((data[name] || []).map((row) => [row.id, row]));
     });
     return data;
@@ -106,6 +107,7 @@
       "state-treaties": "State treaty series",
       "census-historical-trade": "Census",
       "usitc-dataweb": "USITC DataWeb / Census",
+      "un-comtrade": "UN Comtrade",
       "census-statistical-abstract-1948": "Census Statistical Abstract",
       "gsa-stockpile": "Stockpile records",
       "state-country-guide-bolivia": "State country guide",

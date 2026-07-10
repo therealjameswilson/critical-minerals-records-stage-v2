@@ -46,6 +46,8 @@ def test_pilot_meets_minimum_entity_counts():
         "trade-research": 21,
         "dataweb-trade": 3600,
         "dataweb-query-manifest": 2,
+        "comtrade-rare-earth": 170,
+        "comtrade-query-manifest": 40,
     }
     for name, minimum in expected.items():
         assert len(load(name)) >= minimum
@@ -216,6 +218,53 @@ def test_dataweb_ingestion_uses_anonymous_public_session_without_secret():
     assert "Authorization" not in script
 
 
+def test_comtrade_continuity_series_preserves_classification_vintages():
+    rows = load("comtrade-rare-earth")
+    assert len(rows) >= 170
+    assert min(row["year"] for row in rows) == 1966
+    assert max(row["year"] for row in rows) == 1992
+    for row in rows:
+        expected = "S1" if row["year"] <= 1975 else "S2" if row["year"] <= 1987 else "S3"
+        assert row["classification_code"] == expected
+        assert row["source_id"] == "un-comtrade"
+        assert row["scope_confidence"] in {"high", "low"}
+        assert row["scope_caveat"]
+
+
+def test_comtrade_preserves_reporter_mirror_values_without_merging_them():
+    rows = {
+        (row["year"], row["reporter_iso3"], row["flow_code"], row["partner_iso3"], row["commodity_code"]): row
+        for row in load("comtrade-rare-earth")
+    }
+    assert rows[(1970, "USA", "M", None, "51326")]["primary_value"] == 564080
+    assert rows[(1985, "USA", "M", None, "52217")]["net_weight_kg"] == 645996
+    us_report = rows[(1992, "USA", "M", "CHN", "52595")]
+    china_report = rows[(1992, "CHN", "X", "USA", "52595")]
+    assert us_report["primary_value"] == 8154255
+    assert china_report["primary_value"] == 7959606
+    assert us_report["id"] != china_report["id"]
+    assert not us_report["is_original_classification"]
+    assert not china_report["is_original_classification"]
+
+
+def test_comtrade_manifest_covers_queries_including_zero_result_years():
+    rows = load("comtrade-rare-earth")
+    manifests = load("comtrade-query-manifest")
+    assert len(manifests) == 40
+    assert len([row for row in manifests if row["reporter"] == "united-states"]) == 31
+    assert len([row for row in manifests if row["reporter"] == "china"]) == 9
+    assert sum(row["record_count"] for row in manifests) == len(rows)
+    assert any(row["year"] == 1962 and row["record_count"] == 0 for row in manifests)
+    assert all(re.fullmatch(r"[0-9a-f]{64}", row["query_sha256"]) for row in manifests)
+
+
+def test_comtrade_importer_uses_public_preview_without_secret():
+    script = (ROOT / "scripts" / "ingest_un_comtrade_rare_earth.py").read_text(encoding="utf-8")
+    assert "public/v1/preview" in script
+    assert "COMTRADE_API_KEY" not in script
+    assert "Authorization" not in script
+
+
 def test_atlas_renders_census_recovery_pilot_separately_from_standardized_trade():
     atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
     portal = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
@@ -234,6 +283,8 @@ def test_atlas_exposes_dataweb_as_context_not_the_default_spine():
     assert "FRUS remains the documentary spine" in atlas_script
     assert "Map reported import value" in atlas_script
     assert 'H.loadJson("dataweb-trade")' in atlas_script
+    assert 'H.loadJson("comtrade-rare-earth")' in atlas_script
+    assert "Broad proxy families are not summed" in atlas_script
     assert 'mode: LENS_IDS.includes(options.state.mode) ? options.state.mode : "frus-activity"' in atlas_script
 
 

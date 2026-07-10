@@ -64,7 +64,7 @@
       ["Historical boundary", "1861–1992"],
       ["FRUS subject records", new Intl.NumberFormat("en-US").format(window.FRUS_SUBJECTS_INDEX.meta.documents)],
       ["Reviewed FRUS pilot", `${reviewed} of ${data["frus-documents"].length}`],
-      ["Verified trade rows", new Intl.NumberFormat("en-US").format(data.trade.length + data["trade-details"].length + data["dataweb-query-manifest"].reduce((sum, row) => sum + row.record_count, 0))],
+      ["Verified trade rows", new Intl.NumberFormat("en-US").format(data.trade.length + data["trade-details"].length + data["dataweb-query-manifest"].reduce((sum, row) => sum + row.record_count, 0) + data["comtrade-query-manifest"].reduce((sum, row) => sum + row.record_count, 0))],
       ["Mineral profiles", data.minerals.length],
       ["NARA query plans", data["nara-queries"].length]
     ];

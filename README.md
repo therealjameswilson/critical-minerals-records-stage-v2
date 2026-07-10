@@ -31,13 +31,16 @@ appears only in a separately labeled Modern Context layer.
   Series 140 workbooks without project interpolation.
 - 1,476 source-defined long-run trade records covering every selectable year,
   plus 294 contemporaneous rare-earth category rows for 1970-1990 and 3,669
-  USITC DataWeb partner-product rows for 1989-1992.
+  USITC DataWeb partner-product rows for 1989-1992. A separate 177-row UN
+  Comtrade continuity layer preserves rare-earth proxy trade and reporter
+  mirrors across SITC revisions from 1962 through 1992.
 - A Historical Geostrategic Atlas with a 1861–1992 year control, historical
   names, documentary access lines, agreements, stockpile policy, NARA query
-  plans, an optional cited DataWeb import-value layer for 1989-1992,
-  synchronized evidence panels, and an accessible table alternative.
-- A visible atlas layer registry that keeps bilateral trade-flow, production,
-  supplier-share, infrastructure, alliance, boundary, and risk map views locked
+  plans, an optional cited DataWeb import-value layer for 1989-1992, a
+  classification-aware Comtrade continuity panel, synchronized evidence panels,
+  and an accessible table alternative.
+- A visible atlas layer registry that keeps production, supplier-share,
+  infrastructure, alliance, boundary, and risk map views locked
   until compatible official data and citations exist.
 - A source-visible NARA discovery layer that can use a secret-bearing serverless
   proxy without exposing the API key to GitHub Pages.
@@ -84,6 +87,7 @@ Read the [full methodology](methodology.html) or
 - `scripts/build_atlas_data.py`: reproducible atlas overlays and basemap builder
 - `scripts/ingest_usgs_ds140.py`: official XLSX extractor
 - `scripts/ingest_trade_data.py`: official Census and USGS trade extractor
+- `scripts/ingest_un_comtrade_rare_earth.py`: 1962-1992 reporter-partner continuity importer
 - `scripts/ingest_usitc_dataweb.py`: official 1989-1992 partner-trade importer
 - `scripts/validate_history_data.py`: dates, references, provenance, and secret checks
 - `connectors/nara.py`: server-side, metadata-only NARA API client
@@ -131,6 +135,26 @@ python scripts/validate_history_data.py
 ```
 
 Use `--cache-dir <path>` to retain downloaded XLSX files outside the repository.
+
+## Rebuild the UN Comtrade Rare-Earth Continuity Layer
+
+The Comtrade importer adds official international reporter-partner context for
+1962-1992 while keeping FRUS as the documentary spine. It uses separate SITC
+Revision 1, 2, and 3 baskets, preserves broad proxy contamination, and never
+splices revisions or mirror reports into a single synthetic series.
+
+```bash
+python scripts/ingest_un_comtrade_rare_earth.py \
+  --access-date YYYY-MM-DD \
+  --cache-dir .cache/un-comtrade
+python scripts/validate_history_data.py
+```
+
+The public preview service permits one period per query and is rate limited, so
+uncached refreshes take roughly two minutes. The committed manifest includes
+zero-result years as well as successful queries. No API key is required or
+stored. UN Comtrade is labeled Tier 2 international context; USITC DataWeb
+remains the authoritative U.S.-reported verification layer for 1989-1992.
 
 ## Rebuild USITC DataWeb Partner Trade
 

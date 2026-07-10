@@ -29,6 +29,8 @@ EXPECTED_MINIMUMS = {
     "trade-research": 21,
     "dataweb-trade": 3600,
     "dataweb-query-manifest": 2,
+    "comtrade-rare-earth": 170,
+    "comtrade-query-manifest": 40,
 }
 
 
@@ -246,6 +248,55 @@ def main() -> None:
         expected_count = sum(row["direction"] == query.get("direction") for row in datasets["dataweb-trade"])
         if query.get("record_count") != expected_count:
             errors.append(f"{owner}: record count does not match cached rows")
+        if not re.fullmatch(r"[0-9a-f]{64}", str(query.get("query_sha256", ""))):
+            errors.append(f"{owner}: malformed query hash")
+
+    required_comtrade_fields = {
+        "year", "reporter_code", "reporter_name", "reporter_iso3", "partner_code", "partner_name",
+        "partner_iso3", "flow_code", "flow", "classification_code", "classification_label",
+        "is_original_classification", "commodity_code", "commodity_description", "product_family",
+        "scope_confidence", "scope_caveat", "primary_value", "value_unit", "quantity",
+        "quantity_unit_code", "quantity_unit", "quantity_estimated", "net_weight_kg",
+        "net_weight_estimated", "valuation_basis", "query_id", "source_id", "source_url",
+        "access_date", "transcription_status", "confidence"
+    }
+    for row in datasets["comtrade-rare-earth"]:
+        owner = f"comtrade-rare-earth/{row.get('id')}"
+        missing = sorted(required_comtrade_fields - set(row))
+        if missing:
+            errors.append(f"{owner}: missing {', '.join(missing)}")
+        year = row.get("year")
+        if not isinstance(year, int) or not 1962 <= year <= 1992:
+            errors.append(f"{owner}: invalid Comtrade year {year}")
+        expected_class = "S1" if year <= 1975 else "S2" if year <= 1987 else "S3"
+        if row.get("classification_code") != expected_class:
+            errors.append(f"{owner}: expected {expected_class} for {year}")
+        if row.get("reporter_code") not in {156, 841, 842} or row.get("partner_code") not in {0, 156, 842}:
+            errors.append(f"{owner}: unexpected reporter or partner code")
+        if row.get("flow_code") not in {"M", "X"}:
+            errors.append(f"{owner}: invalid flow")
+        if row.get("scope_confidence") not in {"high", "low"} or not row.get("scope_caveat"):
+            errors.append(f"{owner}: missing scope qualification")
+        if not isinstance(row.get("is_original_classification"), bool):
+            errors.append(f"{owner}: classification status must be boolean")
+        if not isinstance(row.get("primary_value"), int) or row.get("primary_value") < 0:
+            errors.append(f"{owner}: primary value must be a nonnegative integer")
+        if row.get("source_id") != "un-comtrade":
+            errors.append(f"{owner}: source_id must be un-comtrade")
+        if row.get("query_id") not in ids["comtrade-query-manifest"]:
+            errors.append(f"{owner}: missing query manifest {row.get('query_id')}")
+
+    manifests = datasets["comtrade-query-manifest"]
+    if len([row for row in manifests if row.get("reporter") == "united-states"]) != 31:
+        errors.append("comtrade-query-manifest: expected one U.S. query for every year 1962-1992")
+    if len([row for row in manifests if row.get("reporter") == "china"]) != 9:
+        errors.append("comtrade-query-manifest: expected China query plans for 1984-1992")
+    if sum(row.get("record_count", 0) for row in manifests) != len(datasets["comtrade-rare-earth"]):
+        errors.append("comtrade-query-manifest: record counts do not reconcile to the static cache")
+    for query in manifests:
+        owner = f"comtrade-query-manifest/{query.get('id')}"
+        if not str(query.get("query_url", "")).startswith("https://comtradeapi.un.org/public/v1/preview/"):
+            errors.append(f"{owner}: unexpected query URL")
         if not re.fullmatch(r"[0-9a-f]{64}", str(query.get("query_sha256", ""))):
             errors.append(f"{owner}: malformed query hash")
 

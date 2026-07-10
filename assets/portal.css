@@ -660,6 +660,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .trade-map-action button:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
 .trade-pilot { margin: 24px 0; padding: 22px; border: 1px solid var(--line-strong); border-top: 5px solid var(--gold-500); background: var(--surface); }
 .trade-pilot.dataweb-trade { border-top-color: var(--teal-700); }
+.trade-pilot.comtrade-continuity { border-top-color: var(--navy-700); }
 .trade-pilot-heading { display: flex; justify-content: space-between; gap: 20px; align-items: start; }
 .trade-pilot-heading h4 { margin: 3px 0 0; font: 700 24px/1.15 Georgia, serif; color: var(--navy-900); }
 [data-theme="dark"] .trade-pilot-heading h4 { color: #e3efed; }
@@ -689,6 +690,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .trade-report-list a { margin-top: 9px; font-size: 10px; font-weight: 800; }
 .trade-acquisition ul { margin: 12px 0 18px; padding-left: 20px; color: var(--muted); }
 .trade-acquisition li + li { margin-top: 5px; }
+.comtrade-mirror-heading { display: flex; justify-content: space-between; gap: 18px; align-items: end; margin-top: 20px; padding-bottom: 9px; border-bottom: 2px solid var(--navy-700); }
+.comtrade-mirror-heading span { max-width: 680px; color: var(--muted); font-size: 10px; }
+.comtrade-mirror-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.comtrade-mirror-grid article { min-width: 0; padding: 15px 15px 15px 0; border-bottom: 1px solid var(--line); }
+.comtrade-mirror-grid article:nth-child(even) { padding-left: 15px; border-left: 1px solid var(--line); }
+.comtrade-mirror-grid article > div { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.comtrade-mirror-grid article > div > span { color: var(--navy-800); font-weight: 900; }
+[data-theme="dark"] .comtrade-mirror-grid article > div > span { color: #d6e8e6; }
+.comtrade-mirror-grid dl { margin: 12px 0; }
+.comtrade-mirror-grid dl > div { display: grid; grid-template-columns: minmax(130px, .85fr) minmax(0, 1fr); gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); }
+.comtrade-mirror-grid dt { color: var(--muted); font-size: 9px; text-transform: uppercase; }
+.comtrade-mirror-grid dd { margin: 0; font: 700 17px/1.2 Georgia, serif; }
+.comtrade-mirror-grid dd small { display: block; margin-top: 3px; color: var(--muted); font: 500 9px/1.35 Inter, ui-sans-serif, system-ui, sans-serif; }
+.comtrade-mirror-grid article > p { margin: 0; color: var(--muted); font-size: 10px; }
 .atlas-accessible-table { margin-top: 14px; }
 .atlas-accessible-table > p { padding: 0 16px; color: var(--muted); font-size: 12px; }
 .table-scroll { overflow-x: auto; }
@@ -1182,6 +1197,10 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .trade-pilot { padding: 17px 13px; }
   .trade-comparison > div { grid-template-columns: 1fr; }
   .trade-comparison > div > span { grid-row: auto; }
+  .comtrade-mirror-heading { align-items: start; flex-direction: column; }
+  .comtrade-mirror-grid { grid-template-columns: 1fr; }
+  .comtrade-mirror-grid article, .comtrade-mirror-grid article:nth-child(even) { padding: 14px 0; border-left: 0; }
+  .comtrade-mirror-grid dl > div { grid-template-columns: 1fr; gap: 3px; }
   .atlas-story-list li { grid-template-columns: 72px 1fr; }
   .atlas-story-list li .badge { grid-column: 2; width: fit-content; }
 }

@@ -100,6 +100,16 @@
     "trust_note": "The portal uses 1989-1992 country breakouts at the shared six-digit Harmonized System level. Partner country means reported origin or destination; it does not establish mine origin, ownership, route, end use, or strategic importance."
   },
   {
+    "id": "un-comtrade",
+    "label": "United Nations Comtrade",
+    "agency": "United Nations Statistics Division",
+    "source_type": "official-international-statistics",
+    "tier": 2,
+    "url": "https://comtradeplus.un.org/",
+    "scope": "Annual reporter-partner merchandise trade by commodity, value, and available quantity. The portal uses a 1962-1992 rare-earth continuity pilot only.",
+    "trust_note": "Comtrade is an official international contextual source, not a substitute for FRUS or authoritative U.S.-reported DataWeb records. SITC proxy baskets, classification revisions, converted records, mirror discrepancies, and missing years remain visible."
+  },
+  {
     "id": "census-statistical-abstract-1948",
     "label": "Statistical Abstract of the United States: 1948, Foreign Commerce tables 1013-1014",
     "agency": "U.S. Department of Commerce, Bureau of the Census",
