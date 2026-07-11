@@ -4,11 +4,13 @@
   const H = window.HistoryData;
   const $ = (id) => document.getElementById(id);
   const EMPTY_COLLECTION = { type: "FeatureCollection", features: [] };
-  const LENS_IDS = ["frus-activity", "resource-geography", "historical-events", "quantitative-trade-flows"];
+  const LENS_IDS = ["frus-activity", "resource-geography", "mineral-production", "supply-chain-evidence", "historical-events", "quantitative-trade-flows"];
   const DEFAULT_LAYERS = [
     "frus-activity", "access-relationships", "agreements",
-    "stockpile-policy", "historical-events", "nara-discovery", "resource-geography"
+    "stockpile-policy", "historical-events", "nara-discovery", "resource-geography",
+    "mineral-production", "supply-chain-evidence"
   ];
+  const STAGE_ORDER = ["mining", "smelting", "refining", "processing", "trade"];
   const MARKER_LABELS = {
     agreements: "§",
     "stockpile-policy": "S",
@@ -54,7 +56,8 @@
         country: options.state.country || null,
         mode: LENS_IDS.includes(options.state.mode) ? options.state.mode : "frus-activity",
         layers: new Set(requestedLayers.filter((id) => supportedLayers.has(id))),
-        tab: "summary"
+        tab: "summary",
+        supplyStage: options.state.supplyStage || "auto"
       };
       this.map = null;
       this.mapReady = false;
@@ -222,6 +225,84 @@
       );
     }
 
+    supplyStages() {
+      if (this.state.mineral === "all") return [];
+      const stages = new Set(this.data["supply-chain"].filter((row) =>
+        row.record_type === "production" && row.year === this.state.year && row.mineral_id === this.state.mineral
+      ).map((row) => row.stage));
+      return STAGE_ORDER.filter((stage) => stages.has(stage));
+    }
+
+    resolvedSupplyStage() {
+      const stages = this.supplyStages();
+      return stages.includes(this.state.supplyStage) ? this.state.supplyStage : stages[0] || null;
+    }
+
+    activeProduction() {
+      const stage = this.resolvedSupplyStage();
+      if (!stage || this.state.mineral === "all") return [];
+      return this.data["supply-chain"].filter((row) =>
+        row.record_type === "production" && row.year === this.state.year &&
+        row.mineral_id === this.state.mineral && row.stage === stage && row.country_iso3
+      );
+    }
+
+    productionTotals() {
+      const totals = new Map();
+      this.activeProduction().forEach((row) => {
+        const current = totals.get(row.country_iso3) || {
+          iso3: row.country_iso3,
+          name: row.source_country_name,
+          value: 0,
+          rows: 0,
+          unit: row.unit,
+          stage: row.stage,
+          estimated: false,
+          source_url: row.source_url,
+          table: row.table_or_page,
+          metric: row.metric,
+          mapping_basis: row.mapping_basis
+        };
+        current.value += row.value;
+        current.rows += 1;
+        current.estimated = current.estimated || row.estimated;
+        totals.set(row.country_iso3, current);
+      });
+      return totals;
+    }
+
+    directImportTotals() {
+      const totals = new Map();
+      if (this.state.mineral === "all") return totals;
+      this.data["supply-chain"].filter((row) =>
+        row.record_type === "us-import" && row.year === this.state.year &&
+        row.mineral_id === this.state.mineral && row.country_iso3
+      ).forEach((row) => {
+        const current = totals.get(row.country_iso3) || {
+          iso3: row.country_iso3,
+          name: row.source_country_name,
+          value: 0,
+          rows: 0,
+          codes: new Set(),
+          unit: row.unit,
+          source_name: row.agency,
+          source_url: row.source_url,
+          commodity_label: "published country row",
+          measure: "U.S. imports for consumption"
+        };
+        current.value += row.value;
+        current.rows += 1;
+        current.codes.add(row.component);
+        totals.set(row.country_iso3, current);
+      });
+      return totals;
+    }
+
+    supplyImportTotals() {
+      const direct = this.directImportTotals();
+      return direct.size ? direct : this.partnerTradeTotals("imports");
+    }
+
     activeDataWebTrade(direction) {
       if (this.state.year < 1989 || this.state.year > 1992) return [];
       return this.data["dataweb-trade"].filter((row) =>
@@ -316,8 +397,8 @@
     bindControls() {
       if (this.bound) return;
       this.bound = true;
-      $("mapYear").addEventListener("input", (event) => this.setState({ year: Number(event.target.value), country: null }));
-      $("mapMineral").addEventListener("change", (event) => this.setState({ mineral: event.target.value, country: null }));
+      $("mapYear").addEventListener("input", (event) => this.setState({ year: Number(event.target.value), country: null, supplyStage: "auto" }));
+      $("mapMineral").addEventListener("change", (event) => this.setState({ mineral: event.target.value, country: null, supplyStage: "auto" }));
       $("atlasMode").addEventListener("change", (event) => {
         const layers = new Set(this.state.layers);
         layers.add(event.target.value);
@@ -490,6 +571,18 @@
       this.map.addSource("orientation", { type: "geojson", data: this.orientation });
       this.map.addLayer({ id: "orientation-land", type: "fill", source: "orientation", paint: { "fill-color": "#e8e4d8", "fill-opacity": 0.96 } });
       this.map.addLayer({ id: "orientation-borders", type: "line", source: "orientation", paint: { "line-color": "#748383", "line-width": 0.7, "line-opacity": 0.74 } });
+      this.map.addSource("atlas-production-countries", { type: "geojson", data: EMPTY_COLLECTION });
+      this.map.addLayer({
+        id: "atlas-production-fill", type: "fill", source: "atlas-production-countries",
+        paint: {
+          "fill-color": ["interpolate", ["linear"], ["get", "production_intensity"], 0, "#e8e4d8", 0.15, "#c7d8c0", 0.4, "#83ad8a", 0.7, "#39766c", 1, "#123b4e"],
+          "fill-opacity": 0.9
+        }
+      });
+      this.map.addLayer({
+        id: "atlas-production-outline", type: "line", source: "atlas-production-countries",
+        paint: { "line-color": "#234f55", "line-width": 1.3, "line-opacity": 0.92 }
+      });
       this.map.addSource("atlas-trade-countries", { type: "geojson", data: EMPTY_COLLECTION });
       this.map.addLayer({
         id: "atlas-trade-fill", type: "fill", source: "atlas-trade-countries",
@@ -556,6 +649,17 @@
           "line-width": ["interpolate", ["linear"], ["get", "trade_value"], 1, 0.9, 1000000, 2.1, 100000000, 5.2]
         }
       });
+      this.map.addSource("atlas-supply-flows", { type: "geojson", data: EMPTY_COLLECTION });
+      this.map.addLayer({
+        id: "atlas-supply-flow-halo", type: "line", source: "atlas-supply-flows",
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: { "line-color": "#fff7df", "line-opacity": 0.72, "line-width": ["interpolate", ["linear"], ["get", "flow_intensity"], 0, 2.6, 1, 8] }
+      });
+      this.map.addLayer({
+        id: "atlas-supply-flow-lines", type: "line", source: "atlas-supply-flows",
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: { "line-color": "#b7771e", "line-opacity": 0.88, "line-dasharray": [2.2, 1.3], "line-width": ["interpolate", ["linear"], ["get", "flow_intensity"], 0, 0.9, 1, 5.2] }
+      });
       this.popup = new window.maplibregl.Popup({ closeButton: false, closeOnClick: false, maxWidth: "310px" });
       this.map.on("click", "atlas-country-fill", (event) => {
         const id = event.features && event.features[0] && event.features[0].properties.atlas_id;
@@ -577,6 +681,12 @@
       this.map.on("mouseleave", "atlas-trade-fill", () => { this.map.getCanvas().style.cursor = ""; });
       this.map.on("mousemove", "atlas-trade-flow-lines", (event) => this.showTradePopup(event));
       this.map.on("mouseleave", "atlas-trade-flow-lines", () => this.popup.remove());
+      this.map.on("mousemove", "atlas-production-fill", (event) => this.showProductionPopup(event));
+      this.map.on("mouseleave", "atlas-production-fill", () => this.popup.remove());
+      this.map.on("mouseenter", "atlas-production-fill", () => { this.map.getCanvas().style.cursor = "help"; });
+      this.map.on("mouseleave", "atlas-production-fill", () => { this.map.getCanvas().style.cursor = ""; });
+      this.map.on("mousemove", "atlas-supply-flow-lines", (event) => this.showSupplyFlowPopup(event));
+      this.map.on("mouseleave", "atlas-supply-flow-lines", () => this.popup.remove());
       this.mapReady = true;
       this.renderMap();
       this.applyMapTheme();
@@ -623,7 +733,8 @@
         ["orientation-land", "fill-color", colors.land],
         ["orientation-borders", "line-color", colors.border],
         ["atlas-relationship-halo", "line-color", colors.halo],
-        ["atlas-trade-flow-halo", "line-color", colors.halo]
+        ["atlas-trade-flow-halo", "line-color", colors.halo],
+        ["atlas-supply-flow-halo", "line-color", colors.halo]
       ].forEach(([layer, property, value]) => {
         if (this.map.getLayer(layer)) this.map.setPaintProperty(layer, property, value);
       });
@@ -664,6 +775,18 @@
       this.popup.setLngLat(event.lngLat).setHTML(`<strong>${H.escape(row.partner_name)}</strong><br><span>${H.escape(this.state.year)} reported imports: ${H.escape(H.formatNumber(row.trade_value))} current dollars</span><br><small>${H.escape(row.commodity_count)} selected ${H.escape(row.commodity_label)}${Number(row.commodity_count) === 1 ? "" : "s"} · ${H.escape(row.source_name)}</small>`).addTo(this.map);
     }
 
+    showProductionPopup(event) {
+      const row = event.features && event.features[0] && event.features[0].properties;
+      if (!row) return;
+      this.popup.setLngLat(event.lngLat).setHTML(`<strong>${H.escape(row.source_country_name)}</strong><br><span>${H.escape(this.state.year)} ${H.escape(row.stage)} production: ${H.escape(H.formatNumber(row.production_value))} ${H.escape(row.unit)}</span><br><small>${H.escape(row.table)} · USGS Statistical Compendium${row.estimated === "true" ? " · estimated in source" : ""}</small>`).addTo(this.map);
+    }
+
+    showSupplyFlowPopup(event) {
+      const row = event.features && event.features[0] && event.features[0].properties;
+      if (!row) return;
+      this.popup.setLngLat(event.lngLat).setHTML(`<strong>${H.escape(row.partner_name)} → United States</strong><br><span>${H.escape(this.state.year)} ${H.escape(row.measure)}: ${H.escape(H.formatNumber(row.flow_value))} ${H.escape(row.unit)}</span><br><small>${H.escape(row.source_name)}. The line connects published geographies; it is not a physical route.</small>`).addTo(this.map);
+    }
+
     selectCountry(id) {
       this.setState({ country: id });
       const row = this.atlasCountry(id);
@@ -689,7 +812,7 @@
     }
 
     countryGeoJson() {
-      if (this.state.mode === "quantitative-trade-flows") return EMPTY_COLLECTION;
+      if (["quantitative-trade-flows", "mineral-production", "supply-chain-evidence"].includes(this.state.mode)) return EMPTY_COLLECTION;
       const byA3 = new Map(this.atlas.countries.map((row) => [row.a3, row.id]));
       return {
         type: "FeatureCollection",
@@ -862,6 +985,65 @@
       };
     }
 
+    productionCountryGeoJson() {
+      if (!["mineral-production", "supply-chain-evidence"].includes(this.state.mode) ||
+          !this.state.layers.has(this.state.mode === "mineral-production" ? "mineral-production" : "supply-chain-evidence")) return EMPTY_COLLECTION;
+      const totals = this.productionTotals();
+      const maximum = Math.max(0, ...[...totals.values()].map((row) => row.value));
+      const atlasByA3 = new Map(this.atlas.countries.map((row) => [row.a3, row.id]));
+      return {
+        type: "FeatureCollection",
+        features: this.orientation.features.filter((feature) => totals.has(feature.properties.ADM0_A3)).map((feature) => {
+          const row = totals.get(feature.properties.ADM0_A3);
+          return {
+            type: "Feature",
+            geometry: feature.geometry,
+            properties: {
+              atlas_id: atlasByA3.get(row.iso3) || "",
+              source_country_name: row.name,
+              country_iso3: row.iso3,
+              production_value: row.value,
+              production_intensity: maximum ? row.value / maximum : 0,
+              unit: row.unit,
+              stage: row.stage,
+              table: row.table,
+              estimated: String(row.estimated),
+              mapping_basis: row.mapping_basis
+            }
+          };
+        })
+      };
+    }
+
+    supplyFlowGeoJson() {
+      if (this.state.mode !== "supply-chain-evidence" || !this.state.layers.has("supply-chain-evidence")) return EMPTY_COLLECTION;
+      const us = this.atlasCountry("united-states");
+      const featuresByA3 = new Map(this.orientation.features.map((feature) => [feature.properties.ADM0_A3, feature]));
+      const totals = [...this.supplyImportTotals().values()].filter((row) => row.iso3 !== "USA" && row.value > 0).sort((a, b) => b.value - a.value).slice(0, 18);
+      const maximum = Math.max(0, ...totals.map((row) => row.value));
+      return {
+        type: "FeatureCollection",
+        features: totals.map((row) => {
+          const center = this.featureCenter(featuresByA3.get(row.iso3));
+          if (!center) return null;
+          return {
+            type: "Feature",
+            geometry: { type: "LineString", coordinates: this.arcCoordinates(center, us.coordinates) },
+            properties: {
+              partner_name: row.name,
+              partner_iso3: row.iso3,
+              flow_value: row.value,
+              flow_intensity: maximum ? row.value / maximum : 0,
+              unit: row.unit || "current U.S. dollars",
+              measure: row.measure || "reported U.S. imports",
+              year: this.state.year,
+              source_name: row.source_name
+            }
+          };
+        }).filter(Boolean)
+      };
+    }
+
     eventGeoJson() {
       if (!this.state.layers.has("historical-events")) return EMPTY_COLLECTION;
       const activeIds = new Set(this.atlas.events.filter((row) =>
@@ -885,6 +1067,8 @@
       this.map.getSource("atlas-relationships").setData(this.relationshipGeoJson());
       this.map.getSource("atlas-trade-countries").setData(this.tradeCountryGeoJson());
       this.map.getSource("atlas-trade-flows").setData(this.tradeFlowGeoJson());
+      this.map.getSource("atlas-production-countries").setData(this.productionCountryGeoJson());
+      this.map.getSource("atlas-supply-flows").setData(this.supplyFlowGeoJson());
       this.renderMarkers();
     }
 
@@ -939,6 +1123,17 @@
 
     renderLegend() {
       const lens = this.layer(this.state.mode);
+      if (["mineral-production", "supply-chain-evidence"].includes(this.state.mode)) {
+        const production = this.productionTotals();
+        const imports = this.state.mode === "supply-chain-evidence" ? this.supplyImportTotals() : new Map();
+        const stage = this.resolvedSupplyStage();
+        const firstProduction = production.values().next().value;
+        const unit = firstProduction?.unit;
+        const publishedMetric = firstProduction?.metric;
+        const direct = this.directImportTotals().size > 0;
+        $("atlasLegend").innerHTML = `<span class="atlas-legend-kicker">Official supply evidence · ${H.escape(this.state.year)}</span><strong>${H.escape(lens.title)}</strong><div class="atlas-scale production-scale"><span><i data-scale="0"></i>No row</span><span><i data-scale="1"></i>Lower</span><span><i data-scale="2"></i>Middle</span><span><i data-scale="3"></i>Highest</span></div><p><b>Green fill</b> = relative values among country rows in ${publishedMetric ? `“${H.escape(publishedMetric)}”` : `the selected ${H.escape(stage || "production")} table`}${unit ? ` (${H.escape(unit)})` : ""}.</p>${this.state.mode === "supply-chain-evidence" ? `<p><i class="line-key"></i> Amber lines = ${direct ? "Census-derived U.S. imports for consumption" : "reported U.S. partner imports in the available trade series"}; they are not physical routes.</p>` : ""}<p>${H.escape(production.size)} production geographies${this.state.mode === "supply-chain-evidence" ? ` · ${H.escape(imports.size)} reported U.S. import partners` : ""}. ${H.escape(lens.caveat)}</p>`;
+        return;
+      }
       if (this.state.mode === "quantitative-trade-flows") {
         const totals = this.partnerTradeTotals("imports");
         const count = [...totals.values()].reduce((sum, row) => sum + row.rows, 0);
@@ -958,6 +1153,13 @@
     renderInspector() {
       const country = this.selectedCountry();
       if (!country) {
+        if (["mineral-production", "supply-chain-evidence"].includes(this.state.mode)) {
+          const production = this.productionTotals();
+          const imports = this.state.mode === "supply-chain-evidence" ? this.supplyImportTotals() : new Map();
+          const mineral = this.selectedMineral();
+          $("mapInspector").innerHTML = `<div class="atlas-drawer-empty"><span class="atlas-folio">Selected geography</span><h3>${mineral ? H.escape(mineral.canonical_name) : "Select one material"}</h3><p>${production.size ? `${H.escape(production.size)} country geographies have published ${H.escape(this.resolvedSupplyStage())} production rows in ${H.escape(this.state.year)}.` : `No supported country-production table matches this exact year and material.`}</p>${this.state.mode === "supply-chain-evidence" ? `<p>${H.escape(imports.size)} reported U.S. import-partner geographies are separately represented by amber lines where an exact-year series exists.</p>` : ""}<div class="atlas-drawer-key"><span><b>Fill</b> Published production</span>${this.state.mode === "supply-chain-evidence" ? "<span><b>Line</b> Reported U.S. imports, not route</span>" : ""}</div></div>`;
+          return;
+        }
         if (this.state.mode === "quantitative-trade-flows") {
           const active = this.partnerTradeTotals("imports").size;
           $("mapInspector").innerHTML = `<div class="atlas-drawer-empty"><span class="atlas-folio">Selected geography</span><h3>Choose a reported partner</h3><p>At ${H.escape(this.state.year)}, ${H.escape(active)} partner geographies carry positive import-value evidence in the selected commodity headings.</p><p>Hover over a shaded country or line for its ${H.escape(this.partnerTradeSource())} value. A full History Stack opens only where the portal has a curated country record.</p><div class="atlas-drawer-key"><span><b>Fill</b> Reported import value</span><span><b>Line</b> Top partner values to the United States</span></div></div>`;
@@ -1226,6 +1428,32 @@
       return this.renderCommodityTradePanel(filteredAnnual, annual);
     }
 
+    renderSupplyPanel() {
+      const mineral = this.selectedMineral();
+      if (!mineral) return '<p class="empty-note">Select one material to compare stage-specific production with reported U.S. trade.</p>';
+      const stages = this.supplyStages();
+      const stage = this.resolvedSupplyStage();
+      const production = [...this.productionTotals().values()].sort((a, b) => b.value - a.value);
+      const publishedMetric = production[0]?.metric;
+      const direct = this.directImportTotals();
+      const imports = [...this.supplyImportTotals().values()].filter((row) => row.iso3 !== "USA").sort((a, b) => b.value - a.value);
+      const frus = this.data["frus-documents"].filter((row) =>
+        row.volume_year_start <= this.state.year && row.volume_year_end >= this.state.year &&
+        (row.mineral_ids || []).includes(mineral.id)
+      );
+      const stageControl = stages.length > 1 ? `<label class="supply-stage-control">Production stage<select data-supply-stage>${stages.map((value) => option(value, value[0].toUpperCase() + value.slice(1), stage)).join("")}</select></label>` : "";
+      const productionRows = production.slice(0, 40).map((row, index) => `<tr><td>${H.escape(index + 1)}</td><th scope="row">${H.escape(row.name)}</th><td>${H.escape(H.formatNumber(row.value))}</td><td>${H.escape(row.unit)}</td><td>${row.estimated ? H.badge("Source estimate", "partial") : H.badge("Reported", "verified")}</td><td>${H.escape(row.mapping_basis.replaceAll("-", " "))}</td></tr>`).join("");
+      const importRows = imports.slice(0, 30).map((row) => `<tr><th scope="row">${H.escape(row.name)}</th><td>${H.escape(H.formatNumber(row.value))}</td><td>${H.escape(row.unit || "current U.S. dollars")}</td><td>${H.escape(row.source_name)}</td></tr>`).join("");
+      const productionSource = production[0]?.source_url || "https://www.usgs.gov/centers/national-minerals-information-center/statistical-compendium";
+      const tradeSource = direct.size ? imports[0]?.source_url : (this.state.year >= 1989 ? "https://dataweb.usitc.gov/" : "https://comtradeplus.un.org/");
+      return `<div class="atlas-panel-heading"><div><p class="eyebrow">FRUS narrative with official statistical context</p><h3>${H.escape(mineral.canonical_name)} supply evidence, ${H.escape(this.state.year)}</h3></div><p>${frus.length} linked FRUS pilot record${frus.length === 1 ? "" : "s"} provide documentary context. Production and trade series describe different parts of the historical setting and are never merged into a route claim.</p></div>
+        <div class="supply-chain-toolbar">${stageControl}<button type="button" data-enable-supply-map>Map this evidence</button></div>
+        <div class="supply-chain-source-boundary"><div><span class="badge badge-source">FRUS</span><strong>Documentary spine</strong><p>${frus.length ? "Open the linked FRUS records to examine what policymakers recorded and debated." : "No checked-in FRUS pilot record matches this exact year and material. That is an index gap, not evidence of policy silence."}</p></div><div><span class="badge badge-source">USGS / Bureau of Mines</span><strong>Published geography</strong><p>${production.length ? `${production.length} country rows appear in “${H.escape(publishedMetric)}.”` : "No supported country-production table matches this exact selection."}</p></div><div><span class="badge badge-source">Trade statistics</span><strong>Reported U.S. relationship</strong><p>${imports.length ? `${imports.length} partner rows are available from ${direct.size ? "the Census-derived cobalt table" : this.partnerTradeSource()}.` : "No positive exact-year partner row matches the checked classifications."}</p></div></div>
+        ${frus.length ? `<div class="supply-frus-links"><strong>FRUS context</strong>${frus.slice(0, 4).map((row) => `<a href="${H.escape(row.stable_url)}" target="_blank" rel="noopener">${H.escape(row.title || row.volume_context || row.volume)} ↗</a>`).join("")}</div>` : ""}
+        <div class="trade-scope-note caution"><strong>Do not read this as a physical supply route</strong><span>Green geography reports production at the selected stage. Amber lines report a separately published U.S. trade relationship. A producing country and a trade partner may differ because of processing, re-export, classification, and reporting practice.</span></div>
+        <div class="supply-chain-tables"><section><h4>${H.escape(stage ? stage[0].toUpperCase() + stage.slice(1) : "Production")} geography</h4>${productionRows ? `<div class="table-scroll"><table><caption>${H.escape(publishedMetric)} (${H.escape(this.state.year)})</caption><thead><tr><th>Rank</th><th>Published geography</th><th>Value</th><th>Unit</th><th>Status</th><th>Map join</th></tr></thead><tbody>${productionRows}</tbody></table></div><a class="text-link" href="${H.escape(productionSource)}" target="_blank" rel="noopener">Open official USGS table ↗</a>` : `<p class="empty-note">Country production is available only for supported 1986-1990 Compendium tables. No value is interpolated for ${H.escape(this.state.year)}.</p>`}</section><section><h4>Reported U.S. imports</h4>${importRows ? `<div class="table-scroll"><table><caption>Published partner evidence for ${H.escape(this.state.year)}</caption><thead><tr><th>Partner</th><th>Value</th><th>Unit</th><th>Source</th></tr></thead><tbody>${importRows}</tbody></table></div><a class="text-link" href="${H.escape(tradeSource)}" target="_blank" rel="noopener">Open official data source ↗</a>` : '<p class="empty-note">No positive exact-year U.S. partner row matches the checked classifications. No trade value is inferred.</p>'}</section></div>`;
+    }
+
     renderNumbersPanel() {
       const mineral = this.selectedMineral();
       if (!mineral) return '<p class="empty-note">Select a material to inspect exact-year official statistics.</p>';
@@ -1258,6 +1486,7 @@
       const renderers = {
         summary: () => this.renderSummaryPanel(),
         frus: () => this.renderFrusPanel(),
+        supply: () => this.renderSupplyPanel(),
         trade: () => this.renderTradePanel(),
         numbers: () => this.renderNumbersPanel(),
         instruments: () => this.renderInstrumentPanel(),
@@ -1274,11 +1503,28 @@
         this.setState({ mode: "quantitative-trade-flows", layers });
         this.renderLayerControls();
       }));
+      $("atlasPanel").querySelectorAll("[data-enable-supply-map]").forEach((button) => button.addEventListener("click", () => {
+        const layers = new Set(this.state.layers);
+        layers.add("supply-chain-evidence");
+        this.setState({ mode: "supply-chain-evidence", layers });
+        this.renderLayerControls();
+      }));
+      $("atlasPanel").querySelectorAll("[data-supply-stage]").forEach((select) => select.addEventListener("change", (event) => {
+        this.setState({ supplyStage: event.target.value, country: null });
+      }));
     }
 
     renderTable() {
       const headerCells = [...document.querySelectorAll(".atlas-accessible-table thead th")];
       const tableNote = document.querySelector(".atlas-accessible-table > p");
+      if (["mineral-production", "supply-chain-evidence"].includes(this.state.mode)) {
+        const headers = ["Published geography", "ISO3", "Production", "Stage", "Official source", "Precision"];
+        headerCells.forEach((cell, index) => { cell.textContent = headers[index]; });
+        if (tableNote) tableNote.textContent = "This table reproduces the production fill without requiring the map. Production is not a shipment route, U.S. supplier share, ownership record, reserve estimate, or measure of political accessibility.";
+        const totals = [...this.productionTotals().values()].sort((a, b) => b.value - a.value);
+        $("mapTableBody").innerHTML = totals.map((row) => `<tr><th scope="row">${H.escape(row.name)}</th><td>${H.escape(row.iso3)}</td><td>${H.escape(H.formatNumber(row.value))} ${H.escape(row.unit)}</td><td>${H.escape(row.stage)}</td><td><a href="${H.escape(row.source_url)}" target="_blank" rel="noopener">${H.escape(row.table)} ↗</a></td><td>${H.escape(row.mapping_basis.replaceAll("-", " "))}</td></tr>`).join("") || '<tr><td colspan="6">No exact-year country-production row matches this selection.</td></tr>';
+        return;
+      }
       if (this.state.mode === "quantitative-trade-flows") {
         const headers = ["Reported partner", "ISO3", "Reported import value", "Selected commodity scope", "Source", "Precision"];
         headerCells.forEach((cell, index) => { cell.textContent = headers[index]; });
@@ -1310,11 +1556,14 @@
     }
 
     renderStatus() {
-      const activeCountries = this.state.mode === "quantitative-trade-flows" ? this.partnerTradeTotals("imports").size : this.data.countries.filter((row) => this.countryValue(row) > 0).length;
+      const activeCountries = this.state.mode === "quantitative-trade-flows" ? this.partnerTradeTotals("imports").size :
+        ["mineral-production", "supply-chain-evidence"].includes(this.state.mode) ? this.productionTotals().size :
+          this.data.countries.filter((row) => this.countryValue(row) > 0).length;
       const relationships = this.activeRelationships().length;
       const mineral = this.selectedMineral();
       const annual = this.annualSlice();
-      $("atlasMapStatus").innerHTML = `<strong>${H.escape(this.state.year)} · ${H.escape(mineral ? mineral.canonical_name : "All pilot materials")}</strong><span>${H.escape(activeCountries)} geographies in this lens · ${H.escape(annual?.counts.year_linked_geographies || 0)} with year-linked evidence · ${H.escape(relationships)} documented access links</span>`;
+      const contextual = this.state.mode === "supply-chain-evidence" ? ` · ${H.escape(this.supplyImportTotals().size)} reported U.S. import partners` : ` · ${H.escape(annual?.counts.year_linked_geographies || 0)} with year-linked evidence · ${H.escape(relationships)} documented access links`;
+      $("atlasMapStatus").innerHTML = `<strong>${H.escape(this.state.year)} · ${H.escape(mineral ? mineral.canonical_name : "All pilot materials")}</strong><span>${H.escape(activeCountries)} geographies in this lens${contextual}</span>`;
     }
 
     renderAll() {

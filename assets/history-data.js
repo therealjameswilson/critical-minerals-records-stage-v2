@@ -5,7 +5,7 @@
     "sources", "minerals", "countries", "episodes", "agreements", "laws",
     "administrations", "stockpile-cases", "frus-documents", "statistics", "trade",
     "trade-details", "trade-research", "dataweb-query-manifest", "comtrade-query-manifest", "comtrade-strategic-query-manifest",
-    "nara-queries", "country-briefs", "modern-context"
+    "nara-queries", "country-briefs", "modern-context", "supply-chain"
   ];
 
   function escape(value) {

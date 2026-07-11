@@ -673,6 +673,25 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .atlas-number-grid a { margin-top: 8px; font-size: 9px; }
 .atlas-number-grid-complete { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); }
 .atlas-number-grid-complete article:last-child { border-right: 0; }
+.supply-chain-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 0 0 18px; padding: 14px 16px; border: 1px solid var(--line); background: var(--paper-muted); }
+.supply-chain-toolbar button { min-height: 40px; padding: 9px 14px; border: 1px solid var(--teal-700); background: var(--teal-700); color: #fff; font: inherit; font-size: 11px; font-weight: 800; cursor: pointer; }
+.supply-stage-control { display: grid; gap: 5px; color: var(--muted); font-size: 9px; font-weight: 900; text-transform: uppercase; }
+.supply-stage-control select { min-width: 190px; min-height: 40px; padding: 7px 34px 7px 10px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); font: inherit; font-size: 12px; text-transform: none; }
+.supply-chain-source-boundary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 18px; border: 1px solid var(--line); }
+.supply-chain-source-boundary > div { min-width: 0; padding: 16px; border-right: 1px solid var(--line); }
+.supply-chain-source-boundary > div:last-child { border-right: 0; }
+.supply-chain-source-boundary strong { display: block; margin: 9px 0 4px; font-family: Georgia, serif; font-size: 16px; }
+.supply-chain-source-boundary p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.supply-frus-links { display: flex; flex-wrap: wrap; gap: 8px 15px; align-items: baseline; margin: 16px 0; padding: 13px 15px; border-left: 4px solid var(--gold-500); background: var(--paper-muted); font-size: 10px; }
+.supply-chain-tables { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 20px; margin-top: 20px; }
+.supply-chain-tables section { min-width: 0; }
+.supply-chain-tables h4 { margin: 0 0 10px; font: 700 18px/1.2 Georgia, serif; }
+.supply-chain-tables table { font-size: 10px; }
+.supply-chain-tables .text-link { display: inline-block; margin-top: 9px; font-size: 10px; }
+.production-scale i[data-scale="0"] { background: #e8e4d8; }
+.production-scale i[data-scale="1"] { background: #c7d8c0; }
+.production-scale i[data-scale="2"] { background: #83ad8a; }
+.production-scale i[data-scale="3"] { background: #123b4e; }
 .trade-scope-note { display: grid; grid-template-columns: 150px 1fr; gap: 16px; margin: 0 0 16px; padding: 12px 14px; border-left: 4px solid var(--gold-500); background: var(--paper-muted); color: var(--muted); font-size: 11px; }
 .trade-scope-note strong { color: var(--ink); text-transform: uppercase; }
 .trade-number-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 16px; }
@@ -1088,6 +1107,10 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .atlas-drawer { max-height: none; }
   .atlas-drawer-empty { min-height: 180px; }
   .atlas-number-grid { grid-template-columns: repeat(3, 1fr); }
+  .supply-chain-source-boundary { grid-template-columns: 1fr; }
+  .supply-chain-source-boundary > div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .supply-chain-source-boundary > div:last-child { border-bottom: 0; }
+  .supply-chain-tables { grid-template-columns: 1fr; }
   .trade-number-grid { grid-template-columns: repeat(2, 1fr); }
   .atlas-number-grid article:nth-child(3n) { border-right: 0; }
 }
@@ -1234,6 +1257,8 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .atlas-summary-metrics, .atlas-number-grid { grid-template-columns: 1fr; }
   .atlas-summary-metrics div, .atlas-number-grid article { border-right: 0; border-bottom: 1px solid var(--line); }
   .atlas-evidence-prompt, .trade-pilot-heading, .trade-map-action { align-items: stretch; flex-direction: column; }
+  .supply-chain-toolbar { align-items: stretch; flex-direction: column; }
+  .supply-stage-control select { width: 100%; }
   .atlas-evidence-prompt button { width: 100%; }
   .trade-pilot { padding: 17px 13px; }
   .trade-comparison > div { grid-template-columns: 1fr; }

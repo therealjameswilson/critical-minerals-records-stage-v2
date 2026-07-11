@@ -38,14 +38,17 @@ appears only in a separately labeled Modern Context layer.
   USITC DataWeb partner-product rows for 1989-1992. UN Comtrade contributes
   2,010 classification-bounded strategic-material rows plus 177 rare-earth
   continuity and mirror observations for 1962-1992.
+- 1,759 source-preserving USGS Statistical Compendium supply-chain rows:
+  country production for supported 1986-1990 mining, smelting, and refining
+  tables, plus Census-derived cobalt imports by country for 1975-1990.
 - A Historical Geostrategic Atlas with a 1861–1992 year control, historical
   names, documentary access lines, agreements, stockpile policy, NARA query
-  plans, a reported-partner trade lens using Comtrade for 1962-1988 and DataWeb
-  for 1989-1992, classification-aware evidence panels, and an accessible table
-  alternative.
-- A visible atlas layer registry that keeps production, supplier-share,
-  infrastructure, alliance, boundary, and risk map views locked
-  until compatible official data and citations exist.
+  plans, production geography, a supply-chain comparison lens, reported-partner
+  trade using Comtrade for 1962-1988 and DataWeb for 1989-1992,
+  classification-aware evidence panels, and an accessible table alternative.
+- A visible atlas layer registry that keeps unsupported supplier-share,
+  infrastructure, alliance, boundary, and risk views locked until compatible
+  official data and citations exist.
 - A source-visible NARA discovery layer that can use a secret-bearing serverless
   proxy without exposing the API key to GitHub Pages.
 
@@ -94,6 +97,7 @@ Read the [full methodology](methodology.html) or
 - `scripts/build_annual_atlas.py`: one evidence ledger for every year and pilot material
 - `scripts/ingest_usgs_ds140.py`: official XLSX extractor
 - `scripts/ingest_usgs_ds140_library.py`: full official DS140 catalog and workbook extractor
+- `scripts/ingest_usgs_supply_chain.py`: USGS Compendium country production and cobalt-import extractor
 - `scripts/ingest_trade_data.py`: official Census and USGS trade extractor
 - `scripts/ingest_un_comtrade_rare_earth.py`: 1962-1992 reporter-partner continuity importer
 - `scripts/ingest_un_comtrade_strategic_materials.py`: classification-bounded partner trade for nine strategic materials
@@ -155,6 +159,9 @@ python scripts/ingest_usgs_ds140.py --access-date YYYY-MM-DD
 python scripts/ingest_usgs_ds140_library.py \
   --access-date YYYY-MM-DD \
   --cache-dir .cache/usgs-ds140-full
+python scripts/ingest_usgs_supply_chain.py \
+  --access-date YYYY-MM-DD \
+  --cache-dir .cache/usgs-supply-chain
 python scripts/validate_history_data.py
 ```
 
@@ -230,9 +237,11 @@ normalized. See [`docs/historical-trade-data-model.md`](docs/historical-trade-da
 ## Rebuild the Historical Atlas
 
 The atlas builder derives relationships, instruments, events, stockpile-policy
-markers, and NARA discovery overlays from the normalized History Stack IDs. It
-does not infer production, supplier shares, route volume, alliance membership,
-facility coordinates, or strategic risk.
+markers, and NARA discovery overlays from normalized History Stack IDs. The
+separate supply-chain ingestion adds published country production and cobalt
+import geography. The interface does not infer supplier shares, physical route
+volume, ownership, access, alliance membership, facility coordinates, or
+strategic risk.
 
 ```bash
 python scripts/build_atlas_data.py

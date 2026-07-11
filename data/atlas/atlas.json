@@ -97,24 +97,24 @@
       "short_title": "Resources",
       "availability": "supported",
       "geometry": "country-markers",
-      "value_semantics": "Country-level resource associations distinguish profile context from year-linked evidence.",
+      "value_semantics": "Profile context shows a curated country-mineral association; year-linked evidence counts checked-in records connected to the exact selected year.",
       "source_ids": [
         "frus-history-at-state",
         "usgs-statistical-compendium"
       ],
-      "caveat": "Profile context is not proof that a country produced or supplied the material in the selected year. Neither class measures production, reserves, mines, supplier rank, or U.S. dependence."
+      "caveat": "An association is a discovery aid, not proof of production, reserves, mines, supplier rank, or policy importance."
     },
     {
       "id": "mineral-production",
       "title": "Mineral production",
       "short_title": "Production",
-      "availability": "locked",
+      "availability": "supported",
       "geometry": "country-fill",
-      "required_data": "Country, mineral, year, mine or refined basis, value, unit, official table/page, and source URL.",
+      "value_semantics": "Country shading represents published country production for the selected material, year, and supply-chain stage.",
       "source_ids": [
         "usgs-statistical-compendium"
       ],
-      "caveat": "The checked-in USGS pilot contains U.S. and world totals, not a compatible country-by-year production series."
+      "caveat": "Available for supported 1986-1990 Compendium tables. Production is not a shipment route, U.S. supplier share, ownership record, reserve estimate, or measure of political accessibility."
     },
     {
       "id": "import-dependence",
@@ -130,16 +130,30 @@
     },
     {
       "id": "quantitative-trade-flows",
-      "title": "Partner trade, 1962-1992",
+      "title": "Reported U.S. partner trade, 1962-1992",
       "short_title": "Partner trade",
       "availability": "supported",
       "geometry": "country-fill-and-lines",
-      "value_semantics": "For 1962-1988, shading and line width represent U.S.-reported UN Comtrade import value across selected SITC headings. For 1989-1992, the map uses USITC DataWeb import customs value across selected HS6 headings. Exports remain in the evidence table.",
+      "value_semantics": "Country shading and line width represent reported U.S. partner trade within the checked commodity classifications. Coverage uses UN Comtrade for 1962-1992 and USITC DataWeb for 1989-1992.",
       "source_ids": [
         "un-comtrade",
         "usitc-dataweb"
       ],
-      "caveat": "Comtrade SITC revisions and product stages remain separate from DataWeb HS6 headings. Partner means reported trade partner, not mine origin, ownership, route, end use, import dependence, or strategic importance. Country positions are generalized centroids."
+      "caveat": "Partner means the published trade geography, not necessarily mine origin, processing location, ownership, physical route, end use, import dependence, or strategic importance. Country positions are generalized centroids."
+    },
+    {
+      "id": "supply-chain-evidence",
+      "title": "Supply-chain evidence",
+      "short_title": "Supply chain",
+      "availability": "supported",
+      "geometry": "country-fill-and-lines",
+      "value_semantics": "USGS country production supplies the stage-specific geography; separately styled lines show reported U.S. imports or partner trade where an exact-year series exists.",
+      "source_ids": [
+        "usgs-statistical-compendium",
+        "un-comtrade",
+        "usitc-dataweb"
+      ],
+      "caveat": "The overlay joins distinct official series without claiming that production moved directly to the United States. It does not infer mine origin, ownership, route, access, or import dependence."
     },
     {
       "id": "infrastructure",

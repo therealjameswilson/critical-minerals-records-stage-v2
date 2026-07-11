@@ -35,6 +35,7 @@ EXPECTED_MINIMUMS = {
     "comtrade-strategic-materials": 2000,
     "comtrade-strategic-query-manifest": 31,
     "annual-snapshots": 132,
+    "supply-chain": 1700,
 }
 
 
@@ -159,6 +160,39 @@ def main() -> None:
             errors.append(f"statistics/{row.get('id')}: missing {', '.join(missing)}")
         if row.get("mineral_id") not in ids["minerals"]:
             errors.append(f"statistics/{row.get('id')}: unknown mineral {row.get('mineral_id')}")
+
+    required_supply_fields = {
+        "record_type", "year", "mineral_id", "stage", "source_country_name",
+        "country_iso3", "mapping_basis", "component", "metric", "value", "unit",
+        "status", "estimated", "agency", "publication_title", "table_or_page",
+        "source_id", "source_url", "catalog_url", "access_date",
+        "geographic_precision", "caveat"
+    }
+    for row in datasets["supply-chain"]:
+        owner = f"supply-chain/{row.get('id')}"
+        missing = sorted(required_supply_fields - set(row))
+        if missing:
+            errors.append(f"{owner}: missing {', '.join(missing)}")
+        if row.get("record_type") not in {"production", "us-import"}:
+            errors.append(f"{owner}: invalid record type {row.get('record_type')}")
+        if row.get("mineral_id") not in ids["minerals"]:
+            errors.append(f"{owner}: unknown mineral {row.get('mineral_id')}")
+        if not isinstance(row.get("year"), int) or not HISTORICAL_START <= row.get("year", 0) <= HISTORICAL_END:
+            errors.append(f"{owner}: year outside 1861-1992")
+        if not isinstance(row.get("value"), (int, float)) or row.get("value", 0) < 0 or not row.get("unit"):
+            errors.append(f"{owner}: invalid value or unit")
+        if not re.fullmatch(r"[A-Z]{3}", str(row.get("country_iso3", ""))):
+            errors.append(f"{owner}: expected orientation ISO3 code")
+        if row.get("source_id") != "usgs-statistical-compendium":
+            errors.append(f"{owner}: unexpected source id {row.get('source_id')}")
+        if not str(row.get("source_url", "")).startswith("https://d9-wret.s3.us-west-2.amazonaws.com/"):
+            errors.append(f"{owner}: unexpected official table URL")
+
+    production_stages = {row.get("stage") for row in datasets["supply-chain"] if row.get("record_type") == "production"}
+    if production_stages != {"mining", "smelting", "refining"}:
+        errors.append(f"supply-chain: expected mining, smelting, and refining stages, found {sorted(production_stages)}")
+    if not any(row.get("record_type") == "us-import" and row.get("mineral_id") == "cobalt" for row in datasets["supply-chain"]):
+        errors.append("supply-chain: expected Census-derived cobalt import rows")
 
     annual = datasets["annual-snapshots"]
     if {row.get("year") for row in annual} != set(range(HISTORICAL_START, HISTORICAL_END + 1)):

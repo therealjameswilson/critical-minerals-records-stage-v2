@@ -381,7 +381,7 @@ def test_atlas_exposes_reported_trade_as_context_not_the_default_spine():
     assert 'H.loadJson("dataweb-trade")' in atlas_script
     assert 'H.loadJson("comtrade-rare-earth")' in atlas_script
     assert 'H.loadJson("comtrade-strategic-materials")' in atlas_script
-    assert layer["title"] == "Partner trade, 1962-1992"
+    assert layer["title"] == "Reported U.S. partner trade, 1962-1992"
     assert "Broad proxy families are not summed" in atlas_script
     assert 'mode: LENS_IDS.includes(options.state.mode) ? options.state.mode : "frus-activity"' in atlas_script
 
@@ -580,19 +580,45 @@ def test_atlas_layers_are_source_bounded_and_unsupported_modes_stay_locked():
     for layer_id in [
         "frus-activity", "access-relationships", "agreements",
         "stockpile-policy", "historical-events", "nara-discovery",
-        "resource-geography", "quantitative-trade-flows",
+        "resource-geography", "mineral-production", "supply-chain-evidence",
+        "quantitative-trade-flows",
     ]:
         assert by_id[layer_id]["availability"] == "supported"
         assert by_id[layer_id]["value_semantics"]
         assert by_id[layer_id]["source_ids"]
         assert by_id[layer_id]["caveat"]
     for layer_id in [
-        "mineral-production", "import-dependence",
+        "import-dependence",
         "infrastructure", "alliances-boundaries", "strategic-risk",
     ]:
         assert by_id[layer_id]["availability"] == "locked"
         assert by_id[layer_id]["required_data"]
     assert all(row["line_value_semantics"] == "linked pilot FRUS records" for row in atlas["relationships"])
+
+
+def test_supply_chain_rows_are_source_bounded_and_atlas_ready():
+    rows = load("supply-chain")
+    assert len(rows) == 1759
+    assert {row["record_type"] for row in rows} == {"production", "us-import"}
+    assert {row["stage"] for row in rows if row["record_type"] == "production"} == {"mining", "smelting", "refining"}
+    assert all(1861 <= row["year"] <= 1992 for row in rows)
+    assert all(row["country_iso3"] and len(row["country_iso3"]) == 3 for row in rows)
+    assert all(row["value"] >= 0 and row["unit"] for row in rows)
+    assert all(row["source_id"] == "usgs-statistical-compendium" for row in rows)
+    assert all("Production geography is not a shipment route" in row["caveat"] for row in rows if row["record_type"] == "production")
+    assert any(row["mineral_id"] == "rare-earth-elements" and row["year"] == 1988 for row in rows)
+    assert any(row["mineral_id"] == "cobalt" and row["record_type"] == "us-import" and row["year"] == 1983 for row in rows)
+
+
+def test_atlas_exposes_supply_chain_as_separate_production_and_trade_evidence():
+    atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
+    html = (ROOT / "records-stage.html").read_text(encoding="utf-8")
+    assert 'data-atlas-tab="supply"' in html
+    assert "renderSupplyPanel" in atlas
+    assert "productionCountryGeoJson" in atlas
+    assert "supplyFlowGeoJson" in atlas
+    assert "Do not read this as a physical supply route" in atlas
+    assert "FRUS narrative with official statistical context" in atlas
 
 
 def test_atlas_uses_local_vector_runtime_and_orientation_geometry():
